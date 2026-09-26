@@ -274,9 +274,28 @@
         <div class="biz-slider-dots" id="bizSliderDots"></div>
       </div>
 
-      <!-- RIGHT SPAN: 2×2 enterprise category icon cards -->
-      <div class="biz-category-grid" id="bizCategoryGrid">
-        <!-- Populated by JS based on current active slide -->
+      <!-- RIGHT SPAN: 12-Month Seasonal Demand & Operational Calendar -->
+      <div class="biz-gallery-calendar-pane" id="secSeasonalCalendar">
+        <div class="gallery-cal-header flex-between">
+          <div class="flex-align" style="gap: 10px;">
+            <div class="gallery-cal-icon"><i class="fa-solid fa-calendar-days"></i></div>
+            <div>
+              <h4 class="gallery-cal-title">6. 12-Month Seasonal Demand &amp; Operational Calendar</h4>
+              <p class="gallery-cal-subtitle">Empirical monthly cash-flow forecasting calibrated for rural harvest cycles &amp; monsoon conditions</p>
+            </div>
+          </div>
+          <div class="calendar-legends flex-align">
+            <span class="leg-item"><span class="badge-cal-pill green">Peak Demand</span></span>
+            <span class="leg-item"><span class="badge-cal-pill blue">Steady Sales</span></span>
+            <span class="leg-item"><span class="badge-cal-pill amber">Weather Caution</span></span>
+          </div>
+        </div>
+        <div class="seasonal-months-grid" id="seasonalMonthsGrid">
+          <!-- Injected dynamically from SEASONAL_CALENDAR_DATA -->
+        </div>
+        <div class="calendar-active-note" id="calendarActiveNote">
+          <i class="fa-solid fa-lightbulb text-orange"></i> <strong>Month Insight:</strong> <span id="txtCalendarNote">Select any month above to view actionable operational guidelines for this enterprise.</span>
+        </div>
       </div>
 
     </div>
@@ -547,29 +566,7 @@
             </div>
           </div>
 
-          <!-- Pillar 6: 12-Month Seasonal Operational & Demand Calendar (FEATURE ADDED!) -->
-          <div class="grid-card col-span-2" id="secSeasonalCalendar">
-            <div class="card-header flex-between">
-              <div class="flex-align">
-                <div class="card-icon bg-green"><i class="fa-solid fa-calendar-days"></i></div>
-                <div>
-                  <h4 class="card-title">6. 12-Month Seasonal Demand & Operational Calendar</h4>
-                  <p class="card-subtitle">Empirical monthly cash-flow forecasting calibrated for rural harvest cycles & monsoon conditions</p>
-                </div>
-              </div>
-              <div class="calendar-legends flex-align">
-                <span class="leg-item"><span class="badge-cal-pill green">Peak Demand</span></span>
-                <span class="leg-item"><span class="badge-cal-pill blue">Steady Sales</span></span>
-                <span class="leg-item"><span class="badge-cal-pill amber">Weather Caution</span></span>
-              </div>
-            </div>
-            <div class="seasonal-months-grid" id="seasonalMonthsGrid">
-              <!-- Injected dynamically from SEASONAL_CALENDAR_DATA -->
-            </div>
-            <div class="calendar-active-note" id="calendarActiveNote">
-              <i class="fa-solid fa-lightbulb text-orange"></i> <strong>Month Insight:</strong> <span id="txtCalendarNote">Select any month above to view actionable operational guidelines for this enterprise.</span>
-            </div>
-          </div>
+
 
         </div>
       </section>

@@ -1516,7 +1516,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const dotsWrap    = document.getElementById('bizSliderDots');
     const prevBtn     = document.getElementById('bizSliderPrev');
     const nextBtn     = document.getElementById('bizSliderNext');
-    const catGrid     = document.getElementById('bizCategoryGrid');
     const captionName = document.getElementById('bizCaptionName');
     const modal       = document.getElementById('bizGalleryModal');
     const modalContent= document.getElementById('bizGalleryModalContent');
@@ -1532,23 +1531,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const VISIBLE = 3;            // how many tiles show at once in the slider
     const TILE_PCT_ACTIVE = 52;   // % width of the centre (active) tile
     const TILE_PCT_SIDE = 24;     // % width of each flanking tile
-
-    // Category icons and labels for the right-side 2×2 grid
-    // We pick 4 representative categories from the current set of visible items
-    const CAT_ICONS = {
-      'Dairy & Value Addition':       { icon: 'fa-cow',             label: 'Dairy & Value Addition' },
-      'Agri-Allied Processing':        { icon: 'fa-seedling',        label: 'Agri Processing' },
-      'Green Agri-Input':              { icon: 'fa-leaf',            label: 'Green Agri-Input' },
-      'Livestock Support Services':    { icon: 'fa-horse',           label: 'Livestock Support' },
-      'Aquaculture':                   { icon: 'fa-fish',            label: 'Aquaculture' },
-      'Horticulture & Retail':         { icon: 'fa-spa',             label: 'Horticulture' },
-      'Poultry & Livestock':           { icon: 'fa-egg',             label: 'Poultry' },
-      'Clean Energy & Mobility':       { icon: 'fa-bolt',            label: 'Clean Energy' },
-      'Logistics & Supply Chain':      { icon: 'fa-truck-fast',      label: 'Logistics' },
-      'Highway Automotive Support':    { icon: 'fa-screwdriver-wrench', label: 'Auto Services' },
-      'Food Services & Hospitality':   { icon: 'fa-utensils',        label: 'Food & Hospitality' },
-      'Logistics Ancillary':           { icon: 'fa-boxes-stacked',   label: 'Logistics Ancillary' },
-    };
 
     // ── Build slide tiles ──────────────────────────────────────────────────────
     items.forEach((biz, i) => {
@@ -1638,41 +1620,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Update caption
       if (captionName) captionName.textContent = items[current].name;
-
-      // Update category grid
-      renderCategoryGrid();
-    }
-
-    // ── Render 2×2 category icon cards on the right ───────────────────────────
-    function renderCategoryGrid() {
-      if (!catGrid) return;
-      // Pick 4 categories: current + its 3 nearest neighbours
-      const picks = [];
-      for (let k = 0; k < 4; k++) {
-        picks.push(items[(current + k) % items.length]);
-      }
-      catGrid.innerHTML = picks.map((biz, idx) => {
-        const catData = CAT_ICONS[biz.category] || { icon: 'fa-store', label: biz.category };
-        const isActive = idx === 0;
-        return `
-          <div class="biz-cat-card ${isActive ? 'active-cat' : ''}"
-               data-biz-index="${(current + idx) % items.length}"
-               role="button" tabindex="0" aria-label="${catData.label}">
-            <div class="biz-cat-icon">
-              <i class="fa-solid ${catData.icon}"></i>
-            </div>
-            <div class="biz-cat-label">${catData.label}</div>
-          </div>
-        `;
-      }).join('');
-
-      // Clicking a category card navigates to that slide
-      catGrid.querySelectorAll('.biz-cat-card').forEach(card => {
-        card.addEventListener('click', () => {
-          const idx = parseInt(card.dataset.bizIndex);
-          goToSlide(idx, true);
-        });
-      });
     }
 
     // ── Go to slide ───────────────────────────────────────────────────────────
