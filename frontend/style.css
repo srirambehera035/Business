@@ -243,6 +243,15 @@ body {
   gap: 2rem;
   align-items: center;
 }
+.hero-container-single {
+  max-width: 860px;
+  margin: 0 auto;
+  text-align: center;
+}
+.hero-container-single .hero-desc {
+  max-width: 740px;
+  margin: 0 auto 0.5rem auto;
+}
 .scheme-pill {
   display: inline-flex;
   align-items: center;
