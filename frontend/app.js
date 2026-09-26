@@ -83,6 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setupComparisonTool();
   setupAudioSarthi();
   setupWhatsAppSharing();
+  renderBusinessPlansMarquee();
 
   // Select initial business & calculate
   selectBusiness(BUSINESSES_DATA[0]);
@@ -210,6 +211,27 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch (err) {
       console.warn("Leaflet Map initialization fallback:", err);
     }
+  }
+
+  // --- CONTINUOUS BUSINESS PLANS CAROUSEL TICKER (RIGHT TO LEFT) - DESIGN SHOWCASE ---
+  function renderBusinessPlansMarquee() {
+    const track = document.getElementById('tickerMarqueeTrack');
+    if (!track || typeof BUSINESSES_DATA === 'undefined') return;
+
+    // Render 32 items twice to create an infinite, seamless continuous marquee loop
+    const fullList = [...BUSINESSES_DATA, ...BUSINESSES_DATA];
+    
+    track.innerHTML = fullList.map((biz) => {
+      return `
+        <div class="biz-circle-item" title="${biz.name}" aria-label="${biz.name}">
+          <div class="biz-circle-ring">
+            <div class="biz-circle-avatar">
+              <img src="${biz.image_url}" alt="${biz.name}" class="biz-circle-img" loading="lazy" onerror="this.src='assets/dairy_thumb.jpg'" />
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
   }
 
   // --- MSJE BENEFICIARY CATEGORY SELECTOR CARDS ---
@@ -619,6 +641,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 8. Multi-Lingual Speech Announcement
     announceBusinessSelection(biz);
+
+    // 9. Update Active Highlight in Carousel Marquee
+    try {
+      document.querySelectorAll('#tickerMarqueeTrack .biz-circle-item').forEach(el => {
+        if (el.getAttribute('data-biz-id') === biz.id) {
+          el.classList.add('active');
+        } else {
+          el.classList.remove('active');
+        }
+      });
+    } catch (e) {}
   }
 
   function populateList(elementId, items) {
@@ -1281,6 +1314,7 @@ document.addEventListener('DOMContentLoaded', () => {
     try { populateCatalogGrid(); } catch (err) { console.warn('populateCatalogGrid:', err); }
     try { renderAudioSarthiQuestions(); } catch (err) { console.warn('renderAudioSarthiQuestions:', err); }
     try { updateSchemeCriteriaDocs(); } catch (err) { console.warn('updateSchemeCriteriaDocs:', err); }
+    try { renderBusinessPlansMarquee(); } catch (err) { console.warn('renderBusinessPlansMarquee:', err); }
 
     if (currentBusiness) {
       const sectorEl = document.getElementById('badgeCurrentSector');

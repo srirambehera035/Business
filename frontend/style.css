@@ -2504,7 +2504,7 @@ body {
   background: linear-gradient(135deg, rgba(15, 23, 42, 0.90), rgba(30, 41, 59, 0.93)), url('assets/rural_landscape_bg.jpg') center/cover no-repeat !important;
   color: #ffffff;
   padding: 3.5rem 0 3rem;
-  border-bottom: 3px solid #f97316;
+  border-bottom: none !important;
 }
 
 .hero-ashoka-card {
@@ -3562,3 +3562,138 @@ body {
     grid-template-columns: repeat(2, 1fr) !important;
   }
 }
+
+/* ============================================================================= */
+/* CONTINUOUS BUSINESS PLANS DESIGN SHOWCASE (RIGHT TO LEFT)                    */
+/* Clean White Background, Borderless Circular Badges, Design Showcase Only      */
+/* ============================================================================= */
+
+.business-plans-carousel-ribbon {
+  position: relative;
+  width: 100%;
+  background: #ffffff !important;
+  padding: 1.25rem 0 1.5rem;
+  border-top: none !important;
+  border-bottom: 1px solid #f1f5f9;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+}
+
+/* Marquee Viewport with White Edge Vignette Masks */
+.ticker-marquee-viewport {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding: 12px 0 16px;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+}
+
+.ticker-marquee-viewport::before,
+.ticker-marquee-viewport::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100px;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.ticker-marquee-viewport::before {
+  left: 0;
+  background: linear-gradient(to right, #ffffff, rgba(255, 255, 255, 0));
+}
+
+.ticker-marquee-viewport::after {
+  right: 0;
+  background: linear-gradient(to left, #ffffff, rgba(255, 255, 255, 0));
+}
+
+/* Continuous Marquee Track - Right to Left */
+.ticker-marquee-track {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  gap: 28px;
+  padding: 6px 10px;
+  animation: marqueeScrollLeft 65s linear infinite;
+  will-change: transform;
+}
+
+@keyframes marqueeScrollLeft {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+/* Borderless Bigger Circular Badges (For Design Purpose) */
+.biz-circle-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: default !important;
+  flex-shrink: 0;
+  pointer-events: none; /* Strictly for design purpose, non-clickable */
+  user-select: none;
+}
+
+.biz-circle-ring {
+  width: 104px !important;
+  height: 104px !important;
+  border-radius: 50% !important;
+  border: none !important;
+  padding: 0 !important;
+  background: transparent !important;
+  box-shadow: 0 10px 26px rgba(15, 23, 42, 0.14), 0 3px 10px rgba(0, 0, 0, 0.08) !important;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+}
+
+.biz-circle-avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #f1f5f9;
+  position: relative;
+}
+
+.biz-circle-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+}
+
+/* Mobile Responsive Ticker */
+@media (max-width: 768px) {
+  .business-plans-carousel-ribbon {
+    padding: 1.25rem 0 1.5rem;
+  }
+  .biz-circle-ring {
+    width: 76px !important;
+    height: 76px !important;
+  }
+  .ticker-marquee-track {
+    gap: 18px;
+    animation-duration: 45s;
+  }
+  .ticker-marquee-viewport {
+    padding: 8px 0 12px;
+  }
+  .ticker-marquee-viewport::before,
+  .ticker-marquee-viewport::after {
+    width: 50px;
+  }
+}
+

@@ -2478,6 +2478,9 @@ const BUSINESSES_DATA = [
 
 const TRANSLATIONS = {
   "en": {
+    "marqueeLead": "32 Vetted Enterprise Blueprints",
+    "marqueeSub": "• Tap any circle to load unit economics & concessional credit",
+    "marqueePause": "Continuous Stream (Right &rarr; Left) • Hover to Pause",
     "govIndia": "GOVERNMENT OF INDIA",
     "govIndiaHindi": "भारत सरकार",
     "portalTitle": "Vyapaar Sarthi",
@@ -2630,6 +2633,9 @@ const TRANSLATIONS = {
     "navCatalog": "32 Enterprise Catalog"
   },
   "hi": {
+    "marqueeLead": "32 प्रमाणित ग्रामीण उद्यम मॉडल",
+    "marqueeSub": "• इकाई अर्थशास्त्र और रियायती ऋण देखने के लिए किसी भी वृत्त पर क्लिक करें",
+    "marqueePause": "सतत प्रवाह (दाएं से बाएं) • रोकने के लिए कर्सर रखें",
     "govIndia": "भारत सरकार",
     "govIndiaHindi": "GOVERNMENT OF INDIA",
     "portalTitle": "व्यापार सारथी",
@@ -2782,6 +2788,9 @@ const TRANSLATIONS = {
     "navCatalog": "32 उद्यम निर्देशिका"
   },
   "or": {
+    "marqueeLead": "32 ପ୍ରମାଣିତ ଗ୍ରାମୀଣ ଉଦ୍ୟୋଗ ଯୋଜନା",
+    "marqueeSub": "• ୟୁନିଟ୍ ଅର୍ଥନୀତି ଓ ରିହାତି ଋଣ ଦେଖିବାକୁ ଯେକୌଣସି ବୃତ୍ତ ଉପରେ କ୍ଲିକ୍ କରନ୍ତୁ",
+    "marqueePause": "ନିରନ୍ତର ପ୍ରବାହ (ଡାହାଣରୁ ବାମ) • ଅଟକାଇବା ପାଇଁ ହୋଭର୍ କରନ୍ତୁ",
     "govIndia": "ଭାରତ ସରକାର",
     "govIndiaHindi": "GOVERNMENT OF INDIA",
     "portalTitle": "ବ୍ୟାପାର ସାରଥୀ",
@@ -2934,6 +2943,9 @@ const TRANSLATIONS = {
     "navCatalog": "32 ଉଦ୍ୟୋଗ ତାଲିକା"
   },
   "bn": {
+    "marqueeLead": "৩২টি পরীক্ষিত গ্রামীণ ব্যবসা মডেল",
+    "marqueeSub": "• আর্থিক বিবরণী ও ভর্তুকি দেখতে যেকোনো বৃত্তে ক্লিক করুন",
+    "marqueePause": "নিরবচ্ছিন্ন প্রবাহ (ডান থেকে বাম) • থামাতে হোভার করুন",
     "govIndia": "ভারত সরকার",
     "govIndiaHindi": "GOVERNMENT OF INDIA",
     "portalTitle": "ব্যাপার সারথী",
@@ -3086,6 +3098,9 @@ const TRANSLATIONS = {
     "navCatalog": "৩২ উদ্যোগ ক্যাটালগ"
   },
   "te": {
+    "marqueeLead": "32 ధృవీకరించబడిన గ్రామీణ వ్యాపార నమూనాలు",
+    "marqueeSub": "• యూనిట్ ఆర్థిక వివరాలు మరియు రాయితీ రుణం చూడటానికి ఏదైనా వృత్తంపై క్లిక్ చేయండి",
+    "marqueePause": "నిరంతర ప్రవాహం (కుడి నుండి ఎడమకు) • పాజ్ చేయడానికి హోవర్ చేయండి",
     "govIndia": "భారత ప్రభుత్వం",
     "govIndiaHindi": "GOVERNMENT OF INDIA",
     "portalTitle": "వ్యాపార్ సారథి",
@@ -3238,6 +3253,9 @@ const TRANSLATIONS = {
     "navCatalog": "32 వ్యాపారాల కేటలాగ్"
   },
   "ta": {
+    "marqueeLead": "32 சரிபார்க்கப்பட்ட கிராமப்புற வணிக மாதிரிகள்",
+    "marqueeSub": "• வணிக விவரங்கள் மற்றும் மானியக் கடனைக் காண ஏதேனும் வட்டத்தில் கிளிக் செய்யவும்",
+    "marqueePause": "தொடர்ச்சியான ஓட்டம் (வலமிருந்து இடமாக) • நிறுத்த நகர்த்தவும்",
     "govIndia": "இந்திய அரசு",
     "govIndiaHindi": "GOVERNMENT OF INDIA",
     "portalTitle": "வியாபார் சாரதி",
@@ -3390,6 +3408,9 @@ const TRANSLATIONS = {
     "navCatalog": "32 தொழில்கள் பட்டியல்"
   },
   "mr": {
+    "marqueeLead": "32 प्रमाणित ग्रामीण व्यवसाय मॉडेल",
+    "marqueeSub": "• युनिट अर्थशास्त्र आणि सवलतीचे कर्ज पाहण्यासाठी कोणत्याही वर्तुळावर क्लिक करा",
+    "marqueePause": "सतत प्रवाह (उजवीकडून डावीकडे) • थांबवण्यासाठी होव्हर करा",
     "govIndia": "भारत सरकार",
     "govIndiaHindi": "GOVERNMENT OF INDIA",
     "portalTitle": "व्यापार सारथी",
