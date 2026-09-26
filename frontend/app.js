@@ -1510,161 +1510,214 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
   }
 
-  // --- INTERACTIVE ENTERPRISE GALLERY: AUTO-SLIDE + HOVER DETAIL + CLICK MODAL ---
+  // --- ENTERPRISE GALLERY: REFERENCE LAYOUT ─ Multi-tile slider LEFT + 2×2 category grid RIGHT ---
   function setupEnterpriseGallery() {
-    const slidesWrap = document.getElementById('bizGallerySlides');
-    const detailInner = document.getElementById('bizGalleryDetailInner');
-    const dotsContainer = document.getElementById('gallerySlideDots');
-    const modal = document.getElementById('bizGalleryModal');
-    const modalContent = document.getElementById('bizGalleryModalContent');
-    const modalClose = document.getElementById('bizGalleryModalClose');
-    const modalOverlay = document.getElementById('bizGalleryModalOverlay');
-    const prevBtn = document.getElementById('galleryPrev');
-    const nextBtn = document.getElementById('galleryNext');
+    const track       = document.getElementById('bizMultiTrack');
+    const dotsWrap    = document.getElementById('bizSliderDots');
+    const prevBtn     = document.getElementById('bizSliderPrev');
+    const nextBtn     = document.getElementById('bizSliderNext');
+    const catGrid     = document.getElementById('bizCategoryGrid');
+    const captionName = document.getElementById('bizCaptionName');
+    const modal       = document.getElementById('bizGalleryModal');
+    const modalContent= document.getElementById('bizGalleryModalContent');
+    const modalClose  = document.getElementById('bizGalleryModalClose');
+    const modalOverlay= document.getElementById('bizGalleryModalOverlay');
+    const exploreBtn  = document.getElementById('bizExploreAllBtn');
 
-    if (!slidesWrap || typeof BUSINESSES_DATA === 'undefined') return;
+    if (!track || typeof BUSINESSES_DATA === 'undefined') return;
 
-    // Use first 12 businesses with most distinct images
-    const galleryItems = BUSINESSES_DATA.slice(0, 12);
-    let currentSlide = 0;
+    const items = BUSINESSES_DATA.slice(0, 12);
+    let current = 0;
     let autoTimer = null;
-    let slides = [];
-    let dots = [];
+    const VISIBLE = 3;            // how many tiles show at once in the slider
+    const TILE_PCT_ACTIVE = 52;   // % width of the centre (active) tile
+    const TILE_PCT_SIDE = 24;     // % width of each flanking tile
 
-    // Build slides
-    galleryItems.forEach((biz, i) => {
-      const slide = document.createElement('div');
-      slide.className = 'gallery-slide' + (i === 0 ? ' active' : '');
-      slide.innerHTML = `
-        <img src="${biz.image_url}" alt="${biz.name}" loading="${i < 3 ? 'eager' : 'lazy'}" onerror="this.src='assets/dairy_thumb.jpg'" />
-        <div class="gallery-slide-caption">
-          <span class="slide-caption-badge">${biz.category}</span>
-          <div class="slide-caption-title">${biz.name}</div>
-          <div class="slide-caption-meta">
-            <span><i class="fa-solid fa-chart-line"></i> ${biz.viability_score}% Viability</span>
-            <span><i class="fa-solid fa-coins"></i> ${biz.unit_economics ? biz.unit_economics.monthly_profit : '₹10,000+'}/mo</span>
-          </div>
+    // Category icons and labels for the right-side 2×2 grid
+    // We pick 4 representative categories from the current set of visible items
+    const CAT_ICONS = {
+      'Dairy & Value Addition':       { icon: 'fa-cow',             label: 'Dairy & Value Addition' },
+      'Agri-Allied Processing':        { icon: 'fa-seedling',        label: 'Agri Processing' },
+      'Green Agri-Input':              { icon: 'fa-leaf',            label: 'Green Agri-Input' },
+      'Livestock Support Services':    { icon: 'fa-horse',           label: 'Livestock Support' },
+      'Aquaculture':                   { icon: 'fa-fish',            label: 'Aquaculture' },
+      'Horticulture & Retail':         { icon: 'fa-spa',             label: 'Horticulture' },
+      'Poultry & Livestock':           { icon: 'fa-egg',             label: 'Poultry' },
+      'Clean Energy & Mobility':       { icon: 'fa-bolt',            label: 'Clean Energy' },
+      'Logistics & Supply Chain':      { icon: 'fa-truck-fast',      label: 'Logistics' },
+      'Highway Automotive Support':    { icon: 'fa-screwdriver-wrench', label: 'Auto Services' },
+      'Food Services & Hospitality':   { icon: 'fa-utensils',        label: 'Food & Hospitality' },
+      'Logistics Ancillary':           { icon: 'fa-boxes-stacked',   label: 'Logistics Ancillary' },
+    };
+
+    // ── Build slide tiles ──────────────────────────────────────────────────────
+    items.forEach((biz, i) => {
+      const tile = document.createElement('div');
+      tile.className = 'biz-slide-tile';
+      tile.dataset.index = i;
+      tile.innerHTML = `
+        <img src="${biz.image_url}" alt="${biz.name}" loading="${i < 4 ? 'eager' : 'lazy'}"
+             onerror="this.src='assets/dairy_thumb.jpg'" />
+        <div class="biz-slide-tile-label">
+          <div class="biz-tile-label-cat">${biz.category}</div>
+          <div class="biz-tile-label-name">${biz.name}</div>
         </div>
       `;
-
-      // Hover → show detail panel
-      slide.addEventListener('mouseenter', () => showDetailPanel(biz));
-      slide.addEventListener('mouseleave', () => {
-        // Keep detail visible if same slide still active
-        if (currentSlide === i) showDetailPanel(biz);
+      tile.addEventListener('click', () => {
+        if (i === current) {
+          openGalleryModal(biz);
+        } else {
+          goToSlide(i, true);
+        }
       });
-
-      // Click → open modal
-      slide.addEventListener('click', () => openGalleryModal(biz));
-      slidesWrap.insertBefore(slide, prevBtn);
-      slides.push(slide);
+      track.appendChild(tile);
 
       // Dot
       const dot = document.createElement('button');
-      dot.className = 'gallery-dot' + (i === 0 ? ' active' : '');
-      dot.setAttribute('aria-label', `Slide ${i + 1}: ${biz.name}`);
+      dot.className = 'biz-slider-dot' + (i === 0 ? ' active' : '');
+      dot.setAttribute('aria-label', `Slide ${i + 1}`);
       dot.addEventListener('click', () => goToSlide(i, true));
-      dotsContainer.appendChild(dot);
-      dots.push(dot);
+      dotsWrap.appendChild(dot);
     });
 
-    // Show detail panel for first slide
-    showDetailPanel(galleryItems[0]);
+    // ── Position tiles like a peekaboo multi-slider ───────────────────────────
+    function renderTiles() {
+      const tiles = track.querySelectorAll('.biz-slide-tile');
+      const n = items.length;
 
-    // Activate a slide
+      tiles.forEach((tile, i) => {
+        const relPos = ((i - current) % n + n) % n;
+        // relPos: 0=active, 1=right1, 2=right2, n-1=left1, n-2=left2
+        let left, width, opacity, zIndex, filter;
+
+        if (relPos === 0) {
+          // Centre active tile
+          left = TILE_PCT_SIDE + '%';
+          width = TILE_PCT_ACTIVE + '%';
+          opacity = 1;
+          zIndex = 3;
+          filter = 'none';
+          tile.classList.add('biz-tile-active');
+        } else if (relPos === 1) {
+          // Right neighbour
+          left = (TILE_PCT_SIDE + TILE_PCT_ACTIVE) + '%';
+          width = TILE_PCT_SIDE + '%';
+          opacity = 0.82;
+          zIndex = 2;
+          filter = 'brightness(0.7)';
+          tile.classList.remove('biz-tile-active');
+        } else if (relPos === n - 1) {
+          // Left neighbour
+          left = '0%';
+          width = TILE_PCT_SIDE + '%';
+          opacity = 0.82;
+          zIndex = 2;
+          filter = 'brightness(0.7)';
+          tile.classList.remove('biz-tile-active');
+        } else {
+          // Off-screen
+          left = relPos <= n / 2 ? '100%' : '-50%';
+          width = TILE_PCT_SIDE + '%';
+          opacity = 0;
+          zIndex = 1;
+          filter = 'none';
+          tile.classList.remove('biz-tile-active');
+        }
+
+        tile.style.left = left;
+        tile.style.width = width;
+        tile.style.opacity = opacity;
+        tile.style.zIndex = zIndex;
+        tile.style.filter = filter;
+      });
+
+      // Update dots
+      dotsWrap.querySelectorAll('.biz-slider-dot').forEach((d, i) =>
+        d.classList.toggle('active', i === current)
+      );
+
+      // Update caption
+      if (captionName) captionName.textContent = items[current].name;
+
+      // Update category grid
+      renderCategoryGrid();
+    }
+
+    // ── Render 2×2 category icon cards on the right ───────────────────────────
+    function renderCategoryGrid() {
+      if (!catGrid) return;
+      // Pick 4 categories: current + its 3 nearest neighbours
+      const picks = [];
+      for (let k = 0; k < 4; k++) {
+        picks.push(items[(current + k) % items.length]);
+      }
+      catGrid.innerHTML = picks.map((biz, idx) => {
+        const catData = CAT_ICONS[biz.category] || { icon: 'fa-store', label: biz.category };
+        const isActive = idx === 0;
+        return `
+          <div class="biz-cat-card ${isActive ? 'active-cat' : ''}"
+               data-biz-index="${(current + idx) % items.length}"
+               role="button" tabindex="0" aria-label="${catData.label}">
+            <div class="biz-cat-icon">
+              <i class="fa-solid ${catData.icon}"></i>
+            </div>
+            <div class="biz-cat-label">${catData.label}</div>
+          </div>
+        `;
+      }).join('');
+
+      // Clicking a category card navigates to that slide
+      catGrid.querySelectorAll('.biz-cat-card').forEach(card => {
+        card.addEventListener('click', () => {
+          const idx = parseInt(card.dataset.bizIndex);
+          goToSlide(idx, true);
+        });
+      });
+    }
+
+    // ── Go to slide ───────────────────────────────────────────────────────────
     function goToSlide(index, resetTimer) {
-      const prev = currentSlide;
-      if (prev === index) return;
-      slides[prev].classList.remove('active');
-      slides[prev].classList.add('exiting');
-      setTimeout(() => slides[prev].classList.remove('exiting'), 750);
-      currentSlide = index;
-      slides[currentSlide].classList.add('active');
-      dots.forEach((d, j) => d.classList.toggle('active', j === currentSlide));
-      showDetailPanel(galleryItems[currentSlide]);
+      current = ((index % items.length) + items.length) % items.length;
+      renderTiles();
       if (resetTimer) startAutoPlay();
     }
 
-    // Auto-slide every 3 seconds
+    // ── Auto-advance every 3 seconds ──────────────────────────────────────────
     function startAutoPlay() {
       clearInterval(autoTimer);
       autoTimer = setInterval(() => {
-        const next = (currentSlide + 1) % galleryItems.length;
-        goToSlide(next, false);
+        goToSlide(current + 1, false);
       }, 3000);
     }
     startAutoPlay();
 
-    // Pause on hover over slides
-    slidesWrap.addEventListener('mouseenter', () => clearInterval(autoTimer));
-    slidesWrap.addEventListener('mouseleave', () => startAutoPlay());
+    // Pause on hover
+    track.parentElement.addEventListener('mouseenter', () => clearInterval(autoTimer));
+    track.parentElement.addEventListener('mouseleave', () => startAutoPlay());
 
-    // Prev/Next nav
-    prevBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const prev = (currentSlide - 1 + galleryItems.length) % galleryItems.length;
-      goToSlide(prev, true);
-    });
-    nextBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const next = (currentSlide + 1) % galleryItems.length;
-      goToSlide(next, true);
-    });
+    // Nav buttons
+    if (prevBtn) prevBtn.addEventListener('click', (e) => { e.stopPropagation(); goToSlide(current - 1, true); });
+    if (nextBtn) nextBtn.addEventListener('click', (e) => { e.stopPropagation(); goToSlide(current + 1, true); });
 
-    // Keyboard arrow navigation
+    // Keyboard nav
     document.addEventListener('keydown', (e) => {
       if (modal && modal.classList.contains('open')) return;
-      if (e.key === 'ArrowRight') {
-        const next = (currentSlide + 1) % galleryItems.length;
-        goToSlide(next, true);
-      } else if (e.key === 'ArrowLeft') {
-        const prev = (currentSlide - 1 + galleryItems.length) % galleryItems.length;
-        goToSlide(prev, true);
-      }
+      if (e.key === 'ArrowRight') goToSlide(current + 1, true);
+      else if (e.key === 'ArrowLeft') goToSlide(current - 1, true);
     });
 
-    // Build and show the right-side hover detail panel
-    function showDetailPanel(biz) {
-      if (!detailInner) return;
-      const score = biz.viability_score || 88;
-      const rationale = biz.local_rationale || biz.target_market || '';
-      const shortRationale = rationale.length > 180 ? rationale.substring(0, 180) + '...' : rationale;
-
-      detailInner.innerHTML = `
-        <div class="detail-content-header">
-          <span class="detail-category-badge">${biz.category}</span>
-          <h4 class="detail-title">${biz.name}</h4>
-        </div>
-        <p class="detail-rationale">${shortRationale}</p>
-        <div class="detail-metrics-grid">
-          <div class="detail-metric-card">
-            <div class="detail-metric-label"><i class="fa-solid fa-coins"></i> Monthly Profit</div>
-            <div class="detail-metric-value text-profit">${biz.unit_economics ? biz.unit_economics.monthly_profit : '₹10,000+'}</div>
-          </div>
-          <div class="detail-metric-card">
-            <div class="detail-metric-label"><i class="fa-solid fa-calendar-check"></i> Breakeven</div>
-            <div class="detail-metric-value">${biz.unit_economics ? biz.unit_economics.breakeven : '6-8 Months'}</div>
-          </div>
-        </div>
-        <div class="detail-scheme-row">
-          <i class="fa-solid fa-landmark-flag"></i>
-          <span class="detail-scheme-text"><strong>Recommended Scheme:</strong> ${biz.preferable_scheme}</span>
-        </div>
-        <div class="detail-viability-bar">
-          <span class="viability-label-sm">Viability</span>
-          <div class="viability-progress-track">
-            <div class="viability-progress-fill" style="width: ${score}%"></div>
-          </div>
-          <span class="viability-score-sm">${score}/100</span>
-        </div>
-        <div class="detail-click-hint">
-          <i class="fa-solid fa-mouse-pointer"></i>
-          <span>Click the image to view full details</span>
-        </div>
-      `;
+    // Explore All
+    if (exploreBtn) {
+      exploreBtn.addEventListener('click', () => {
+        const sec = document.getElementById('secControlDock');
+        if (sec) sec.scrollIntoView({ behavior: 'smooth' });
+      });
     }
 
-    // Open full-detail modal
+    // Initial render
+    renderTiles();
+
+    // ── CLICK MODAL ────────────────────────────────────────────────────────────
     function openGalleryModal(biz) {
       if (!modal || !modalContent) return;
       const score = biz.viability_score || 88;
@@ -1675,7 +1728,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <img src="${biz.image_url}" alt="${biz.name}" onerror="this.src='assets/dairy_thumb.jpg'" />
           <div class="biz-modal-image-badge">
             <span class="slide-caption-badge">${biz.category}</span>
-            <div style="background: rgba(74, 222, 128, 0.15); border: 1px solid rgba(74, 222, 128, 0.4); color: #4ade80; font-size: 0.78rem; font-weight: 700; padding: 3px 10px; border-radius: 4px;">
+            <div style="background:rgba(74,222,128,0.15);border:1px solid rgba(74,222,128,0.4);color:#4ade80;font-size:0.78rem;font-weight:700;padding:3px 10px;border-radius:4px;">
               ${score}% Viability
             </div>
           </div>
@@ -1709,18 +1762,16 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="biz-modal-viability">
             <span class="biz-modal-viability-label">Overall Viability Score</span>
             <div class="biz-modal-viability-track">
-              <div class="biz-modal-viability-fill" style="width: ${score}%"></div>
+              <div class="biz-modal-viability-fill" style="width:${score}%"></div>
             </div>
             <span class="biz-modal-viability-score">${score}/100</span>
           </div>
         </div>
       `;
-
       modal.classList.add('open');
       document.body.style.overflow = 'hidden';
     }
 
-    // Close modal
     function closeGalleryModal() {
       if (!modal) return;
       modal.classList.remove('open');

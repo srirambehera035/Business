@@ -251,39 +251,50 @@
   </section>
 
   <!-- ========================================================================= -->
-  <!-- INTERACTIVE ENTERPRISE GALLERY — AUTO-SLIDE + HOVER DETAIL + CLICK MODAL  -->
+  <!-- ENTERPRISE SHOWCASE — REFERENCE LAYOUT: SLIDER LEFT + CARDS RIGHT        -->
   <!-- ========================================================================= -->
   <section class="biz-gallery-section" id="secBizGallery">
-    <div class="container">
-      <div class="biz-gallery-header text-center">
-        <span class="badge-gallery"><i class="fa-solid fa-images"></i> ENTERPRISE SHOWCASE</span>
-        <h3 class="biz-gallery-title" data-i18n="galleryTitle">32 Vetted Rural Enterprise Blueprints</h3>
-        <p class="biz-gallery-sub" data-i18n="gallerySub">Explore diverse micro-enterprise opportunities supported under MSJE Concessional Credit — hover to preview, click to expand.</p>
+
+    <!-- TOP DIV: 2-column — Left: multi-image slider | Right: 2x2 icon card grid -->
+    <div class="biz-gallery-top">
+
+      <!-- LEFT SPAN: Overlapping multi-image slider (3 visible, sliding left) -->
+      <div class="biz-multi-slider" id="bizMultiSlider">
+        <div class="biz-multi-track" id="bizMultiTrack">
+          <!-- Slides injected by JS -->
+        </div>
+        <!-- Left/Right nav arrows -->
+        <button class="biz-slider-arrow biz-slider-prev" id="bizSliderPrev" aria-label="Previous">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <button class="biz-slider-arrow biz-slider-next" id="bizSliderNext" aria-label="Next">
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+        <!-- Dots indicator row -->
+        <div class="biz-slider-dots" id="bizSliderDots"></div>
       </div>
 
-      <div class="biz-gallery-layout">
-        <!-- Left: Auto-sliding image strip -->
-        <div class="biz-gallery-slides-wrap" id="bizGallerySlides">
-          <!-- slides injected by JS -->
-          <button class="gallery-nav-btn gallery-prev" id="galleryPrev" aria-label="Previous"><i class="fa-solid fa-chevron-left"></i></button>
-          <button class="gallery-nav-btn gallery-next" id="galleryNext" aria-label="Next"><i class="fa-solid fa-chevron-right"></i></button>
-          <div class="gallery-slide-dots" id="gallerySlideDots"></div>
-        </div>
-
-        <!-- Right: Hover detail info panel -->
-        <div class="biz-gallery-detail-panel" id="bizGalleryDetail">
-          <div class="detail-panel-inner" id="bizGalleryDetailInner">
-            <div class="detail-placeholder">
-              <i class="fa-solid fa-hand-pointer fa-2x"></i>
-              <p data-i18n="galleryHoverHint">Hover over an enterprise image to see its business details here</p>
-            </div>
-          </div>
-        </div>
+      <!-- RIGHT SPAN: 2×2 enterprise category icon cards -->
+      <div class="biz-category-grid" id="bizCategoryGrid">
+        <!-- Populated by JS based on current active slide -->
       </div>
+
     </div>
+
+    <!-- BOTTOM DIV: Caption label showing current business name + "Explore All" -->
+    <div class="biz-gallery-bottom" id="bizGalleryBottom">
+      <div class="biz-gallery-caption-left">
+        <span class="biz-caption-badge" id="bizCaptionBadge"><i class="fa-solid fa-store"></i></span>
+        <span class="biz-caption-name" id="bizCaptionName">Solar-Powered Milk Chilling &amp; Paneer Unit</span>
+      </div>
+      <button class="biz-explore-all-btn" id="bizExploreAllBtn">
+        Explore All <i class="fa-solid fa-arrow-right"></i>
+      </button>
+    </div>
+
   </section>
 
-  <!-- ENTERPRISE CLICK MODAL (Full Detail) -->
+  <!-- ENTERPRISE CLICK MODAL (Full Detail with ✕ close) -->
   <div class="biz-gallery-modal" id="bizGalleryModal" role="dialog" aria-modal="true" aria-label="Enterprise Detail">
     <div class="biz-gallery-modal-overlay" id="bizGalleryModalOverlay"></div>
     <div class="biz-gallery-modal-card" id="bizGalleryModalCard">
