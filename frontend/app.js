@@ -84,6 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setupAudioSarthi();
   setupWhatsAppSharing();
   renderBusinessPlansMarquee();
+  setupEnterpriseGallery();
 
   // Select initial business & calculate
   selectBusiness(BUSINESSES_DATA[0]);
@@ -1507,6 +1508,230 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       </div>
     `;
+  }
+
+  // --- INTERACTIVE ENTERPRISE GALLERY: AUTO-SLIDE + HOVER DETAIL + CLICK MODAL ---
+  function setupEnterpriseGallery() {
+    const slidesWrap = document.getElementById('bizGallerySlides');
+    const detailInner = document.getElementById('bizGalleryDetailInner');
+    const dotsContainer = document.getElementById('gallerySlideDots');
+    const modal = document.getElementById('bizGalleryModal');
+    const modalContent = document.getElementById('bizGalleryModalContent');
+    const modalClose = document.getElementById('bizGalleryModalClose');
+    const modalOverlay = document.getElementById('bizGalleryModalOverlay');
+    const prevBtn = document.getElementById('galleryPrev');
+    const nextBtn = document.getElementById('galleryNext');
+
+    if (!slidesWrap || typeof BUSINESSES_DATA === 'undefined') return;
+
+    // Use first 12 businesses with most distinct images
+    const galleryItems = BUSINESSES_DATA.slice(0, 12);
+    let currentSlide = 0;
+    let autoTimer = null;
+    let slides = [];
+    let dots = [];
+
+    // Build slides
+    galleryItems.forEach((biz, i) => {
+      const slide = document.createElement('div');
+      slide.className = 'gallery-slide' + (i === 0 ? ' active' : '');
+      slide.innerHTML = `
+        <img src="${biz.image_url}" alt="${biz.name}" loading="${i < 3 ? 'eager' : 'lazy'}" onerror="this.src='assets/dairy_thumb.jpg'" />
+        <div class="gallery-slide-caption">
+          <span class="slide-caption-badge">${biz.category}</span>
+          <div class="slide-caption-title">${biz.name}</div>
+          <div class="slide-caption-meta">
+            <span><i class="fa-solid fa-chart-line"></i> ${biz.viability_score}% Viability</span>
+            <span><i class="fa-solid fa-coins"></i> ${biz.unit_economics ? biz.unit_economics.monthly_profit : '₹10,000+'}/mo</span>
+          </div>
+        </div>
+      `;
+
+      // Hover → show detail panel
+      slide.addEventListener('mouseenter', () => showDetailPanel(biz));
+      slide.addEventListener('mouseleave', () => {
+        // Keep detail visible if same slide still active
+        if (currentSlide === i) showDetailPanel(biz);
+      });
+
+      // Click → open modal
+      slide.addEventListener('click', () => openGalleryModal(biz));
+      slidesWrap.insertBefore(slide, prevBtn);
+      slides.push(slide);
+
+      // Dot
+      const dot = document.createElement('button');
+      dot.className = 'gallery-dot' + (i === 0 ? ' active' : '');
+      dot.setAttribute('aria-label', `Slide ${i + 1}: ${biz.name}`);
+      dot.addEventListener('click', () => goToSlide(i, true));
+      dotsContainer.appendChild(dot);
+      dots.push(dot);
+    });
+
+    // Show detail panel for first slide
+    showDetailPanel(galleryItems[0]);
+
+    // Activate a slide
+    function goToSlide(index, resetTimer) {
+      const prev = currentSlide;
+      if (prev === index) return;
+      slides[prev].classList.remove('active');
+      slides[prev].classList.add('exiting');
+      setTimeout(() => slides[prev].classList.remove('exiting'), 750);
+      currentSlide = index;
+      slides[currentSlide].classList.add('active');
+      dots.forEach((d, j) => d.classList.toggle('active', j === currentSlide));
+      showDetailPanel(galleryItems[currentSlide]);
+      if (resetTimer) startAutoPlay();
+    }
+
+    // Auto-slide every 3 seconds
+    function startAutoPlay() {
+      clearInterval(autoTimer);
+      autoTimer = setInterval(() => {
+        const next = (currentSlide + 1) % galleryItems.length;
+        goToSlide(next, false);
+      }, 3000);
+    }
+    startAutoPlay();
+
+    // Pause on hover over slides
+    slidesWrap.addEventListener('mouseenter', () => clearInterval(autoTimer));
+    slidesWrap.addEventListener('mouseleave', () => startAutoPlay());
+
+    // Prev/Next nav
+    prevBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const prev = (currentSlide - 1 + galleryItems.length) % galleryItems.length;
+      goToSlide(prev, true);
+    });
+    nextBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const next = (currentSlide + 1) % galleryItems.length;
+      goToSlide(next, true);
+    });
+
+    // Keyboard arrow navigation
+    document.addEventListener('keydown', (e) => {
+      if (modal && modal.classList.contains('open')) return;
+      if (e.key === 'ArrowRight') {
+        const next = (currentSlide + 1) % galleryItems.length;
+        goToSlide(next, true);
+      } else if (e.key === 'ArrowLeft') {
+        const prev = (currentSlide - 1 + galleryItems.length) % galleryItems.length;
+        goToSlide(prev, true);
+      }
+    });
+
+    // Build and show the right-side hover detail panel
+    function showDetailPanel(biz) {
+      if (!detailInner) return;
+      const score = biz.viability_score || 88;
+      const rationale = biz.local_rationale || biz.target_market || '';
+      const shortRationale = rationale.length > 180 ? rationale.substring(0, 180) + '...' : rationale;
+
+      detailInner.innerHTML = `
+        <div class="detail-content-header">
+          <span class="detail-category-badge">${biz.category}</span>
+          <h4 class="detail-title">${biz.name}</h4>
+        </div>
+        <p class="detail-rationale">${shortRationale}</p>
+        <div class="detail-metrics-grid">
+          <div class="detail-metric-card">
+            <div class="detail-metric-label"><i class="fa-solid fa-coins"></i> Monthly Profit</div>
+            <div class="detail-metric-value text-profit">${biz.unit_economics ? biz.unit_economics.monthly_profit : '₹10,000+'}</div>
+          </div>
+          <div class="detail-metric-card">
+            <div class="detail-metric-label"><i class="fa-solid fa-calendar-check"></i> Breakeven</div>
+            <div class="detail-metric-value">${biz.unit_economics ? biz.unit_economics.breakeven : '6-8 Months'}</div>
+          </div>
+        </div>
+        <div class="detail-scheme-row">
+          <i class="fa-solid fa-landmark-flag"></i>
+          <span class="detail-scheme-text"><strong>Recommended Scheme:</strong> ${biz.preferable_scheme}</span>
+        </div>
+        <div class="detail-viability-bar">
+          <span class="viability-label-sm">Viability</span>
+          <div class="viability-progress-track">
+            <div class="viability-progress-fill" style="width: ${score}%"></div>
+          </div>
+          <span class="viability-score-sm">${score}/100</span>
+        </div>
+        <div class="detail-click-hint">
+          <i class="fa-solid fa-mouse-pointer"></i>
+          <span>Click the image to view full details</span>
+        </div>
+      `;
+    }
+
+    // Open full-detail modal
+    function openGalleryModal(biz) {
+      if (!modal || !modalContent) return;
+      const score = biz.viability_score || 88;
+      const rationale = biz.local_rationale || biz.target_market || '';
+
+      modalContent.innerHTML = `
+        <div class="biz-modal-image-wrap">
+          <img src="${biz.image_url}" alt="${biz.name}" onerror="this.src='assets/dairy_thumb.jpg'" />
+          <div class="biz-modal-image-badge">
+            <span class="slide-caption-badge">${biz.category}</span>
+            <div style="background: rgba(74, 222, 128, 0.15); border: 1px solid rgba(74, 222, 128, 0.4); color: #4ade80; font-size: 0.78rem; font-weight: 700; padding: 3px 10px; border-radius: 4px;">
+              ${score}% Viability
+            </div>
+          </div>
+        </div>
+        <div class="biz-modal-detail-wrap">
+          <span class="biz-modal-category">${biz.category}</span>
+          <h3 class="biz-modal-title">${biz.name}</h3>
+          <p class="biz-modal-desc">${rationale}</p>
+          <div class="biz-modal-stats">
+            <div class="biz-modal-stat">
+              <div class="biz-modal-stat-label">Monthly Profit</div>
+              <div class="biz-modal-stat-val green">${biz.unit_economics ? biz.unit_economics.monthly_profit : '₹10,000+'}</div>
+            </div>
+            <div class="biz-modal-stat">
+              <div class="biz-modal-stat-label">Breakeven Period</div>
+              <div class="biz-modal-stat-val">${biz.unit_economics ? biz.unit_economics.breakeven : '6-8 Months'}</div>
+            </div>
+            <div class="biz-modal-stat">
+              <div class="biz-modal-stat-label">Project Cost</div>
+              <div class="biz-modal-stat-val">₹${(biz.project_cost_inr || 0).toLocaleString('en-IN')}</div>
+            </div>
+            <div class="biz-modal-stat">
+              <div class="biz-modal-stat-label">10% Beneficiary Margin</div>
+              <div class="biz-modal-stat-val">₹${(biz.beneficiary_margin_inr || 0).toLocaleString('en-IN')}</div>
+            </div>
+          </div>
+          <div class="biz-modal-scheme-tag">
+            <i class="fa-solid fa-landmark-flag"></i>
+            <span><strong>Recommended Scheme:</strong> ${biz.preferable_scheme}</span>
+          </div>
+          <div class="biz-modal-viability">
+            <span class="biz-modal-viability-label">Overall Viability Score</span>
+            <div class="biz-modal-viability-track">
+              <div class="biz-modal-viability-fill" style="width: ${score}%"></div>
+            </div>
+            <span class="biz-modal-viability-score">${score}/100</span>
+          </div>
+        </div>
+      `;
+
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    // Close modal
+    function closeGalleryModal() {
+      if (!modal) return;
+      modal.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    if (modalClose) modalClose.addEventListener('click', closeGalleryModal);
+    if (modalOverlay) modalOverlay.addEventListener('click', closeGalleryModal);
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal && modal.classList.contains('open')) closeGalleryModal();
+    });
   }
 
 });

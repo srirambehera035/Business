@@ -251,6 +251,50 @@
   </section>
 
   <!-- ========================================================================= -->
+  <!-- INTERACTIVE ENTERPRISE GALLERY — AUTO-SLIDE + HOVER DETAIL + CLICK MODAL  -->
+  <!-- ========================================================================= -->
+  <section class="biz-gallery-section" id="secBizGallery">
+    <div class="container">
+      <div class="biz-gallery-header text-center">
+        <span class="badge-gallery"><i class="fa-solid fa-images"></i> ENTERPRISE SHOWCASE</span>
+        <h3 class="biz-gallery-title" data-i18n="galleryTitle">32 Vetted Rural Enterprise Blueprints</h3>
+        <p class="biz-gallery-sub" data-i18n="gallerySub">Explore diverse micro-enterprise opportunities supported under MSJE Concessional Credit — hover to preview, click to expand.</p>
+      </div>
+
+      <div class="biz-gallery-layout">
+        <!-- Left: Auto-sliding image strip -->
+        <div class="biz-gallery-slides-wrap" id="bizGallerySlides">
+          <!-- slides injected by JS -->
+          <button class="gallery-nav-btn gallery-prev" id="galleryPrev" aria-label="Previous"><i class="fa-solid fa-chevron-left"></i></button>
+          <button class="gallery-nav-btn gallery-next" id="galleryNext" aria-label="Next"><i class="fa-solid fa-chevron-right"></i></button>
+          <div class="gallery-slide-dots" id="gallerySlideDots"></div>
+        </div>
+
+        <!-- Right: Hover detail info panel -->
+        <div class="biz-gallery-detail-panel" id="bizGalleryDetail">
+          <div class="detail-panel-inner" id="bizGalleryDetailInner">
+            <div class="detail-placeholder">
+              <i class="fa-solid fa-hand-pointer fa-2x"></i>
+              <p data-i18n="galleryHoverHint">Hover over an enterprise image to see its business details here</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ENTERPRISE CLICK MODAL (Full Detail) -->
+  <div class="biz-gallery-modal" id="bizGalleryModal" role="dialog" aria-modal="true" aria-label="Enterprise Detail">
+    <div class="biz-gallery-modal-overlay" id="bizGalleryModalOverlay"></div>
+    <div class="biz-gallery-modal-card" id="bizGalleryModalCard">
+      <button class="biz-modal-close-btn" id="bizGalleryModalClose" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+      <div class="biz-modal-content" id="bizGalleryModalContent">
+        <!-- Populated by JS on click -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
   <!-- CONTROL DOCK: LOCATION & 32 BUSINESS DROPDOWN SELECTOR                   -->
   <!-- ========================================================================= -->
   <section class="control-dock-section" id="secControlDock">
