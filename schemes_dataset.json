@@ -1,0 +1,692 @@
+{
+  "total_schemes": 19,
+  "dataset_version": "2.0-SIH26-Consolidated",
+  "description": "Comprehensive Government Concessional Credit, Subvention & Subsidy Schemes Dataset for Rural and Semi-Urban Micro-Entrepreneurs",
+  "schemes": [
+    {
+      "scheme_id": "SCHEME-MFS-01",
+      "scheme_name": "Micro Finance Scheme",
+      "implementing_agency": "State Channelizing Agencies (SCAs) / NBFC-MFIs / Scheduled Banks",
+      "criteria": [
+        "Total annual household income must not exceed ₹3,00,000",
+        "Age limit: 18 - 60 years",
+        "Loans provided to individuals or through Joint Liability Groups (JLGs) and Self Help Groups (SHGs)",
+        "Zero physical collateral required"
+      ],
+      "minimum_project_price": "No legal minimum floor set by RBI",
+      "maximum_loan_limit": "Individual: up to ₹2.00 Lakh (Concessional SCA cap: ₹1.25 Lakh - ₹1.40 Lakh); Large MFIs/NBFC-MFIs: up to ₹1,000 Crore credit line",
+      "margin_money_percent": "10% beneficiary contribution (under state concessional channels)",
+      "interest_rate": "6.5% p.a. (under Government Concessional SCA window); Market MFI rate: 16% - 26% p.a.",
+      "moratorium_period": "3 months repayment holiday directly after disbursement",
+      "max_tenure": "Small loans (under ₹25,000): 12 - 18 months; Loans above ₹30,000: 24 - 36 months (up to 3 years)",
+      "documents_required": [
+        "KYC documents (Aadhaar Card, Voter ID, PAN Card)",
+        "Photographs of borrower and co-borrower / guarantor",
+        "6 months bank account statement",
+        "Ration card or local income certificate",
+        "End-use declaration of funds"
+      ],
+      "eligible_sectors": [
+        "Small retail / Kirana",
+        "Backyard poultry / Dairy",
+        "Handicrafts & Tailoring",
+        "Street food & local services"
+      ],
+      "category_tags": [
+        "Micro-Credit",
+        "Collateral-Free",
+        "SHG/JLG",
+        "Livelihood"
+      ]
+    },
+    {
+      "scheme_id": "SCHEME-TLS-02",
+      "scheme_name": "Term Loan Scheme (Concessional SCA & MSME Window)",
+      "implementing_agency": "Apex Corporations (NSFDC / NMDFC / NBCFDC) & Partner Commercial Banks",
+      "criteria": [
+        "Business must display consistent profitability for at least 2 consecutive financial years (for existing units)",
+        "CIBIL credit score of 700 or above preferred",
+        "Age limit: 21 - 65 years",
+        "Eligible entities: Sole proprietorships, partnership firms, private limited companies, LLPs"
+      ],
+      "minimum_project_price": "Depends on lending bank / Apex Corporation (typically starts from ₹1.40 Lakh)",
+      "maximum_loan_limit": "NMDFC: up to ₹30 Lakh; NSFDC: up to ₹45 Lakh; PMMY Tarun: up to ₹20 Lakh; Commercial Bank MSME term loan: up to ₹20 Crore",
+      "margin_money_percent": "10% - 15% beneficiary margin contribution",
+      "interest_rate": "8.0% p.a. (Apex Concessional Window); Commercial MSME rate: 9% - 13% depending on credit rating",
+      "moratorium_period": "3 to 12 months (typically 6 months for agro-processing and manufacturing units)",
+      "max_tenure": "3 to 7 years (up to 10 years for agro-processing; up to 25 years for large fixed infrastructure)",
+      "documents_required": [
+        "Audited balance sheets and P&L statements for last 2-3 years",
+        "ITR and GST returns for past 1-2 years",
+        "KYC documents (Aadhaar, PAN, Voter ID)",
+        "Business proof: Udyam registration, partnership deed, MOA/AOA, trade license",
+        "Detailed Project Report (DPR) with machinery quotations"
+      ],
+      "eligible_sectors": [
+        "Light manufacturing",
+        "Food processing & packaging",
+        "Commercial dairy chilling",
+        "Fabrication & warehousing"
+      ],
+      "category_tags": [
+        "Term-Loan",
+        "Capital-Expenditure",
+        "Machinery",
+        "SCA-Concessional"
+      ]
+    },
+    {
+      "scheme_id": "SCHEME-MSY-03",
+      "scheme_name": "Mahila Samriddhi Yojana (MSY)",
+      "implementing_agency": "National Minorities / Backward Classes / SC Corporations via State SCAs",
+      "criteria": [
+        "Applicant must be a woman",
+        "Age limit: 18 to 55 years",
+        "Target category: Backward Classes (OBC), SC, ST, or Below Poverty Line (BPL)",
+        "Self-employment intent: Must use loan to start or expand a micro-enterprise"
+      ],
+      "minimum_project_price": "No specific minimum project price",
+      "maximum_loan_limit": "Individual beneficiary: up to ₹1,25,000; SHGs / Group loans: up to ₹15,00,000",
+      "margin_money_percent": "5% - 10% (Subsidized channel)",
+      "interest_rate": "4.0% per annum (Highly subsidized concessional rate)",
+      "moratorium_period": "Up to 6 months",
+      "max_tenure": "Up to 5 years (60 months)",
+      "documents_required": [
+        "Identity proof (Aadhaar Card, Voter ID)",
+        "Address proof (Electricity bill, Ration card, Residence certificate)",
+        "Income certificate issued by competent revenue authority",
+        "Caste / Category certificate",
+        "Bank passbook details",
+        "Passport size photographs"
+      ],
+      "eligible_sectors": [
+        "Tailoring & boutique",
+        "Pickle / Papad / Food packaging",
+        "Beauty parlor",
+        "Bangle & ornament trading"
+      ],
+      "category_tags": [
+        "Women-Centric",
+        "4% Interest",
+        "SHG",
+        "Concessional"
+      ]
+    },
+    {
+      "scheme_id": "SCHEME-MKSP-04",
+      "scheme_name": "Mahila Kisan Sashaktikaran Pariyojana (MKSP)",
+      "implementing_agency": "Ministry of Rural Development (DAY-NRLM) / State Rural Livelihoods Missions (OLM in Odisha)",
+      "criteria": [
+        "Must be a rural woman farmer",
+        "Must be an active member of a registered Self-Help Group (SHG)",
+        "Both land-owning farmers and landless agricultural wage laborers are eligible",
+        "Age: 18 years or older",
+        "Statutory reservation: ST (15%), SC (25%)"
+      ],
+      "minimum_project_price": "Not fixed / Need-based",
+      "maximum_loan_limit": "Individual woman farmer: up to ₹3,00,000; SHG Federation: up to ₹10,00,000",
+      "margin_money_percent": "Nil or nominal SHG group corpus contribution",
+      "interest_rate": "Standard concessional rate: 7% p.a.; Prompt repayment subvention: 4% p.a.; Special Odisha State Subvention (Mission Shakti): 0% p.a.",
+      "moratorium_period": "Internal SHG loans: up to 6 months; Large individual enterprise loans: up to 18 months; Crop failure relief: 1-2 years",
+      "max_tenure": "3 years for single project cycle",
+      "documents_required": [
+        "Identity and address proof",
+        "SHG membership resolution and passbook copy",
+        "Bank account details",
+        "Land / work cultivation records",
+        "Caste certificate (for SC/ST claims)",
+        "Ration card / BPL card",
+        "Passport size photograph"
+      ],
+      "eligible_sectors": [
+        "Organic vegetable farming",
+        "Mushroom production",
+        "Poultry & goat rearing",
+        "Bio-inputs & composting"
+      ],
+      "category_tags": [
+        "Women-Farmers",
+        "Agri-Allied",
+        "Interest-Subvention",
+        "Mission-Shakti"
+      ]
+    },
+    {
+      "scheme_id": "SCHEME-AMY-05",
+      "scheme_name": "Aajeevika Microfinance Yojana (AMY)",
+      "implementing_agency": "State Scheduled Castes Finance & Development Corporation (OSFDC in Odisha)",
+      "criteria": [
+        "Caste: Must belong to Scheduled Caste (SC) community",
+        "No ceiling on family annual income",
+        "Age limit: 18 to 60 years",
+        "Loan must be utilized for income-generating micro-business activities"
+      ],
+      "minimum_project_price": "Project cost up to ₹1,40,000",
+      "maximum_loan_limit": "Up to ₹1,25,000 (with remaining ₹15,000 as promoter contribution / margin money)",
+      "margin_money_percent": "10% (e.g., ₹14,000 on a ₹1,40,000 unit)",
+      "interest_rate": "5.0% per annum",
+      "moratorium_period": "3 months",
+      "max_tenure": "3 years (36 monthly installments)",
+      "documents_required": [
+        "Caste certificate issued by Tehsildar / Sub-Collector",
+        "Identity proof (Aadhaar / Voter ID)",
+        "Address proof (Ration card / Electricity bill)",
+        "Age proof (School certificate or Birth certificate)",
+        "Bank account passbook copy"
+      ],
+      "eligible_sectors": [
+        "Sanitary hardware trading",
+        "Footwear repair / Leather craft",
+        "Two-wheeler mechanic garage",
+        "Kirana store"
+      ],
+      "category_tags": [
+        "SC-Beneficiary",
+        "5% Interest",
+        "Margin-Assistance",
+        "Micro-Enterprise"
+      ]
+    },
+    {
+      "scheme_id": "SCHEME-MAY-06",
+      "scheme_name": "Mahila Adhikarita Yojana (MAY)",
+      "implementing_agency": "National Safai Karamcharis Finance & Development Corporation (NSKFDC)",
+      "criteria": [
+        "Applicant must be a Safai Karamchari (cleaning/sanitation worker or manual scavenger)",
+        "Only women are eligible (including dependent daughters of Safai Karamcharis)",
+        "Age: 18 years old or above",
+        "Must be a citizen of India and utilize funds for small business or trade"
+      ],
+      "minimum_project_price": "Maximum project cost: up to ₹2,00,000",
+      "maximum_loan_limit": "Up to ₹2,00,000 (100% financial assistance available)",
+      "margin_money_percent": "Nil or up to 5%",
+      "interest_rate": "1.0% to 4.0% per annum (Lowest tier concessional lending)",
+      "moratorium_period": "Up to 6 months",
+      "max_tenure": "Up to 5 years (60 months)",
+      "documents_required": [
+        "Identity and address proof",
+        "Proof of profession (Safai Karamchari ID card / local municipality certification)",
+        "Caste certificate",
+        "Brief project profile / simple business plan",
+        "Bank account details and photographs"
+      ],
+      "eligible_sectors": [
+        "Flour / Spice milling",
+        "Sanitary napkin packaging",
+        "Vegetable retail cart",
+        "Readymade garment trading"
+      ],
+      "category_tags": [
+        "Sanitation-Workers",
+        "Women-Only",
+        "1-4% Interest",
+        "NSKFDC"
+      ]
+    },
+    {
+      "scheme_id": "SCHEME-MUDRA-07",
+      "scheme_name": "Pradhan Mantri MUDRA Yojana (PMMY)",
+      "implementing_agency": "Commercial Banks / RRBs / Small Finance Banks / MFIs",
+      "criteria": [
+        "Target borrowers: Non-Corporate Small Business (NCSB) segment in rural and urban areas",
+        "Age limit: 18 to 65 years",
+        "Must have a satisfactory repayment record and no existing default",
+        "Zero physical collateral and zero third-party guarantee required"
+      ],
+      "minimum_project_price": "No strict floor set by Government",
+      "maximum_loan_limit": "Categorized into 4 tiers: Shishu (up to ₹50,000), Kishore (₹50,001 to ₹5,00,000), Tarun (₹5,00,001 to ₹10,00,000), Tarun Plus (₹10,00,001 to ₹20,00,000 for previous Tarun repayers)",
+      "margin_money_percent": "Shishu: Nil; Kishore & Tarun: 10% - 15%",
+      "interest_rate": "8.0% to 12.5% p.a. (Determined by lending bank based on risk grade)",
+      "moratorium_period": "Shishu: Up to 3 months; Kishore/Tarun: 6 to 12 months",
+      "max_tenure": "Loans up to ₹5 Lakh: up to 5 years; Loans up to ₹20 Lakh: up to 7 years",
+      "documents_required": [
+        "Identity and address proof",
+        "Business registration proof (Udyam, GST, Trade license)",
+        "Bank account statements for past 6-12 months",
+        "Financial statements / ITR (for Kishore and Tarun tiers)",
+        "Machinery purchase quotations / Project report"
+      ],
+      "eligible_sectors": [
+        "Retail trading",
+        "Artisans & food stalls",
+        "Transport vehicle (Auto/Pick-up van)",
+        "Repair workshops"
+      ],
+      "category_tags": [
+        "Universal",
+        "Collateral-Free",
+        "Tiered-Loans",
+        "PMMY"
+      ]
+    },
+    {
+      "scheme_id": "SCHEME-SUI-08",
+      "scheme_name": "Stand-Up India Scheme",
+      "implementing_agency": "All Scheduled Commercial Banks (Mandated 1 SC/ST & 1 Woman per branch)",
+      "criteria": [
+        "Target group: Women entrepreneurs (all categories) and SC/ST entrepreneurs",
+        "Age: 18 years or above",
+        "Must be a greenfield enterprise (first time venture in manufacturing, services, agri-allied, or trading)",
+        "At least 51% shareholding and controlling stake must be held by SC/ST or woman promoter"
+      ],
+      "minimum_project_price": "Minimum practical project cost: ~₹11.76 Lakh",
+      "maximum_loan_limit": "Between ₹10.00 Lakh and ₹1.00 Crore",
+      "margin_money_percent": "Up to 15% (can be converged with eligible state capital subsidies to bring promoter margin to 10%)",
+      "interest_rate": "Lowest applicable rate for that category: Base Rate (MCLR) + 3% + tenure premium",
+      "moratorium_period": "Up to 18 months",
+      "max_tenure": "Up to 7 years",
+      "documents_required": [
+        "Identity and address proof",
+        "Caste certificate (for SC/ST category)",
+        "Greenfield project report (Detailed Project Report)",
+        "Balance sheets and projected cash flows",
+        "Proof of business premises (rent lease / land ownership)"
+      ],
+      "eligible_sectors": [
+        "Agro-cold chain",
+        "Industrial fabrication",
+        "Textile garmenting units",
+        "Diagnostic laboratories"
+      ],
+      "category_tags": [
+        "High-Value",
+        "Greenfield",
+        "SC-ST-Women",
+        "Bank-Finance"
+      ]
+    },
+    {
+      "scheme_id": "SCHEME-SVANIDHI-09",
+      "scheme_name": "PM Street Vendor's AtmaNirbhar Nidhi (PM SVANidhi)",
+      "implementing_agency": "Ministry of Housing and Urban Affairs (MoHUA) via Scheduled Banks / NBFCs",
+      "criteria": [
+        "Targets street vendors operating in urban as well as surrounding peri-urban and rural fringe areas",
+        "Must be actively engaged in vending",
+        "Must possess a Certificate of Vending (CoV) / Identity Card issued by Town Vending Committee (TVC), or a Letter of Recommendation (LoR) approved by ULB/BDO",
+        "Age limit: 18 to 60 years"
+      ],
+      "minimum_project_price": "No minimum project cost floor",
+      "maximum_loan_limit": "1st Tranche: up to ₹15,000; 2nd Tranche: up to ₹25,000; 3rd Tranche: up to ₹50,000",
+      "margin_money_percent": "0% (Nil margin money)",
+      "interest_rate": "Base bank interest rate (9.9% - 15% p.a.) with a direct 7.0% p.a. interest subsidy credited to account + ₹1,200/yr digital cashback",
+      "moratorium_period": "Nil (Immediate monthly repayment to build credit discipline)",
+      "max_tenure": "1st Tranche: 12 months; 2nd Tranche: 18 months; 3rd Tranche: 36 months",
+      "documents_required": [
+        "Aadhaar Card / Voter ID",
+        "Certificate of Vending (CoV) / Vending ID / BDO Letter of Recommendation",
+        "Bank account passbook copy",
+        "Registered mobile number linked with Aadhaar"
+      ],
+      "eligible_sectors": [
+        "Street food carts",
+        "Vegetable / Fruit vending",
+        "Flower & garland stall",
+        "Newspaper / Cobbler stalls"
+      ],
+      "category_tags": [
+        "Working-Capital",
+        "Interest-Subsidy-7%",
+        "Cashback",
+        "Street-Vendors"
+      ]
+    },
+    {
+      "scheme_id": "SCHEME-VISHWAKARMA-10",
+      "scheme_name": "PM Vishwakarma Scheme",
+      "implementing_agency": "Ministry of MSME & Ministry of Skill Development and Entrepreneurship",
+      "criteria": [
+        "Must be an artisan or craftsperson working with hands and tools in one of the 18 recognized traditional trades (Carpenter, Blacksmith, Potter, Mason, Barber, Tailor, Cobbler, etc.)",
+        "Minimum age: 18 years",
+        "Self-employed in the unorganized / informal sector",
+        "Only one member per family is eligible",
+        "Must not have availed loans under PMEGP, PM SVANidhi, or MUDRA in the past 5 years"
+      ],
+      "minimum_project_price": "No specific minimum project price",
+      "maximum_loan_limit": "1st Tranche: up to ₹1,00,000; 2nd Tranche: up to ₹2,00,000; Total: up to ₹3,00,000",
+      "margin_money_percent": "0% beneficiary contribution",
+      "interest_rate": "Concessional fixed rate of 5.0% per annum (Government pays up to 8% interest subvention to lending bank)",
+      "moratorium_period": "As per bank repayment schedule (typically 1 to 3 months)",
+      "max_tenure": "1st Tranche: up to 18 months; 2nd Tranche: up to 30 months",
+      "documents_required": [
+        "Aadhaar Card linked with mobile number",
+        "Bank account details (IFSC & Account number)",
+        "PM Vishwakarma portal registration & biometrics",
+        "Trade verification by Gram Panchayat Pradhan or Urban Local Body Executive Officer",
+        "Ration card"
+      ],
+      "eligible_sectors": [
+        "Carpentry",
+        "Masonry (Rajmistri)",
+        "Pottery",
+        "Blacksmithing",
+        "Barber / Hair salon",
+        "Tailoring",
+        "Cobbler / Leathercraft"
+      ],
+      "category_tags": [
+        "Artisans",
+        "5% Fixed Rate",
+        "Toolkit-Grant-₹15k",
+        "Skill-Stipend"
+      ]
+    },
+    {
+      "scheme_id": "SCHEME-KCC-11",
+      "scheme_name": "Kisan Credit Card (KCC) - Crop, Dairy, Poultry & Fisheries",
+      "implementing_agency": "NABARD / Commercial Banks / Cooperative Banks / RRBs",
+      "criteria": [
+        "Individual farmers, tenant farmers, oral lessees, sharecroppers",
+        "Self Help Groups (SHGs) or Joint Liability Groups (JLGs) of farmers",
+        "Farmers involved in agriculture, animal husbandry, dairy cattle rearing, poultry, or fisheries"
+      ],
+      "minimum_project_price": "No minimum project price floor",
+      "maximum_loan_limit": "Collateral-free credit limit: up to ₹2,00,000 (elevated from ₹1.60L); Modified Interest Subvention Scheme (MISS) limit: up to ₹5,00,000 (dairy/poultry/crop)",
+      "margin_money_percent": "Nil for loans up to ₹2.00 Lakh",
+      "interest_rate": "Standard 7% p.a. concessional rate; 3% Prompt Repayment Incentive (Effective cost to farmer: 4.0% p.a.)",
+      "moratorium_period": "Linked to crop harvesting / livestock lactation cycle (no rigid monthly moratorium)",
+      "max_tenure": "Card valid for 5 years with annual renewal; repayment linked to seasonal marketing cycle",
+      "documents_required": [
+        "Aadhaar card / KYC documents",
+        "Land ownership record (RoR / Patta) or lease agreement / tenancy declaration",
+        "Bank account details and photograph",
+        "Proof of livestock ownership (ear-tag records) for dairy/poultry KCC"
+      ],
+      "eligible_sectors": [
+        "Dairy farming (Cattle feed & maintenance)",
+        "Broiler poultry farming",
+        "Paddy & vegetable cultivation",
+        "Fisheries culture"
+      ],
+      "category_tags": [
+        "Farmer-Credit",
+        "Effective-4%-Rate",
+        "Dairy-Poultry",
+        "Collateral-Free-2L"
+      ]
+    },
+    {
+      "scheme_id": "SCHEME-PMFME-12",
+      "scheme_name": "PM Formalisation of Micro Food Processing Enterprises (PMFME)",
+      "implementing_agency": "Ministry of Food Processing Industries (MoFPI) & State Nodal Agencies",
+      "criteria": [
+        "Individual micro food processing enterprises (existing units upgrading or new units)",
+        "Proprietorship / partnership firms, FPOs, Farmer Producer Companies, Cooperatives, and SHGs",
+        "Focus on 'One District One Product' (ODOP) - e.g., Fish/Prawn in Khordha, Turmeric in Kandhamal",
+        "Applicant must possess ownership / lease of premises"
+      ],
+      "minimum_project_price": "No rigid minimum floor",
+      "maximum_loan_limit": "Individual units: Credit-linked capital subsidy of 35% of eligible project cost (Maximum ₹10.00 Lakh); Common infrastructure: 35% subsidy up to ₹3.00 Crore",
+      "margin_money_percent": "10% beneficiary contribution",
+      "interest_rate": "Lending bank's prevailing commercial MSME interest rate (effectively cushioned by the 35% upfront capital subsidy)",
+      "moratorium_period": "Up to 6 months depending on commercial bank sanction",
+      "max_tenure": "Generally up to 6 years (term loan)",
+      "documents_required": [
+        "Aadhaar & KYC documents",
+        "Detailed Project Report (DPR) prepared via District Resource Person (DRP)",
+        "Business registration (Udyam / FSSAI license / GST if applicable)",
+        "Machinery quotations and factory floor layout",
+        "Bank statements for last 12 months"
+      ],
+      "eligible_sectors": [
+        "Bakery & confectionery",
+        "Mustard oil expeller",
+        "Spice grinding & packaging",
+        "Puffed rice (Mudhi) making",
+        "Pickle & sauce processing"
+      ],
+      "category_tags": [
+        "Food-Processing",
+        "35%-Capital-Subsidy",
+        "ODOP",
+        "Up-to-10L-Grant"
+      ]
+    },
+    {
+      "scheme_id": "SCHEME-PMEGP-13",
+      "scheme_name": "Prime Minister's Employment Generation Programme (PMEGP)",
+      "implementing_agency": "Khadi and Village Industries Commission (KVIC) / DIC / KVIB",
+      "criteria": [
+        "Applicant must be 18 years or above",
+        "Minimum 8th pass qualification for manufacturing projects costing >₹10 Lakh and service projects >₹5 Lakh",
+        "Must set up a new micro-enterprise in the non-farm sector",
+        "Special categories: SC, ST, OBC, Women, Minorities, Ex-servicemen, PwD"
+      ],
+      "minimum_project_price": "No minimum floor",
+      "maximum_loan_limit": "Manufacturing Sector: Maximum project cost up to ₹50.00 Lakh; Service / Business Sector: Maximum project cost up to ₹20.00 Lakh",
+      "margin_money_percent": "Beneficiary margin: 10% for General category; 5% for Special Categories (SC/ST/OBC/Women/Rural)",
+      "interest_rate": "Normal bank MSME interest rate, offset by substantial non-refundable government margin money subsidy: Urban (15% Gen, 25% Spl); Rural (25% Gen, 35% Spl)",
+      "moratorium_period": "Initial moratorium of 6 months as prescribed by the financing bank",
+      "max_tenure": "3 to 7 years",
+      "documents_required": [
+        "Aadhaar Card and passport photographs",
+        "Educational qualification certificate (8th pass certificate/marksheet)",
+        "Caste / Category certificate",
+        "Rural Area Certificate issued by Gram Panchayat / BDO",
+        "Detailed Project Report (DPR) with machine quotes",
+        "EDP (Entrepreneurship Development Training) certificate"
+      ],
+      "eligible_sectors": [
+        "Fly-ash bricks & paver blocks",
+        "Woodwork & furniture",
+        "Corrugated packaging",
+        "Food products",
+        "Automobile repair garage"
+      ],
+      "category_tags": [
+        "Up-to-35%-Subsidy",
+        "50L-Project-Cap",
+        "Rural-Boost",
+        "KVIC"
+      ]
+    },
+    {
+      "scheme_id": "SCHEME-NBCFDC-14",
+      "scheme_name": "NBCFDC Concessional Credit Schemes",
+      "implementing_agency": "National Backward Classes Finance and Development Corporation (via State SCAs)",
+      "criteria": [
+        "Must belong to an eligible Other Backward Class (OBC) notified by Central or State Government",
+        "Annual family income must not exceed ₹3,00,000",
+        "Must undertake a viable income-generating micro-enterprise or service activity",
+        "Persons with Disabilities (PwDs) receive an additional 0.25% interest concession"
+      ],
+      "minimum_project_price": "No specific minimum project price",
+      "maximum_loan_limit": "Individual loans: up to ₹25.00 Lakh (Up to 85% of project cost financed by Corporation)",
+      "margin_money_percent": "15% promoter margin (can be reduced to 10% under special state schemes)",
+      "interest_rate": "Up to ₹1.25 Lakh: 7.0% p.a.; From ₹1.25 Lakh to ₹25 Lakh: 8.0% p.a.; 1.0% rebate for timely repayments",
+      "moratorium_period": "1 quarter (3 months)",
+      "max_tenure": "Up to ₹1.25 Lakh: 4 years; ₹1.25 Lakh to ₹25 Lakh: up to 7 years",
+      "documents_required": [
+        "Aadhaar card / Identity proof",
+        "OBC caste certificate",
+        "Income certificate (annual family income < ₹3 Lakh)",
+        "Detailed project report / business quotation",
+        "Bank passbook details"
+      ],
+      "eligible_sectors": [
+        "Agri-transport vehicles",
+        "Dairy & livestock",
+        "Handicrafts & tailoring",
+        "Small hardware stores"
+      ],
+      "category_tags": [
+        "OBC-Specific",
+        "7-8%-Interest",
+        "1%-Prompt-Rebate",
+        "Up-to-25L"
+      ]
+    },
+    {
+      "scheme_id": "SCHEME-NHFDC-15",
+      "scheme_name": "NHFDC Concessional Loan Scheme for Divyangjan",
+      "implementing_agency": "National Handicapped Finance and Development Corporation via State SCAs & RRBs",
+      "criteria": [
+        "Person with benchmark disability (minimum 40% disability certified by medical authority)",
+        "Indian citizen aged 18 years or above",
+        "Eligible for setting up self-employment ventures or commercial activities"
+      ],
+      "minimum_project_price": "No specific minimum project price",
+      "maximum_loan_limit": "Up to ₹50.00 Lakh per beneficiary / unit",
+      "margin_money_percent": "Loans up to ₹5 Lakh: Nil; Loans above ₹5 Lakh: 5% - 10%",
+      "interest_rate": "Loans up to ₹50,000: 5.0% p.a.; ₹50,000 to ₹5 Lakh: 6.0% p.a.; ₹5 Lakh to ₹15 Lakh: 7.0% p.a.; ₹15 Lakh to ₹50 Lakh: 8.0% p.a. (Special 1% rebate for women with disabilities)",
+      "moratorium_period": "As decided by implementing agency (typically 6 to 12 months for commercial projects)",
+      "max_tenure": "Up to 10 years depending on the activity",
+      "documents_required": [
+        "Unique Disability ID (UDID) Card / Medical Disability Certificate (>=40%)",
+        "Aadhaar card / KYC documents",
+        "Income & residence certificate",
+        "Project profile / machinery quotation",
+        "Bank details"
+      ],
+      "eligible_sectors": [
+        "Digital service kiosk (CSC)",
+        "Stationery & xerox shop",
+        "Retail grocery",
+        "Small fabrication / repair"
+      ],
+      "category_tags": [
+        "Divyangjan-PwD",
+        "5-8%-Concessional",
+        "10-Year-Tenure",
+        "Inclusion"
+      ]
+    },
+    {
+      "scheme_id": "SCHEME-NMDFC-16",
+      "scheme_name": "NMDFC Concessional Term Loan (Credit Line 1 & Credit Line 2)",
+      "implementing_agency": "National Minorities Development & Finance Corporation via State SCAs",
+      "criteria": [
+        "Must belong to a notified National Minority community (Muslim, Christian, Sikh, Buddhist, Jain, Parsi)",
+        "Credit Line 1: Annual family income up to ₹3,00,000 (Targeted concessional segment)",
+        "Credit Line 2: Annual family income up to ₹8,00,000 (Extended segment for semi-urban entrepreneurs)",
+        "Must undertake an economically viable income-generating activity"
+      ],
+      "minimum_project_price": "No specific minimum project price",
+      "maximum_loan_limit": "Credit Line 1: up to ₹20.00 Lakh; Credit Line 2: up to ₹30.00 Lakh",
+      "margin_money_percent": "Credit Line 1: 5% - 10%; Credit Line 2: 10% - 15%",
+      "interest_rate": "Credit Line 1: 6.0% p.a. for both male & female; Credit Line 2: 8.0% p.a. for male, 6.0% p.a. for female beneficiaries",
+      "moratorium_period": "6 months",
+      "max_tenure": "Up to 5 years (60 monthly installments)",
+      "documents_required": [
+        "Minority community self-declaration / certificate",
+        "Income certificate issued by competent authority",
+        "Aadhaar Card and address proof",
+        "Detailed project report / asset quotation",
+        "Bank account passbook copy"
+      ],
+      "eligible_sectors": [
+        "Bakery & food production",
+        "Auto-rickshaw / Light transport",
+        "Apparel & garment manufacturing",
+        "Hardware & electrical store"
+      ],
+      "category_tags": [
+        "Minorities",
+        "6%-Concessional",
+        "Women-Incentive",
+        "Up-to-30L"
+      ]
+    },
+    {
+      "scheme_id": "SCHEME-MSHAKTI-17",
+      "scheme_name": "Mission Shakti 0% Interest Loan Scheme (Odisha Pilot Window)",
+      "implementing_agency": "Mission Shakti Department, Government of Odisha via Scheduled Commercial Banks",
+      "criteria": [
+        "Must be a registered Women Self Help Group (WSHG) in Odisha",
+        "Group must have completed at least 6 months of active savings and internal lending",
+        "Prompt repayment track record",
+        "Directly applicable to peri-urban & rural women in Khordha/Bhubaneswar blocks"
+      ],
+      "minimum_project_price": "No minimum floor",
+      "maximum_loan_limit": "Up to ₹10.00 Lakh loan with 100% interest subvention (Zero Interest)",
+      "margin_money_percent": "0% margin contribution",
+      "interest_rate": "0.0% effective interest rate (State Govt reimburses the full bank interest up to ₹10 Lakh upon regular repayment)",
+      "moratorium_period": "Up to 3 months",
+      "max_tenure": "3 to 5 years",
+      "documents_required": [
+        "WSHG registration certificate & resolution book",
+        "Bank account passbook of the SHG",
+        "Aadhaar cards of President and Secretary",
+        "Micro-credit business plan / enterprise proposal"
+      ],
+      "eligible_sectors": [
+        "Mushroom cultivation",
+        "Sal leaf plate making",
+        "Spices processing",
+        "Rural tiffin kitchen",
+        "Mid-day meal catering"
+      ],
+      "category_tags": [
+        "0%-Interest",
+        "Odisha-Specific",
+        "Women-SHG",
+        "High-Impact"
+      ]
+    },
+    {
+      "scheme_id": "SCHEME-MKUY-18",
+      "scheme_name": "Mukhyamantri Krushi Udyog Yojana (MKUY)",
+      "implementing_agency": "APICOL & Department of Agriculture & Farmers' Empowerment, Government of Odisha",
+      "criteria": [
+        "Any individual entrepreneur, farmer, or agri-graduate setting up a commercial agro-enterprise in Odisha",
+        "Must register on the GO-SUGOM / MKUY portal before commencing project",
+        "Greenfield or expansion of commercial dairy, goatry, food processing, cold room, nursery"
+      ],
+      "minimum_project_price": "Projects starting from ₹1.00 Lakh",
+      "maximum_loan_limit": "Capital Investment Subsidy (CIS) of 40% of fixed capital (up to ₹50.00 Lakh); 50% subsidy for SC/ST/Women/Agri-graduates",
+      "margin_money_percent": "10% to 20% promoter contribution",
+      "interest_rate": "Bank commercial agriculture loan rate, compensated by direct 40%-50% back-ended capital subsidy",
+      "moratorium_period": "6 to 12 months",
+      "max_tenure": "5 to 7 years",
+      "documents_required": [
+        "Detailed Project Report (DPR) approved by APICOL",
+        "Land possession documents (RoR or minimum 10-year registered lease)",
+        "Aadhaar, PAN, Bank sanction letter",
+        "Machinery quotations and building estimate"
+      ],
+      "eligible_sectors": [
+        "Commercial dairy farm (>=10 cows)",
+        "Milk chilling & paneer processing",
+        "Biofloc fisheries",
+        "Commercial horticulture nursery"
+      ],
+      "category_tags": [
+        "Odisha-Agri",
+        "40-50%-Subsidy",
+        "Up-to-50L-Grant",
+        "Commercial-Farm"
+      ]
+    },
+    {
+      "scheme_id": "SCHEME-SURYAGHAR-19",
+      "scheme_name": "PM Surya Ghar: Muft Bijli Yojana (Rooftop Solar for Micro-Units)",
+      "implementing_agency": "Ministry of New and Renewable Energy (MNRE) via DISCOMs & National Solar Portal",
+      "criteria": [
+        "Micro-enterprises, dairy farmers, and home-based units operating in premises with a registered electricity consumer connection",
+        "Sufficient shadow-free rooftop or shed space"
+      ],
+      "minimum_project_price": "1 kW system (~₹50,000)",
+      "maximum_loan_limit": "Direct Central Government Capital Subsidy: ₹30,000 for 1 kW, ₹60,000 for 2 kW, ₹78,000 for 3 kW and above; Collateral-free bank loan at repo + 0.5% (~7% p.a.)",
+      "margin_money_percent": "10% promoter contribution",
+      "interest_rate": "~7.0% p.a. concessional green credit through SBI, PNB, Canara Bank",
+      "moratorium_period": "3 months",
+      "max_tenure": "Up to 10 years",
+      "documents_required": [
+        "Electricity bill of the premises",
+        "Aadhaar Card and bank account details",
+        "Site photograph and roof feasibility report via empaneled solar vendor"
+      ],
+      "eligible_sectors": [
+        "Solar-powered cold storage",
+        "Solar milk chilling",
+        "Atta chaki / Flour mill",
+        "Sewing machine units"
+      ],
+      "category_tags": [
+        "Solar-Energy",
+        "Direct-Subsidy-₹78k",
+        "Power-Backup",
+        "Green-Credit"
+      ]
+    }
+  ]
+}

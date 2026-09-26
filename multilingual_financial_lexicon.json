@@ -1,0 +1,140 @@
+{
+  "supported_languages": [
+    "en",
+    "hi",
+    "or",
+    "bn",
+    "te",
+    "ta"
+  ],
+  "financial_terms": [
+    {
+      "term_id": "TERM-MARGIN-MONEY",
+      "en": "Margin Money (Beneficiary Contribution)",
+      "hi": "मार्जिन मनी (लाभार्थी का अंशदान)",
+      "or": "ମାର୍ଜିନ ମନି (ହିତାଧିକାରୀଙ୍କ ନିଜସ୍ୱ ଅଂଶଦାନ)",
+      "bn": "মার্জিন মানি (উদ্যোক্তার নিজস্ব অবদান)",
+      "te": "మార్జిన్ మనీ (లబ్ధిదారుని వాటా)",
+      "ta": "விளிம்புத் தொகை (பயனாளியின் பங்கு)",
+      "plain_explanation_rural": "The 10% cash that the entrepreneur must contribute from their own pocket before the government or bank releases the 90% loan.",
+      "plain_explanation_hi": "वह 10% राशि जो लाभार्थी को अपनी जेब से लगानी होती है ताकि सरकार बाकी 90% का रियायती ऋण जारी कर सके।",
+      "plain_explanation_or": "ସେହି ୧୦% ଟଙ୍କା ଯାହା ହିତାଧିକାରୀଙ୍କୁ ନିଜ ପାଖରୁ ଦେବାକୁ ପଡେ, ଯାହାଦ୍ୱାରା ବ୍ୟାଙ୍କ ବା ସରକାର ବାକି ୯୦% ଋଣ ପ୍ରଦାନ କରିବେ।"
+    },
+    {
+      "term_id": "TERM-CONCESSIONAL-LOAN",
+      "en": "Concessional Loan",
+      "hi": "रियायती ऋण",
+      "or": "ରିହାତି ଋଣ",
+      "bn": "রেয়াতি ঋণ",
+      "te": "రాయితీ రుణం",
+      "ta": "சலுகைக் கடன்",
+      "plain_explanation_rural": "A special low-interest government-backed loan (e.g. 5% to 8%) compared to private money lenders who charge 24% to 36%.",
+      "plain_explanation_hi": "सरकारी योजना के तहत कम ब्याज दर (5% से 8%) वाला ऋण, जो महाजनों के 24-36% ब्याज से बहुत सस्ता होता है।",
+      "plain_explanation_or": "ସରକାରଙ୍କ ଦ୍ୱାରା ବହୁତ କମ୍ ସୁଧ (୫% ରୁ ୮%) ରେ ଦିଆଯାଉଥିବା ଋଣ, ଯାହା ମହାଜନୀ ସୁଧ ଠାରୁ ବହୁତ ଶସ୍ତା।"
+    },
+    {
+      "term_id": "TERM-MORATORIUM",
+      "en": "Moratorium Period (Repayment Holiday)",
+      "hi": "मोराटोरियम (किस्त स्थगन अवधि)",
+      "or": "ଋଣ ଛୁଟି ଅବଧି (ମୋରାଟୋରିୟମ୍)",
+      "bn": "ঋণ কিস্তি স্থগিতের মেয়াদ",
+      "te": "మొరటోరియం కాలం",
+      "ta": "தவணை ஒத்திவைப்புக் காலம்",
+      "plain_explanation_rural": "A grace period (e.g. 3 to 6 months) after getting the loan where the entrepreneur does not have to pay principal EMIs while setting up the machinery.",
+      "plain_explanation_hi": "ऋण मिलने के बाद के शुरुआती 3 से 6 महीने, जिनमें मशीन लगाने और कारोबार शुरू करने के दौरान कोई मासिक किस्त (EMI) नहीं देनी होती।",
+      "plain_explanation_or": "ଋଣ ମିଳିବା ପରେ ପ୍ରଥମ ୩ ରୁ ୬ ମାସ ପର୍ଯ୍ୟନ୍ତ କିସ୍ତି ନଦେବାର ଛୁଟି, ଯେପର୍ଯ୍ୟନ୍ତ ବ୍ୟବସାୟ ସ୍ଥିର ନହୁଏ।"
+    },
+    {
+      "term_id": "TERM-CAPITAL-SUBSIDY",
+      "en": "Capital Subsidy",
+      "hi": "पूंजीगत अनुदान (सब्सिडी)",
+      "or": "ପୁଞ୍ଜି ସବସିଡି (ଅନୁଦାନ)",
+      "bn": "মূলধনী ভর্তুকি",
+      "te": "మూలధన రాయితీ",
+      "ta": "மூலதன மானியம்",
+      "plain_explanation_rural": "A direct financial grant by the government (e.g. 35% under PMFME or 40% under MKUY) that does NOT have to be repaid to the bank.",
+      "plain_explanation_hi": "सरकार द्वारा दी जाने वाली वह छूट (जैसे 35%), जिसे बैंक को वापस नहीं लौटाना पड़ता। यह ऋण की राशि को सीधे घटा देती है।",
+      "plain_explanation_or": "ସରକାରଙ୍କ ତରଫରୁ ମିଳୁଥିବା ମାଗଣା ଆର୍ଥିକ ଅନୁଦାନ (ଯେପରିକି ୩୫%), ଯାହା ବ୍ୟାଙ୍କକୁ ଫେରସ୍ତ କରିବାକୁ ପଡ଼େ ନାହିଁ।"
+    },
+    {
+      "term_id": "TERM-WORKING-CAPITAL",
+      "en": "Working Capital",
+      "hi": "कार्यशील पूंजी",
+      "or": "ଦୈନନ୍ଦିନ ଖର୍ଚ୍ଚ ପୁଞ୍ଜି (କାର୍ଯ୍ୟକାରୀ ପୁଞ୍ଜି)",
+      "bn": "চলতি মূলধন",
+      "te": "వర్కింగ్ క్యాపిటల్",
+      "ta": "நடைமுறை மூலதனம்",
+      "plain_explanation_rural": "The day-to-day money needed to buy raw materials, pay worker wages, electricity bills, and transport before customer payments arrive.",
+      "plain_explanation_hi": "कारोबार चलाने के लिए कच्चा माल, बिजली और मजदूरी चुकाने हेतु रोजाना जरूरी पैसा।",
+      "plain_explanation_or": "କଞ୍ଚାମାଲ କିଣିବା, ବିଜୁଳି ବିଲ୍ ଓ ମଜୁରି ଦେବା ପାଇଁ ପ୍ରତିଦିନ ଆବଶ୍ୟକ ହେଉଥିବା ଖର୍ଚ୍ଚ ଟଙ୍କା।"
+    }
+  ],
+  "user_intent_samples": [
+    {
+      "intent": "check_eligibility_by_margin",
+      "utterances": [
+        {
+          "lang": "en",
+          "text": "I have 50000 rupees margin money. What business can I start?"
+        },
+        {
+          "lang": "hi",
+          "text": "मेरे पास 50000 रुपये हैं, मुझे कौन सा सरकारी लोन मिल सकता है?"
+        },
+        {
+          "lang": "or",
+          "text": "ମୋ ପାଖରେ ୫୦,୦୦୦ ଟଙ୍କା ଅଛି, ମୁଁ କେଉଁ ବ୍ୟବସାୟ ଆରମ୍ଭ କରିପାରିବି?"
+        }
+      ],
+      "resolved_parameters": {
+        "available_margin": 50000,
+        "eligible_project_cost": 500000
+      }
+    },
+    {
+      "intent": "ask_collateral_free_loans",
+      "utterances": [
+        {
+          "lang": "en",
+          "text": "Can I get a business loan without giving my house or land as mortgage?"
+        },
+        {
+          "lang": "hi",
+          "text": "क्या बिना जमीन गिरवी रखे कोई बिजनेस लोन मिल सकता है?"
+        },
+        {
+          "lang": "or",
+          "text": "ବିନା ଜମି ବନ୍ଧକ ରଖି ବ୍ୟବସାୟ ପାଇଁ ଋଣ ମିଳିପାରିବ କି?"
+        }
+      ],
+      "recommended_schemes": [
+        "SCHEME-MUDRA-07",
+        "SCHEME-MFS-01",
+        "SCHEME-VISHWAKARMA-10",
+        "SCHEME-SVANIDHI-09"
+      ]
+    },
+    {
+      "intent": "ask_women_shg_schemes",
+      "utterances": [
+        {
+          "lang": "en",
+          "text": "What schemes are available for women SHGs in Odisha?"
+        },
+        {
+          "lang": "hi",
+          "text": "ओडिशा में महिला स्वयं सहायता समूहों के लिए कौन सी योजनाएं हैं?"
+        },
+        {
+          "lang": "or",
+          "text": "ଓଡ଼ିଶାରେ ମହିଳା ଏସଏଚଜି (SHG) ମାନଙ୍କ ପାଇଁ କଣ ସବୁ ଯୋଜନା ଅଛି?"
+        }
+      ],
+      "recommended_schemes": [
+        "SCHEME-MSHAKTI-17",
+        "SCHEME-MKSP-04",
+        "SCHEME-MSY-03"
+      ]
+    }
+  ]
+}

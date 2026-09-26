@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Vyapaar Sarthi | Rural Micro-Enterprise Advisory & Concessional Scheme Navigator | Govt. of India</title>
+  <meta name="description" content="Vyapaar Sarthi - AI-Driven Hyper-Local Business Advisory and Concessional Financial Structuring Platform for Rural Micro-Entrepreneurs under Ministry of Social Justice and Empowerment, Government of India.">
+  
+  <!-- Google Fonts: Inter & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Leaflet CSS for Maps -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="font-inter">
+
+  <!-- TOP TRICOLOR BAR -->
+  <div class="tricolor-strip">
+    <div class="saffron"></div>
+    <div class="white"></div>
+    <div class="green"></div>
+  </div>
+
+  <!-- GOVT ACCESSIBILITY & UTILITY BAR (ASHOKA PILLAR & SOCIAL JUSTICE MINISTRY) -->
+  <header class="gov-topbar">
+    <div class="container flex-between">
+      <div class="gov-brand flex-align">
+        <!-- Official State Emblem of India (Ashoka Lion Capital with Satyameva Jayate) -->
+        <div class="emblem-box official-emblem-wrap" title="State Emblem of India - Lion Capital of Ashoka">
+          <img src="assets/emblem_of_india.svg" alt="State Emblem of India" class="gov-emblem-official" />
+        </div>
+        <!-- Official National Flag of India -->
+        <div class="flag-box official-flag-wrap" title="National Flag of India">
+          <img src="assets/flag_of_india.svg" alt="National Flag of India" class="gov-flag-official" />
+        </div>
+        <div class="gov-titles">
+          <span class="hindi-title" data-i18n="govIndiaHindi">भारत सरकार | सामाजिक न्याय एवं अधिकारिता मंत्रालय</span>
+          <span class="eng-title" data-i18n="govIndia">Government of India | Ministry of Social Justice and Empowerment</span>
+        </div>
+      </div></div>
+      </div>
+
+      <div class="utility-controls flex-align">
+        <!-- Theme Mode: Light / Dark / System -->
+        <div class="theme-switcher flex-align">
+          
+          <button class="theme-btn active" data-theme="light" title="Light Mode"><i class="fa-solid fa-sun"></i></button>
+          <button class="theme-btn" data-theme="dark" title="Dark Mode"><i class="fa-solid fa-moon"></i></button>
+          <button class="theme-btn" data-theme="system" title="System Default"><i class="fa-solid fa-desktop"></i></button>
+        </div>
+
+        <!-- Font Resize -->
+        <div class="font-resizers hide-mobile">
+          <button id="btnFontDec" title="Decrease Font">A-</button>
+          <button id="btnFontReset" title="Normal Font">A</button>
+          <button id="btnFontInc" title="Increase Font">A+</button>
+        </div>
+
+        <!-- 7-Language Switcher -->
+        <div class="lang-selector flex-align">
+          <i class="fa-solid fa-globe"></i>
+          <select id="langSelect" aria-label="Select Language" onchange="if(window.setPortalLanguage) window.setPortalLanguage(this.value)">
+            <option value="or">ଓଡ଼ିଆ (Odia)</option>
+            <option value="hi">हिन्दी (Hindi)</option>
+            <option value="en" selected>English</option>
+            <option value="bn">বাংলা (Bengali)</option>
+            <option value="te">తెలుగు (Telugu)</option>
+            <option value="ta">தமிழ் (Tamil)</option>
+            <option value="mr">मराठी (Marathi)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- STICKY GOVERNMENT NAVIGATION BAR WITH MULTIPLE OPTIONS -->
+  <nav class="main-navbar sticky-navbar" id="mainStickyNavbar">
+    <div class="container flex-between">
+      <div class="portal-identity flex-align">
+        <div class="portal-logo-icon">
+          <i class="fa-solid fa-scale-balanced"></i>
+        </div>
+        <div>
+          <h1 class="portal-name"><span data-i18n="portalTitle">Vyapaar Sarthi</span> <span class="badge-beta">MSJE PAN-INDIA</span></h1>
+          <p class="portal-tagline" data-i18n="tagline">National AI Rural Enterprise Advisory & Concessional Scheme Navigator</p>
+        </div>
+      </div>
+
+      <!-- Multiple Sticky Navigation Options -->
+      <div class="nav-menu-links flex-align hide-mobile" id="navMenuLinks">
+        <a href="#secOverview" class="nav-link-btn active" data-target="secModule1"><i class="fa-solid fa-chart-pie"></i> <span data-i18n="navFeasibility">Feasibility & Threats</span></a>
+        <a href="#secCalculator" class="nav-link-btn" data-target="secModule2"><i class="fa-solid fa-calculator"></i> <span data-i18n="navFinancials">Financial Engine (10%)</span></a>
+        <a href="#secEnterprises" class="nav-link-btn" data-target="secCatalog"><i class="fa-solid fa-store"></i> <span data-i18n="navEnterprises">32 Enterprises</span></a>
+        <a href="#secDashboard" class="nav-link-btn" data-target="secProfile" id="navLinkDashboard"><i class="fa-solid fa-id-card"></i> <span data-i18n="navDashboard">Beneficiary Dashboard</span></a>
+        <button id="btnNavCompare" class="nav-link-btn btn-nav-highlight"><i class="fa-solid fa-code-compare"></i> Compare Plans</button>
+        <a href="#secVideoGuide" class="nav-link-btn"><i class="fa-solid fa-circle-play"></i> <span data-i18n="navVideo">Video Guide</span></a>
+      </div>
+
+      <!-- Right Action: User Account / Login Button -->
+      <div class="nav-actions flex-align">
+        <div id="userAuthContainer">
+          <button id="btnOpenLogin" class="btn-outline flex-align">
+            <i class="fa-solid fa-user-circle"></i>
+            <span id="txtAuthBtn" data-i18n="btnLogin">Citizen Login / Register</span>
+          </button>
+        </div>
+        <button id="btnMobileNavToggle" class="btn-mobile-menu hide-desktop" aria-label="Toggle Navigation">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Collapsible Menu Drawer -->
+    <div class="mobile-nav-drawer" id="mobileNavDrawer">
+      <button class="m-nav-item active" data-target="secModule1"><i class="fa-solid fa-chart-pie"></i> <span data-i18n="navFeasibility">Feasibility & Threats</span></button>
+      <button class="m-nav-item" data-target="secModule2"><i class="fa-solid fa-calculator"></i> <span data-i18n="navFinancials">Financial Engine (10%)</span></button>
+      <button class="m-nav-item" data-target="secCatalog"><i class="fa-solid fa-store"></i> 32 Vetted Enterprises</button>
+      <button class="m-nav-item" data-target="secProfile"><i class="fa-solid fa-id-card"></i> <span data-i18n="navDashboard">Beneficiary Dashboard</span></button>
+      <button class="m-nav-item" id="btnMobileCompare"><i class="fa-solid fa-code-compare"></i> Compare 2 Plans Side-by-Side</button>
+      <a href="#secVideoGuide" class="m-nav-item"><i class="fa-solid fa-circle-play"></i> Video Demonstration</a>
+    </div>
+  </nav>
+
+  <!-- ========================================================================= -->
+  <!-- HERO BANNER: NATIONWIDE RURAL ENTERPRISE INITIATIVE                       -->
+  <!-- ========================================================================= -->
+  <section class="hero-banner" id="secOverview">
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <div class="scheme-pill">
+          <i class="fa-solid fa-landmark-flag text-orange"></i>
+          <span>Ministry of Social Justice & Empowerment | Pan-India Concessional Credit</span>
+        </div>
+        <h2 class="hero-title" data-i18n="heroHeading">
+          AI-Powered Rural Enterprise Advisory & Concessional Scheme Navigator
+        </h2>
+        <p class="hero-desc" data-i18n="heroDesc">
+          Eliminate anecdotal business failures. Get hyper-local market research, competitor density, localized threat radars, and automated 10% margin loan structuring certified under Ministry of Social Justice & Empowerment concessional credit frameworks.
+        </p>
+        
+        <div class="hero-features-chips flex-align">
+          <span class="chip"><i class="fa-solid fa-shield-halved text-green"></i> <span data-i18n="heroChip3">CGTMSE Collateral-Free</span></span>
+          <span class="chip"><i class="fa-solid fa-hand-holding-dollar text-green"></i> <span data-i18n="heroChip1">10% Beneficiary Margin</span></span>
+          <span class="chip"><i class="fa-solid fa-percent text-green"></i> <span data-i18n="heroChip4">5% Interest Subvention</span></span>
+          <span class="chip"><i class="fa-solid fa-gift text-green"></i> <span data-i18n="heroChip2">Up to 50% Capital Subsidy</span></span>
+        </div>
+      </div>
+
+      <!-- Live Nationwide Stats (Pan-India) -->
+      <div class="hero-stats-panel">
+        
+        <div class="stat-card">
+          <div class="stat-icon bg-blue"><i class="fa-solid fa-map-location-dot"></i></div>
+          <div>
+            <div class="stat-val" data-i18n="statDistricts">766 Districts</div>
+            <div class="stat-lbl" data-i18n="statDistrictsSub">Pan-India Gram Panchayats Mapped</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon bg-green"><i class="fa-solid fa-layer-group"></i></div>
+          <div>
+            <div class="stat-val" data-i18n="statStates">28 States & 8 UTs</div>
+            <div class="stat-lbl" data-i18n="statStatesSub">Unified LGD Directory Integrated</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon bg-orange"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+          <div>
+            <div class="stat-val" data-i18n="statBizPlans">32 Profitable Plans</div>
+            <div class="stat-lbl" data-i18n="statBizPlansSub">DPRs with Unit Economics</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon bg-purple"><i class="fa-solid fa-landmark-flag"></i></div>
+          <div>
+            <div class="stat-val" data-i18n="statSubsidy">Up to ₹1.25 Lakh</div>
+            <div class="stat-lbl" data-i18n="statSubsidySub">Concessional Capital Subsidy</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- PROMINENT CENTER VIDEO DEMO SECTION                                       -->
+  <!-- ========================================================================= -->
+  <section class="video-showcase-section" id="secVideoGuide">
+    <div class="container">
+      <div class="video-showcase-card">
+        <div class="video-section-header text-center">
+          <span class="badge-video"><i class="fa-solid fa-circle-play"></i> RURAL CITIZEN VIDEO GUIDE</span>
+          <h3 class="video-section-title" data-i18n="videoSectionTitle">Official Video Guide: How to Use Vyapaar Sarthi</h3>
+          <p class="video-section-subtitle" data-i18n="videoSectionDesc">
+            A complete visual walkthrough for rural citizens to test business viability and secure concessional credit.
+          </p>
+        </div>
+
+        <div class="video-player-frame">
+          <div class="video-inner-container" id="mainVideoPlayer">
+            <video id="actualVideo" class="html5-video-tag" controls poster="assets/dairy_thumb.jpg" preload="none">
+              <source src="assets/demo_walkthrough.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            
+            <div class="video-placeholder-overlay" id="videoOverlay">
+              <div class="v-overlay-icon pulse-icon"><i class="fa-solid fa-play"></i></div>
+              <h4 id="txtVideoOverlayTitle">Interactive Audio Walkthrough: 4 Simple Steps to Your Loan</h4>
+              <p id="txtVideoOverlayDesc">Click to play animated step-by-step audio guidance in your chosen regional language.</p>
+              <div class="v-chapters-bar flex-align">
+                <span class="v-chip"><i class="fa-solid fa-map-pin"></i> 1. Select State & Village</span>
+                <span class="v-chip"><i class="fa-solid fa-wallet"></i> 2. Enter 10% Margin</span>
+                <span class="v-chip"><i class="fa-solid fa-shield"></i> 3. Feasibility & Threats</span>
+                <span class="v-chip"><i class="fa-solid fa-file-pdf"></i> 4. Download Bank DPR</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="video-player-bottom-bar flex-between">
+            <div class="flex-align">
+              <button id="btnPlayDemo" class="v-action-btn"><i class="fa-solid fa-volume-high"></i> Play Native Audio Walkthrough</button>
+              <button id="btnNextChapter" class="v-action-btn"><i class="fa-solid fa-forward-step"></i> Next Step</button>
+            </div>
+            <div class="v-audio-badge flex-align">
+              <i class="fa-solid fa-headset text-orange"></i> Native Audio Sync: <strong id="lblActiveVideoLang">English</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- CONTROL DOCK: LOCATION & 32 BUSINESS DROPDOWN SELECTOR                   -->
+  <!-- ========================================================================= -->
+  <section class="control-dock-section" id="secControlDock">
+    <div class="container">
+      <div class="dock-card">
+        <div class="dock-header flex-between">
+          <div class="flex-align">
+            <span class="dock-step">STEP 1</span>
+            <h3 class="dock-title" data-i18n="inputTitle">Select Location & Enterprise Parameters</h3>
+          </div>
+          <div class="dock-actions flex-align">
+            <button id="btnOpenCompareDock" class="btn-compare-pill flex-align" title="Compare 2 Business Plans Side-by-Side">
+              <i class="fa-solid fa-code-compare"></i> <span data-i18n="btnCompareSchemes">Compare All Concessional Schemes</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="dock-grid">
+          <!-- 1. Geographic Location Selector (Pan-India) -->
+          <div class="form-group">
+            <label for="selectLocation"><i class="fa-solid fa-map-pin"></i> <span data-i18n="lblLocation">Geographic Cluster / Village (Pan-India)</span></label>
+            <select id="selectLocation" class="form-control">
+              <option value="panindia" selected>National Rural Directory (All 766 Districts Mapped)</option>
+              <option value="khordha">Khordha District Cluster, Odisha (751010)</option>
+              <option value="bodhgaya">Bodh Gaya Peri-Urban Cluster, Gaya, Bihar (824231)</option>
+              <option value="sarnath">Sarnath Rural Haat, Varanasi, Uttar Pradesh (221001)</option>
+              <option value="baramati">Baramati Agro-Processing Cluster, Pune, Maharashtra (413102)</option>
+              <option value="singur">Singur Agro-Hub, Hooghly, West Bengal (712409)</option>
+              <option value="alanganallur">Alanganallur Agro-Center, Madurai, Tamil Nadu (625501)</option>
+              <option value="wardhannapet">Wardhannapet Rural Cluster, Warangal, Telangana (506313)</option>
+              <option value="custom">-- Custom Village (Registered in Citizen Profile) --</option>
+            </select>
+            <small class="form-hint"><i class="fa-solid fa-circle-info"></i> Fully geocoded catchment for competitor mapping & hazard radars</small>
+          </div>
+
+          <!-- 2. Available Margin Capital (10% Rule) -->
+          <div class="form-group">
+            <label for="sliderMargin"><i class="fa-solid fa-wallet"></i> <span data-i18n="lblMargin">Available Margin Capital (10% Beneficiary Contribution)</span></label>
+            <div class="slider-container">
+              <input type="range" id="sliderMargin" min="10000" max="500000" step="5000" value="48000" class="margin-slider">
+              <div class="slider-labels flex-between">
+                <span>₹10,000</span>
+                <span class="active-margin-display" id="lblMarginValue">₹ 48,000</span>
+                <span>₹5,00,000</span>
+              </div>
+            </div>
+            <small class="form-hint"><i class="fa-solid fa-calculator text-blue"></i> Automatically structures 100% Project Cost = Margin &times; 10</small>
+          </div>
+
+          <!-- 3. AI-Ranked Business Dropdown (All 32 Businesses) -->
+          <div class="form-group col-span-2">
+            <label for="dropdownPreferredBiz"><i class="fa-solid fa-briefcase"></i> <span data-i18n="lblSelectBiz">Select Preferred Micro-Enterprise (32 Vetted Plans)</span></label>
+            <div class="select-with-ai-badge">
+              <select id="dropdownPreferredBiz" class="form-control select-business-dropdown">
+                <!-- Dynamically populated with all 32 businesses from data.js -->
+              </select>
+              <small class="form-hint"><i class="fa-solid fa-wand-magic-sparkles text-orange"></i> AI ranks demand, viability score and routes to preferential schemes</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- Locality High-Demand Quick Selection Pills -->
+        <div class="ai-trending-strip flex-align">
+          <span class="trending-label"><i class="fa-solid fa-arrow-trend-up text-orange"></i> Trending Top Demand:</span>
+          <div class="trending-pills-list flex-align" id="aiTrendingPills">
+            <!-- Dynamically populated buttons -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- TAB NAVIGATION: MODULES & CITIZEN DASHBOARD                               -->
+  <!-- ========================================================================= -->
+  <main class="main-content-section">
+    <div class="container">
+      <div class="app-tab-navigation flex-align">
+        <button class="tab-btn active" data-target="secModule1">
+          <i class="fa-solid fa-chart-pie"></i> 
+          <span data-i18n="tabFeasibility">Hyper-Local Feasibility & Threat Radar</span>
+        </button>
+        <button class="tab-btn" data-target="secModule2">
+          <i class="fa-solid fa-calculator"></i> 
+          <span data-i18n="tabFinancials">Smart Financial Engine & Scheme Navigator (10% Margin)</span>
+        </button>
+        <button class="tab-btn" data-target="secCatalog">
+          <i class="fa-solid fa-store"></i> 
+          <span data-i18n="catalogTitle">32 Profitable Rural Micro-Enterprise Blueprints</span>
+        </button>
+        <button class="tab-btn" data-target="secProfile" id="tabBtnProfile">
+          <i class="fa-solid fa-id-card"></i> 
+          <span data-i18n="navDashboard">Beneficiary Dashboard</span>
+        </button>
+      </div>
+
+      <!-- ======================================================================= -->
+      <!-- MODULE 1: HYPER-LOCAL FEASIBILITY & THREAT RADAR                       -->
+      <!-- ======================================================================= -->
+      <section id="secModule1" class="tab-pane active">
+        
+        <!-- Top Feasibility Summary Banner with Authentic Enterprise Photography -->
+        <div class="feasibility-header-card flex-between">
+          <div class="biz-info-content flex-align">
+            <div class="biz-photo-wrapper">
+              <img id="imgActiveBizPhoto" src="assets/dairy_thumb.jpg" alt="Enterprise Showcase" class="active-biz-photo">
+              <span class="photo-overlay-caption"><i class="fa-solid fa-camera"></i> Live Cluster Model</span>
+            </div>
+            <div>
+              <span class="badge-sector" id="badgeCurrentSector">Dairy & Value Addition</span>
+              <h3 class="active-biz-title" id="txtCurrentBizTitle">Solar-Powered Milk Chilling & Paneer/Curd Processing Unit</h3>
+              <p class="biz-summary-desc" id="txtCurrentBizSummary">
+                High milk yields in adjoining rural belt facing distress sales. Processing into fresh paneer and packaged curd captures high-value urban retail and highway transit demand.
+              </p>
+            </div>
+          </div>
+          
+          <!-- Dynamic Viability Score Meter -->
+          <div class="viability-meter-box text-center">
+            <div class="viability-circle">
+              <span class="score-number" id="viabilityScore">93</span>
+              <span class="score-total">/100</span>
+            </div>
+            <div class="viability-label text-green" id="viabilityTag">EXCELLENT VIABILITY</div>
+          </div>
+        </div>
+
+        <div class="feasibility-grid">
+          
+          <!-- Pillar 1: Market Catchment & Demographic Reach -->
+          <div class="grid-card">
+            <div class="card-header flex-align">
+              <div class="card-icon bg-blue"><i class="fa-solid fa-people-roof"></i></div>
+              <div>
+                <h4 class="card-title" data-i18n="radarPillar2">Local Haat Demand Velocity</h4>
+                <p class="card-subtitle">5–10 km radial analysis calibrated via Census & Land Records</p>
+              </div>
+            </div>
+            <div class="card-body">
+              <ul class="data-list">
+                <li><span class="d-label">5 km Immediate Population:</span> <strong class="d-val" id="valPop5km">52,000 Residents</strong></li>
+                <li><span class="d-label">10 km Regional Transit Reach:</span> <strong class="d-val" id="valPop10km">2,10,000 Reach</strong></li>
+                <li><span class="d-label">Catchment Households:</span> <strong class="d-val">11,400 Families</strong></li>
+                <li><span class="d-label">Local Commercial Corridor:</span> <strong class="d-val">National Highway & Haat Axis</strong></li>
+                <li><span class="d-label">Nearest Wholesale Mandi:</span> <strong class="d-val">Regional Haat Terminal (3.2 km)</strong></li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Pillar 2: Unit Economics & Pricing Benchmarks -->
+          <div class="grid-card">
+            <div class="card-header flex-align">
+              <div class="card-icon bg-green"><i class="fa-solid fa-sack-dollar"></i></div>
+              <div>
+                <h4 class="card-title" data-i18n="radarPillar4">Working Capital Liquidity</h4>
+                <p class="card-subtitle">Real-time local wholesale & retail price benchmarks</p>
+              </div>
+            </div>
+            <div class="card-body">
+              <ul class="data-list" id="unitEconomicsList">
+                <li><span class="d-label">Target Daily Output:</span> <strong class="d-val" id="econDailyOutput">450 L Chilled / 40 kg Paneer</strong></li>
+                <li><span class="d-label">Unit Production Cost:</span> <strong class="d-val" id="econUnitCost">₹38.50 per Liter</strong></li>
+                <li><span class="d-label">Benchmark Selling Price:</span> <strong class="d-val" id="econSellingPrice">₹54.00 Retail / ₹48.00 Wholesale</strong></li>
+                <li><span class="d-label">Est. Monthly Net Profit:</span> <strong class="d-val text-green" id="econMonthlyProfit">₹42,000 – ₹55,000</strong></li>
+                <li><span class="d-label">Breakeven Timeline:</span> <strong class="d-val text-orange" id="econBreakeven">5 to 7 Months</strong></li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Pillar 3: Dynamic Tailored SWOT Matrix -->
+          <div class="grid-card col-span-2">
+            <div class="card-header flex-align">
+              <div class="card-icon bg-orange"><i class="fa-solid fa-chart-simple"></i></div>
+              <div>
+                <h4 class="card-title" data-i18n="swotTitle">Hyper-Local SWOT Intelligence</h4>
+                <p class="card-subtitle">Calibrated specifically for rural micro-budgets (₹10,000 – ₹5,00,000 Margin)</p>
+              </div>
+            </div>
+            <div class="swot-grid">
+              <div class="swot-card swot-s">
+                <div class="swot-head"><i class="fa-solid fa-dumbbell"></i> <span data-i18n="swotStrengths">Strengths & Locational Edge</span></div>
+                <ul id="swotStrengths">
+                  <!-- Dynamically populated from data.js -->
+                </ul>
+              </div>
+              <div class="swot-card swot-w">
+                <div class="swot-head"><i class="fa-solid fa-triangle-exclamation"></i> <span data-i18n="swotWeaknesses">Operational Constraints</span></div>
+                <ul id="swotWeaknesses">
+                  <!-- Dynamically populated from data.js -->
+                </ul>
+              </div>
+              <div class="swot-card swot-o">
+                <div class="swot-head"><i class="fa-solid fa-arrow-trend-up"></i> <span data-i18n="swotOpportunities">Market & Subsidy Catalysts</span></div>
+                <ul id="swotOpportunities">
+                  <!-- Dynamically populated from data.js -->
+                </ul>
+              </div>
+              <div class="swot-card swot-t">
+                <div class="swot-head"><i class="fa-solid fa-shield-virus"></i> <span data-i18n="swotThreats">Mitigated Hazards</span></div>
+                <ul id="swotThreats">
+                  <!-- Dynamically populated from data.js -->
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pillar 4: Localized Threat Radar & Mitigation -->
+          <div class="grid-card col-span-2">
+            <div class="card-header flex-align">
+              <div class="card-icon bg-red"><i class="fa-solid fa-shield-halved"></i></div>
+              <div>
+                <h4 class="card-title" data-i18n="radarPillar5">Climate & Monsoon Risk Mitigation</h4>
+                <p class="card-subtitle">Pinpointing environmental, supply chain and infrastructure hazards with concrete countermeasures</p>
+              </div>
+            </div>
+            <div class="threats-grid" id="threatsRadarGrid">
+              <!-- Dynamically populated from data.js -->
+            </div>
+          </div>
+
+          <!-- Pillar 5: Interactive Resilient Geographic Catchment Map -->
+          <div class="grid-card col-span-2">
+            <div class="card-header flex-between">
+              <div class="flex-align">
+                <div class="card-icon bg-blue"><i class="fa-solid fa-map-location-dot"></i></div>
+                <div>
+                  <h4 class="card-title">5. Geographic Market Catchment Map & Competitor POIs</h4>
+                  <p class="card-subtitle">OpenStreetMap visualization with 5 km & 10 km concentric radial rings and competitor clusters</p>
+                </div>
+              </div>
+              <div class="map-legends flex-align">
+                <span class="leg-item"><span class="leg-dot bg-green"></span> 5 km Catchment</span>
+                <span class="leg-item"><span class="leg-dot bg-orange"></span> 10 km Regional Buffer</span>
+                <span class="leg-item"><span class="leg-dot bg-red"></span> Competitor POIs</span>
+              </div>
+            </div>
+            <div class="map-wrapper">
+              <div id="leafletMap" class="leaflet-map-frame" style="height: 420px; width: 100%;"></div>
+            </div>
+          </div>
+
+          <!-- Pillar 6: 12-Month Seasonal Operational & Demand Calendar (FEATURE ADDED!) -->
+          <div class="grid-card col-span-2" id="secSeasonalCalendar">
+            <div class="card-header flex-between">
+              <div class="flex-align">
+                <div class="card-icon bg-green"><i class="fa-solid fa-calendar-days"></i></div>
+                <div>
+                  <h4 class="card-title">6. 12-Month Seasonal Demand & Operational Calendar</h4>
+                  <p class="card-subtitle">Empirical monthly cash-flow forecasting calibrated for rural harvest cycles & monsoon conditions</p>
+                </div>
+              </div>
+              <div class="calendar-legends flex-align">
+                <span class="leg-item"><span class="badge-cal-pill green">Peak Demand</span></span>
+                <span class="leg-item"><span class="badge-cal-pill blue">Steady Sales</span></span>
+                <span class="leg-item"><span class="badge-cal-pill amber">Weather Caution</span></span>
+              </div>
+            </div>
+            <div class="seasonal-months-grid" id="seasonalMonthsGrid">
+              <!-- Injected dynamically from SEASONAL_CALENDAR_DATA -->
+            </div>
+            <div class="calendar-active-note" id="calendarActiveNote">
+              <i class="fa-solid fa-lightbulb text-orange"></i> <strong>Month Insight:</strong> <span id="txtCalendarNote">Select any month above to view actionable operational guidelines for this enterprise.</span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ======================================================================= -->
+      <!-- MODULE 2: SMART FINANCIAL CALCULATOR & SCHEME ROUTER                   -->
+      <!-- ======================================================================= -->
+      <section id="secModule2" class="tab-pane">
+        
+        <!-- MSJE Beneficiary Category & Concession Selector (FEATURE ADDED!) -->
+        <div class="msje-category-selector-card">
+          <div class="card-header flex-between">
+            <div class="flex-align">
+              <div class="card-icon bg-blue"><i class="fa-solid fa-users-viewfinder"></i></div>
+              <div>
+                <h4 class="card-title">Ministry of Social Justice & Empowerment: Beneficiary Category Concessions</h4>
+                <p class="card-subtitle">Select your socio-economic category to activate preferential interest subventions & apex corporation subsidies</p>
+              </div>
+            </div>
+            <span class="msje-mandate-badge"><i class="fa-solid fa-award"></i> MSJE Concessional Mandate</span>
+          </div>
+
+          <div class="category-cards-grid" id="categoryCardsGrid">
+            <!-- 6 Interactive Cards: SC, ST, OBC, Divyangjan, Women SHG, General -->
+          </div>
+        </div>
+
+        <!-- Financial Structuring Breakdown Cards -->
+        <div class="calc-metrics-row">
+          
+          <div class="calc-metric-card">
+            <div class="c-lbl" data-i18n="cardMargin">Beneficiary Margin (10%)</div>
+            <div class="c-val text-blue" id="valMargin10">₹ 48,000</div>
+            <div class="c-sub">Beneficiary Cash Contribution</div>
+          </div>
+
+          <div class="calc-metric-card highlight-card">
+            <div class="c-lbl" data-i18n="cardProjectCost">Total Project Cost</div>
+            <div class="c-val text-green" id="valTotalCost">₹ 4,80,000</div>
+            <div class="c-sub">Automated Formula: Margin &divide; 10%</div>
+          </div>
+
+          <div class="calc-metric-card">
+            <div class="c-lbl" data-i18n="cardLoan">Bank Term Loan (90%)</div>
+            <div class="c-val text-orange" id="valLoan90">₹ 4,32,000</div>
+            <div class="c-sub">90% of Total Project Cost</div>
+          </div>
+
+        </div>
+
+        <!-- Scheme Auto-Selection Banner (Logic A vs Logic B + MSJE Corporation) -->
+        <div class="scheme-router-card">
+          <div class="flex-between flex-wrap">
+            <div>
+              <span class="badge-scheme-tier" id="badgeLogic">LOGIC B: Term Loan Tier (₹1.40L &ndash; ₹50.00L)</span>
+              <h3 class="scheme-matched-title" id="txtSchemeName">Mukhyamantri Krushi Udyog Yojana (MKUY) / NSFDC Term Loan</h3>
+              <p class="scheme-matched-desc" id="txtSchemeDesc">
+                Project cost ₹4,80,000 automatically routed to Term Loan Tier with 8.0% interest rate, 7-year repayment horizon, and 6-month moratorium.
+              </p>
+            </div>
+            <div class="scheme-subsidy-box">
+              <span class="subsidy-tag"><i class="fa-solid fa-gift"></i> CONCESSIONAL SUBSIDY</span>
+              <div class="subsidy-val" id="txtSubsidyBadge">40%–50% Back-Ended Capital Subsidy</div>
+              <small class="block text-muted" id="txtApexCorp">NSFDC (National SC Finance & Development Corp)</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- Monthly Net Take-Home Family Income Calculator (FEATURE ADDED!) -->
+        <div class="take-home-cashflow-card">
+          <div class="card-header flex-between">
+            <div class="flex-align">
+              <div class="card-icon bg-green"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+              <div>
+                <h4 class="card-title" data-i18n="waterfallTitle">Waterfall Cash Flow & Revenue Projection (Monthly)</h4>
+                <p class="card-subtitle">Real-world operational cash-flow: What you take home after paying all bills & bank EMI</p>
+              </div>
+            </div>
+            <span class="badge-dscr text-green"><i class="fa-solid fa-circle-check"></i> DSCR: 2.6x (Safe & Bank Approved)</span>
+          </div>
+
+          <div class="cashflow-waterfall-grid">
+            <div class="cf-box cf-inflow">
+              <span class="cf-lbl"><i class="fa-solid fa-arrow-down text-green"></i> Est. Gross Monthly Sales</span>
+              <strong class="cf-val text-green" id="cfGrossSales">₹ 78,500</strong>
+              <small>Wholesale & Retail Haat Sales</small>
+            </div>
+
+            <div class="cf-operator">&minus;</div>
+
+            <div class="cf-box cf-outflow">
+              <span class="cf-lbl"><i class="fa-solid fa-boxes-stacked text-orange"></i> Raw Materials & Inputs</span>
+              <strong class="cf-val text-orange" id="cfRawMaterial">₹ 36,200</strong>
+              <small>Direct Procurement Costs</small>
+            </div>
+
+            <div class="cf-operator">&minus;</div>
+
+            <div class="cf-box cf-outflow">
+              <span class="cf-lbl"><i class="fa-solid fa-bolt text-orange"></i> Power, Fuel & Freight</span>
+              <strong class="cf-val text-orange" id="cfUtilities">₹ 5,400</strong>
+              <small>Monthly Operational Utilities</small>
+            </div>
+
+            <div class="cf-operator">&minus;</div>
+
+            <div class="cf-box cf-emi">
+              <span class="cf-lbl"><i class="fa-solid fa-building-columns text-blue"></i> Monthly Bank Loan EMI</span>
+              <strong class="cf-val text-blue" id="cfMonthlyEmi">₹ 5,820</strong>
+              <small>Concessional Principal & Interest</small>
+            </div>
+
+            <div class="cf-operator">=</div>
+
+            <div class="cf-box cf-takehome">
+              <span class="cf-lbl"><i class="fa-solid fa-wallet text-green"></i> Net Take-Home Family Income</span>
+              <strong class="cf-val text-green-glow" id="cfTakeHome">₹ 31,080 / mo</strong>
+              <small class="text-green font-bold">100% Free Disposable Cash</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- Repayment Amortization & Moratorium Generator -->
+        <div class="repayment-engine-grid">
+          
+          <!-- Repayment Summary Card -->
+          <div class="grid-card">
+            <div class="card-header flex-align">
+              <div class="card-icon bg-green"><i class="fa-solid fa-calendar-check"></i></div>
+              <div>
+                <h4 class="card-title">Quarterly Repayment Schedule</h4>
+                <p class="card-subtitle">Factoring in Grace Moratorium Holidays</p>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="morat-badge-row flex-align">
+                <span class="badge-moratorium" id="badgeMoratoriumMonths"><i class="fa-solid fa-clock-rotate-left"></i> Moratorium: 6 Months (Quarters 1–2 = ₹0 EMI)</span>
+              </div>
+              <ul class="data-list">
+                <li><span class="d-label" data-i18n="lblQuarterlyEmi">Quarterly EMI Repayment:</span> <strong class="d-val text-green" id="valQuarterlyEmi">₹ 20,412 / Quarter</strong></li>
+                <li><span class="d-label" data-i18n="lblMonthlyEq">Monthly Equivalent Burden:</span> <strong class="d-val" id="valMonthlyEmi">₹ 6,804 / Month</strong></li>
+                <li><span class="d-label" data-i18n="lblTotalInterest">Total Loan Interest:</span> <strong class="d-val" id="valTotalInterest">₹ 98,712</strong></li>
+                <li><span class="d-label" data-i18n="lblTotalRepaid">Total Repaid Over Tenure:</span> <strong class="d-val" id="valTotalRepaid">₹ 5,30,712</strong></li>
+              </ul>
+              
+              <div class="capex-opex-split">
+                <h5 class="split-title">Capital Apportionment (70% Capex vs 30% Opex)</h5>
+                <div class="split-bar">
+                  <div class="split-capex" style="width: 70%;" title="70% Capex">70% Capex</div>
+                  <div class="split-opex" style="width: 30%;" title="30% Opex">30% Opex</div>
+                </div>
+                <div class="split-details flex-between">
+                  <span id="lblCapexText">70% Capex (Machinery/Assets): <strong id="valCapex70">₹ 3,36,000</strong></span>
+                  <span id="lblOpexText">30% Opex (Working Capital): <strong id="valOpex30">₹ 1,44,000</strong></span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Amortization Chart -->
+          <div class="grid-card">
+            <div class="card-header flex-align">
+              <div class="card-icon bg-blue"><i class="fa-solid fa-chart-line"></i></div>
+              <div>
+                <h4 class="card-title">Loan Balance & Amortization Curve</h4>
+                <p class="card-subtitle">Visualizing Principal Amortization with Grace Period</p>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="chart-canvas-container" style="height: 280px; position: relative;">
+                <canvas id="chartRepayment"></canvas>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- AI Scheme Eligibility & Mandatory Documents Checklist -->
+        <div class="scheme-details-card">
+          <div class="card-header flex-align">
+            <div class="card-icon bg-orange"><i class="fa-solid fa-clipboard-check"></i></div>
+            <div>
+              <h4 class="card-title">AI Scheme Advisory: Eligibility & Mandatory Documents</h4>
+              <p class="card-subtitle" id="txtSubsidyDetails">Specific Government Criteria, Age, Land Records & Machinery Quotations</p>
+            </div>
+          </div>
+
+          <div class="criteria-docs-grid">
+            <div class="criteria-col">
+              <h5 class="col-head"><i class="fa-solid fa-user-check text-green"></i> Eligibility Criteria</h5>
+              <ul class="checklist-items" id="listEligibilityCriteria">
+                <!-- Dynamically populated from data.js -->
+              </ul>
+            </div>
+
+            <div class="docs-col">
+              <h5 class="col-head"><i class="fa-solid fa-file-circle-check text-blue"></i> Mandatory Bank Documents</h5>
+              <ul class="checklist-items" id="listMandatoryDocs">
+                <!-- Dynamically populated from data.js -->
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Where to Submit: Local Bank Branch & SCA Center Directory (FEATURE ADDED!) -->
+        <div class="bank-submission-guide-card" id="secBankDirectory">
+          <div class="card-header flex-between">
+            <div class="flex-align">
+              <div class="card-icon bg-blue"><i class="fa-solid fa-building-columns"></i></div>
+              <div>
+                <h4 class="card-title">Where to Submit: District Bank & SCA Disbursal Directory</h4>
+                <p class="card-subtitle">Government Channelizing Agencies & Commercial Bank Branches accepting this DPR</p>
+              </div>
+            </div>
+            <div class="cgtmse-stamp flex-align">
+              <i class="fa-solid fa-shield-halved text-green"></i>
+              <div>
+                <strong>CGTMSE 100% Collateral-Free</strong>
+                <small>Loans &le; ₹10 Lakh (No Property Mortgage)</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="bank-directory-content flex-between">
+            <div class="bank-sanction-photo-col">
+              <img src="assets/bank_sanction.jpg" alt="Official Bank Loan Sanction" class="bank-sanction-img">
+              <div class="sanction-caption">
+                <i class="fa-solid fa-circle-check text-green"></i> Government Bank Branch Lead Officer Single-Window Sanction
+              </div>
+            </div>
+
+            <div class="bank-offices-grid" id="bankOfficesGrid">
+              <!-- Dynamically populated from LOCAL_BANK_SCA_DIRECTORY -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Full Amortization Quarters Table (Collapsible) -->
+        <div class="table-card">
+          <div class="card-header flex-between">
+            <h4 class="card-title">Quarterly Repayment Schedule Matrix</h4>
+            <span class="badge-status">NABARD / KVIC Aligned</span>
+          </div>
+          <div class="table-responsive">
+            <table class="schedule-table">
+              <thead>
+                <tr>
+                  <th>Quarter</th>
+                  <th>Timeline</th>
+                  <th>Repayment Status</th>
+                  <th>Quarterly EMI</th>
+                  <th>Principal Component</th>
+                  <th>Interest Component</th>
+                  <th>Ending Loan Balance</th>
+                </tr>
+              </thead>
+              <tbody id="tbodySchedule">
+                <!-- Rows injected dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ======================================================================= -->
+      <!-- VETTED RURAL ENTERPRISES CATALOG (32 BUSINESSES)                        -->
+      <!-- ======================================================================= -->
+      <section id="secCatalog" class="tab-pane">
+        <div class="catalog-header flex-between">
+          <div>
+            <h3 class="sec-title" data-i18n="catalogTitle">32 Profitable Rural Micro-Enterprise Blueprints</h3>
+            <p class="sec-subtitle">Click any enterprise to automatically load its financial roadmap, viability score, threat radar, and loan DPR.</p>
+          </div>
+          <div class="catalog-filters flex-align">
+            <button class="cat-pill active" data-cat="all" data-i18n="filterAll">All Enterprises (32)</button>
+            <button class="cat-pill" data-cat="Agro-Processing & Dairy" data-i18n="filterAgro">Agro-Processing & Dairy</button>
+            <button class="cat-pill" data-cat="Green Energy & EV" data-i18n="filterGreen">Green Energy & EV</button>
+            <button class="cat-pill" data-cat="Eco-Crafts & Waste Upcycling" data-i18n="filterCrafts">Eco-Crafts & Waste Upcycling</button>
+            <button class="cat-pill" data-cat="Digital & Rural Services" data-i18n="filterDigital">Digital & Rural Services</button>
+          </div>
+        </div>
+
+        <div class="businesses-grid" id="catalogGrid">
+          <!-- Injected dynamically from data.js -->
+        </div>
+      </section>
+
+      <!-- ======================================================================= -->
+      <!-- DEDICATED CITIZEN DASHBOARD                                            -->
+      <!-- ======================================================================= -->
+      <section id="secProfile" class="tab-pane">
+        <div class="profile-dashboard-card">
+          
+          <div class="profile-banner flex-between">
+            <div class="flex-align">
+              <div class="profile-avatar">
+                <i class="fa-solid fa-user-shield"></i>
+              </div>
+              <div>
+                <div class="verified-badge"><i class="fa-solid fa-circle-check"></i> Authenticated Rural Beneficiary</div>
+                <h3 class="profile-name" id="profDisplayName">Sriram Jena</h3>
+                <p class="profile-meta">
+                  <i class="fa-solid fa-phone"></i> <span id="profMobile">+91 9876543210</span> | 
+                  <i class="fa-solid fa-location-dot"></i> <span id="profLocation">Khordha Rural Cluster, Odisha (751010)</span> |
+                  <i class="fa-solid fa-id-card-clip"></i> <span id="profCategoryBadge" class="badge-cat-sm">SC (NSFDC Channel)</span>
+                </p>
+              </div>
+            </div>
+
+            <div class="profile-actions flex-align">
+              <button id="btnProfileDprDownload" class="btn-primary flex-align" title="Generate PDF DPR">
+                <i class="fa-solid fa-file-pdf"></i> <span data-i18n="btnDownloadDprPdf">Download Bank-Ready DPR (PDF)</span>
+              </button>
+              <button id="btnProfileShareWhatsApp" class="btn-whatsapp flex-align" title="Share roadmap on WhatsApp">
+                <i class="fa-brands fa-whatsapp"></i> <span data-i18n="btnShareWhatsApp">Share Plan on WhatsApp</span>
+              </button>
+              <button id="btnEditProfile" class="btn-outline flex-align">
+                <i class="fa-solid fa-user-pen"></i> Edit Profile
+              </button>
+              <button id="btnLogout" class="btn-danger flex-align">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+              </button>
+            </div>
+          </div>
+
+          <!-- Citizen Metrics Row -->
+          <div class="profile-metrics-grid">
+            <div class="p-card">
+              <span class="p-lbl">Entrepreneurial Intent</span>
+              <strong class="p-val text-blue" id="profBizStatus">First-Time Entrepreneur</strong>
+              <small class="text-muted">Aadhaar Linked LGD Jurisdiction</small>
+            </div>
+            <div class="p-card">
+              <span class="p-lbl">Selected Enterprise</span>
+              <strong class="p-val text-green" id="profBizName">Solar Milk Chilling Unit</strong>
+              <small class="text-muted" id="profSector">Dairy & Value Addition</small>
+            </div>
+            <div class="p-card">
+              <span class="p-lbl">Beneficiary Margin (10%)</span>
+              <strong class="p-val text-orange" id="profMargin">₹ 48,000</strong>
+              <small class="text-muted">Self-Financed Contribution</small>
+            </div>
+            <div class="p-card">
+              <span class="p-lbl">Concessional Bank Loan</span>
+              <strong class="p-val text-green" id="profLoanCapacity">₹ 4,32,000 (90%)</strong>
+              <small class="text-muted" id="profSchemeStatus">MKUY / NSFDC Term Loan</small>
+            </div>
+          </div>
+
+          <!-- Active Enterprise Summary Card -->
+          <div class="profile-application-box">
+            <div class="flex-between flex-wrap">
+              <div>
+                <span class="badge-status badge-ready"><i class="fa-solid fa-check"></i> Bank Application Ready</span>
+                <h4 style="margin: 0.5rem 0 0.2rem 0; font-size: 1.25rem;">Active Detailed Project Report (DPR) Application</h4>
+                <p class="text-muted" style="font-size: 0.9rem;">
+                  Your loan application is structured under Ministry of Social Justice & Empowerment concessional credit guidelines with zero physical collateral for micro-tiers.
+                </p>
+              </div>
+              <div class="text-right">
+                <span class="dpr-ref-pill">DPR Reference: <strong id="lblDprRefCode">MSJE-OD-751010-0926</strong></span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ========================================================================= -->
+  <!-- SIDE-BY-SIDE BUSINESS COMPARISON MODAL (FEATURE ADDED!)                   -->
+  <!-- ========================================================================= -->
+  <div id="compareModal" class="modal-overlay">
+    <div class="modal-dialog compare-modal-dialog">
+      <div class="modal-header flex-between">
+        <div class="flex-align">
+          <i class="fa-solid fa-code-compare text-blue modal-icon"></i>
+          <div>
+            <h3 class="modal-title">Side-by-Side Enterprise Comparison Tool</h3>
+            <p class="modal-subtitle">Compare two business models by Margin, Loan, Profitability & Risk before applying</p>
+          </div>
+        </div>
+        <button id="btnCloseCompare" class="btn-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="compare-selectors-grid">
+          <div class="comp-col-select">
+            <label><i class="fa-solid fa-building text-blue"></i> Choose First Plan (Plan A):</label>
+            <select id="selectCompareA" class="form-control"></select>
+          </div>
+          <div class="comp-vs-badge">VS</div>
+          <div class="comp-col-select">
+            <label><i class="fa-solid fa-building text-orange"></i> Choose Second Plan (Plan B):</label>
+            <select id="selectCompareB" class="form-control"></select>
+          </div>
+        </div>
+
+        <div class="compare-table-wrapper" id="compareTableContainer">
+          <!-- Injected dynamically -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- FLOATING AUDIO SARTHI AI VOICE ASSISTANT WIDGET (FEATURE ADDED!)          -->
+  <!-- ========================================================================= -->
+  <div class="floating-audio-sarthi" id="floatingAudioSarthi">
+    <button class="btn-sarthi-trigger" id="btnTriggerSarthi" title="Talk to Audio Sarthi AI">
+      <div class="sarthi-pulse-ring"></div>
+      <i class="fa-solid fa-microphone"></i>
+      <span class="sarthi-btn-lbl">Audio Sarthi</span>
+    </button>
+
+    <div class="sarthi-dialog-card" id="sarthiDialogCard">
+      <div class="sarthi-dialog-header flex-between">
+        <div class="flex-align">
+          <div class="sarthi-avatar-mini"><i class="fa-solid fa-headset"></i></div>
+          <div>
+            <strong>Audio Sarthi | AI Assistant</strong>
+            <small class="block text-muted">Ministry of Social Justice Voice Guide</small>
+          </div>
+        </div>
+        <button id="btnCloseSarthi" class="btn-close-sm">&times;</button>
+      </div>
+
+      <div class="sarthi-dialog-body">
+        <p class="sarthi-intro">Click any common question or tap the mic to speak in your native language:</p>
+        <div class="sarthi-questions-list" id="sarthiQuestionsList">
+          <!-- Dynamically populated from AUDIO_SARTHI_INTENTS -->
+        </div>
+        <div class="sarthi-answer-box" id="sarthiAnswerBox" style="display:none;">
+          <div class="sarthi-ans-head flex-between">
+            <span class="text-green"><i class="fa-solid fa-volume-high"></i> AI Response:</span>
+            <button id="btnReplayAudio" class="btn-replay-sm"><i class="fa-solid fa-rotate-right"></i> Replay</button>
+          </div>
+          <p id="txtSarthiResponseText"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- POST-LOGIN VERIFICATION ANIMATION OVERLAY                                 -->
+  <!-- ========================================================================= -->
+  <div id="redirectOverlay" class="redirect-overlay">
+    <div class="redirect-card text-center">
+      <div class="gov-loader-radar">
+        <div class="radar-circle"></div>
+        <div class="radar-scan"></div>
+        <div class="radar-emblem"><i class="fa-solid fa-scale-balanced"></i></div>
+      </div>
+      <h3 class="redirect-title" id="txtRedirectTitle">Authenticating Citizen Credentials...</h3>
+      <p class="redirect-status" id="txtRedirectStatus">Connecting to Local Government Directory (LGD) & National Panchayat Database...</p>
+      
+      <div class="redirect-progress-bar">
+        <div class="progress-bar-fill" id="redirectProgress"></div>
+      </div>
+      <div class="redirect-steps-checklist text-left">
+        <div class="r-check" id="chkStep1"><i class="fa-solid fa-circle-check text-green"></i> Citizen Profile & Mobile Authenticated</div>
+        <div class="r-check" id="chkStep2"><i class="fa-solid fa-circle-check text-green"></i> 5–10 km Commercial POIs & Market Demand Scanned</div>
+        <div class="r-check" id="chkStep3"><i class="fa-solid fa-circle-check text-green"></i> 10% Margin Matched with Ministry Concessional Schemes</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- CITIZEN LOGIN & REGISTRATION MODAL                                        -->
+  <!-- ========================================================================= -->
+  <div id="loginModal" class="modal-overlay">
+    <div class="modal-dialog auth-modal-dialog">
+      <div class="modal-header flex-between">
+        <div class="flex-align">
+          <i class="fa-solid fa-id-card text-blue modal-icon"></i>
+          <div>
+            <h3 class="modal-title" data-i18n="modalLoginTitle">Beneficiary Onboarding & Location Setup</h3>
+            <p class="modal-subtitle">Ministry of Social Justice & Empowerment Onboarding Portal</p>
+          </div>
+        </div>
+        <button id="btnCloseLogin" class="btn-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="formRegister">
+          
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label for="regName"><i class="fa-solid fa-user"></i> <span data-i18n="lblFullName">Full Name:</span> *</label>
+              <div class="input-with-mic">
+                <input type="text" id="regName" class="form-control" placeholder="e.g. Sriram Jena" required value="Sriram Jena">
+                <button type="button" class="btn-mic-field" data-input="regName" title="Speak to Fill Name">
+                  <i class="fa-solid fa-microphone"></i>
+                </button>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="regMobile"><i class="fa-solid fa-mobile-screen"></i> <span data-i18n="lblMobile">Mobile Number (10 Digits):</span> *</label>
+              <input type="tel" id="regMobile" class="form-control" placeholder="10-digit mobile number" required value="9876543210">
+            </div>
+          </div>
+
+          <!-- Social Category Dropdown (MSJE Mandate) -->
+          <div class="form-group">
+            <label for="regCategory"><i class="fa-solid fa-users-viewfinder"></i> Socio-Economic Category (MSJE Mandate) *</label>
+            <select id="regCategory" class="form-control" required>
+              <option value="sc" selected>Scheduled Caste (SC) - NSFDC Concessional Channel</option>
+              <option value="st">Scheduled Tribe (ST) - NSTFDC Tribal Channel</option>
+              <option value="obc">Other Backward Class (OBC) - NBCFDC Channel</option>
+              <option value="divyangjan">Persons with Disabilities (Divyangjan) - NDFDC Channel</option>
+              <option value="women_shg">Women Self-Help Group (SHG) / W-Enterprise</option>
+              <option value="general">General / Rural Economically Weaker Section (EWS)</option>
+            </select>
+          </div>
+
+          <div class="form-grid-3">
+            <div class="form-group">
+              <label for="regState"><i class="fa-solid fa-landmark"></i> State (Select or Type) *</label>
+              <input list="stateList" id="regState" class="form-control" placeholder="Select or type State" required value="Odisha">
+              <datalist id="stateList">
+                <option value="Odisha">
+                <option value="Bihar">
+                <option value="Uttar Pradesh">
+                <option value="Maharashtra">
+                <option value="West Bengal">
+                <option value="Madhya Pradesh">
+                <option value="Rajasthan">
+                <option value="Tamil Nadu">
+                <option value="Telangana">
+                <option value="Andhra Pradesh">
+                <option value="Gujarat">
+                <option value="Karnataka">
+              </datalist>
+            </div>
+
+            <div class="form-group">
+              <label for="regDistrict"><i class="fa-solid fa-city"></i> <span data-i18n="lblDistrict">District:</span> (Select or Type) *</label>
+              <div class="input-with-mic">
+                <input list="districtList" id="regDistrict" class="form-control" placeholder="Select or type District" required value="Khordha">
+                <datalist id="districtList">
+                  <option value="Khordha">
+                  <option value="Cuttack">
+                  <option value="Puri">
+                  <option value="Gaya">
+                  <option value="Patna">
+                  <option value="Varanasi">
+                  <option value="Lucknow">
+                  <option value="Pune">
+                  <option value="Howrah">
+                  <option value="Madurai">
+                  <option value="Warangal">
+                  <option value="Ahmedabad">
+                </datalist>
+                <button type="button" class="btn-mic-field" data-input="regDistrict" title="Speak to Fill District">
+                  <i class="fa-solid fa-microphone"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="regArea"><i class="fa-solid fa-location-dot"></i> Village / Town (Select or Type) *</label>
+              <div class="input-with-mic">
+                <input list="villageList" id="regArea" class="form-control" placeholder="Select or type Village" required value="Khordha Rural Cluster">
+                <datalist id="villageList">
+                  <option value="Khordha Rural Cluster">
+                  <option value="Naharkanta">
+                  <option value="Balianta">
+                  <option value="Pandra">
+                  <option value="Bodh Gaya">
+                  <option value="Sarnath">
+                  <option value="Baramati">
+                  <option value="Singur">
+                  <option value="Alanganallur">
+                </datalist>
+                <button type="button" class="btn-mic-field" data-input="regArea" title="Speak to Fill Village">
+                  <i class="fa-solid fa-microphone"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label for="regPin"><i class="fa-solid fa-envelope"></i> Postal <span data-i18n="lblPincode">Postal PIN Code:</span> *</label>
+              <input type="text" id="regPin" class="form-control" placeholder="6-digit PIN" required value="751010">
+            </div>
+            <div class="form-group">
+              <label for="regMargin"><i class="fa-solid fa-wallet"></i> Available Margin Capital (₹) *</label>
+              <input type="number" id="regMargin" class="form-control" placeholder="e.g. 48000" min="10000" step="1000" required value="48000">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label><i class="fa-solid fa-briefcase"></i> Current Entrepreneurial Status *</label>
+            <div class="radio-options-grid">
+              <label class="radio-card">
+                <input type="radio" name="bizStatus" value="Planning to Start a New Business (First-Time)" checked>
+                <div>
+                  <strong>First-Time Entrepreneur</strong>
+                  <small>Planning to start a brand new rural business venture</small>
+                </div>
+              </label>
+              <label class="radio-card">
+                <input type="radio" name="bizStatus" value="Currently Running a Business (Seeking Expansion)">
+                <div>
+                  <strong>Currently Running Business</strong>
+                  <small>Looking for working capital / machinery expansion loan</small>
+                </div>
+              </label>
+              <label class="radio-card">
+                <input type="radio" name="bizStatus" value="Looking to Switch / Modernize Trade">
+                <div>
+                  <strong>Looking to Switch Business</strong>
+                  <small>Modernizing traditional trade or pivoting to high-demand niche</small>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <div class="form-submit-row flex-between">
+            <small class="text-muted"><i class="fa-solid fa-shield-halved text-green"></i> Certified under Ministry of Social Justice & Empowerment Guidelines</small>
+            <button type="submit" class="btn-primary-lg flex-align">
+              <i class="fa-solid fa-check-double"></i> Verify & Open Citizen Dashboard
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- BANK-READY DETAILED PROJECT REPORT (DPR) MODAL                           -->
+  <!-- ========================================================================= -->
+  <div id="dprModal" class="modal-overlay">
+    <div class="modal-dialog dpr-modal-dialog">
+      <div class="modal-header flex-between">
+        <div class="flex-align">
+          <i class="fa-solid fa-file-invoice text-blue modal-icon"></i>
+          <div>
+            <h3 class="modal-title">Bank-Ready Detailed Project Report (DPR)</h3>
+            <p class="modal-subtitle">Ministry of Social Justice & Empowerment Concessional Loan Application</p>
+          </div>
+        </div>
+        <button id="btnCloseDPR" class="btn-close">&times;</button>
+      </div>
+      <div class="modal-body printable-dpr" id="printableDprContent">
+        <!-- Generated dynamically for printing -->
+      </div>
+      <div class="modal-footer flex-between">
+        <span class="text-muted"><i class="fa-solid fa-circle-info"></i> Formatted for State Bank of India, UCO Bank & Channelizing Agencies</span>
+        <button id="btnPrintDPR" class="btn-primary flex-align">
+          <i class="fa-solid fa-print"></i> Print / Save as PDF
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- GOVERNMENT OFFICIAL FOOTER                                                -->
+  <!-- ========================================================================= -->
+  <footer class="gov-footer">
+    <div class="container footer-grid">
+      <div>
+        <div class="flex-align" style="gap:0.75rem; margin-bottom: 0.75rem;">
+          <i class="fa-solid fa-scale-balanced text-orange" style="font-size:1.8rem;"></i>
+          <h4 style="color:#fff; font-size:1.2rem; margin:0;" data-i18n="portalTitle">Vyapaar Sarthi</h4>
+        </div>
+        <p class="footer-desc">
+          An AI-driven hyper-local rural business intelligence and concessional credit structuring platform developed under the Ministry of Social Justice and Empowerment, Government of India.
+        </p>
+      </div>
+
+      <div>
+        <h5 class="f-head">Concessional Credit Framework</h5>
+        <ul class="f-links">
+          <li><i class="fa-solid fa-angle-right"></i> 10% Beneficiary Margin Rule</li>
+          <li><i class="fa-solid fa-angle-right"></i> Logic A: Micro Finance (&le; ₹1.40L @ 6.5%)</li>
+          <li><i class="fa-solid fa-angle-right"></i> Logic B: Term Loan (&le; ₹50.00L @ 8.0%)</li>
+          <li><i class="fa-solid fa-angle-right"></i> 3 to 6-Month Moratorium Holidays</li>
+        </ul>
+      </div>
+
+      <div>
+        <h5 class="f-head">Geographic & Pilot Reach</h5>
+        <ul class="f-links">
+          <li><i class="fa-solid fa-location-dot"></i> Pan-India Coverage (28 States & 8 UTs)</li>
+          <li><i class="fa-solid fa-location-dot"></i> Khordha District Rural Cluster, Odisha (751010)</li>
+          <li><i class="fa-solid fa-language"></i> 7 Indic Languages (Bhashini AI Voice)</li>
+          <li><i class="fa-solid fa-universal-access"></i> NIC Accessibility Standard Compliant</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom text-center">
+      <p>&copy; 2026 Government of India | Ministry of Social Justice and Empowerment | All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Chart.js CDN for Financial Charts -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+  <!-- Leaflet JS for Maps -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+  <!-- Datasets & 7-Language Dictionary -->
+  <script src="data.js"></script>
+
+  <!-- Core Application Logic -->
+  <script src="app.js"></script>
+
+</body>
+</html>

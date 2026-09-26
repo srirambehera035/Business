@@ -1,0 +1,343 @@
+{
+  "dataset_name": "NABARD & KVIC Model Detailed Project Reports (DPR)",
+  "intended_use": "SIH26 Module 2 Smart Scheme Calculator & Feasibility Structuring",
+  "total_dprs": 4,
+  "dpr_profiles": [
+    {
+      "dpr_id": "DPR-DAIRY-01",
+      "business_name": "Solar-Powered Milk Chilling & Paneer/Curd Processing Unit",
+      "category": "Dairy & Value Addition",
+      "qualifying_scheme": "Term Loan Scheme (SCA) / MKUY / PMFME",
+      "total_project_cost_inr": 480000,
+      "financial_structuring": {
+        "promoter_margin_10_percent": 48000,
+        "term_loan_90_percent": 432000,
+        "interest_rate_pa": 8.0,
+        "repayment_tenure_months": 84,
+        "moratorium_period_months": 6,
+        "monthly_emi_post_moratorium_inr": 6732,
+        "eligible_capital_subsidy": "Up to 40% (₹1,92,000) under MKUY / 35% under PMFME"
+      },
+      "capital_expenditure_capex": [
+        {
+          "item": "Bulk Milk Cooler (BMC) 500-liter capacity",
+          "cost_inr": 210000
+        },
+        {
+          "item": "Rooftop Solar Hybrid Inverter (3 kW) + Battery Bank",
+          "cost_inr": 120000
+        },
+        {
+          "item": "Stainless Steel Paneer Press & Curd Incubation Chamber",
+          "cost_inr": 45000
+        },
+        {
+          "item": "Hygiene, Milk Testing Analyser & Quality Lab Kit",
+          "cost_inr": 25000
+        },
+        {
+          "item": "Shed Electrical & Drainage Modification",
+          "cost_inr": 20000
+        }
+      ],
+      "total_capex_inr": 420000,
+      "initial_working_capital_opex_cycle": [
+        {
+          "item": "Raw milk procurement reserve (1st 15 days @ 250 L/day)",
+          "cost_inr": 35000
+        },
+        {
+          "item": "Food-grade vacuum packaging pouches & crates",
+          "cost_inr": 12000
+        },
+        {
+          "item": "Consumables (Citric acid, cultures, sanitizers)",
+          "cost_inr": 5000
+        },
+        {
+          "item": "Initial marketing & retailer samples",
+          "cost_inr": 8000
+        }
+      ],
+      "total_initial_working_capital_inr": 60000,
+      "monthly_operating_economics": {
+        "procurement_volume_liters_per_month": 7500,
+        "procurement_cost_inr": 255000,
+        "value_added_outputs": [
+          {
+            "product": "Fresh Paneer (350 kg @ ₹320/kg)",
+            "monthly_revenue_inr": 112000
+          },
+          {
+            "product": "Packaged Curd / Dahi (2,500 kg @ ₹60/kg)",
+            "monthly_revenue_inr": 150000
+          },
+          {
+            "product": "Chilled Standardized Milk (2,000 L @ ₹46/L)",
+            "monthly_revenue_inr": 92000
+          }
+        ],
+        "total_monthly_gross_revenue_inr": 354000,
+        "monthly_operating_costs": {
+          "raw_milk_cost": 255000,
+          "labor_and_operator_wages (2 staff)": 24000,
+          "electricity_and_solar_maintenance": 4500,
+          "packaging_materials": 14000,
+          "local_distribution_fuel": 8500
+        },
+        "total_monthly_operating_expense_inr": 306000,
+        "net_monthly_operating_cashflow_inr": 48000,
+        "monthly_loan_emi_inr": 6732,
+        "net_monthly_entrepreneur_profit_inr": 41268,
+        "break_even_month": 4,
+        "debt_service_coverage_ratio_dscr": 7.1
+      }
+    },
+    {
+      "dpr_id": "DPR-MUSHROOM-02",
+      "business_name": "Commercial Mushroom Farming & Solar Dehydration (Oyster & Paddy Straw)",
+      "category": "Agri-Allied Processing",
+      "qualifying_scheme": "Micro Finance Scheme / MKSP / Mission Shakti",
+      "total_project_cost_inr": 135000,
+      "financial_structuring": {
+        "promoter_margin_10_percent": 13500,
+        "term_loan_90_percent": 121500,
+        "interest_rate_pa": 6.5,
+        "repayment_tenure_months": 36,
+        "moratorium_period_months": 3,
+        "monthly_emi_post_moratorium_inr": 4028,
+        "eligible_capital_subsidy": "0% interest subvention for WSHGs in Odisha"
+      },
+      "capital_expenditure_capex": [
+        {
+          "item": "Bamboo & Thatch Cropping Shed (500 sq ft)",
+          "cost_inr": 42000
+        },
+        {
+          "item": "Straw Sterilization Drum & Steam Boiler Unit",
+          "cost_inr": 22000
+        },
+        {
+          "item": "Mini Solar Tunnel Dehydrator (10 kg capacity)",
+          "cost_inr": 28000
+        },
+        {
+          "item": "Misting Foggers, Humidity Meter & Hanging Ropes",
+          "cost_inr": 13000
+        }
+      ],
+      "total_capex_inr": 105000,
+      "initial_working_capital_opex_cycle": [
+        {
+          "item": "Paddy Straw (2 tons locally sourced)",
+          "cost_inr": 6000
+        },
+        {
+          "item": "High-yield Mushroom Spawn Bottles (150 bottles)",
+          "cost_inr": 9000
+        },
+        {
+          "item": "PP Polypropylene grow bags & rubber bands",
+          "cost_inr": 4000
+        },
+        {
+          "item": "Lime, Bavistin & initial disinfection chemicals",
+          "cost_inr": 3000
+        },
+        {
+          "item": "Working reserve",
+          "cost_inr": 8000
+        }
+      ],
+      "total_initial_working_capital_inr": 30000,
+      "monthly_operating_economics": {
+        "monthly_harvest_fresh_mushroom_kg": 450,
+        "value_added_outputs": [
+          {
+            "product": "Fresh Oyster/Straw Mushroom (350 kg @ ₹140/kg)",
+            "monthly_revenue_inr": 49000
+          },
+          {
+            "product": "Dried Mushroom Packets (10 kg @ ₹1,200/kg)",
+            "monthly_revenue_inr": 12000
+          }
+        ],
+        "total_monthly_gross_revenue_inr": 61000,
+        "monthly_operating_costs": {
+          "straw_and_spawn_replenishment": 13500,
+          "power_and_water_charges": 2200,
+          "packaging_materials_and_labels": 3000,
+          "transport_to_rasulgarh_mandi": 3500
+        },
+        "total_monthly_operating_expense_inr": 22200,
+        "net_monthly_operating_cashflow_inr": 38800,
+        "monthly_loan_emi_inr": 4028,
+        "net_monthly_entrepreneur_profit_inr": 34772,
+        "break_even_month": 2,
+        "debt_service_coverage_ratio_dscr": 9.6
+      }
+    },
+    {
+      "dpr_id": "DPR-MUDHI-03",
+      "business_name": "Mechanized Puffed Rice (Mudhi) & Flattened Rice (Chuda) Unit",
+      "category": "Food Processing",
+      "qualifying_scheme": "PMFME / PMEGP / Term Loan Scheme",
+      "total_project_cost_inr": 340000,
+      "financial_structuring": {
+        "promoter_margin_10_percent": 34000,
+        "term_loan_90_percent": 306000,
+        "interest_rate_pa": 8.0,
+        "repayment_tenure_months": 84,
+        "moratorium_period_months": 6,
+        "monthly_emi_post_moratorium_inr": 4768,
+        "eligible_capital_subsidy": "35% credit-linked capital subsidy (₹1,19,000) under PMFME"
+      },
+      "capital_expenditure_capex": [
+        {
+          "item": "Semi-automatic Roaster & Mudhi Making Machine (150 kg/hr)",
+          "cost_inr": 165000
+        },
+        {
+          "item": "Paddy Pre-Cleaner & Destoner Unit",
+          "cost_inr": 45000
+        },
+        {
+          "item": "Continuous Band Nitrogen-Flush Pouch Sealer",
+          "cost_inr": 32000
+        },
+        {
+          "item": "3-Phase Electric Connection & Panel Board",
+          "cost_inr": 28000
+        },
+        {
+          "item": "Weighing Scales, Storage Silos & Crates",
+          "cost_inr": 20000
+        }
+      ],
+      "total_capex_inr": 290000,
+      "initial_working_capital_opex_cycle": [
+        {
+          "item": "Raw processing paddy (50 quintals @ ₹2,200/qtl)",
+          "cost_inr": 30000
+        },
+        {
+          "item": "Custom printed brand packaging pouches (250g/500g)",
+          "cost_inr": 12000
+        },
+        {
+          "item": "Rock salt, fuel briquettes & consumables",
+          "cost_inr": 8000
+        }
+      ],
+      "total_initial_working_capital_inr": 50000,
+      "monthly_operating_economics": {
+        "monthly_finished_mudhi_output_kg": 4000,
+        "value_added_outputs": [
+          {
+            "product": "Packaged Brand Mudhi (3,000 kg @ ₹45/kg)",
+            "monthly_revenue_inr": 135000
+          },
+          {
+            "product": "Bulk Wholesale Sacks (1,000 kg @ ₹36/kg)",
+            "monthly_revenue_inr": 36000
+          },
+          {
+            "product": "Husk & Bran by-product sold for cattle feed",
+            "monthly_revenue_inr": 7500
+          }
+        ],
+        "total_monthly_gross_revenue_inr": 178500,
+        "monthly_operating_costs": {
+          "raw_paddy_procurement": 95000,
+          "power_and_roaster_fuel_briquettes": 12000,
+          "labor_wages (1 operator + 1 helper)": 20000,
+          "packaging_bags": 8500,
+          "distribution_transport": 6000
+        },
+        "total_monthly_operating_expense_inr": 141500,
+        "net_monthly_operating_cashflow_inr": 37000,
+        "monthly_loan_emi_inr": 4768,
+        "net_monthly_entrepreneur_profit_inr": 32232,
+        "break_even_month": 5,
+        "debt_service_coverage_ratio_dscr": 7.7
+      }
+    },
+    {
+      "dpr_id": "DPR-EV-SWAP-04",
+      "business_name": "Two-Wheeler EV Charging & Smart Battery Swapping Station",
+      "category": "Clean Energy & Mobility",
+      "qualifying_scheme": "PMEGP / Term Loan Scheme",
+      "total_project_cost_inr": 420000,
+      "financial_structuring": {
+        "promoter_margin_10_percent": 42000,
+        "term_loan_90_percent": 378000,
+        "interest_rate_pa": 8.0,
+        "repayment_tenure_months": 84,
+        "moratorium_period_months": 6,
+        "monthly_emi_post_moratorium_inr": 5890,
+        "eligible_capital_subsidy": "25-35% Margin Money Subsidy under PMEGP Rural"
+      },
+      "capital_expenditure_capex": [
+        {
+          "item": "8-Slot Smart Lithium Battery Swapping Cabinet",
+          "cost_inr": 190000
+        },
+        {
+          "item": "Initial Battery Pack Inventory (6 swap packs @ ₹25,000)",
+          "cost_inr": 150000
+        },
+        {
+          "item": "Dual Gun Fast Charger (3.3 kW AC)",
+          "cost_inr": 35000
+        },
+        {
+          "item": "CCTV, Canopy & Metering Electrical Work",
+          "cost_inr": 25000
+        }
+      ],
+      "total_capex_inr": 400000,
+      "initial_working_capital_opex_cycle": [
+        {
+          "item": "Commercial electricity meter security deposit",
+          "cost_inr": 12000
+        },
+        {
+          "item": "Software franchise / cloud swap connectivity fee",
+          "cost_inr": 8000
+        }
+      ],
+      "total_initial_working_capital_inr": 20000,
+      "monthly_operating_economics": {
+        "daily_battery_swaps": 35,
+        "daily_fast_charging_sessions": 12,
+        "value_added_outputs": [
+          {
+            "service": "Battery Swap fees (1,050 swaps/mo @ ₹80/swap)",
+            "monthly_revenue_inr": 84000
+          },
+          {
+            "service": "Direct Fast Charging (360 sessions/mo @ ₹60/session)",
+            "monthly_revenue_inr": 21600
+          },
+          {
+            "service": "Tyre air, puncture & helmet cleaning ancillary",
+            "monthly_revenue_inr": 5500
+          }
+        ],
+        "total_monthly_gross_revenue_inr": 111100,
+        "monthly_operating_costs": {
+          "commercial_electricity_bill": 38000,
+          "site_lease_roadside_stall": 8000,
+          "station_attendant_stipend": 14000,
+          "cloud_iot_fee_and_insurance": 3500
+        },
+        "total_monthly_operating_expense_inr": 63500,
+        "net_monthly_operating_cashflow_inr": 47600,
+        "monthly_loan_emi_inr": 5890,
+        "net_monthly_entrepreneur_profit_inr": 41710,
+        "break_even_month": 4,
+        "debt_service_coverage_ratio_dscr": 8.0
+      }
+    }
+  ]
+}

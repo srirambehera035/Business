@@ -1,0 +1,56 @@
+{
+  "source": "MoSPI 6th/7th Economic Census Empirical Rural & Semi-Urban Saturation Thresholds",
+  "methodology": "Density computed as (Estimated Catchment Population) / (Count of Active Units in 5km)",
+  "categories": [
+    {
+      "sector": "Retail Kirana / General Grocery",
+      "ideal_population_per_unit": 450,
+      "saturation_alert_threshold": 250,
+      "status_rules": {
+        "underserved": "Population per unit > 600 (High demand, room for new stores)",
+        "optimal": "Population per unit between 350 and 600",
+        "saturated": "Population per unit < 250 (Red Ocean, price war likely)"
+      }
+    },
+    {
+      "sector": "Automobile & Two-Wheeler Repair Garage",
+      "ideal_population_per_unit": 2200,
+      "saturation_alert_threshold": 1200,
+      "status_rules": {
+        "underserved": "Population per unit > 3,000",
+        "optimal": "Population per unit between 1,800 and 3,000",
+        "saturated": "Population per unit < 1,200"
+      }
+    },
+    {
+      "sector": "Flour Mill / Atta Chaki / Oil Expeller",
+      "ideal_population_per_unit": 1800,
+      "saturation_alert_threshold": 900,
+      "status_rules": {
+        "underserved": "Population per unit > 2,500",
+        "optimal": "Population per unit between 1,200 and 2,500",
+        "saturated": "Population per unit < 900"
+      }
+    },
+    {
+      "sector": "Small-scale Milk Chilling / Bulk Milk Cooler",
+      "ideal_population_per_unit": 12000,
+      "saturation_alert_threshold": 5000,
+      "status_rules": {
+        "underserved": "Population per unit > 15,000 (Major cold chain bottleneck)",
+        "optimal": "Population per unit between 7,000 and 15,000",
+        "saturated": "Population per unit < 5,000"
+      }
+    },
+    {
+      "sector": "Building Materials & Cement Supply",
+      "ideal_population_per_unit": 3500,
+      "saturation_alert_threshold": 1800,
+      "status_rules": {
+        "underserved": "Population per unit > 5,000",
+        "optimal": "Population per unit between 2,500 and 5,000",
+        "saturated": "Population per unit < 1,800"
+      }
+    }
+  ]
+}
