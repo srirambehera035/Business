@@ -3722,8 +3722,8 @@ body {
 /* ── TOP DIV: 2-column grid ─────────────────────────────────────────────────── */
 .biz-gallery-top {
   display: grid;
-  grid-template-columns: 56% 44%;
-  min-height: 440px;
+  grid-template-columns: 50% 50%;
+  min-height: 480px;
 }
 
 /* ── LEFT SPAN: Multi-image offset slider ────────────────────────────────────── */
@@ -3883,8 +3883,8 @@ body {
 
 /* ── RIGHT SPAN: 12-Month Seasonal Demand & Operational Calendar ─────────── */
 .biz-gallery-calendar-pane {
-  background: linear-gradient(145deg, #323696 0%, #242777 100%);
-  padding: 1.35rem 1.5rem 1.15rem;
+  background: linear-gradient(150deg, #2c318f 0%, #1e226a 60%, #15184b 100%);
+  padding: 1.3rem 1.5rem 1.15rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -3913,6 +3913,7 @@ body {
   justify-content: center;
   font-size: 1.1rem;
   flex-shrink: 0;
+  box-shadow: 0 0 14px rgba(34, 197, 94, 0.25);
 }
 
 .gallery-cal-title {
@@ -3926,7 +3927,7 @@ body {
 
 .gallery-cal-subtitle {
   font-size: 0.72rem;
-  color: rgba(226, 232, 240, 0.75);
+  color: rgba(226, 232, 240, 0.78);
   margin: 0;
   line-height: 1.35;
 }
@@ -3949,54 +3950,62 @@ body {
   border-radius: 20px;
 }
 
-/* 12 Months Grid inside gallery */
+/* 12 Months Grid: 3×4 Matrix (3 rows of 4 columns) */
 .biz-gallery-calendar-pane .seasonal-months-grid {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 6px;
-  margin: 0.2rem 0;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 7px;
+  margin: 0.1rem 0;
   overflow: visible;
   padding-bottom: 0;
 }
 
 .biz-gallery-calendar-pane .month-cal-card {
   background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 8px;
-  padding: 0.45rem 0.25rem;
+  padding: 0.48rem 0.3rem;
   text-align: center;
   cursor: pointer;
-  transition: all 0.22s ease;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   min-width: 0;
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  user-select: none;
 }
 
 .biz-gallery-calendar-pane .month-cal-card:hover {
-  background: rgba(255, 255, 255, 0.16);
-  border-color: rgba(255, 255, 255, 0.38);
+  background: rgba(249, 115, 22, 0.2);
+  border-color: #fb923c;
   transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(249, 115, 22, 0.35);
 }
 
 .biz-gallery-calendar-pane .month-cal-card.active {
-  background: rgba(249, 115, 22, 0.25);
+  background: rgba(249, 115, 22, 0.28);
   border-color: #f97316;
-  box-shadow: 0 0 14px rgba(249, 115, 22, 0.4);
+  box-shadow: 0 0 16px rgba(249, 115, 22, 0.45);
   transform: translateY(-2px);
 }
 
 .biz-gallery-calendar-pane .m-name {
-  font-size: 0.78rem;
+  font-size: 0.82rem;
   font-weight: 800;
   color: #ffffff;
-  margin-bottom: 3px;
+  margin-bottom: 2px;
+  letter-spacing: 0.3px;
 }
 
 .biz-gallery-calendar-pane .badge-cal-pill {
   display: inline-block;
   font-size: 0.62rem;
   font-weight: 700;
-  padding: 1px 5px;
+  padding: 1.5px 6px;
   border-radius: 10px;
   line-height: 1.25;
 }
@@ -4020,21 +4029,136 @@ body {
   border: 1px solid rgba(251, 146, 60, 0.45);
 }
 
-/* Active Month Note Box */
+/* ── Dynamic Month Insight & Demanded Businesses Container ───────────── */
 .biz-gallery-calendar-pane .calendar-active-note {
-  background: rgba(10, 15, 35, 0.45);
-  border: 1px dashed rgba(249, 115, 22, 0.45);
-  border-radius: 8px;
+  background: rgba(10, 15, 38, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 9px;
   padding: 0.65rem 0.85rem;
   font-size: 0.78rem;
   color: #f1f5f9;
   line-height: 1.45;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
-.biz-gallery-calendar-pane .calendar-active-note strong {
+.cal-detail-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.cal-detail-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  flex-wrap: wrap;
+}
+
+.cal-detail-month {
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: #ffffff;
+  font-family: 'Outfit', sans-serif;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.cal-detail-season {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #cbd5e1;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 1.5px 7px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.cal-biz-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.cal-biz-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5px;
+}
+
+.cal-biz-group-title {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.cal-biz-group-title strong {
+  color: #e2e8f0;
+}
+
+.cal-biz-chips-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.cal-biz-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 5px;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.cal-biz-chip.seasonal {
+  background: rgba(249, 115, 22, 0.18);
+  border: 1px solid rgba(249, 115, 22, 0.45);
+  color: #ffedd5;
+}
+
+.cal-biz-chip.seasonal:hover {
+  background: rgba(249, 115, 22, 0.3);
+  transform: translateY(-1px);
+}
+
+.cal-biz-chip.other {
+  background: rgba(56, 189, 248, 0.14);
+  border: 1px solid rgba(56, 189, 248, 0.38);
+  color: #e0f2fe;
+}
+
+.cal-biz-chip.other:hover {
+  background: rgba(56, 189, 248, 0.25);
+  transform: translateY(-1px);
+}
+
+.cal-advisory-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  background: rgba(249, 115, 22, 0.09);
+  border: 1px dashed rgba(249, 115, 22, 0.38);
+  border-radius: 5px;
+  padding: 4px 7px;
+  font-size: 0.72rem;
+  color: #fed7aa;
+  line-height: 1.35;
+}
+
+.cal-advisory-row strong {
   color: #fb923c;
 }
 

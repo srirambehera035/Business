@@ -3777,86 +3777,230 @@ const SEASONAL_CALENDAR_DATA = [
   {
     "month": "Jan",
     "name": "January",
+    "quarter": "Q1 - Winter",
     "demand": "Peak",
     "status": "green",
-    "notes": "Winter harvest, wedding surge, high paneer/mushroom sales"
+    "season": "Winter Harvest & Wedding Surge (Rabi Phase 1)",
+    "seasonalBusinesses": [
+      "Solar Milk Chilling & Paneer Unit",
+      "Cold-Pressed Mustard Oil Unit",
+      "Button Mushroom Cultivation"
+    ],
+    "otherBusinesses": [
+      "Paddy Harvesting & Threshing Unit",
+      "Cattle Feed & Silage Making",
+      "Sugarcane Juice & Jaggery Bottling"
+    ],
+    "notes": "Winter harvest & wedding boom drive 3x demand for dairy, paneer & edible oils. Keep raw material inventory stocked."
   },
   {
     "month": "Feb",
     "name": "February",
+    "quarter": "Q1 - Haat Peak",
     "demand": "High",
     "status": "green",
-    "notes": "Festive haat demand, high liquid milk & food processing turnover"
+    "season": "Pre-Spring Haat & Agro-Processing Surge",
+    "seasonalBusinesses": [
+      "Spices Grinding & Packaging Unit",
+      "Bio-Fertilizer & Vermicompost Hub",
+      "Mini Rice & Flour Mill"
+    ],
+    "otherBusinesses": [
+      "Dairy Value Addition (Curd/Butter)",
+      "Custom Hiring Farm Machinery",
+      "Poultry Hatchery & Egg Farm"
+    ],
+    "notes": "Weekly rural haats witness maximum footfall. High turnover for ground spices, flour chakki and organic compost."
   },
   {
     "month": "Mar",
     "name": "March",
+    "quarter": "Q1 - Grain Cycle",
     "demand": "Steady",
     "status": "blue",
-    "notes": "Pre-summer harvest, steady transit sales on highways"
+    "season": "Wheat & Grain Harvesting Cycle",
+    "seasonalBusinesses": [
+      "Combined Harvester & Thresher Service",
+      "Dal Mill & Pulses Processing",
+      "Wheat Flour Chakki Unit"
+    ],
+    "otherBusinesses": [
+      "Solar Water Pumping & Drip Irrigation",
+      "Mini Cold Storage Unit",
+      "Transport & Haat Logistics"
+    ],
+    "notes": "Rabi grain harvesting peak. Ensure fast transit to Mandis and secure dry storage against pre-monsoon pest risk."
   },
   {
     "month": "Apr",
     "name": "April",
+    "quarter": "Q2 - New Year Rush",
     "demand": "High",
     "status": "green",
-    "notes": "New Year / Baisakhi / Pana Sankranti demand for dairy & beverages"
+    "season": "New Year Festivals & Pre-Summer Rush",
+    "seasonalBusinesses": [
+      "Solar Cold Storage & Dairy Chilling",
+      "Flavored Milk, Lassi & Curd Processing",
+      "Sugarcane Juice & Jaggery Bottling"
+    ],
+    "otherBusinesses": [
+      "E-Rickshaw Rural Transit",
+      "Cold Chain Perishables Delivery",
+      "Ice Block & Beverage Production"
+    ],
+    "notes": "Rising temperatures trigger immense demand for chilled dairy, beverages, and cold chain transport."
   },
   {
     "month": "May",
     "name": "May",
+    "quarter": "Q2 - Summer Peak",
     "demand": "Caution",
     "status": "amber",
-    "notes": "Peak summer heat (42°C-44°C); ensure solar cooling aeration active"
+    "season": "Peak Summer Heatwaves (42°C - 45°C)",
+    "seasonalBusinesses": [
+      "Solar Powered Cold Room / Chiller",
+      "Packaged Drinking Water RO Plant",
+      "Solar Rooftop & Inverter Hub"
+    ],
+    "otherBusinesses": [
+      "Deep Freezer Dairy Preservation",
+      "Dry Fodder & Silage Storage",
+      "Rural Hardware & Shade Netting"
+    ],
+    "notes": "Extreme ambient heat hazard. Maintain 24x7 solar cooling aeration; protect dairy livestock hydration and shelf life."
   },
   {
     "month": "Jun",
     "name": "June",
+    "quarter": "Q2 - Kharif Sowing",
     "demand": "Steady",
     "status": "blue",
-    "notes": "Raja Festival & pre-monsoon construction material demand"
+    "season": "Kharif Pre-Sowing & Monsoon Onset",
+    "seasonalBusinesses": [
+      "Certified Paddy Seed Processing",
+      "Organic Bio-Fertilizer & Pesticides",
+      "Farm Machinery Repair & Spare Workshop"
+    ],
+    "otherBusinesses": [
+      "Handloom & Eco-Crafts",
+      "Fish Hatchery & Fingerling Nursery",
+      "Poultry Layer Feed"
+    ],
+    "notes": "Kharif sowing begins. Farmers heavily invest in high-yield seed preparation, bio-manure and tractor equipment."
   },
   {
     "month": "Jul",
     "name": "July",
+    "quarter": "Q3 - Heavy Monsoon",
     "demand": "Caution",
     "status": "red",
-    "notes": "Heavy monsoon rainfall; maintain elevated plinth storage"
+    "season": "Peak South-West Monsoon & Rain Deluges",
+    "seasonalBusinesses": [
+      "Freshwater Aquaculture (Fish / Prawn)",
+      "Hydroponic Green Fodder Unit",
+      "Mushroom Substrate Preparation"
+    ],
+    "otherBusinesses": [
+      "Waterproof Grain Silo Storage",
+      "Veterinary Care & Animal Health Point",
+      "Rural Logistics & Transit"
+    ],
+    "notes": "Transit and flooding caution. Elevate inventory on high plinths; monitor pond water pH and aeration."
   },
   {
     "month": "Aug",
     "name": "August",
+    "quarter": "Q3 - Aquaculture",
     "demand": "Steady",
     "status": "blue",
-    "notes": "Monsoon vegetable processing, mushroom indoor flushes"
+    "season": "Mid-Monsoon Aquaculture & Indoor Cultivation",
+    "seasonalBusinesses": [
+      "Composite Fish Farming Unit",
+      "Milch Cattle Dairy Expansion",
+      "Oyster Mushroom Cultivation"
+    ],
+    "otherBusinesses": [
+      "Solar Dehydration for Spices & Herbs",
+      "Poultry Layer Unit",
+      "Bio-Gas Energy Unit"
+    ],
+    "notes": "Indoor mushroom flushes thrive in monsoon humidity. Rapid growth for aquaculture fingerlings in rural ponds."
   },
   {
     "month": "Sep",
     "name": "September",
+    "quarter": "Q3 - Pre-Festive",
     "demand": "High",
     "status": "green",
-    "notes": "Pre-Puja retail stock replenishment, packaging box surges"
+    "season": "Pre-Festive Retail Stocking & Haat Surges",
+    "seasonalBusinesses": [
+      "Eco-Friendly Clay & Terracotta Crafts",
+      "Packaging Box & Paper Bag Making",
+      "Ready-to-Eat Namkeen & Snacks Unit"
+    ],
+    "otherBusinesses": [
+      "Honey Bee Keeping & Processing",
+      "Bakery & Confectionery Unit",
+      "Liquid Milk Distribution"
+    ],
+    "notes": "Retailers build inventory ahead of Durga Puja & Diwali. Huge surge for gift packaging and processed snacks."
   },
   {
     "month": "Oct",
     "name": "October",
+    "quarter": "Q4 - Festive Boom",
     "demand": "Peak",
     "status": "green",
-    "notes": "Durga Puja & Dussehra festival boom; 3x sales volume"
+    "season": "Durga Puja, Dussehra & Navratri Boom",
+    "seasonalBusinesses": [
+      "Sweets, Mawa & Khoya Processing",
+      "Solar Milk Chilling & Paneer Unit",
+      "Banana Fiber & Jute Handicrafts"
+    ],
+    "otherBusinesses": [
+      "Rural Event Sound & Lighting Rental",
+      "Mini Mustard Oil Expeller",
+      "Haat Express Cargo Logistics"
+    ],
+    "notes": "Sales surge 300% across festive markets. Direct high-margin retail of sweets, curd, paneer, and ceremonial craft."
   },
   {
     "month": "Nov",
     "name": "November",
+    "quarter": "Q4 - Wedding Peak",
     "demand": "Peak",
     "status": "green",
-    "notes": "Diwali & wedding season; maximum dairy & sweet orders"
+    "season": "Diwali, Chhath Puja & Winter Weddings",
+    "seasonalBusinesses": [
+      "Cold-Pressed Mustard & Sesame Oil",
+      "Dairy & Pure Desi Ghee Packaging",
+      "Paddy Harvesting & Threshing Unit"
+    ],
+    "otherBusinesses": [
+      "Fresh Button Mushroom Harvest",
+      "Rural Fast-Moving Retail Goods",
+      "Mini Cold Storage"
+    ],
+    "notes": "Maximum liquidity in rural economy. Peak sales for pure ghee, cooking oils, and winter wedding catering."
   },
   {
     "month": "Dec",
     "name": "December",
+    "quarter": "Q4 - Winter Wayside",
     "demand": "High",
     "status": "green",
-    "notes": "Winter tourist transit on NH-16, picnic perishables demand"
+    "season": "Winter Tourist Transit & Highway Haats",
+    "seasonalBusinesses": [
+      "Highway Wayside Agri-Tourism & Food Stall",
+      "Winter Vegetable Dehydration Unit",
+      "Honey & Herbal Extracts Unit"
+    ],
+    "otherBusinesses": [
+      "Solar Milk Chilling & Dairy",
+      "Poultry Meat Processing",
+      "Floriculture & Marigold Farm"
+    ],
+    "notes": "NH highway tourist flow boosts roadside sales of fresh dairy, processed snacks, honey, and winter flower garlands."
   }
 ];
 

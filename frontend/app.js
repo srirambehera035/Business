@@ -299,22 +299,94 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!grid || typeof SEASONAL_CALENDAR_DATA === 'undefined') return;
     grid.innerHTML = '';
 
+    const updateActiveMonth = (m, card) => {
+      document.querySelectorAll('.month-cal-card').forEach(c => c.classList.remove('active'));
+      if (card) card.classList.add('active');
+
+      if (!noteEl) return;
+
+      const topBizHtml = (m.seasonalBusinesses || []).map(b => 
+        `<span class="cal-biz-chip seasonal"><i class="fa-solid fa-fire"></i> ${b}</span>`
+      ).join('');
+
+      const otherBizHtml = (m.otherBusinesses || []).map(b => 
+        `<span class="cal-biz-chip other"><i class="fa-solid fa-briefcase"></i> ${b}</span>`
+      ).join('');
+
+      const demandBadge = `<span class="badge-cal-pill ${m.status}">${m.demand} Demand</span>`;
+
+      noteEl.innerHTML = `
+        <div class="cal-detail-card">
+          <div class="cal-detail-header">
+            <div class="cal-detail-month">
+              <i class="fa-solid fa-calendar-check text-green"></i> ${m.name} (${m.month})
+            </div>
+            <div class="flex-align" style="gap:6px;">
+              <span class="cal-detail-season">${m.season || ''}</span>
+              ${demandBadge}
+            </div>
+          </div>
+
+          <div class="cal-biz-sections">
+            <div class="cal-biz-group">
+              <div class="cal-biz-group-title">
+                <i class="fa-solid fa-fire text-orange"></i> <strong>Seasonal Demanded Businesses:</strong>
+              </div>
+              <div class="cal-biz-chips-wrap">
+                ${topBizHtml}
+              </div>
+            </div>
+
+            <div class="cal-biz-group">
+              <div class="cal-biz-group-title">
+                <i class="fa-solid fa-layer-group text-blue"></i> <strong>Other Demanded Businesses:</strong>
+              </div>
+              <div class="cal-biz-chips-wrap">
+                ${otherBizHtml}
+              </div>
+            </div>
+          </div>
+
+          <div class="cal-advisory-row">
+            <i class="fa-solid fa-lightbulb text-orange"></i>
+            <div><strong>Operational &amp; Cash Flow Guidance:</strong> ${m.notes}</div>
+          </div>
+        </div>
+      `;
+    };
+
     SEASONAL_CALENDAR_DATA.forEach((m, idx) => {
       const card = document.createElement('div');
       card.className = `month-cal-card ${idx === 0 ? 'active' : ''}`;
+      card.setAttribute('role', 'button');
+      card.setAttribute('tabindex', '0');
+      card.setAttribute('aria-label', `${m.name} - ${m.demand} demand`);
+
       card.innerHTML = `
         <div class="m-name">${m.month}</div>
         <span class="badge-cal-pill ${m.status}">${m.demand}</span>
       `;
 
+      // Hover event: instantly display demanded businesses & guidance
+      card.addEventListener('mouseenter', () => {
+        updateActiveMonth(m, card);
+      });
+
+      // Click & Keyboard Focus support (for touch devices and accessibility)
       card.addEventListener('click', () => {
-        document.querySelectorAll('.month-cal-card').forEach(c => c.classList.remove('active'));
-        card.classList.add('active');
-        noteEl.innerHTML = `<strong>${m.name} Operational Advice:</strong> ${m.notes}`;
+        updateActiveMonth(m, card);
+      });
+      card.addEventListener('focus', () => {
+        updateActiveMonth(m, card);
       });
 
       grid.appendChild(card);
     });
+
+    // Render January by default on initialization
+    if (SEASONAL_CALENDAR_DATA.length > 0 && grid.children.length > 0) {
+      updateActiveMonth(SEASONAL_CALENDAR_DATA[0], grid.children[0]);
+    }
   }
 
   // --- LOCAL BANK BRANCH & SCA DIRECTORY ---
