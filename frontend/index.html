@@ -1015,14 +1015,57 @@
         <div class="flex-align">
           <i class="fa-solid fa-id-card text-blue modal-icon"></i>
           <div>
-            <h3 class="modal-title" data-i18n="modalLoginTitle">Beneficiary Onboarding & Location Setup</h3>
-            <p class="modal-subtitle">Ministry of Social Justice & Empowerment Onboarding Portal</p>
+            <h3 class="modal-title" id="authModalTitle">Citizen Portal Access</h3>
+            <p class="modal-subtitle">Ministry of Social Justice & Empowerment Concessional Credit Portal</p>
           </div>
         </div>
         <button id="btnCloseLogin" class="btn-close">&times;</button>
       </div>
+
+      <!-- Auth Mode Tab Switcher -->
+      <div class="auth-tab-bar">
+        <button type="button" class="auth-tab-btn active" id="btnAuthTabLogin">
+          <i class="fa-solid fa-right-to-bracket"></i> Citizen Login
+        </button>
+        <button type="button" class="auth-tab-btn" id="btnAuthTabRegister">
+          <i class="fa-solid fa-user-plus"></i> New Registration
+        </button>
+      </div>
+
       <div class="modal-body">
-        <form id="formRegister">
+        <!-- 1. DIRECT LOGIN FORM -->
+        <form id="formLoginDirect" class="auth-form-pane active">
+          <div class="form-group">
+            <label for="loginMobile"><i class="fa-solid fa-mobile-screen"></i> Registered Mobile Number / Aadhaar ID *</label>
+            <input type="tel" id="loginMobile" class="form-control" placeholder="Enter 10-digit mobile number" required value="9876543210">
+          </div>
+
+          <div class="form-group">
+            <label for="loginOtp"><i class="fa-solid fa-key"></i> OTP / Security Access PIN *</label>
+            <div class="input-with-action">
+              <input type="password" id="loginOtp" class="form-control" placeholder="Enter 6-digit OTP or PIN" required value="123456">
+              <button type="button" class="btn-secondary-sm" id="btnSendOtp">Send OTP</button>
+            </div>
+            <small class="text-muted" style="margin-top:0.35rem; display:block;"><i class="fa-solid fa-circle-info"></i> Demo PIN: 123456 (or click Send OTP to test authentication)</small>
+          </div>
+
+          <div class="form-group flex-between flex-align" style="margin-top:1.2rem;">
+            <label class="flex-align" style="font-size:0.82rem; cursor:pointer;">
+              <input type="checkbox" checked style="margin-right:0.4rem;"> Remember login session
+            </label>
+            <a href="#" id="linkForgotPin" style="font-size:0.8rem; color:#2563eb; text-decoration:none; font-weight:600;">Forgot PIN?</a>
+          </div>
+
+          <div class="form-submit-row flex-between" style="margin-top:1.5rem;">
+            <small class="text-muted"><i class="fa-solid fa-shield-halved text-green"></i> Authenticated via DigiLocker & MSJE Portal</small>
+            <button type="submit" class="btn-primary-lg flex-align">
+              <i class="fa-solid fa-right-to-bracket"></i> Login to Citizen Dashboard
+            </button>
+          </div>
+        </form>
+
+        <!-- 2. REGISTRATION FORM -->
+        <form id="formRegister" class="auth-form-pane">
           
           <div class="form-grid-2">
             <div class="form-group">

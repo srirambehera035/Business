@@ -1316,27 +1316,81 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --- CITIZEN LOGIN / REGISTRATION MODAL CONTROLLER ---
-  btnOpenLogin.addEventListener('click', () => {
+  const btnAuthTabLogin = document.getElementById('btnAuthTabLogin');
+  const btnAuthTabRegister = document.getElementById('btnAuthTabRegister');
+  const formLoginDirect = document.getElementById('formLoginDirect');
+  const btnSendOtp = document.getElementById('btnSendOtp');
+
+  btnOpenLogin?.addEventListener('click', () => {
     if (currentUser.isLoggedIn) {
-      document.querySelector('.tab-btn[data-target="secProfile"]').click();
+      document.querySelector('.tab-btn[data-target="secProfile"]')?.click();
     } else {
-      loginModal.classList.add('active');
+      loginModal?.classList.add('active');
     }
   });
 
-  btnCloseLogin.addEventListener('click', () => loginModal.classList.remove('active'));
+  document.getElementById('ftrLinkLogin')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (currentUser.isLoggedIn) {
+      document.querySelector('.tab-btn[data-target="secProfile"]')?.click();
+    } else {
+      loginModal?.classList.add('active');
+    }
+  });
 
-  formRegister.addEventListener('submit', (e) => {
+  btnCloseLogin?.addEventListener('click', () => loginModal?.classList.remove('active'));
+
+  // Auth Modal Tab Switcher
+  btnAuthTabLogin?.addEventListener('click', () => {
+    btnAuthTabLogin.classList.add('active');
+    btnAuthTabRegister?.classList.remove('active');
+    formLoginDirect?.classList.add('active');
+    formRegister?.classList.remove('active');
+  });
+
+  btnAuthTabRegister?.addEventListener('click', () => {
+    btnAuthTabRegister.classList.add('active');
+    btnAuthTabLogin?.classList.remove('active');
+    formRegister?.classList.add('active');
+    formLoginDirect?.classList.remove('active');
+  });
+
+  // Send OTP Feedback
+  btnSendOtp?.addEventListener('click', () => {
+    const mobInput = document.getElementById('loginMobile');
+    const val = mobInput?.value || "9876543210";
+    btnSendOtp.textContent = 'OTP Sent!';
+    btnSendOtp.style.background = '#dcfce7';
+    btnSendOtp.style.color = '#15803d';
+    setTimeout(() => {
+      btnSendOtp.textContent = 'Send OTP';
+      btnSendOtp.style.background = '';
+      btnSendOtp.style.color = '';
+    }, 3000);
+  });
+
+  // Direct Login Form Handler
+  formLoginDirect?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const mob = document.getElementById('loginMobile')?.value || "9876543210";
+    currentUser.mobile = mob;
+    currentUser.isLoggedIn = true;
+    loginModal?.classList.remove('active');
+    triggerVerificationAnimation();
+  });
+
+  // Registration Form Handler
+  formRegister?.addEventListener('submit', (e) => {
     e.preventDefault();
 
-    currentUser.name = document.getElementById('regName').value || "Sriram Jena";
-    currentUser.mobile = document.getElementById('regMobile').value || "9876543210";
-    currentUser.category = document.getElementById('regCategory').value || "sc";
-    currentUser.state = document.getElementById('regState').value;
-    currentUser.district = document.getElementById('regDistrict').value;
-    currentUser.area = document.getElementById('regArea').value;
-    currentUser.pin = document.getElementById('regPin').value;
-    currentUser.margin = parseInt(document.getElementById('regMargin').value) || 48000;
+    currentUser.name = document.getElementById('regName')?.value || "Sriram Jena";
+    currentUser.mobile = document.getElementById('regMobile')?.value || "9876543210";
+    currentUser.category = document.getElementById('regCategory')?.value || "sc";
+    currentUser.state = document.getElementById('regState')?.value || "Odisha";
+    currentUser.district = document.getElementById('regDistrict')?.value || "Khordha";
+    currentUser.area = document.getElementById('regArea')?.value || "Khordha Rural Cluster";
+    currentUser.pin = document.getElementById('regPin')?.value || "751010";
+    currentUser.margin = parseInt(document.getElementById('regMargin')?.value) || 48000;
     
     currentCategory = currentUser.category;
     document.querySelectorAll('.category-card').forEach(c => {
@@ -1347,7 +1401,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (selectedStatus) currentUser.status = selectedStatus.value;
     currentUser.isLoggedIn = true;
 
-    loginModal.classList.remove('active');
+    loginModal?.classList.remove('active');
     triggerVerificationAnimation();
   });
 
