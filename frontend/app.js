@@ -85,12 +85,31 @@ document.addEventListener('DOMContentLoaded', () => {
   setupWhatsAppSharing();
   renderBusinessPlansMarquee();
   setupEnterpriseGallery();
+  setupHeroVideoPlaylist();
 
   // Select initial business & calculate
   selectBusiness(BUSINESSES_DATA[0]);
 
   // Apply initial translations
   updateLanguageTexts();
+
+  // --- HERO BACKGROUND VIDEO PLAYLIST ENGINE ---
+  function setupHeroVideoPlaylist() {
+    const heroVideo = document.getElementById('heroBgVideo');
+    if (!heroVideo) return;
+
+    const playlist = [
+      "https://res.cloudinary.com/n0c7bqpd/video/upload/v1790452960/WhatsApp_Video_2026-09-27_at_01.28.53_z97fu1.mp4",
+      "https://res.cloudinary.com/n0c7bqpd/video/upload/v1790453491/WhatsApp_Video_2026-09-27_at_01.30.20_j5ffts.mp4"
+    ];
+    let currentIndex = 0;
+
+    heroVideo.addEventListener('ended', () => {
+      currentIndex = (currentIndex + 1) % playlist.length;
+      heroVideo.src = playlist[currentIndex];
+      heroVideo.play().catch(err => console.log('Hero video transition error:', err));
+    });
+  }
 
   // --- THEME ENGINE ---
   function initTheme() {
