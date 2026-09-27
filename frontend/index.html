@@ -1013,13 +1013,15 @@
     <div class="modal-dialog auth-modal-dialog">
       <div class="modal-header flex-between">
         <div class="flex-align">
-          <i class="fa-solid fa-id-card text-blue modal-icon"></i>
+          <div class="modal-icon-wrap">
+            <i class="fa-solid fa-scale-balanced text-orange"></i>
+          </div>
           <div>
             <h3 class="modal-title" id="authModalTitle">Citizen Portal Access</h3>
             <p class="modal-subtitle">Ministry of Social Justice & Empowerment Concessional Credit Portal</p>
           </div>
         </div>
-        <button id="btnCloseLogin" class="btn-close">&times;</button>
+        <button id="btnCloseLogin" class="btn-close" aria-label="Close Modal">&times;</button>
       </div>
 
       <!-- Auth Mode Tab Switcher -->
@@ -1036,24 +1038,24 @@
         <!-- 1. DIRECT LOGIN FORM -->
         <form id="formLoginDirect" class="auth-form-pane active">
           <div class="form-group">
-            <label for="loginMobile"><i class="fa-solid fa-mobile-screen"></i> Registered Mobile Number / Aadhaar ID *</label>
+            <label for="loginMobile"><i class="fa-solid fa-mobile-screen text-blue"></i> Registered Mobile Number / Aadhaar ID *</label>
             <input type="tel" id="loginMobile" class="form-control" placeholder="Enter 10-digit mobile number" required value="9876543210">
           </div>
 
           <div class="form-group">
-            <label for="loginOtp"><i class="fa-solid fa-key"></i> OTP / Security Access PIN *</label>
+            <label for="loginOtp"><i class="fa-solid fa-key text-blue"></i> OTP / Security Access PIN *</label>
             <div class="input-with-action">
               <input type="password" id="loginOtp" class="form-control" placeholder="Enter 6-digit OTP or PIN" required value="123456">
               <button type="button" class="btn-secondary-sm" id="btnSendOtp">Send OTP</button>
             </div>
-            <small class="text-muted" style="margin-top:0.35rem; display:block;"><i class="fa-solid fa-circle-info"></i> Demo PIN: 123456 (or click Send OTP to test authentication)</small>
+            <small class="text-muted" style="margin-top:0.4rem; display:block;"><i class="fa-solid fa-circle-info text-blue"></i> Demo PIN: 123456 (or click Send OTP to test authentication)</small>
           </div>
 
           <div class="form-group flex-between flex-align" style="margin-top:1.2rem;">
-            <label class="flex-align" style="font-size:0.82rem; cursor:pointer;">
-              <input type="checkbox" checked style="margin-right:0.4rem;"> Remember login session
+            <label class="flex-align" style="font-size:0.85rem; cursor:pointer;">
+              <input type="checkbox" checked style="margin-right:0.45rem;"> Remember login session
             </label>
-            <a href="#" id="linkForgotPin" style="font-size:0.8rem; color:#2563eb; text-decoration:none; font-weight:600;">Forgot PIN?</a>
+            <a href="#" id="linkForgotPin" style="font-size:0.82rem; color:#2563eb; text-decoration:none; font-weight:600;">Forgot PIN?</a>
           </div>
 
           <div class="form-submit-row flex-between" style="margin-top:1.5rem;">
@@ -1069,7 +1071,7 @@
           
           <div class="form-grid-2">
             <div class="form-group">
-              <label for="regName"><i class="fa-solid fa-user"></i> <span data-i18n="lblFullName">Full Name:</span> *</label>
+              <label for="regName"><i class="fa-solid fa-user text-blue"></i> Full Name *</label>
               <div class="input-with-mic">
                 <input type="text" id="regName" class="form-control" placeholder="e.g. Sriram Jena" required value="Sriram Jena">
                 <button type="button" class="btn-mic-field" data-input="regName" title="Speak to Fill Name">
@@ -1078,14 +1080,14 @@
               </div>
             </div>
             <div class="form-group">
-              <label for="regMobile"><i class="fa-solid fa-mobile-screen"></i> <span data-i18n="lblMobile">Mobile Number (10 Digits):</span> *</label>
+              <label for="regMobile"><i class="fa-solid fa-mobile-screen text-blue"></i> Mobile Number (10 Digits) *</label>
               <input type="tel" id="regMobile" class="form-control" placeholder="10-digit mobile number" required value="9876543210">
             </div>
           </div>
 
           <!-- Social Category Dropdown (MSJE Mandate) -->
           <div class="form-group">
-            <label for="regCategory"><i class="fa-solid fa-users-viewfinder"></i> Socio-Economic Category (MSJE Mandate) *</label>
+            <label for="regCategory"><i class="fa-solid fa-users-viewfinder text-blue"></i> Socio-Economic Category (MSJE Mandate) *</label>
             <select id="regCategory" class="form-control" required>
               <option value="sc" selected>Scheduled Caste (SC) - NSFDC Concessional Channel</option>
               <option value="st">Scheduled Tribe (ST) - NSTFDC Tribal Channel</option>
@@ -1096,9 +1098,9 @@
             </select>
           </div>
 
-          <div class="form-grid-3">
+          <div class="form-grid-2">
             <div class="form-group">
-              <label for="regState"><i class="fa-solid fa-landmark"></i> State (Select or Type) *</label>
+              <label for="regState"><i class="fa-solid fa-landmark text-blue"></i> State *</label>
               <input list="stateList" id="regState" class="form-control" placeholder="Select or type State" required value="Odisha">
               <datalist id="stateList">
                 <option value="Odisha">
@@ -1117,7 +1119,7 @@
             </div>
 
             <div class="form-group">
-              <label for="regDistrict"><i class="fa-solid fa-city"></i> <span data-i18n="lblDistrict">District:</span> (Select or Type) *</label>
+              <label for="regDistrict"><i class="fa-solid fa-city text-blue"></i> District *</label>
               <div class="input-with-mic">
                 <input list="districtList" id="regDistrict" class="form-control" placeholder="Select or type District" required value="Khordha">
                 <datalist id="districtList">
@@ -1139,9 +1141,11 @@
                 </button>
               </div>
             </div>
+          </div>
 
+          <div class="form-grid-2">
             <div class="form-group">
-              <label for="regArea"><i class="fa-solid fa-location-dot"></i> Village / Town (Select or Type) *</label>
+              <label for="regArea"><i class="fa-solid fa-location-dot text-blue"></i> Village / Town *</label>
               <div class="input-with-mic">
                 <input list="villageList" id="regArea" class="form-control" placeholder="Select or type Village" required value="Khordha Rural Cluster">
                 <datalist id="villageList">
@@ -1160,17 +1164,16 @@
                 </button>
               </div>
             </div>
-          </div>
 
-          <div class="form-grid-2">
             <div class="form-group">
-              <label for="regPin"><i class="fa-solid fa-envelope"></i> Postal <span data-i18n="lblPincode">Postal PIN Code:</span> *</label>
+              <label for="regPin"><i class="fa-solid fa-envelope text-blue"></i> Postal PIN Code *</label>
               <input type="text" id="regPin" class="form-control" placeholder="6-digit PIN" required value="751010">
             </div>
-            <div class="form-group">
-              <label for="regMargin"><i class="fa-solid fa-wallet"></i> Available Margin Capital (₹) *</label>
-              <input type="number" id="regMargin" class="form-control" placeholder="e.g. 48000" min="10000" step="1000" required value="48000">
-            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="regMargin"><i class="fa-solid fa-wallet text-blue"></i> Available 10% Margin Capital (₹) *</label>
+            <input type="number" id="regMargin" class="form-control" placeholder="e.g. 48000" min="10000" step="1000" required value="48000">
           </div>
 
           <div class="form-group">

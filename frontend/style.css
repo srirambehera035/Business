@@ -1509,44 +1509,83 @@ body {
   box-shadow: 0 20px 25px -5px rgba(0,0,0,0.25);
   color: var(--text-main);
 }
-.auth-modal-dialog { max-width: 640px; }
-.modal-header {
-  padding: 1rem 1.4rem;
-  border-bottom: 1px solid var(--border-color);
+/* Premium Modal Header & Glassmorphism */
+.auth-modal-dialog {
+  max-width: 680px;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 }
-.modal-title { font-family: var(--font-heading); font-size: 1.2rem; font-weight: 800; color: var(--text-main); }
-.modal-subtitle { font-size: 0.75rem; color: var(--text-muted); }
-.btn-close {
-  background: transparent;
-  border: none;
-  font-size: 1.8rem;
-  line-height: 1;
-  color: var(--text-muted);
-  cursor: pointer;
+
+.auth-modal-dialog .modal-header {
+  background: linear-gradient(135deg, #0b3b60 0%, #1e527d 100%);
+  color: #ffffff;
+  padding: 1.25rem 1.6rem;
+  border-bottom: 2px solid rgba(255, 153, 51, 0.4);
 }
+
+.modal-icon-wrap {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  margin-right: 0.8rem;
+}
+
+.auth-modal-dialog .modal-title {
+  color: #ffffff;
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: -0.2px;
+}
+
+.auth-modal-dialog .modal-subtitle {
+  color: #cbd5e1;
+  font-size: 0.78rem;
+  margin-top: 0.15rem;
+}
+
+.auth-modal-dialog .btn-close {
+  color: #cbd5e1;
+  font-size: 1.6rem;
+  transition: color 0.2s, transform 0.2s;
+}
+
+.auth-modal-dialog .btn-close:hover {
+  color: #ffffff;
+  transform: scale(1.1);
+}
+
 .modal-body { padding: 1.4rem; }
 
-/* Auth Modal Tabs & Panes */
+/* Modern Segmented Tab Control */
 .auth-tab-bar {
   display: flex;
-  background: var(--bg-card-subtle);
-  border-bottom: 1px solid var(--border-color);
-  padding: 0 1.4rem;
-  gap: 0.5rem;
+  background: var(--bg-card-subtle, #f1f5f9);
+  border: 1px solid var(--border-color, #e2e8f0);
+  border-radius: 12px;
+  padding: 4px;
+  margin: 1.2rem 1.4rem 0.5rem;
+  gap: 4px;
 }
 
 .auth-tab-btn {
   flex: 1;
-  padding: 0.75rem 1rem;
-  background: transparent;
+  padding: 0.65rem 1rem;
+  border-radius: 8px;
   border: none;
-  border-bottom: 3px solid transparent;
+  background: transparent;
   font-family: var(--font-heading);
   font-size: 0.88rem;
   font-weight: 700;
-  color: var(--text-muted);
+  color: var(--text-muted, #64748b);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.25s ease;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1554,15 +1593,19 @@ body {
 }
 
 .auth-tab-btn.active {
-  color: var(--primary-navy, #0b3b60);
-  border-bottom-color: var(--saffron, #ff9933);
-  background: rgba(11, 59, 96, 0.04);
+  background: #ffffff;
+  color: #0b3b60;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="dark"] .auth-tab-bar {
+  background: rgba(255, 255, 255, 0.05);
 }
 
 [data-theme="dark"] .auth-tab-btn.active {
+  background: #1e293b;
   color: #38bdf8;
-  border-bottom-color: #ff9933;
-  background: rgba(56, 189, 248, 0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .auth-form-pane {
@@ -1571,6 +1614,81 @@ body {
 
 .auth-form-pane.active {
   display: block;
+}
+
+/* Form Group & Input Improvements */
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.83rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 0.4rem;
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.65rem 0.9rem;
+  border: 1.5px solid var(--border-color, #cbd5e1);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  background: var(--bg-card);
+  color: var(--text-main);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+.input-with-mic {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-with-mic input {
+  padding-right: 44px;
+}
+
+.btn-mic-field {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(37, 99, 235, 0.1);
+  color: #2563eb;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.btn-mic-field:hover {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.btn-mic-field.listening {
+  background: #ef4444;
+  color: #ffffff;
+  animation: pulseMic 1s infinite;
+}
+
+@keyframes pulseMic {
+  0% { transform: translateY(-50%) scale(1); }
+  50% { transform: translateY(-50%) scale(1.15); }
+  100% { transform: translateY(-50%) scale(1); }
 }
 
 .input-with-action {
@@ -1591,38 +1709,45 @@ body {
   padding: 0.35rem 0.65rem;
 }
 
-/* Radio Cards (Requirement 2) */
-.form-grid-2 {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-}
-.form-grid-3 {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 0.8rem;
-}
-.radio-options-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  margin-top: 0.3rem;
-}
+/* Radio Card Custom Selection Styling */
 .radio-card {
   display: flex;
   align-items: flex-start;
-  gap: 0.75rem;
+  gap: 0.85rem;
   background: var(--bg-card-subtle);
-  border: 1px solid var(--border-color);
-  padding: 0.75rem 1rem;
-  border-radius: 6px;
+  border: 1.5px solid var(--border-color);
+  padding: 0.85rem 1.1rem;
+  border-radius: 10px;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.2s ease;
 }
-.radio-card:hover { border-color: var(--border-focus); }
-.radio-card input { margin-top: 0.25rem; }
-.radio-card strong { display: block; font-size: 0.85rem; color: var(--text-main); }
-.radio-card small { display: block; font-size: 0.72rem; color: var(--text-muted); }
+
+.radio-card:hover {
+  border-color: #2563eb;
+  background: rgba(37, 99, 235, 0.03);
+}
+
+.radio-card input[type="radio"] {
+  accent-color: #0b3b60;
+  width: 16px;
+  height: 16px;
+  margin-top: 0.2rem;
+}
+
+.radio-card strong {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 0.15rem;
+}
+
+.radio-card small {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
 .form-submit-row {
   margin-top: 1.2rem;
   padding-top: 1rem;
