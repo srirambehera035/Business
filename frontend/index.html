@@ -3,7 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Vyapaar Sarthi | Rural Micro-Enterprise Advisory & Concessional Scheme Navigator | Govt. of India</title>
+  <title>Vyapaar Sarthi</title>
+  <link rel="icon" type="image/png" href="assets/logo.png">
+  <link rel="shortcut icon" href="assets/logo.png">
+  <link rel="apple-touch-icon" href="assets/logo.png">
   <meta name="description" content="Vyapaar Sarthi - AI-Driven Hyper-Local Business Advisory and Concessional Financial Structuring Platform for Rural Micro-Entrepreneurs under Ministry of Social Justice and Empowerment, Government of India.">
   
   <!-- Google Fonts: Inter & Outfit -->
@@ -70,10 +73,10 @@
     <div class="container flex-between">
       <div class="portal-identity flex-align">
         <div class="portal-logo-icon">
-          <i class="fa-solid fa-scale-balanced"></i>
+          <img src="assets/logo.png" alt="Vyapaar Sarthi Logo" class="portal-logo-img">
         </div>
         <div>
-          <h1 class="portal-name"><span data-i18n="portalTitle">Vyapaar Sarthi</span> <span class="badge-beta">MSJE PAN-INDIA</span></h1>
+          <h1 class="portal-name"><span data-i18n="portalTitle"><span class="brand-vyapaar">Vyapaar</span> <span class="brand-sarthi">Sarthi</span></span> <span class="badge-beta">MSJE PAN-INDIA</span></h1>
           <p class="portal-tagline" data-i18n="tagline">National AI Rural Enterprise Advisory & Concessional Scheme Navigator</p>
         </div>
       </div>
@@ -147,8 +150,7 @@
     <div class="container">
       <div class="video-showcase-card">
         <div class="video-section-header text-center">
-          <span class="badge-video"><i class="fa-solid fa-circle-play"></i> RURAL CITIZEN VIDEO GUIDE</span>
-          <h3 class="video-section-title" data-i18n="videoSectionTitle">Official Video Guide: How to Use Vyapaar Sarthi</h3>
+          <h3 class="video-section-title" data-i18n="videoSectionTitle">Official Video Guide: How to Use <span class="brand-vyapaar">Vyapaar</span> <span class="brand-sarthi">Sarthi</span></h3>
           <p class="video-section-subtitle" data-i18n="videoSectionDesc">
             A complete visual walkthrough for rural citizens to test business viability and secure concessional credit.
           </p>
@@ -257,116 +259,6 @@
   </div>
 
   <!-- ========================================================================= -->
-  <!-- CONTROL DOCK: LOCATION & 32 BUSINESS DROPDOWN SELECTOR                   -->
-  <!-- ========================================================================= -->
-  <section class="control-dock-section" id="secControlDock">
-    <div class="container">
-      <div class="dock-card">
-        <div class="dock-header flex-between">
-          <div class="flex-align">
-            <span class="dock-step">STEP 1</span>
-            <h3 class="dock-title" data-i18n="inputTitle">Select Location &amp; Enterprise Parameters</h3>
-          </div>
-          <div class="dock-actions flex-align">
-            <button id="btnOpenCompareDock" class="btn-compare-pill flex-align" title="Compare 2 Business Plans Side-by-Side">
-              <i class="fa-solid fa-code-compare"></i> <span data-i18n="btnCompareSchemes">Compare All Concessional Schemes</span>
-            </button>
-          </div>
-        </div>
-
-        <form class="dock-form-grid" id="formEnterpriseParams" onsubmit="event.preventDefault();">
-          <!-- 1. Geographic Location Selector (Pan-India) -->
-          <div class="form-group">
-            <label for="selectLocation" class="form-label">
-              <i class="fa-solid fa-map-pin text-orange"></i> 
-              <span data-i18n="lblLocation">Target Geographic Cluster / Village</span>
-            </label>
-            <div class="input-select-wrap">
-              <select id="selectLocation" class="form-control form-select-custom">
-                <option value="panindia" selected>National Rural Directory (All 766 Districts Mapped)</option>
-                <option value="khordha">Khordha District Cluster, Odisha (751010)</option>
-                <option value="bodhgaya">Bodh Gaya Peri-Urban Cluster, Gaya, Bihar (824231)</option>
-                <option value="sarnath">Sarnath Rural Haat, Varanasi, Uttar Pradesh (221001)</option>
-                <option value="baramati">Baramati Agro-Processing Cluster, Pune, Maharashtra (413102)</option>
-                <option value="singur">Singur Agro-Hub, Hooghly, West Bengal (712409)</option>
-                <option value="alanganallur">Alanganallur Agro-Center, Madurai, Tamil Nadu (625501)</option>
-                <option value="wardhannapet">Wardhannapet Rural Cluster, Warangal, Telangana (506313)</option>
-                <option value="custom">-- Custom Village (Registered in Citizen Profile) --</option>
-              </select>
-            </div>
-            <small class="form-hint"><i class="fa-solid fa-circle-info"></i> Geocoded catchment for competitor mapping &amp; localized threat radars</small>
-          </div>
-
-          <!-- 2. Available Margin Capital (Text Input with min 10,000 & Quick Buttons) -->
-          <div class="form-group">
-            <div class="label-with-min-tag flex-between">
-              <label for="inputMarginCapital" class="form-label">
-                <i class="fa-solid fa-wallet text-green"></i> 
-                <span data-i18n="lblMargin">Available Margin Capital (10% Self Contribution)</span>
-              </label>
-              <span class="badge-min-margin"><i class="fa-solid fa-shield-halved"></i> Min: ₹10,000</span>
-            </div>
-
-            <div class="margin-text-input-wrap">
-              <span class="currency-symbol">₹</span>
-              <input 
-                type="number" 
-                id="inputMarginCapital" 
-                min="10000" 
-                max="5000000" 
-                step="1000" 
-                value="48000" 
-                class="form-control margin-numeric-input" 
-                placeholder="Enter margin amount (e.g. 48000)"
-                aria-label="Available Margin Capital in Rupees (Minimum 10,000)"
-              />
-              <span class="project-multiplier-badge" id="lblMarginValue" title="100% Total Project Cost structured under 10% Margin Rule">
-                <i class="fa-solid fa-calculator text-blue"></i> Project Cost: ₹4,80,000
-              </span>
-            </div>
-
-            <!-- Quick Preset Chips -->
-            <div class="quick-margin-bar flex-align">
-              <span class="quick-margin-lbl">Quick Presets:</span>
-              <div class="quick-margin-chips flex-align" id="quickMarginPresets">
-                <button type="button" class="quick-margin-chip" data-val="10000">₹10,000 (Min)</button>
-                <button type="button" class="quick-margin-chip" data-val="25000">₹25,000</button>
-                <button type="button" class="quick-margin-chip active" data-val="48000">₹48,000</button>
-                <button type="button" class="quick-margin-chip" data-val="100000">₹1,00,000</button>
-                <button type="button" class="quick-margin-chip" data-val="250000">₹2,50,000</button>
-                <button type="button" class="quick-margin-chip" data-val="500000">₹5,00,000</button>
-              </div>
-            </div>
-
-            <small class="form-hint"><i class="fa-solid fa-circle-check text-green"></i> Minimum available margin is <strong>₹10,000</strong> (Structures 100% Project Cost = Margin &times; 10 under MSJE / Mudra rules)</small>
-          </div>
-
-          <!-- 3. AI-Ranked Business Dropdown (All 32 Businesses) -->
-          <div class="form-group col-span-2">
-            <label for="dropdownPreferredBiz" class="form-label">
-              <i class="fa-solid fa-briefcase text-orange"></i> 
-              <span data-i18n="lblSelectBiz">Select Rural Micro-Enterprise (32 Vetted Blueprints)</span>
-            </label>
-            <div class="select-with-ai-badge">
-              <select id="dropdownPreferredBiz" class="form-control select-business-dropdown">
-                <!-- Dynamically populated with all 32 businesses from data.js -->
-              </select>
-            </div>
-            <small class="form-hint"><i class="fa-solid fa-wand-magic-sparkles text-orange"></i> AI ranks demand velocity, viability score (0-100) &amp; routes to preferential concessional schemes</small>
-          </div>
-        </form>
-
-        <!-- Locality High-Demand Quick Selection Pills -->
-        <div class="ai-trending-strip flex-align">
-          <span class="trending-label"><i class="fa-solid fa-arrow-trend-up text-orange"></i> Trending Top Demand:</span>
-          <div class="trending-pills-list flex-align" id="aiTrendingPills">
-            <!-- Dynamically populated buttons -->
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- ========================================================================= -->
   <!-- TAB NAVIGATION: MODULES & CITIZEN DASHBOARD                               -->
   <!-- ========================================================================= -->
@@ -1250,62 +1142,9 @@
   <!-- GOVERNMENT OFFICIAL FOOTER                                                -->
   <!-- ========================================================================= -->
   <footer class="gov-footer">
-    <div class="footer-top-accent"></div>
-    <div class="container">
-      <div class="footer-grid-4">
-        <!-- Col 1: Brand & Ministry Authority -->
-        <div>
-          <div class="footer-brand-title">
-            <i class="fa-solid fa-scale-balanced text-orange"></i>
-            <span data-i18n="portalTitle">Vyapaar Sarthi</span>
-            <span class="footer-brand-badge">MSJE GOVT</span>
-          </div>
-          <p class="footer-desc">
-            National AI Rural Micro-Enterprise Advisory & Concessional Credit Structuring Platform. Developed under Ministry of Social Justice & Empowerment guidelines, Government of India.
-          </p>
-          <div class="footer-helpline-box">
-            <i class="fa-solid fa-headset helpline-icon"></i>
-            <div>
-              <div class="helpline-number">1800-11-2026 / 14567</div>
-              <div class="helpline-label">Toll-Free MSJE Beneficiary Support (24x7)</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Col 2: Credit Framework -->
-        <div>
-          <h5 class="f-head">Concessional Credit</h5>
-          <ul class="f-links">
-            <li><i class="fa-solid fa-circle-check"></i> <span>10% Beneficiary Margin Rule</span></li>
-            <li><i class="fa-solid fa-circle-check"></i> <span>Logic A: Micro Finance (&le; ₹1.40L @ 6.5%)</span></li>
-            <li><i class="fa-solid fa-circle-check"></i> <span>Logic B: Term Loan (&le; ₹50.00L @ 8.0%)</span></li>
-            <li><i class="fa-solid fa-circle-check"></i> <span>3–6 Months Moratorium Holiday</span></li>
-            <li><i class="fa-solid fa-circle-check"></i> <span>NBCFDC, NSFDC & NSKFDC Channel</span></li>
           </ul>
         </div>
-
-        <!-- Col 3: Pilot Reach & Standards -->
-        <div>
-          <h5 class="f-head">Geographic & AI Reach</h5>
-          <ul class="f-links">
-            <li><i class="fa-solid fa-location-dot"></i> <span>Pan-India Coverage (28 States & 8 UTs)</span></li>
-            <li><i class="fa-solid fa-location-dot"></i> <span>Khordha District Pilot Cluster (751010)</span></li>
-            <li><i class="fa-solid fa-language"></i> <span>7 Indic Languages (Bhashini AI Voice)</span></li>
-            <li><i class="fa-solid fa-shield-halved"></i> <span>NIC Web & Security Compliant</span></li>
-            <li><i class="fa-solid fa-id-card"></i> <span>DigiLocker & UIDAI Integrated</span></li>
-          </ul>
-        </div>
-
-        <!-- Col 4: Citizen Resources -->
-        <div>
-          <h5 class="f-head">Citizen Resources</h5>
-          <ul class="f-links">
-            <li><i class="fa-solid fa-angle-right"></i> <a href="#secOverview">Feasibility & Threat Radar</a></li>
-            <li><i class="fa-solid fa-angle-right"></i> <a href="#secCalculator">Financial Calculator Engine</a></li>
-            <li><i class="fa-solid fa-angle-right"></i> <a href="#secEnterprises">32 Vetted Enterprise Catalog</a></li>
-            <li><i class="fa-solid fa-angle-right"></i> <a href="https://socialjustice.gov.in" target="_blank" rel="noopener">Ministry Portal (MSJE)</a></li>
-            <li><i class="fa-solid fa-angle-right"></i> <a href="https://www.india.gov.in" target="_blank" rel="noopener">National Portal of India</a></li>
-          </ul>
+      </div>
         </div>
       </div>
 

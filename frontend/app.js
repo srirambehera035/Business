@@ -689,32 +689,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- POPULATE PREFERRED BUSINESSES DROPDOWN ---
   function populateBusinessDropdown() {
-    dropdownPreferredBiz.innerHTML = '';
-    
-    BUSINESSES_DATA.forEach(b => {
-      const opt = document.createElement('option');
-      opt.value = b.id;
-      opt.textContent = `${b.name} (Margin: ₹${b.beneficiary_margin_inr.toLocaleString('en-IN')} | ${b.viability_score}/100)`;
-      if (b.id === currentBusiness.id) opt.selected = true;
-      dropdownPreferredBiz.appendChild(opt);
-    });
+    if (dropdownPreferredBiz) {
+      dropdownPreferredBiz.innerHTML = '';
+      BUSINESSES_DATA.forEach(b => {
+        const opt = document.createElement('option');
+        opt.value = b.id;
+        opt.textContent = `${b.name} (Margin: ₹${b.beneficiary_margin_inr.toLocaleString('en-IN')} | ${b.viability_score}/100)`;
+        if (b.id === currentBusiness.id) opt.selected = true;
+        dropdownPreferredBiz.appendChild(opt);
+      });
 
-    dropdownPreferredBiz.addEventListener('change', (e) => {
-      const chosen = BUSINESSES_DATA.find(item => item.id === e.target.value);
-      if (chosen) selectBusiness(chosen);
-    });
+      dropdownPreferredBiz.addEventListener('change', (e) => {
+        const chosen = BUSINESSES_DATA.find(item => item.id === e.target.value);
+        if (chosen) selectBusiness(chosen);
+      });
+    }
 
     const trendingPillsContainer = document.getElementById('aiTrendingPills');
-    trendingPillsContainer.innerHTML = '';
-    const topPicks = [BUSINESSES_DATA[0], BUSINESSES_DATA[1], BUSINESSES_DATA[7], BUSINESSES_DATA[22]];
+    if (trendingPillsContainer) {
+      trendingPillsContainer.innerHTML = '';
+      const topPicks = [BUSINESSES_DATA[0], BUSINESSES_DATA[1], BUSINESSES_DATA[7], BUSINESSES_DATA[22]];
 
-    topPicks.forEach(p => {
-      const btn = document.createElement('button');
-      btn.className = 'trending-pill-btn';
-      btn.innerHTML = `<i class="fa-solid fa-fire text-orange"></i> ${p.name.split('&')[0].substring(0, 20)}... <span class="badge-margin">${p.viability_score}/100</span>`;
-      btn.addEventListener('click', () => selectBusiness(p));
-      trendingPillsContainer.appendChild(btn);
-    });
+      topPicks.forEach(p => {
+        const btn = document.createElement('button');
+        btn.className = 'trending-pill-btn';
+        btn.innerHTML = `<i class="fa-solid fa-fire text-orange"></i> ${p.name.split('&')[0].substring(0, 20)}... <span class="badge-margin">${p.viability_score}/100</span>`;
+        btn.addEventListener('click', () => selectBusiness(p));
+        trendingPillsContainer.appendChild(btn);
+      });
+    }
   }
 
   // --- SELECT BUSINESS & FULLY UPDATE ALL SECTIONS ---
@@ -729,7 +732,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('#quickMarginPresets .quick-margin-chip').forEach(btn => {
       btn.classList.toggle('active', parseInt(btn.getAttribute('data-val')) === currentMargin);
     });
-    dropdownPreferredBiz.value = biz.id;
+    if (dropdownPreferredBiz) dropdownPreferredBiz.value = biz.id;
 
     // 1. Update Module 1 Header & Photo
     document.getElementById('badgeCurrentSector').textContent = biz.category;
@@ -1182,22 +1185,24 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // --- LOCATION SELECTOR LISTENER ---
-  selectLocation.addEventListener('change', (e) => {
-    const loc = e.target.value;
-    if (!leafletMap) return;
+  if (selectLocation) {
+    selectLocation.addEventListener('change', (e) => {
+      const loc = e.target.value;
+      if (!leafletMap) return;
 
-    const coords = {
-      hansapal: [20.3155, 85.8722],
-      bodhgaya: [24.6961, 84.9869],
-      sarnath: [25.3762, 83.0227],
-      baramati: [18.1517, 74.5772],
-      singur: [22.8126, 88.2323],
-      alanganallur: [10.0433, 78.0935],
-      wardhannapet: [17.7667, 79.6000]
-    };
+      const coords = {
+        hansapal: [20.3155, 85.8722],
+        bodhgaya: [24.6961, 84.9869],
+        sarnath: [25.3762, 83.0227],
+        baramati: [18.1517, 74.5772],
+        singur: [22.8126, 88.2323],
+        alanganallur: [10.0433, 78.0935],
+        wardhannapet: [17.7667, 79.6000]
+      };
 
-    if (coords[loc]) leafletMap.flyTo(coords[loc], 12);
-  });
+      if (coords[loc]) leafletMap.flyTo(coords[loc], 12);
+    });
+  }
 
   // --- POPULATE 32 ENTERPRISES CATALOG GRID ---
   function populateCatalogGrid() {
@@ -1554,7 +1559,9 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('[data-i18n]').forEach(el => {
       const key = el.getAttribute('data-i18n');
       if (dict[key]) {
-        if (el.children.length === 0) {
+        if (dict[key].includes('<span') || dict[key].includes('<')) {
+          el.innerHTML = dict[key];
+        } else if (el.children.length === 0) {
           el.textContent = dict[key];
         } else {
           const textSpan = el.querySelector('span');
@@ -1978,33 +1985,13 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
           <div class="biz-modal-scheme-tag">
             <i class="fa-solid fa-landmark-flag"></i>
-            <span><strong>Recommended Scheme:</strong> ${biz.preferable_scheme}</span>
-          </div>
-          <div class="biz-modal-viability">
-            <span class="biz-modal-viability-label">Overall Viability Score</span>
-            <div class="biz-modal-viability-track">
-              <div class="biz-modal-viability-fill" style="width:${score}%"></div>
-            </div>
-            <span class="biz-modal-viability-score">${score}/100</span>
-          </div>
-        </div>
-      `;
-      modal.classList.add('open');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeGalleryModal() {
-      if (!modal) return;
-      modal.classList.remove('open');
-      document.body.style.overflow = '';
-    }
-
-    if (modalClose) modalClose.addEventListener('click', closeGalleryModal);
+            <spa    if (modalClose) modalClose.addEventListener('click', closeGalleryModal);
     if (modalOverlay) modalOverlay.addEventListener('click', closeGalleryModal);
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && modal && modal.classList.contains('open')) closeGalleryModal();
     });
-=======
+  }
+
   // --- AUTHENTICATION & REGISTRATION MODAL CONTROLLER ---
   function setupAuthModals() {
     const btnAuthTabLogin = document.getElementById('btnAuthTabLogin');
@@ -2125,8 +2112,8 @@ document.addEventListener('DOMContentLoaded', () => {
         alert(`Registration Complete! Welcome ${currentUser.name}. Your profile and 10% concessional credit margin have been configured.`);
       });
     }
->>>>>>> 067eb20 (Fix register page modal overlay, tab switching, and register submit button layout)
   }
 
 });
+
 
