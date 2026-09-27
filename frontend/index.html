@@ -1039,13 +1039,13 @@
         <form id="formLoginDirect" class="auth-form-pane active">
           <div class="form-group">
             <label for="loginMobile"><i class="fa-solid fa-mobile-screen text-blue"></i> Registered Mobile Number / Aadhaar ID *</label>
-            <input type="tel" id="loginMobile" class="form-control" placeholder="Enter 10-digit mobile number" required value="9876543210">
+            <input type="tel" id="loginMobile" class="form-control" placeholder="Enter 10-digit mobile number" required>
           </div>
 
           <div class="form-group">
             <label for="loginOtp"><i class="fa-solid fa-key text-blue"></i> OTP / Security Access PIN *</label>
             <div class="input-with-action">
-              <input type="password" id="loginOtp" class="form-control" placeholder="Enter 6-digit OTP or PIN" required value="123456">
+              <input type="password" id="loginOtp" class="form-control" placeholder="Enter 6-digit OTP or PIN" required>
               <button type="button" class="btn-secondary-sm" id="btnSendOtp">Send OTP</button>
             </div>
             <small class="text-muted" style="margin-top:0.4rem; display:block;"><i class="fa-solid fa-circle-info text-blue"></i> Demo PIN: 123456 (or click Send OTP to test authentication)</small>
@@ -1073,7 +1073,7 @@
             <div class="form-group">
               <label for="regName"><i class="fa-solid fa-user text-blue"></i> Full Name *</label>
               <div class="input-with-mic">
-                <input type="text" id="regName" class="form-control" placeholder="e.g. Sriram Jena" required value="Sriram Jena">
+                <input type="text" id="regName" class="form-control" placeholder="e.g. Sriram Jena" required>
                 <button type="button" class="btn-mic-field" data-input="regName" title="Speak to Fill Name">
                   <i class="fa-solid fa-microphone"></i>
                 </button>
@@ -1081,7 +1081,7 @@
             </div>
             <div class="form-group">
               <label for="regMobile"><i class="fa-solid fa-mobile-screen text-blue"></i> Mobile Number (10 Digits) *</label>
-              <input type="tel" id="regMobile" class="form-control" placeholder="10-digit mobile number" required value="9876543210">
+              <input type="tel" id="regMobile" class="form-control" placeholder="e.g. 9876543210" required>
             </div>
           </div>
 
@@ -1089,7 +1089,8 @@
           <div class="form-group">
             <label for="regCategory"><i class="fa-solid fa-users-viewfinder text-blue"></i> Socio-Economic Category (MSJE Mandate) *</label>
             <select id="regCategory" class="form-control" required>
-              <option value="sc" selected>Scheduled Caste (SC) - NSFDC Concessional Channel</option>
+              <option value="" disabled selected>Select Socio-Economic Category</option>
+              <option value="sc">Scheduled Caste (SC) - NSFDC Concessional Channel</option>
               <option value="st">Scheduled Tribe (ST) - NSTFDC Tribal Channel</option>
               <option value="obc">Other Backward Class (OBC) - NBCFDC Channel</option>
               <option value="divyangjan">Persons with Disabilities (Divyangjan) - NDFDC Channel</option>
@@ -1101,7 +1102,7 @@
           <div class="form-grid-2">
             <div class="form-group">
               <label for="regState"><i class="fa-solid fa-landmark text-blue"></i> State *</label>
-              <input list="stateList" id="regState" class="form-control" placeholder="Select or type State" required value="Odisha">
+              <input list="stateList" id="regState" class="form-control" placeholder="Select or type State" required>
               <datalist id="stateList">
                 <option value="Odisha">
                 <option value="Bihar">
@@ -1121,7 +1122,7 @@
             <div class="form-group">
               <label for="regDistrict"><i class="fa-solid fa-city text-blue"></i> District *</label>
               <div class="input-with-mic">
-                <input list="districtList" id="regDistrict" class="form-control" placeholder="Select or type District" required value="Khordha">
+                <input list="districtList" id="regDistrict" class="form-control" placeholder="Select or type District" required>
                 <datalist id="districtList">
                   <option value="Khordha">
                   <option value="Cuttack">
@@ -1147,7 +1148,7 @@
             <div class="form-group">
               <label for="regArea"><i class="fa-solid fa-location-dot text-blue"></i> Village / Town *</label>
               <div class="input-with-mic">
-                <input list="villageList" id="regArea" class="form-control" placeholder="Select or type Village" required value="Khordha Rural Cluster">
+                <input list="villageList" id="regArea" class="form-control" placeholder="Select or type Village" required>
                 <datalist id="villageList">
                   <option value="Khordha Rural Cluster">
                   <option value="Naharkanta">
@@ -1167,13 +1168,13 @@
 
             <div class="form-group">
               <label for="regPin"><i class="fa-solid fa-envelope text-blue"></i> Postal PIN Code *</label>
-              <input type="text" id="regPin" class="form-control" placeholder="6-digit PIN" required value="751010">
+              <input type="text" id="regPin" class="form-control" placeholder="6-digit PIN" required>
             </div>
           </div>
 
           <div class="form-group">
             <label for="regMargin"><i class="fa-solid fa-wallet text-blue"></i> Available 10% Margin Capital (₹) *</label>
-            <input type="number" id="regMargin" class="form-control" placeholder="e.g. 48000" min="10000" step="1000" required value="48000">
+            <input type="number" id="regMargin" class="form-control" placeholder="e.g. 48000" min="10000" step="1000" required>
           </div>
 
           <div class="form-group">
