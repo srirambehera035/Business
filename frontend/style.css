@@ -3722,7 +3722,7 @@ body {
 /* ── TOP DIV: 2-column grid ─────────────────────────────────────────────────── */
 .biz-gallery-top {
   display: grid;
-  grid-template-columns: 50% 50%;
+  grid-template-columns: 44% 56%;
   min-height: 480px;
 }
 
@@ -3884,7 +3884,7 @@ body {
 /* ── RIGHT SPAN: 12-Month Seasonal Demand & Operational Calendar ─────────── */
 .biz-gallery-calendar-pane {
   background: linear-gradient(150deg, #2c318f 0%, #1e226a 60%, #15184b 100%);
-  padding: 1.3rem 1.5rem 1.15rem;
+  padding: 1.25rem 1.4rem 1.15rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -3950,21 +3950,30 @@ body {
   border-radius: 20px;
 }
 
-/* 12 Months Grid: 3×4 Matrix (3 rows of 4 columns) */
+/* ── SIDE-BY-SIDE SPLIT: 4x3 Matrix LEFT | Demanded Businesses RIGHT ────── */
+.cal-split-layout {
+  display: grid;
+  grid-template-columns: 42% 58%;
+  gap: 12px;
+  align-items: stretch;
+  flex: 1;
+  margin-top: 0.2rem;
+}
+
+/* 12 Months Grid: 4×3 Matrix (4 rows of 3 columns) */
 .biz-gallery-calendar-pane .seasonal-months-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 7px;
-  margin: 0.1rem 0;
-  overflow: visible;
-  padding-bottom: 0;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin: 0;
+  align-content: stretch;
 }
 
 .biz-gallery-calendar-pane .month-cal-card {
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 8px;
-  padding: 0.48rem 0.3rem;
+  padding: 0.42rem 0.25rem;
   text-align: center;
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -4029,23 +4038,29 @@ body {
   border: 1px solid rgba(251, 146, 60, 0.45);
 }
 
-/* ── Dynamic Month Insight & Demanded Businesses Container ───────────── */
+/* ── Dynamic Demanded Businesses & Guidance Container (AT RIGHT OF MATRIX) ── */
 .biz-gallery-calendar-pane .calendar-active-note {
-  background: rgba(10, 15, 38, 0.65);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: 9px;
-  padding: 0.65rem 0.85rem;
+  background: rgba(10, 15, 38, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 10px;
+  padding: 0.75rem 0.9rem;
   font-size: 0.78rem;
   color: #f1f5f9;
-  line-height: 1.45;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  line-height: 1.4;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
 }
 
 .cal-detail-card {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
   gap: 0.45rem;
 }
 
@@ -4473,14 +4488,19 @@ body {
     padding: 1.25rem 1rem;
   }
 
-  .biz-gallery-calendar-pane .seasonal-months-grid {
-    grid-template-columns: repeat(6, 1fr);
+  .cal-split-layout {
+    grid-template-columns: 42% 58%;
   }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 680px) {
   .biz-multi-slider {
     min-height: 230px;
+  }
+
+  .cal-split-layout {
+    grid-template-columns: 1fr;
+    gap: 10px;
   }
 
   .biz-gallery-calendar-pane .seasonal-months-grid {
@@ -4495,17 +4515,6 @@ body {
   .biz-gallery-calendar-pane .badge-cal-pill {
     font-size: 0.58rem;
     padding: 1px 4px;
-  }
-
-  .biz-gallery-bottom {
-    padding: 0.7rem 1rem;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0.6rem;
-  }
-
-  .biz-explore-all-btn {
-    justify-content: center;
   }
 
   .biz-modal-content {

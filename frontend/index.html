@@ -250,11 +250,16 @@
             <span class="leg-item"><span class="badge-cal-pill amber">Weather Caution</span></span>
           </div>
         </div>
-        <div class="seasonal-months-grid" id="seasonalMonthsGrid">
-          <!-- Injected dynamically from SEASONAL_CALENDAR_DATA -->
-        </div>
-        <div class="calendar-active-note" id="calendarActiveNote">
-          <i class="fa-solid fa-lightbulb text-orange"></i> <strong>Month Insight:</strong> <span id="txtCalendarNote">Select any month above to view actionable operational guidelines for this enterprise.</span>
+        <!-- SIDE-BY-SIDE: 4x3 Matrix on Left | Demanded Businesses Panel on Right -->
+        <div class="cal-split-layout">
+          <div class="seasonal-months-grid" id="seasonalMonthsGrid">
+            <!-- 4 rows x 3 columns of Month Cards injected by JS -->
+          </div>
+          <div class="calendar-active-note" id="calendarActiveNote">
+            <div id="txtCalendarNote">
+              <!-- Dynamically populated on hover/click -->
+            </div>
+          </div>
         </div>
       </div>
 
