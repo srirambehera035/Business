@@ -1499,7 +1499,9 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('[data-i18n]').forEach(el => {
       const key = el.getAttribute('data-i18n');
       if (dict[key]) {
-        if (el.children.length === 0) {
+        if (dict[key].includes('<span') || dict[key].includes('<')) {
+          el.innerHTML = dict[key];
+        } else if (el.children.length === 0) {
           el.textContent = dict[key];
         } else {
           const textSpan = el.querySelector('span');
