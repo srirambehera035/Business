@@ -1316,11 +1316,11 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --- CITIZEN LOGIN / REGISTRATION MODAL CONTROLLER ---
-  btnOpenLogin.addEventListener('click', () => {
+  btnOpenLogin?.addEventListener('click', () => {
     if (currentUser.isLoggedIn) {
-      document.querySelector('.tab-btn[data-target="secProfile"]').click();
+      document.querySelector('.tab-btn[data-target="secProfile"]')?.click();
     } else {
-      loginModal.classList.add('active');
+      loginModal?.classList.add('active');
     }
   });
 
