@@ -31,6 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let activeAudioResponse = "";
 
   // --- DOM REFERENCES ---
+  const inputMarginCapital = document.getElementById('inputMarginCapital');
   const sliderMargin = document.getElementById('sliderMargin');
   const lblMarginValue = document.getElementById('lblMarginValue');
   const dropdownPreferredBiz = document.getElementById('dropdownPreferredBiz');
@@ -718,8 +719,15 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- SELECT BUSINESS & FULLY UPDATE ALL SECTIONS ---
   function selectBusiness(biz) {
     currentBusiness = biz;
-    currentMargin = biz.beneficiary_margin_inr;
-    sliderMargin.value = currentMargin;
+    currentMargin = Math.max(10000, biz.beneficiary_margin_inr || 10000);
+    if (inputMarginCapital) inputMarginCapital.value = currentMargin;
+    if (sliderMargin) sliderMargin.value = currentMargin;
+    if (lblMarginValue) {
+      lblMarginValue.innerHTML = `<i class="fa-solid fa-calculator text-blue"></i> Project Cost: ₹${(currentMargin * 10).toLocaleString('en-IN')}`;
+    }
+    document.querySelectorAll('#quickMarginPresets .quick-margin-chip').forEach(btn => {
+      btn.classList.toggle('active', parseInt(btn.getAttribute('data-val')) === currentMargin);
+    });
     dropdownPreferredBiz.value = biz.id;
 
     // 1. Update Module 1 Header & Photo
@@ -1114,11 +1122,62 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // --- MARGIN SLIDER EVENT LISTENER ---
-  sliderMargin.addEventListener('input', (e) => {
-    currentMargin = parseInt(e.target.value);
-    lblMarginValue.textContent = `₹ ${currentMargin.toLocaleString('en-IN')}`;
-    updateFinancialUI();
+  // --- MARGIN TEXT & NUMBER INPUT EVENT LISTENERS ---
+  if (inputMarginCapital) {
+    inputMarginCapital.addEventListener('input', (e) => {
+      let val = parseInt(e.target.value);
+      if (isNaN(val)) val = 10000;
+      currentMargin = val;
+      if (lblMarginValue) {
+        lblMarginValue.innerHTML = `<i class="fa-solid fa-calculator text-blue"></i> Project Cost: ₹${(Math.max(10000, currentMargin) * 10).toLocaleString('en-IN')}`;
+      }
+      document.querySelectorAll('#quickMarginPresets .quick-margin-chip').forEach(btn => {
+        btn.classList.toggle('active', parseInt(btn.getAttribute('data-val')) === currentMargin);
+      });
+      if (currentMargin >= 10000) {
+        updateFinancialUI();
+      }
+    });
+
+    inputMarginCapital.addEventListener('change', (e) => {
+      let val = parseInt(e.target.value);
+      if (isNaN(val) || val < 10000) {
+        val = 10000; // Minimum margin of 10,000
+        inputMarginCapital.value = val;
+      }
+      currentMargin = val;
+      if (lblMarginValue) {
+        lblMarginValue.innerHTML = `<i class="fa-solid fa-calculator text-blue"></i> Project Cost: ₹${(currentMargin * 10).toLocaleString('en-IN')}`;
+      }
+      updateFinancialUI();
+    });
+  }
+
+  if (sliderMargin) {
+    sliderMargin.addEventListener('input', (e) => {
+      currentMargin = Math.max(10000, parseInt(e.target.value) || 10000);
+      if (inputMarginCapital) inputMarginCapital.value = currentMargin;
+      if (lblMarginValue) {
+        lblMarginValue.innerHTML = `<i class="fa-solid fa-calculator text-blue"></i> Project Cost: ₹${(currentMargin * 10).toLocaleString('en-IN')}`;
+      }
+      updateFinancialUI();
+    });
+  }
+
+  // Quick Margin Presets
+  document.querySelectorAll('#quickMarginPresets .quick-margin-chip').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const val = parseInt(btn.getAttribute('data-val')) || 10000;
+      currentMargin = Math.max(10000, val);
+      if (inputMarginCapital) inputMarginCapital.value = currentMargin;
+      if (sliderMargin) sliderMargin.value = currentMargin;
+      if (lblMarginValue) {
+        lblMarginValue.innerHTML = `<i class="fa-solid fa-calculator text-blue"></i> Project Cost: ₹${(currentMargin * 10).toLocaleString('en-IN')}`;
+      }
+      document.querySelectorAll('#quickMarginPresets .quick-margin-chip').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      updateFinancialUI();
+    });
   });
 
   // --- LOCATION SELECTOR LISTENER ---
