@@ -3781,17 +3781,45 @@ const SEASONAL_CALENDAR_DATA = [
     "demand": "Peak",
     "status": "green",
     "season": "Winter Harvest & Wedding Surge (Rabi Phase 1)",
-    "seasonalBusinesses": [
-      "Solar Milk Chilling & Paneer Unit",
-      "Cold-Pressed Mustard Oil Unit",
-      "Button Mushroom Cultivation"
+    "ideas": "Post-harvest cash liquidity and auspicious winter wedding dates drive 3x demand for dairy processing, pure mustard oils, and fresh mushrooms.",
+    "notes": "Winter harvest & wedding boom drive 3x demand for dairy, paneer & edible oils. Keep raw material inventory stocked.",
+    "featuredBusinesses": [
+      {
+        "name": "Solar Milk Chilling & Paneer Unit",
+        "image": "assets/dairy_thumb.jpg",
+        "category": "Dairy & Value Addition",
+        "demandTag": "Peak Wedding Surge",
+        "summary": "Supplies daily fresh paneer & pasteurized milk to sweet makers and banquet caterers during peak winter wedding dates.",
+        "margin": "₹48,000",
+        "profit": "₹35,000 – ₹52,000/mo",
+        "bizId": "BIZ-01"
+      },
+      {
+        "name": "Cold-Pressed Mustard Oil Unit",
+        "image": "assets/oil_mill_thumb.jpg",
+        "category": "Edible Oils & Agro",
+        "demandTag": "Fresh Crop Influx",
+        "summary": "Abundant winter mustard harvest provides low-cost raw seed. High margin retail sales in village haats and local mandis.",
+        "margin": "₹38,000",
+        "profit": "₹28,000 – ₹42,000/mo",
+        "bizId": "BIZ-03"
+      },
+      {
+        "name": "Button Mushroom Cultivation",
+        "image": "assets/mushroom_thumb.jpg",
+        "category": "Horticulture & Indoor",
+        "demandTag": "Ideal Ambient Climate",
+        "summary": "Cool winter temperatures (15–22°C) create optimal climate for heavy button flushes with zero air-conditioning costs.",
+        "margin": "₹25,000",
+        "profit": "₹22,000 – ₹34,000/mo",
+        "bizId": "BIZ-07"
+      }
     ],
     "otherBusinesses": [
-      "Paddy Harvesting & Threshing Unit",
-      "Cattle Feed & Silage Making",
-      "Sugarcane Juice & Jaggery Bottling"
-    ],
-    "notes": "Winter harvest & wedding boom drive 3x demand for dairy, paneer & edible oils. Keep raw material inventory stocked."
+      { "name": "Paddy Harvesting & Threshing", "icon": "fa-tractor" },
+      { "name": "Cattle Feed & Silage Making", "icon": "fa-wheat-awn" },
+      { "name": "Sugarcane Juice & Jaggery", "icon": "fa-bottle-droplet" }
+    ]
   },
   {
     "month": "Feb",
@@ -3800,17 +3828,45 @@ const SEASONAL_CALENDAR_DATA = [
     "demand": "High",
     "status": "green",
     "season": "Pre-Spring Haat & Agro-Processing Surge",
-    "seasonalBusinesses": [
-      "Spices Grinding & Packaging Unit",
-      "Bio-Fertilizer & Vermicompost Hub",
-      "Mini Rice & Flour Mill"
+    "ideas": "Weekly rural haats experience peak buyer footfall. High turnover for packaged ground spices, mini flour mills, and organic compost hubs.",
+    "notes": "Weekly rural haats witness maximum footfall. High turnover for ground spices, flour chakki and organic compost.",
+    "featuredBusinesses": [
+      {
+        "name": "Spices Grinding & Packaging Unit",
+        "image": "assets/spices_thumb.jpg",
+        "category": "Agro-Processing",
+        "demandTag": "Haat Footfall Peak",
+        "summary": "Turmeric, chili, and coriander bulk milling with airtight retail packaging for weekly haats and regional Kirana stores.",
+        "margin": "₹32,000",
+        "profit": "₹26,000 – ₹38,000/mo",
+        "bizId": "BIZ-08"
+      },
+      {
+        "name": "Bio-Fertilizer & Vermicompost Hub",
+        "image": "assets/organic_thumb.jpg",
+        "category": "Organic Agri-Inputs",
+        "demandTag": "Pre-Sowing Orders",
+        "summary": "Farmers pre-order organic vermicompost & bio-fertilizer ahead of spring pulses and vegetable nursery preparation.",
+        "margin": "₹22,000",
+        "profit": "₹18,000 – ₹28,000/mo",
+        "bizId": "BIZ-12"
+      },
+      {
+        "name": "Mini Rice & Flour Mill",
+        "image": "assets/flour_mill.jpg",
+        "category": "Grain Processing",
+        "demandTag": "Daily Cash Flow",
+        "summary": "Continuous custom milling demand for wheat, paddy, and millets with steady daily cash collections from village households.",
+        "margin": "₹28,000",
+        "profit": "₹24,000 – ₹36,000/mo",
+        "bizId": "BIZ-04"
+      }
     ],
     "otherBusinesses": [
-      "Dairy Value Addition (Curd/Butter)",
-      "Custom Hiring Farm Machinery",
-      "Poultry Hatchery & Egg Farm"
-    ],
-    "notes": "Weekly rural haats witness maximum footfall. High turnover for ground spices, flour chakki and organic compost."
+      { "name": "Dairy Value Addition (Curd/Butter)", "icon": "fa-cow" },
+      { "name": "Custom Hiring Farm Machinery", "icon": "fa-gears" },
+      { "name": "Poultry Hatchery & Egg Farm", "icon": "fa-egg" }
+    ]
   },
   {
     "month": "Mar",
@@ -3819,17 +3875,45 @@ const SEASONAL_CALENDAR_DATA = [
     "demand": "Steady",
     "status": "blue",
     "season": "Wheat & Grain Harvesting Cycle",
-    "seasonalBusinesses": [
-      "Combined Harvester & Thresher Service",
-      "Dal Mill & Pulses Processing",
-      "Wheat Flour Chakki Unit"
+    "ideas": "Rabi grain harvesting across rural belts. Farm machinery rentals, pulses processing, and cold storage operate at maximum seasonal capacity.",
+    "notes": "Rabi grain harvesting peak. Ensure fast transit to Mandis and secure dry storage against pre-monsoon pest risk.",
+    "featuredBusinesses": [
+      {
+        "name": "Combined Harvester & Custom Hiring",
+        "image": "assets/tractor.jpg",
+        "category": "Farm Mechanization",
+        "demandTag": "Hourly Rental Surge",
+        "summary": "High-margin tractor and harvester rentals to farmers during time-critical wheat and pulses harvesting windows.",
+        "margin": "₹55,000",
+        "profit": "₹42,000 – ₹65,000/mo",
+        "bizId": "BIZ-15"
+      },
+      {
+        "name": "Dal Mill & Pulses Processing",
+        "image": "assets/flour_mill.jpg",
+        "category": "Agro-Processing",
+        "demandTag": "Post-Harvest Processing",
+        "summary": "De-husking, grading, and packaging of freshly harvested gram, moong, and arhar pulses for regional wholesale markets.",
+        "margin": "₹35,000",
+        "profit": "₹28,000 – ₹40,000/mo",
+        "bizId": "BIZ-05"
+      },
+      {
+        "name": "Mini Cold Storage Unit",
+        "image": "assets/cold_storage.jpg",
+        "category": "Cold Chain Storage",
+        "demandTag": "Storage Arbitrage",
+        "summary": "Secure cold storage for perishable horticulture and seeds to avoid distress harvest sales and capture premium pricing.",
+        "margin": "₹45,000",
+        "profit": "₹32,000 – ₹48,000/mo",
+        "bizId": "BIZ-18"
+      }
     ],
     "otherBusinesses": [
-      "Solar Water Pumping & Drip Irrigation",
-      "Mini Cold Storage Unit",
-      "Transport & Haat Logistics"
-    ],
-    "notes": "Rabi grain harvesting peak. Ensure fast transit to Mandis and secure dry storage against pre-monsoon pest risk."
+      { "name": "Solar Water Pumping & Drip", "icon": "fa-solar-panel" },
+      { "name": "Wheat Flour Chakki Unit", "icon": "fa-bowl-rice" },
+      { "name": "Transport & Haat Logistics", "icon": "fa-truck" }
+    ]
   },
   {
     "month": "Apr",
@@ -3838,17 +3922,45 @@ const SEASONAL_CALENDAR_DATA = [
     "demand": "High",
     "status": "green",
     "season": "New Year Festivals & Pre-Summer Rush",
-    "seasonalBusinesses": [
-      "Solar Cold Storage & Dairy Chilling",
-      "Flavored Milk, Lassi & Curd Processing",
-      "Sugarcane Juice & Jaggery Bottling"
+    "ideas": "Regional festive celebrations and rising temperatures trigger immense demand for chilled dairy, clean beverages, and eco-packaging.",
+    "notes": "Rising temperatures trigger immense demand for chilled dairy, beverages, and cold chain transport.",
+    "featuredBusinesses": [
+      {
+        "name": "Flavored Milk, Lassi & Curd Unit",
+        "image": "assets/dairy_thumb.jpg",
+        "category": "Dairy & Beverages",
+        "demandTag": "High-Margin Refreshment",
+        "summary": "High turnover for chilled sweet lassi pouches, spiced buttermilk, and curd cups supplied to wayside stalls & mandis.",
+        "margin": "₹48,000",
+        "profit": "₹36,000 – ₹54,000/mo",
+        "bizId": "BIZ-01"
+      },
+      {
+        "name": "E-Rickshaw & Rural Transit Fleet",
+        "image": "assets/ev_thumb.jpg",
+        "category": "Clean Transit",
+        "demandTag": "Festive Mobility Boom",
+        "summary": "Zero-emission last-mile transit for festive shoppers and haat cargo with ultra-low operating & charging expenses.",
+        "margin": "₹30,000",
+        "profit": "₹22,000 – ₹35,000/mo",
+        "bizId": "BIZ-22"
+      },
+      {
+        "name": "Leaf Plates & Eco-Packaging",
+        "image": "assets/leaf_plates_thumb.jpg",
+        "category": "Eco-Manufacturing",
+        "demandTag": "Temple & Feast Demand",
+        "summary": "Biodegradable Sal & Areca leaf plates pressed for community feasts, religious gatherings, and festive catering.",
+        "margin": "₹18,000",
+        "profit": "₹16,000 – ₹25,000/mo",
+        "bizId": "BIZ-11"
+      }
     ],
     "otherBusinesses": [
-      "E-Rickshaw Rural Transit",
-      "Cold Chain Perishables Delivery",
-      "Ice Block & Beverage Production"
-    ],
-    "notes": "Rising temperatures trigger immense demand for chilled dairy, beverages, and cold chain transport."
+      { "name": "Cold Chain Perishables Delivery", "icon": "fa-snowflake" },
+      { "name": "Sugarcane Juice & Bottling", "icon": "fa-glass-water" },
+      { "name": "Ice Block & Beverage Production", "icon": "fa-cube" }
+    ]
   },
   {
     "month": "May",
@@ -3857,17 +3969,45 @@ const SEASONAL_CALENDAR_DATA = [
     "demand": "Caution",
     "status": "amber",
     "season": "Peak Summer Heatwaves (42°C - 45°C)",
-    "seasonalBusinesses": [
-      "Solar Powered Cold Room / Chiller",
-      "Packaged Drinking Water RO Plant",
-      "Solar Rooftop & Inverter Hub"
+    "ideas": "Severe ambient heat necessitates solar-powered refrigeration, RO drinking water bottling, and livestock hydration support.",
+    "notes": "Extreme ambient heat hazard. Maintain 24x7 solar cooling aeration; protect dairy livestock hydration and shelf life.",
+    "featuredBusinesses": [
+      {
+        "name": "Solar Powered Cold Room / Chiller",
+        "image": "assets/cold_storage.jpg",
+        "category": "Solar Infrastructure",
+        "demandTag": "24x7 Spoilage Defense",
+        "summary": "Essential cooling preservation for milk, veterinary vaccines, and fresh fruits during 45°C heatwaves.",
+        "margin": "₹45,000",
+        "profit": "₹34,000 – ₹50,000/mo",
+        "bizId": "BIZ-18"
+      },
+      {
+        "name": "Packaged Drinking Water RO Plant",
+        "image": "assets/digital_kiosk_thumb.jpg",
+        "category": "Utility Services",
+        "demandTag": "4x Water Demand",
+        "summary": "Bulk chilled 20-liter jars supplied daily to village schools, panchayat secretariats, and highway dhabas.",
+        "margin": "₹36,000",
+        "profit": "₹28,000 – ₹42,000/mo",
+        "bizId": "BIZ-20"
+      },
+      {
+        "name": "Dry Fodder & Silage Storage",
+        "image": "assets/organic_thumb.jpg",
+        "category": "Livestock Support",
+        "demandTag": "Feed Security",
+        "summary": "Nutrient-fortified dry fodder & fermented silage supply to dairy farmers when natural grazing pastures are dry.",
+        "margin": "₹24,000",
+        "profit": "₹20,000 – ₹30,000/mo",
+        "bizId": "BIZ-02"
+      }
     ],
     "otherBusinesses": [
-      "Deep Freezer Dairy Preservation",
-      "Dry Fodder & Silage Storage",
-      "Rural Hardware & Shade Netting"
-    ],
-    "notes": "Extreme ambient heat hazard. Maintain 24x7 solar cooling aeration; protect dairy livestock hydration and shelf life."
+      { "name": "Deep Freezer Dairy Hub", "icon": "fa-temperature-arrow-down" },
+      { "name": "Solar Rooftop & Inverter Hub", "icon": "fa-sun" },
+      { "name": "Rural Hardware & Shade Netting", "icon": "fa-shield" }
+    ]
   },
   {
     "month": "Jun",
@@ -3876,17 +4016,45 @@ const SEASONAL_CALENDAR_DATA = [
     "demand": "Steady",
     "status": "blue",
     "season": "Kharif Pre-Sowing & Monsoon Onset",
-    "seasonalBusinesses": [
-      "Certified Paddy Seed Processing",
-      "Organic Bio-Fertilizer & Pesticides",
-      "Farm Machinery Repair & Spare Workshop"
+    "ideas": "Monsoon onset marks the start of Kharif cultivation. Peak purchasing for certified seed treatment, farm repair, and bio-manure.",
+    "notes": "Kharif sowing begins. Farmers heavily invest in high-yield seed preparation, bio-manure and tractor equipment.",
+    "featuredBusinesses": [
+      {
+        "name": "Certified Seed Processing Hub",
+        "image": "assets/organic_thumb.jpg",
+        "category": "Agri-Inputs",
+        "demandTag": "Kharif Planting Sowing",
+        "summary": "Grading and bio-fungicide coating of high-yield paddy, pulses, and oilseeds ready for timely field sowing.",
+        "margin": "₹26,000",
+        "profit": "₹22,000 – ₹35,000/mo",
+        "bizId": "BIZ-14"
+      },
+      {
+        "name": "Farm Machinery Repair & Spares",
+        "image": "assets/tractor.jpg",
+        "category": "Rural Engineering",
+        "demandTag": "High-Uptime Support",
+        "summary": "Servicing and maintenance of diesel pump sets, power tillers, and tractor attachments for continuous sowing.",
+        "margin": "₹30,000",
+        "profit": "₹25,000 – ₹38,000/mo",
+        "bizId": "BIZ-16"
+      },
+      {
+        "name": "Handloom & Khadi Textile Unit",
+        "image": "assets/handloom.jpg",
+        "category": "Rural Handicrafts",
+        "demandTag": "Indoor Production Cycle",
+        "summary": "Indoor loom weaving building cotton saree and dress material inventory ahead of upcoming festive demand.",
+        "margin": "₹20,000",
+        "profit": "₹18,000 – ₹26,000/mo",
+        "bizId": "BIZ-09"
+      }
     ],
     "otherBusinesses": [
-      "Handloom & Eco-Crafts",
-      "Fish Hatchery & Fingerling Nursery",
-      "Poultry Layer Feed"
-    ],
-    "notes": "Kharif sowing begins. Farmers heavily invest in high-yield seed preparation, bio-manure and tractor equipment."
+      { "name": "Organic Bio-Fertilizer & Pesticides", "icon": "fa-seedling" },
+      { "name": "Fish Hatchery & Fingerling Nursery", "icon": "fa-fish" },
+      { "name": "Poultry Layer Feed", "icon": "fa-egg" }
+    ]
   },
   {
     "month": "Jul",
@@ -3895,17 +4063,45 @@ const SEASONAL_CALENDAR_DATA = [
     "demand": "Caution",
     "status": "red",
     "season": "Peak South-West Monsoon & Rain Deluges",
-    "seasonalBusinesses": [
-      "Freshwater Aquaculture (Fish / Prawn)",
-      "Hydroponic Green Fodder Unit",
-      "Mushroom Substrate Preparation"
+    "ideas": "Heavy monsoon rains restrict outdoor transit. Superb growth window for freshwater pond aquaculture and indoor hydroponics.",
+    "notes": "Transit and flooding caution. Elevate inventory on high plinths; monitor pond water pH and aeration.",
+    "featuredBusinesses": [
+      {
+        "name": "Freshwater Aquaculture (Fish / Prawn)",
+        "image": "assets/fish_thumb.jpg",
+        "category": "Fisheries & Aqua",
+        "demandTag": "Rapid Monsoon Growth",
+        "summary": "Stocking high-yield carp and freshwater prawn fingerlings in rainwater-filled village panchayat ponds.",
+        "margin": "₹40,000",
+        "profit": "₹30,000 – ₹45,000/mo",
+        "bizId": "BIZ-06"
+      },
+      {
+        "name": "Hydroponic Green Fodder Unit",
+        "image": "assets/organic_thumb.jpg",
+        "category": "Dairy Support",
+        "demandTag": "Waterlogged Feed Supply",
+        "summary": "Growing 7-day hydroponic barley/maize sprout mats to maintain cattle milk yield when outdoor fields are flooded.",
+        "margin": "₹22,000",
+        "profit": "₹18,000 – ₹27,000/mo",
+        "bizId": "BIZ-02"
+      },
+      {
+        "name": "Mushroom Substrate Preparation Hub",
+        "image": "assets/mushroom_thumb.jpg",
+        "category": "Agro-Allied",
+        "demandTag": "Indoor Humidity Advantage",
+        "summary": "Sterilizing and packing paddy straw spawn bags for humid late-monsoon oyster mushroom production cycles.",
+        "margin": "₹20,000",
+        "profit": "₹16,000 – ₹25,000/mo",
+        "bizId": "BIZ-07"
+      }
     ],
     "otherBusinesses": [
-      "Waterproof Grain Silo Storage",
-      "Veterinary Care & Animal Health Point",
-      "Rural Logistics & Transit"
-    ],
-    "notes": "Transit and flooding caution. Elevate inventory on high plinths; monitor pond water pH and aeration."
+      { "name": "Waterproof Grain Silo Storage", "icon": "fa-warehouse" },
+      { "name": "Veterinary Animal Health Point", "icon": "fa-stethoscope" },
+      { "name": "Rural Logistics & Transit", "icon": "fa-truck-fast" }
+    ]
   },
   {
     "month": "Aug",
@@ -3914,17 +4110,45 @@ const SEASONAL_CALENDAR_DATA = [
     "demand": "Steady",
     "status": "blue",
     "season": "Mid-Monsoon Aquaculture & Indoor Cultivation",
-    "seasonalBusinesses": [
-      "Composite Fish Farming Unit",
-      "Milch Cattle Dairy Expansion",
-      "Oyster Mushroom Cultivation"
+    "ideas": "High ambient humidity fuels rapid oyster mushroom flushes and excellent weight gain for pond fisheries.",
+    "notes": "Indoor mushroom flushes thrive in monsoon humidity. Rapid growth for aquaculture fingerlings in rural ponds.",
+    "featuredBusinesses": [
+      {
+        "name": "Composite Fish Farming & Feed Unit",
+        "image": "assets/fish_thumb.jpg",
+        "category": "Aqua-Culture",
+        "demandTag": "Peak Fish Biomass",
+        "summary": "Manufacturing floating protein pellet feed for local aquaculture ponds and harvesting early market-ready fish.",
+        "margin": "₹40,000",
+        "profit": "₹32,000 – ₹48,000/mo",
+        "bizId": "BIZ-06"
+      },
+      {
+        "name": "Oyster Mushroom Flush Unit",
+        "image": "assets/mushroom_thumb.jpg",
+        "category": "Indoor Cultivation",
+        "demandTag": "Heavy Flush Yields",
+        "summary": "Harvesting daily fresh oyster mushrooms in natural humidity with high profit margins in local vegetable mandis.",
+        "margin": "₹22,000",
+        "profit": "₹20,000 – ₹32,000/mo",
+        "bizId": "BIZ-07"
+      },
+      {
+        "name": "Solar Dehydration & Herb Drying",
+        "image": "assets/solar_dryer.jpg",
+        "category": "Food Processing",
+        "demandTag": "Value Preservation",
+        "summary": "Hygienic solar cabinet dehydration of ginger, turmeric, and wild amla for off-season premium retail.",
+        "margin": "₹28,000",
+        "profit": "₹22,000 – ₹34,000/mo",
+        "bizId": "BIZ-19"
+      }
     ],
     "otherBusinesses": [
-      "Solar Dehydration for Spices & Herbs",
-      "Poultry Layer Unit",
-      "Bio-Gas Energy Unit"
-    ],
-    "notes": "Indoor mushroom flushes thrive in monsoon humidity. Rapid growth for aquaculture fingerlings in rural ponds."
+      { "name": "Milch Cattle Dairy Expansion", "icon": "fa-cow" },
+      { "name": "Poultry Layer Unit", "icon": "fa-egg" },
+      { "name": "Bio-Gas Energy Unit", "icon": "fa-fire-flame-simple" }
+    ]
   },
   {
     "month": "Sep",
@@ -3933,17 +4157,45 @@ const SEASONAL_CALENDAR_DATA = [
     "demand": "High",
     "status": "green",
     "season": "Pre-Festive Retail Stocking & Haat Surges",
-    "seasonalBusinesses": [
-      "Eco-Friendly Clay & Terracotta Crafts",
-      "Packaging Box & Paper Bag Making",
-      "Ready-to-Eat Namkeen & Snacks Unit"
+    "ideas": "Wholesalers and retail shops build massive inventory ahead of Durga Puja & Diwali. Huge orders for terracotta diyas, packaging, and honey.",
+    "notes": "Retailers build inventory ahead of Durga Puja & Diwali. Huge surge for gift packaging and processed snacks.",
+    "featuredBusinesses": [
+      {
+        "name": "Eco-Friendly Terracotta & Clay Crafts",
+        "image": "assets/pottery_craft_thumb.jpg",
+        "category": "Artisan Crafts",
+        "demandTag": "Festive Diya Bulk Orders",
+        "summary": "Electric pottery wheel molding of earthen lamps, decorative idols, and hand-crafted planters for festive wholesale.",
+        "margin": "₹16,000",
+        "profit": "₹22,000 – ₹36,000/mo",
+        "bizId": "BIZ-10"
+      },
+      {
+        "name": "Honey Bee Keeping & Packaging",
+        "image": "assets/honey_bee.jpg",
+        "category": "Apiculture",
+        "demandTag": "Festive Gifting Demand",
+        "summary": "Harvesting pure forest and mustard honey packed in premium glass jars for festive gift hampers and Ayurvedic trade.",
+        "margin": "₹24,000",
+        "profit": "₹20,000 – ₹32,000/mo",
+        "bizId": "BIZ-13"
+      },
+      {
+        "name": "Corrugated Box & Paper Bag Unit",
+        "image": "assets/leaf_plates_thumb.jpg",
+        "category": "Packaging Solutions",
+        "demandTag": "Retail Packaging Surge",
+        "summary": "Supplying branded carry bags and sweet boxes to town confectioners, apparel shops, and jewelers.",
+        "margin": "₹30,000",
+        "profit": "₹26,000 – ₹38,000/mo",
+        "bizId": "BIZ-21"
+      }
     ],
     "otherBusinesses": [
-      "Honey Bee Keeping & Processing",
-      "Bakery & Confectionery Unit",
-      "Liquid Milk Distribution"
-    ],
-    "notes": "Retailers build inventory ahead of Durga Puja & Diwali. Huge surge for gift packaging and processed snacks."
+      { "name": "Ready-to-Eat Namkeen & Snacks", "icon": "fa-bowl-food" },
+      { "name": "Bakery & Confectionery Unit", "icon": "fa-cake-candles" },
+      { "name": "Liquid Milk Distribution", "icon": "fa-bottle-droplet" }
+    ]
   },
   {
     "month": "Oct",
@@ -3952,17 +4204,45 @@ const SEASONAL_CALENDAR_DATA = [
     "demand": "Peak",
     "status": "green",
     "season": "Durga Puja, Dussehra & Navratri Boom",
-    "seasonalBusinesses": [
-      "Sweets, Mawa & Khoya Processing",
-      "Solar Milk Chilling & Paneer Unit",
-      "Banana Fiber & Jute Handicrafts"
+    "ideas": "Festive spending explosion across rural and urban markets. Sweet shops, banquet caterers, and handloom weavers operate at 300% regular volume.",
+    "notes": "Sales surge 300% across festive markets. Direct high-margin retail of sweets, curd, paneer, and ceremonial craft.",
+    "featuredBusinesses": [
+      {
+        "name": "Sweets, Mawa & Khoya Processing",
+        "image": "assets/dairy_thumb.jpg",
+        "category": "Dairy Confectionery",
+        "demandTag": "300% Festive Volume",
+        "summary": "Continuous bulk mawa and condensed milk supply to sweet manufacturers for festive laddoos, pedas, and rasgullas.",
+        "margin": "₹48,000",
+        "profit": "₹45,000 – ₹70,000/mo",
+        "bizId": "BIZ-01"
+      },
+      {
+        "name": "Handloom Sarees & Jute Crafts",
+        "image": "assets/handloom.jpg",
+        "category": "Handicrafts & Apparel",
+        "demandTag": "Festive Shopping Rush",
+        "summary": "Peak direct-to-consumer sales of traditional handloom sarees, dhurries, and festive decorative jute items.",
+        "margin": "₹25,000",
+        "profit": "₹30,000 – ₹48,000/mo",
+        "bizId": "BIZ-09"
+      },
+      {
+        "name": "Poultry & Egg Layer Production",
+        "image": "assets/poultry_thumb.jpg",
+        "category": "Livestock & Poultry",
+        "demandTag": "Post-Navratri Surge",
+        "summary": "Catering to massive post-Navratri festive restaurant demand and weekly haat livestock buyers.",
+        "margin": "₹35,000",
+        "profit": "₹28,000 – ₹42,000/mo",
+        "bizId": "BIZ-17"
+      }
     ],
     "otherBusinesses": [
-      "Rural Event Sound & Lighting Rental",
-      "Mini Mustard Oil Expeller",
-      "Haat Express Cargo Logistics"
-    ],
-    "notes": "Sales surge 300% across festive markets. Direct high-margin retail of sweets, curd, paneer, and ceremonial craft."
+      { "name": "Solar Milk Chilling & Paneer", "icon": "fa-temperature-arrow-down" },
+      { "name": "Mini Mustard Oil Expeller", "icon": "fa-droplet" },
+      { "name": "Rural Event Sound & Lighting", "icon": "fa-bolt" }
+    ]
   },
   {
     "month": "Nov",
@@ -3971,17 +4251,45 @@ const SEASONAL_CALENDAR_DATA = [
     "demand": "Peak",
     "status": "green",
     "season": "Diwali, Chhath Puja & Winter Weddings",
-    "seasonalBusinesses": [
-      "Cold-Pressed Mustard & Sesame Oil",
-      "Dairy & Pure Desi Ghee Packaging",
-      "Paddy Harvesting & Threshing Unit"
+    "ideas": "Paddy harvest proceeds generate maximum disposable income. Major auspicious wedding dates drive enormous spending on ghee, cooking oils, and farm threshing.",
+    "notes": "Maximum liquidity in rural economy. Peak sales for pure ghee, cooking oils, and winter wedding catering.",
+    "featuredBusinesses": [
+      {
+        "name": "Cold-Pressed Mustard & Sesame Oil",
+        "image": "assets/oil_mill_thumb.jpg",
+        "category": "Edible Oils",
+        "demandTag": "Wedding Season Surge",
+        "summary": "Pure cold-pressed kachi ghani mustard oil for winter cooking, wedding banquets, and ceremonial Chhath rituals.",
+        "margin": "₹38,000",
+        "profit": "₹35,000 – ₹55,000/mo",
+        "bizId": "BIZ-03"
+      },
+      {
+        "name": "Pure Desi Ghee & Dairy Packaging",
+        "image": "assets/dairy_thumb.jpg",
+        "category": "High-Value Dairy",
+        "demandTag": "Premium Ghee Demand",
+        "summary": "Small-batch packaging of premium A2 cow ghee in glass jars with 40%+ gross profit margins.",
+        "margin": "₹48,000",
+        "profit": "₹40,000 – ₹60,000/mo",
+        "bizId": "BIZ-01"
+      },
+      {
+        "name": "Paddy Harvester & Threshing Service",
+        "image": "assets/tractor.jpg",
+        "category": "Custom Hiring",
+        "demandTag": "24/7 Field Operations",
+        "summary": "Non-stop custom threshing and baling operations in village fields following the Kharif paddy harvest.",
+        "margin": "₹50,000",
+        "profit": "₹45,000 – ₹70,000/mo",
+        "bizId": "BIZ-15"
+      }
     ],
     "otherBusinesses": [
-      "Fresh Button Mushroom Harvest",
-      "Rural Fast-Moving Retail Goods",
-      "Mini Cold Storage"
-    ],
-    "notes": "Maximum liquidity in rural economy. Peak sales for pure ghee, cooking oils, and winter wedding catering."
+      { "name": "Fresh Button Mushroom Harvest", "icon": "fa-cubes-stacked" },
+      { "name": "Rural FMCG Retail Supplies", "icon": "fa-cart-shopping" },
+      { "name": "Mini Cold Storage Hub", "icon": "fa-snowflake" }
+    ]
   },
   {
     "month": "Dec",
@@ -3990,17 +4298,45 @@ const SEASONAL_CALENDAR_DATA = [
     "demand": "High",
     "status": "green",
     "season": "Winter Tourist Transit & Highway Haats",
-    "seasonalBusinesses": [
-      "Highway Wayside Agri-Tourism & Food Stall",
-      "Winter Vegetable Dehydration Unit",
-      "Honey & Herbal Extracts Unit"
+    "ideas": "Winter travel, religious yatras, and highway tourist flows create bustling roadside trade for wayside dhabas, dehydrated winter snacks, and goat farming.",
+    "notes": "NH highway tourist flow boosts roadside sales of fresh dairy, processed snacks, honey, and winter flower garlands.",
+    "featuredBusinesses": [
+      {
+        "name": "Highway Wayside Agri-Tourism & Food",
+        "image": "assets/digital_kiosk_thumb.jpg",
+        "category": "Hospitality & Food",
+        "demandTag": "Tourist Transit Surge",
+        "summary": "Serving fresh tea, traditional snacks, hot sugarcane juice, and organic farm produce to highway travelers.",
+        "margin": "₹32,000",
+        "profit": "₹30,000 – ₹46,000/mo",
+        "bizId": "BIZ-23"
+      },
+      {
+        "name": "Goat Rearing & Stall-Fed Breeding",
+        "image": "assets/goat_farming.jpg",
+        "category": "Livestock Rearing",
+        "demandTag": "Winter Meat Demand",
+        "summary": "Stall-fed Black Bengal & Osmanabadi goat breeding for winter festive meat demand with low feeding maintenance cost.",
+        "margin": "₹28,000",
+        "profit": "₹25,000 – ₹38,000/mo",
+        "bizId": "BIZ-24"
+      },
+      {
+        "name": "Honey & Herbal Extracts Unit",
+        "image": "assets/honey_bee.jpg",
+        "category": "Wellness & Food",
+        "demandTag": "Winter Health Products",
+        "summary": "Raw winter forest honey, ginger paste, and dried amla packed in retail jars for health-conscious buyers.",
+        "margin": "₹24,000",
+        "profit": "₹22,000 – ₹35,000/mo",
+        "bizId": "BIZ-13"
+      }
     ],
     "otherBusinesses": [
-      "Solar Milk Chilling & Dairy",
-      "Poultry Meat Processing",
-      "Floriculture & Marigold Farm"
-    ],
-    "notes": "NH highway tourist flow boosts roadside sales of fresh dairy, processed snacks, honey, and winter flower garlands."
+      { "name": "Solar Milk Chilling & Dairy", "icon": "fa-cow" },
+      { "name": "Poultry Meat Processing", "icon": "fa-drumstick-bite" },
+      { "name": "Floriculture & Marigold Farm", "icon": "fa-spa" }
+    ]
   }
 ];
 

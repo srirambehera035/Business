@@ -318,60 +318,127 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!grid || typeof SEASONAL_CALENDAR_DATA === 'undefined') return;
     grid.innerHTML = '';
 
+    const showPlaceholder = () => {
+      document.querySelectorAll('.month-cal-card').forEach(c => c.classList.remove('active'));
+      if (!noteEl) return;
+      noteEl.innerHTML = `
+        <div class="cal-placeholder-card">
+          <div class="cal-placeholder-icon"><i class="fa-solid fa-calendar-days text-orange"></i></div>
+          <h4>Seasonal Demand &amp; Business Opportunities</h4>
+          <p>Click any month (Jan – Dec) in the 4×3 matrix on the left to reveal season-specific business ideas, images, 10% margin requirements, and cash flow strategies.</p>
+          <div class="cal-placeholder-tags">
+            <span><i class="fa-solid fa-fire text-orange"></i> 32 Vetted Enterprises</span>
+            <span><i class="fa-solid fa-shield-halved text-green"></i> 10% Margin Capital</span>
+            <span><i class="fa-solid fa-landmark-flag text-blue"></i> MSJE Scheme Alignment</span>
+          </div>
+        </div>
+      `;
+    };
+
     const updateActiveMonth = (m, card) => {
       document.querySelectorAll('.month-cal-card').forEach(c => c.classList.remove('active'));
       if (card) card.classList.add('active');
 
       if (!noteEl) return;
 
-      const topBizHtml = (m.seasonalBusinesses || []).map(b => 
-        `<span class="cal-biz-chip seasonal"><i class="fa-solid fa-fire"></i> ${b}</span>`
-      ).join('');
-
-      const otherBizHtml = (m.otherBusinesses || []).map(b => 
-        `<span class="cal-biz-chip other"><i class="fa-solid fa-briefcase"></i> ${b}</span>`
-      ).join('');
-
       const demandBadge = `<span class="badge-cal-pill ${m.status}">${m.demand} Demand</span>`;
+
+      const featuredListHtml = (m.featuredBusinesses || []).map(b => `
+        <div class="cal-biz-card-item">
+          <div class="cal-biz-thumb-wrap">
+            <img src="${b.image}" alt="${b.name}" class="cal-biz-thumb" loading="lazy" onerror="this.src='assets/dairy_thumb.jpg'">
+            <span class="cal-biz-demand-tag">${b.demandTag || 'High Demand'}</span>
+          </div>
+          <div class="cal-biz-content">
+            <div class="cal-biz-item-top">
+              <h5 class="cal-biz-name">${b.name}</h5>
+              <span class="cal-biz-cat-badge">${b.category}</span>
+            </div>
+            <p class="cal-biz-summary">${b.summary}</p>
+            <div class="cal-biz-footer">
+              <span class="cal-biz-meta-pill"><i class="fa-solid fa-wallet text-green"></i> 10% Margin: <strong>${b.margin}</strong></span>
+              <span class="cal-biz-meta-pill"><i class="fa-solid fa-chart-line text-blue"></i> Est: <strong>${b.profit}</strong></span>
+              <button class="cal-biz-select-btn" data-biz-id="${b.bizId}" title="Select enterprise and inspect DPR plan">
+                <span>Explore Plan</span> <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+
+      const otherChipsHtml = (m.otherBusinesses || []).map(ob => {
+        if (typeof ob === 'string') {
+          return `<span class="cal-biz-chip other"><i class="fa-solid fa-briefcase"></i> ${ob}</span>`;
+        } else {
+          return `<span class="cal-biz-chip other"><i class="fa-solid ${ob.icon || 'fa-briefcase'} text-blue"></i> ${ob.name}</span>`;
+        }
+      }).join('');
 
       noteEl.innerHTML = `
         <div class="cal-detail-card">
           <div class="cal-detail-header">
-            <div class="cal-detail-month">
-              <i class="fa-solid fa-calendar-check text-green"></i> ${m.name} (${m.month})
-            </div>
-            <div class="flex-align" style="gap:6px;">
+            <div class="cal-detail-title-wrap">
+              <div class="cal-detail-month">
+                <i class="fa-solid fa-calendar-check text-green"></i> ${m.name} (${m.month})
+              </div>
               <span class="cal-detail-season">${m.season || ''}</span>
               ${demandBadge}
             </div>
-          </div>
-
-          <div class="cal-biz-sections">
-            <div class="cal-biz-group">
-              <div class="cal-biz-group-title">
-                <i class="fa-solid fa-fire text-orange"></i> <strong>Seasonal Demanded Businesses:</strong>
-              </div>
-              <div class="cal-biz-chips-wrap">
-                ${topBizHtml}
-              </div>
-            </div>
-
-            <div class="cal-biz-group">
-              <div class="cal-biz-group-title">
-                <i class="fa-solid fa-layer-group text-blue"></i> <strong>Other Demanded Businesses:</strong>
-              </div>
-              <div class="cal-biz-chips-wrap">
-                ${otherBizHtml}
-              </div>
-            </div>
+            <button class="cal-close-btn" id="btnCloseCalDetail" title="Close detail view" aria-label="Close detail section">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
           </div>
 
           <div class="cal-advisory-row">
             <i class="fa-solid fa-lightbulb text-orange"></i>
-            <div><strong>Operational &amp; Cash Flow Guidance:</strong> ${m.notes}</div>
+            <div>
+              <strong>Seasonal Strategy &amp; Cash Flow Guidance:</strong>
+              <div class="cal-advisory-text">${m.ideas || m.notes}</div>
+            </div>
+          </div>
+
+          <div class="cal-biz-list-section">
+            <div class="cal-biz-list-header">
+              <i class="fa-solid fa-fire text-orange"></i> <strong>Seasonal Demanded Businesses &amp; Ideas:</strong>
+            </div>
+            <div class="cal-biz-list">
+              ${featuredListHtml}
+            </div>
+          </div>
+
+          <div class="cal-other-biz-section">
+            <div class="cal-other-title">
+              <i class="fa-solid fa-layer-group text-blue"></i> <strong>Other Demanded Businesses in ${m.name}:</strong>
+            </div>
+            <div class="cal-other-chips-wrap">
+              ${otherChipsHtml}
+            </div>
           </div>
         </div>
       `;
+
+      // Attach Close Button Event
+      const closeBtn = noteEl.querySelector('#btnCloseCalDetail');
+      if (closeBtn) {
+        closeBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          showPlaceholder();
+        });
+      }
+
+      // Attach "Explore Plan" button click handlers
+      noteEl.querySelectorAll('.cal-biz-select-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const bizId = btn.getAttribute('data-biz-id');
+          const targetBiz = BUSINESSES_DATA.find(item => item.id === bizId);
+          if (targetBiz) {
+            selectBusiness(targetBiz);
+            const secCalc = document.getElementById('secFeasibilityModule') || document.getElementById('secOverview');
+            secCalc?.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      });
     };
 
     SEASONAL_CALENDAR_DATA.forEach((m, idx) => {
@@ -386,15 +453,16 @@ document.addEventListener('DOMContentLoaded', () => {
         <span class="badge-cal-pill ${m.status}">${m.demand}</span>
       `;
 
-      // Hover event: instantly display demanded businesses & guidance
+      // Hover event
       card.addEventListener('mouseenter', () => {
         updateActiveMonth(m, card);
       });
 
-      // Click & Keyboard Focus support (for touch devices and accessibility)
+      // Click event
       card.addEventListener('click', () => {
         updateActiveMonth(m, card);
       });
+
       card.addEventListener('focus', () => {
         updateActiveMonth(m, card);
       });

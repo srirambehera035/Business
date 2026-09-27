@@ -4073,28 +4073,42 @@ body {
 
 /* ── Dynamic Demanded Businesses & Guidance Container (AT RIGHT OF MATRIX) ── */
 .biz-gallery-calendar-pane .calendar-active-note {
-  background: rgba(10, 15, 38, 0.7);
+  background: rgba(10, 15, 38, 0.85);
   border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: 10px;
-  padding: 0.75rem 0.9rem;
+  border-radius: 12px;
+  padding: 0.85rem 1rem;
   font-size: 0.78rem;
   color: #f1f5f9;
   line-height: 1.4;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
+  max-height: 480px;
+  overflow-y: auto;
+}
+
+/* Custom Sleek Scrollbar for Calendar Note */
+.biz-gallery-calendar-pane .calendar-active-note::-webkit-scrollbar {
+  width: 5px;
+}
+.biz-gallery-calendar-pane .calendar-active-note::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 4px;
+}
+.biz-gallery-calendar-pane .calendar-active-note::-webkit-scrollbar-thumb {
+  background: rgba(249, 115, 22, 0.4);
+  border-radius: 4px;
+}
+.biz-gallery-calendar-pane .calendar-active-note::-webkit-scrollbar-thumb:hover {
+  background: rgba(249, 115, 22, 0.7);
 }
 
 .cal-detail-card {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
-  gap: 0.45rem;
+  gap: 0.65rem;
 }
 
 .cal-detail-header {
@@ -4102,19 +4116,26 @@ body {
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  padding-bottom: 4px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.cal-detail-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   flex-wrap: wrap;
+  flex: 1;
 }
 
 .cal-detail-month {
-  font-size: 0.88rem;
+  font-size: 0.92rem;
   font-weight: 800;
   color: #ffffff;
   font-family: 'Outfit', sans-serif;
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
 }
 
 .cal-detail-season {
@@ -4122,39 +4143,315 @@ body {
   font-weight: 600;
   color: #cbd5e1;
   background: rgba(255, 255, 255, 0.08);
-  padding: 1.5px 7px;
-  border-radius: 10px;
+  padding: 2px 8px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* Close Button Cross (x) */
+.cal-close-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #cbd5e1;
+  font-size: 0.85rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cal-close-btn:hover {
+  background: rgba(239, 68, 68, 0.85);
+  border-color: #ef4444;
+  color: #ffffff;
+  transform: rotate(90deg) scale(1.1);
+}
+
+/* Placeholder card when closed */
+.cal-placeholder-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem 1.25rem;
+  gap: 0.75rem;
+  height: 100%;
+  min-height: 280px;
+}
+
+.cal-placeholder-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: rgba(249, 115, 22, 0.15);
+  border: 1.5px solid rgba(249, 115, 22, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: #fb923c;
+}
+
+.cal-placeholder-card h4 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  margin: 0;
+  font-family: 'Outfit', sans-serif;
+}
+
+.cal-placeholder-card p {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  line-height: 1.5;
+  margin: 0;
+  max-width: 320px;
+}
+
+.cal-placeholder-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+  margin-top: 0.5rem;
+}
+
+.cal-placeholder-tags span {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: #cbd5e1;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 3px 8px;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Seasonal guidance callout */
+.cal-advisory-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  background: rgba(249, 115, 22, 0.08);
+  border: 1px dashed rgba(249, 115, 22, 0.35);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 0.74rem;
+  color: #fed7aa;
+  line-height: 1.4;
+}
+
+.cal-advisory-row strong {
+  color: #fb923c;
+  display: block;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  margin-bottom: 2px;
+}
+
+.cal-advisory-text {
+  color: #fde68a;
+}
+
+/* Structured Business List (Image on left, short summary on right) */
+.cal-biz-list-section {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cal-biz-list-header {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #e2e8f0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.cal-biz-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cal-biz-card-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 9px;
+  padding: 7px 9px;
+  transition: all 0.2s ease;
 }
 
-.cal-biz-sections {
+.cal-biz-card-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(249, 115, 22, 0.35);
+  transform: translateX(2px);
+}
+
+.cal-biz-thumb-wrap {
+  width: 62px;
+  height: 62px;
+  min-width: 62px;
+  border-radius: 7px;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: #1e293b;
+  flex-shrink: 0;
+}
+
+.cal-biz-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.cal-biz-demand-tag {
+  position: absolute;
+  bottom: 2px;
+  left: 2px;
+  right: 2px;
+  background: rgba(15, 23, 42, 0.85);
+  color: #fb923c;
+  font-size: 0.54rem;
+  font-weight: 800;
+  text-align: center;
+  border-radius: 3px;
+  padding: 1px 2px;
+  line-height: 1.1;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cal-biz-content {
+  flex: 1;
+  min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: 2px;
 }
 
-.cal-biz-group {
+.cal-biz-item-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.cal-biz-name {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+  font-family: 'Outfit', sans-serif;
+  line-height: 1.25;
+}
+
+.cal-biz-cat-badge {
+  font-size: 0.62rem;
+  font-weight: 600;
+  color: #a5b4fc;
+  background: rgba(99, 102, 241, 0.15);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  padding: 1px 6px;
+  border-radius: 10px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.cal-biz-summary {
+  font-size: 0.72rem;
+  color: #cbd5e1;
+  line-height: 1.35;
+  margin: 0;
+}
+
+.cal-biz-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 3px;
+}
+
+.cal-biz-meta-pill {
+  font-size: 0.65rem;
+  color: #94a3b8;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 2px 6px;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.cal-biz-meta-pill strong {
+  color: #e2e8f0;
+}
+
+.cal-biz-select-btn {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #ffffff;
+  background: linear-gradient(135deg, #f97316, #ea580c);
+  border: none;
+  padding: 2.5px 8px;
+  border-radius: 10px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(249, 115, 22, 0.3);
+}
+
+.cal-biz-select-btn:hover {
+  background: linear-gradient(135deg, #fb923c, #f97316);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(249, 115, 22, 0.5);
+}
+
+/* Other businesses tags */
+.cal-other-biz-section {
   display: flex;
   flex-direction: column;
-  gap: 2.5px;
+  gap: 3px;
+  padding-top: 4px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.cal-biz-group-title {
+.cal-other-title {
   font-size: 0.68rem;
   font-weight: 700;
   color: #94a3b8;
   text-transform: uppercase;
-  letter-spacing: 0.4px;
+  letter-spacing: 0.3px;
   display: flex;
   align-items: center;
   gap: 4px;
 }
 
-.cal-biz-group-title strong {
-  color: #e2e8f0;
-}
-
-.cal-biz-chips-wrap {
+.cal-other-chips-wrap {
   display: flex;
   flex-wrap: wrap;
   gap: 4px;
@@ -4171,17 +4468,6 @@ body {
   transition: transform 0.15s ease, background 0.15s ease;
 }
 
-.cal-biz-chip.seasonal {
-  background: rgba(249, 115, 22, 0.18);
-  border: 1px solid rgba(249, 115, 22, 0.45);
-  color: #ffedd5;
-}
-
-.cal-biz-chip.seasonal:hover {
-  background: rgba(249, 115, 22, 0.3);
-  transform: translateY(-1px);
-}
-
 .cal-biz-chip.other {
   background: rgba(56, 189, 248, 0.14);
   border: 1px solid rgba(56, 189, 248, 0.38);
@@ -4191,23 +4477,6 @@ body {
 .cal-biz-chip.other:hover {
   background: rgba(56, 189, 248, 0.25);
   transform: translateY(-1px);
-}
-
-.cal-advisory-row {
-  display: flex;
-  align-items: flex-start;
-  gap: 6px;
-  background: rgba(249, 115, 22, 0.09);
-  border: 1px dashed rgba(249, 115, 22, 0.38);
-  border-radius: 5px;
-  padding: 4px 7px;
-  font-size: 0.72rem;
-  color: #fed7aa;
-  line-height: 1.35;
-}
-
-.cal-advisory-row strong {
-  color: #fb923c;
 }
 
 /* ── BOTTOM DIV: Caption bar ─────────────────────────────────────────────────── */
