@@ -87,6 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderBusinessPlansMarquee();
   setupEnterpriseGallery();
   setupHeroVideoPlaylist();
+  setupAuthModals();
 
   // Select initial business & calculate
   selectBusiness(BUSINESSES_DATA[0]);
@@ -1782,6 +1783,7 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
   }
 
+<<<<<<< HEAD
   // --- ENTERPRISE GALLERY: REFERENCE LAYOUT ─ Multi-tile slider LEFT + 2×2 category grid RIGHT ---
   function setupEnterpriseGallery() {
     const track       = document.getElementById('bizMultiTrack');
@@ -2002,6 +2004,129 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && modal && modal.classList.contains('open')) closeGalleryModal();
     });
+=======
+  // --- AUTHENTICATION & REGISTRATION MODAL CONTROLLER ---
+  function setupAuthModals() {
+    const btnAuthTabLogin = document.getElementById('btnAuthTabLogin');
+    const btnAuthTabRegister = document.getElementById('btnAuthTabRegister');
+    const formLoginDirect = document.getElementById('formLoginDirect');
+    const formRegister = document.getElementById('formRegister');
+    const btnSendOtp = document.getElementById('btnSendOtp');
+
+    // Open Modal
+    if (btnOpenLogin && loginModal) {
+      btnOpenLogin.addEventListener('click', (e) => {
+        e.preventDefault();
+        loginModal.classList.add('active');
+      });
+    }
+
+    // Close Modal
+    if (btnCloseLogin && loginModal) {
+      btnCloseLogin.addEventListener('click', (e) => {
+        e.preventDefault();
+        loginModal.classList.remove('active');
+      });
+    }
+
+    if (loginModal) {
+      loginModal.addEventListener('click', (e) => {
+        if (e.target === loginModal) {
+          loginModal.classList.remove('active');
+        }
+      });
+    }
+
+    // Switch to Login Tab
+    if (btnAuthTabLogin) {
+      btnAuthTabLogin.addEventListener('click', () => {
+        btnAuthTabLogin.classList.add('active');
+        btnAuthTabRegister.classList.remove('active');
+        formLoginDirect?.classList.add('active');
+        formRegister?.classList.remove('active');
+      });
+    }
+
+    // Switch to Register Tab
+    if (btnAuthTabRegister) {
+      btnAuthTabRegister.addEventListener('click', () => {
+        btnAuthTabRegister.classList.add('active');
+        btnAuthTabLogin.classList.remove('active');
+        formRegister?.classList.add('active');
+        formLoginDirect?.classList.remove('active');
+      });
+    }
+
+    // Send OTP Simulation
+    if (btnSendOtp) {
+      btnSendOtp.addEventListener('click', () => {
+        const mob = document.getElementById('loginMobile')?.value;
+        if (!mob || mob.trim().length < 10) {
+          alert('Please enter a valid 10-digit mobile number first.');
+          return;
+        }
+        btnSendOtp.textContent = 'OTP Sent (123456)';
+        btnSendOtp.style.background = '#16a34a';
+        btnSendOtp.style.color = '#ffffff';
+        setTimeout(() => {
+          const otpInput = document.getElementById('loginOtp');
+          if (otpInput) otpInput.value = '123456';
+        }, 800);
+      });
+    }
+
+    // Submit Direct Login
+    if (formLoginDirect) {
+      formLoginDirect.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const mob = document.getElementById('loginMobile')?.value || "9876543210";
+        currentUser.isLoggedIn = true;
+        currentUser.mobile = mob;
+        updateAuthButtonText();
+        loginModal.classList.remove('active');
+        announceWelcome();
+        alert(`Welcome back to Vyapaar Sarthi! Authenticated session for mobile ${mob}.`);
+      });
+    }
+
+    // Submit Registration Form
+    if (formRegister) {
+      formRegister.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = document.getElementById('regName')?.value;
+        const mobile = document.getElementById('regMobile')?.value;
+        const category = document.getElementById('regCategory')?.value;
+        const state = document.getElementById('regState')?.value;
+        const district = document.getElementById('regDistrict')?.value;
+        const area = document.getElementById('regArea')?.value;
+        const pin = document.getElementById('regPin')?.value;
+        const margin = document.getElementById('regMargin')?.value;
+        const bizStatusRadio = document.querySelector('input[name="bizStatus"]:checked');
+
+        if (name) currentUser.name = name;
+        if (mobile) currentUser.mobile = mobile;
+        if (category) currentUser.category = category;
+        if (state) currentUser.state = state;
+        if (district) currentUser.district = district;
+        if (area) currentUser.area = area;
+        if (pin) currentUser.pin = pin;
+        if (margin) {
+          currentUser.margin = parseInt(margin, 10);
+          currentMargin = currentUser.margin;
+          if (sliderMargin) sliderMargin.value = currentMargin;
+        }
+        if (bizStatusRadio) currentUser.status = bizStatusRadio.value;
+        currentUser.isLoggedIn = true;
+
+        updateAuthButtonText();
+        try { updateFinancialUI(); } catch(err) { console.warn(err); }
+        loginModal.classList.remove('active');
+        announceWelcome();
+        alert(`Registration Complete! Welcome ${currentUser.name}. Your profile and 10% concessional credit margin have been configured.`);
+      });
+    }
+>>>>>>> 067eb20 (Fix register page modal overlay, tab switching, and register submit button layout)
   }
 
 });
+
