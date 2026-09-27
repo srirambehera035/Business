@@ -5693,12 +5693,12 @@ body {
 .live-ticker-strip {
   display: flex;
   align-items: center;
-  background: #18181b;
-  color: #f4f4f5;
+  background: #ffffff !important;
+  color: #dc2626 !important;
   height: 42px;
   overflow: hidden;
-  border-bottom: 1px solid #27272a;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid #e2e8f0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
   font-family: 'Space Mono', 'Roboto Mono', consolas, monospace, sans-serif;
   font-size: 0.82rem;
   z-index: 99;
@@ -5719,7 +5719,7 @@ body {
   gap: 0.55rem;
   flex-shrink: 0;
   z-index: 5;
-  box-shadow: 4px 0 14px rgba(0, 0, 0, 0.45);
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.15);
   text-transform: uppercase;
 }
 
@@ -5779,25 +5779,25 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  color: #e4e4e7;
-  font-weight: 600;
+  color: #dc2626 !important;
+  font-weight: 700;
   letter-spacing: 0.2px;
 }
 
 .ticker-item strong {
-  color: #ffffff;
-  font-weight: 800;
+  color: #991b1b !important;
+  font-weight: 900;
 }
 
 .ticker-sep {
-  color: #52525b;
+  color: #f87171 !important;
   font-size: 0.75rem;
 }
 
-.text-orange { color: #f97316 !important; }
-.text-green { color: #22c55e !important; }
-.text-yellow { color: #eab308 !important; }
-.text-blue { color: #38bdf8 !important; }
+.text-orange { color: #ea580c !important; }
+.text-green { color: #16a34a !important; }
+.text-yellow { color: #d97706 !important; }
+.text-blue { color: #0284c7 !important; }
 
 @media (max-width: 768px) {
   .ticker-badge span:last-child {
