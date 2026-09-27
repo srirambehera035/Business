@@ -5687,5 +5687,127 @@ body {
   }
 }
 
+/* ==========================================================================
+   LIVE DEMAND BUSINESS TICKER STRIP (IMAGE 3 STYLING)
+   ========================================================================== */
+.live-ticker-strip {
+  display: flex;
+  align-items: center;
+  background: #18181b;
+  color: #f4f4f5;
+  height: 42px;
+  overflow: hidden;
+  border-bottom: 1px solid #27272a;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  font-family: 'Space Mono', 'Roboto Mono', consolas, monospace, sans-serif;
+  font-size: 0.82rem;
+  z-index: 99;
+  position: relative;
+  width: 100%;
+}
+
+.ticker-badge {
+  background: linear-gradient(135deg, #ff9933 0%, #f59e0b 100%);
+  color: #0f172a;
+  font-weight: 900;
+  font-size: 0.8rem;
+  letter-spacing: 0.8px;
+  padding: 0 1.1rem;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  flex-shrink: 0;
+  z-index: 5;
+  box-shadow: 4px 0 14px rgba(0, 0, 0, 0.45);
+  text-transform: uppercase;
+}
+
+.pulse-dot {
+  width: 9px;
+  height: 9px;
+  background-color: #dc2626;
+  border-radius: 50%;
+  box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7);
+  animation: pulse-red 1.5s infinite;
+}
+
+@keyframes pulse-red {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7);
+  }
+  70% {
+    transform: scale(1.15);
+    box-shadow: 0 0 0 8px rgba(220, 38, 38, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(220, 38, 38, 0);
+  }
+}
+
+.ticker-content-wrapper {
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+}
+
+.ticker-marquee-track {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  animation: ticker-scroll 30s linear infinite;
+  gap: 1.5rem;
+}
+
+.ticker-marquee-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes ticker-scroll {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.ticker-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #e4e4e7;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+.ticker-item strong {
+  color: #ffffff;
+  font-weight: 800;
+}
+
+.ticker-sep {
+  color: #52525b;
+  font-size: 0.75rem;
+}
+
+.text-orange { color: #f97316 !important; }
+.text-green { color: #22c55e !important; }
+.text-yellow { color: #eab308 !important; }
+.text-blue { color: #38bdf8 !important; }
+
+@media (max-width: 768px) {
+  .ticker-badge span:last-child {
+    display: none;
+  }
+  .ticker-badge {
+    padding: 0 0.65rem;
+  }
+}
+
+
 
 
