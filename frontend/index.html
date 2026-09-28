@@ -211,10 +211,28 @@
 
         <div class="video-player-frame">
           <div class="video-inner-container" id="mainVideoPlayer">
-            <iframe id="youtubeVideoGuide" class="youtube-embed-frame"
-                    src="https://www.youtube.com/embed/60a0nHFefn4?autoplay=0&rel=0&modestbranding=1" 
+            <!-- Official Vyapaar Sarthi Demo Video Poster Thumbnail -->
+            <img src="assets/demo_video_poster.jpg" alt="Vyapaar Sarthi Official Portal Demo Guide" class="video-poster-img" id="imgVideoPoster">
+            
+            <div class="video-placeholder-overlay" id="videoOverlay">
+              <button class="v-overlay-icon pulse-icon" id="btnPlayVideoMain" aria-label="Play Official Video Guide">
+                <i class="fa-solid fa-play"></i>
+              </button>
+              <h4 id="txtVideoOverlayTitle">Official Portal Guide: How to Use Vyapaar Sarthi</h4>
+              <p id="txtVideoOverlayDesc">Watch the complete step-by-step visual and regional audio walkthrough to test enterprise feasibility and secure 90% concessional loan sanction.</p>
+              <div class="v-chapters-bar flex-align">
+                <span class="v-chip"><i class="fa-solid fa-map-pin"></i> 1. Select State &amp; Village</span>
+                <span class="v-chip"><i class="fa-solid fa-wallet"></i> 2. Enter 10% Margin</span>
+                <span class="v-chip"><i class="fa-solid fa-shield"></i> 3. Feasibility &amp; Threats</span>
+                <span class="v-chip"><i class="fa-solid fa-file-pdf"></i> 4. Download Bank DPR</span>
+              </div>
+            </div>
+
+            <!-- YouTube Video Embed Player (revealed on play) -->
+            <iframe id="youtubeVideoGuide" class="youtube-embed-frame" style="display:none;"
+                    src="https://www.youtube.com/embed/60a0nHFefn4?autoplay=1&rel=0&modestbranding=1" 
                     title="Official YouTube Guide: How Vyapaar Sarthi Works" 
-                    frameborder="0"  
+                    frameborder="0" 
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
                     allowfullscreen>
             </iframe>
@@ -226,7 +244,7 @@
               <button id="btnNextChapter" class="v-action-btn"><i class="fa-solid fa-forward-step"></i> Next Step</button>
             </div>
             <div class="v-audio-badge flex-align">
-              <i class="fa-brands fa-youtube text-red" style="font-size:1.1rem; color:#ef4444;"></i> YouTube Video &amp; Audio Sync: <strong id="lblActiveVideoLang">English</strong>
+              <i class="fa-solid fa-headset text-orange" style="font-size:1.1rem;"></i> Native Audio Walkthrough: <strong id="lblActiveVideoLang">English</strong>
             </div>
           </div>
         </div>

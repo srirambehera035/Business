@@ -1968,6 +1968,18 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- CENTER VIDEO DEMO PLAYER WALKTHROUGH ---
   let videoChapter = 1;
 
+  const btnPlayMain = document.getElementById('btnPlayVideoMain');
+  btnPlayMain?.addEventListener('click', () => {
+    const overlay = document.getElementById('videoOverlay');
+    const poster = document.getElementById('imgVideoPoster');
+    const iframe = document.getElementById('youtubeVideoGuide');
+    if (overlay) overlay.style.display = 'none';
+    if (poster) poster.style.display = 'none';
+    if (iframe) iframe.style.display = 'block';
+    const p = SPEECH_PROMPTS[currentLang] || SPEECH_PROMPTS['en'];
+    speakAdvisory(p['ch1']);
+  });
+
   btnPlayDemo?.addEventListener('click', () => {
     const p = SPEECH_PROMPTS[currentLang] || SPEECH_PROMPTS['en'];
     const chKey = `ch${videoChapter}`;

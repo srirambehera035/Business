@@ -6063,6 +6063,99 @@ body {
   border: 0;
 }
 
+.video-poster-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.video-placeholder-overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(180deg, rgba(7, 29, 48, 0.6) 0%, rgba(3, 13, 23, 0.88) 100%);
+  backdrop-filter: blur(3px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+  z-index: 5;
+  transition: opacity 0.3s ease;
+}
+
+.v-overlay-icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ff9933 0%, #d97706 100%);
+  color: #ffffff;
+  border: none;
+  font-size: 1.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 5px;
+  cursor: pointer;
+  box-shadow: 0 10px 25px rgba(255, 153, 51, 0.5);
+  margin-bottom: 1.2rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.v-overlay-icon:hover {
+  transform: scale(1.12);
+  box-shadow: 0 15px 35px rgba(255, 153, 51, 0.75);
+}
+
+.v-overlay-icon.pulse-icon {
+  animation: pulsePlayBtn 2s infinite;
+}
+
+@keyframes pulsePlayBtn {
+  0% { box-shadow: 0 0 0 0 rgba(255, 153, 51, 0.6); }
+  70% { box-shadow: 0 0 0 18px rgba(255, 153, 51, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 153, 51, 0); }
+}
+
+#txtVideoOverlayTitle {
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 0.4rem;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+}
+
+#txtVideoOverlayDesc {
+  font-size: 0.9rem;
+  color: #cbd5e1;
+  max-width: 620px;
+  margin-bottom: 1.4rem;
+}
+
+.v-chapters-bar {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.v-chip {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+  padding: 0.4rem 0.85rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
 
 
 
