@@ -106,11 +106,19 @@ document.addEventListener('DOMContentLoaded', () => {
       "https://res.cloudinary.com/n0c7bqpd/video/upload/v1790453491/WhatsApp_Video_2026-09-27_at_01.30.20_j5ffts.mp4"
     ];
     let currentIndex = 0;
+    heroVideo.muted = true;
 
-    heroVideo.addEventListener('ended', () => {
+    const playNextVideo = () => {
       currentIndex = (currentIndex + 1) % playlist.length;
       heroVideo.src = playlist[currentIndex];
-      heroVideo.play().catch(err => console.log('Hero video transition error:', err));
+      heroVideo.load();
+      heroVideo.play().catch(err => console.warn('Hero background video auto-play transition:', err));
+    };
+
+    heroVideo.addEventListener('ended', playNextVideo);
+    heroVideo.addEventListener('error', (e) => {
+      console.warn('Hero video failed to load, switching to next in playlist:', e);
+      setTimeout(playNextVideo, 1000);
     });
   }
 
