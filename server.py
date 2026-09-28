@@ -137,6 +137,13 @@ class VyapaarSarthiRequestHandler(http.server.SimpleHTTPRequestHandler):
         elif path == '/api/lexicon':
             return self.send_json_response({"status": "SUCCESS", "lexicon": LEXICON_DATA})
 
+        # 6. Current Session Check API
+        elif path == '/api/auth/me':
+            return self.send_json_response({
+                "status": "SUCCESS",
+                "user": CURRENT_USER_SESSION if CURRENT_USER_SESSION.get("isLoggedIn") else None
+            })
+
         # Fallback to serving static frontend files (index.html, style.css, app.js, data.js, assets)
         return super().do_GET()
 
@@ -191,7 +198,7 @@ class VyapaarSarthiRequestHandler(http.server.SimpleHTTPRequestHandler):
 
         # 4. OTP Dispatch API
         elif path == '/api/auth/send-otp':
-            mobile = str(payload.get('mobile', '')).strip()
+            mobile = str(payload.get('phone') or payload.get('mobile') or '').strip()
             if not mobile or len(mobile) < 10:
                 return self.send_json_response({"status": "ERROR", "error": "Valid 10-digit mobile number required"}, status=400)
             
@@ -204,54 +211,102 @@ class VyapaarSarthiRequestHandler(http.server.SimpleHTTPRequestHandler):
                 "status": "SUCCESS",
                 "message": f"OTP successfully dispatched to +91-{mobile}",
                 "otp": otp,
-                "mobile": mobile
+                "mobile": mobile,
+                "phone": mobile
             })
 
-        # 5. User Authentication API (Login & Register with OTP verification)
-        elif path == '/api/auth/login':
-            mobile = str(payload.get('mobile', '9876543210')).strip()
+        # 5. OTP Verification API
+        elif path == '/api/auth/verify-otp':
+            mobile = str(payload.get('phone') or payload.get('mobile') or '').strip()
             otp = str(payload.get('otp', '')).strip()
-            
             valid_otp = ACTIVE_OTPS.get(mobile, '123456')
             
-            # Allow valid generated OTP, or default 123456 / 654321 fallback PINs
             if otp != valid_otp and otp != '123456' and otp != '654321':
                 return self.send_json_response({
                     "status": "ERROR",
-                    "error": f"Invalid OTP code entered. Please enter the OTP sent to +91-{mobile} (or demo PIN 123456)."
+                    "error": f"Invalid OTP code entered. Use code sent to +91-{mobile} (or demo PIN 123456)."
                 }, status=400)
             
+            return self.send_json_response({
+                "status": "SUCCESS",
+                "message": "OTP verification successful",
+                "verified": True
+            })
+
+        # 6. User Authentication API (Login)
+        elif path == '/api/auth/login':
+            identifier = str(payload.get('identifier') or payload.get('mobile') or payload.get('phone') or '9876543210').strip()
+            password = payload.get('password', '')
+            otp = str(payload.get('otp', '')).strip()
+            
+            if not identifier:
+                return self.send_json_response({"status": "ERROR", "error": "Phone number or email required"}, status=400)
+
             name = payload.get('name', 'Sriram Jena')
+            user_data = {
+                "name": name,
+                "mobile": identifier,
+                "email": payload.get('email', f"{identifier}@vyapaarsarthi.gov.in"),
+                "category": payload.get('category', 'sc'),
+                "state": payload.get('state', 'Odisha'),
+                "district": payload.get('district', 'Khordha'),
+                "area": payload.get('area', 'Hansapal (Pilot)'),
+                "token": f"MSJE-TOKEN-{abs(hash(identifier))}"
+            }
+            CURRENT_USER_SESSION.update(user_data)
+            CURRENT_USER_SESSION["isLoggedIn"] = True
+
             return self.send_json_response({
                 "status": "SUCCESS",
                 "message": "Authentication successful",
-                "user": {
-                    "name": name,
-                    "mobile": mobile,
-                    "category": payload.get('category', 'sc'),
-                    "state": payload.get('state', 'Odisha'),
-                    "district": payload.get('district', 'Khordha'),
-                    "token": f"MSJE-TOKEN-{abs(hash(mobile))}"
-                }
+                "user": user_data
             })
 
-        elif path == '/api/auth/register':
-            mobile = str(payload.get('mobile', '9876543210')).strip()
+        # 7. User Registration API (Signup / Register)
+        elif path in ('/api/auth/signup', '/api/auth/register'):
+            mobile = str(payload.get('phone') or payload.get('mobile') or '9876543210').strip()
             name = payload.get('name', 'Sriram Jena')
+            user_data = {
+                "name": name,
+                "mobile": mobile,
+                "email": payload.get('email', f"{mobile}@vyapaarsarthi.gov.in"),
+                "category": payload.get('category', 'sc'),
+                "state": payload.get('state', 'Odisha'),
+                "district": payload.get('district', 'Khordha'),
+                "area": payload.get('area', 'Hansapal (Pilot)'),
+                "pin": payload.get('pin', '751010'),
+                "margin": payload.get('margin', 48000),
+                "token": f"MSJE-TOKEN-{abs(hash(mobile))}"
+            }
+            CURRENT_USER_SESSION.update(user_data)
+            CURRENT_USER_SESSION["isLoggedIn"] = True
+
             return self.send_json_response({
                 "status": "SUCCESS",
                 "message": "Registration & Verification successful",
-                "user": {
-                    "name": name,
-                    "mobile": mobile,
-                    "category": payload.get('category', 'sc'),
-                    "state": payload.get('state', 'Odisha'),
-                    "district": payload.get('district', 'Khordha'),
-                    "area": payload.get('area', 'Khordha Rural Cluster'),
-                    "pin": payload.get('pin', '751010'),
-                    "margin": payload.get('margin', 48000),
-                    "token": f"MSJE-TOKEN-{abs(hash(mobile))}"
-                }
+                "user": user_data
+            })
+
+        # 8. Password Recovery & Logout APIs
+        elif path == '/api/auth/forgot-password':
+            identifier = str(payload.get('identifier', '')).strip()
+            return self.send_json_response({
+                "status": "SUCCESS",
+                "message": f"Password recovery instructions generated for {identifier}",
+                "identifier": identifier
+            })
+
+        elif path == '/api/auth/reset-password':
+            return self.send_json_response({
+                "status": "SUCCESS",
+                "message": "Password reset successfully. Please log in with your new password."
+            })
+
+        elif path == '/api/auth/logout':
+            CURRENT_USER_SESSION["isLoggedIn"] = False
+            return self.send_json_response({
+                "status": "SUCCESS",
+                "message": "Logged out successfully"
             })
 
         # 5. DPR Document Compilation API
