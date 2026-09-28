@@ -43,7 +43,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const loginModal = document.getElementById('loginModal');
   const btnOpenLogin = document.getElementById('btnOpenLogin');
   const btnCloseLogin = document.getElementById('btnCloseLogin');
-  const formRegister = document.getElementById('formRegister');
   const redirectOverlay = document.getElementById('redirectOverlay');
 
   const dprModal = document.getElementById('dprModal');
@@ -1388,186 +1387,645 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // --- CITIZEN LOGIN / REGISTRATION MODAL CONTROLLER ---
-  const btnAuthTabLogin = document.getElementById('btnAuthTabLogin');
-  const btnAuthTabRegister = document.getElementById('btnAuthTabRegister');
-  const formLoginDirect = document.getElementById('formLoginDirect');
-  const btnSendOtp = document.getElementById('btnSendOtp');
+  // =============================================================================
+  // VYAPAAR SARTHI: CITIZEN AUTHENTICATION & SESSION MANAGEMENT CONTROLLER
+  // =============================================================================
 
+  const API_AUTH = {
+    async getMe() {
+      try {
+        const res = await fetch('/api/auth/me', { credentials: 'include' });
+        if (!res.ok) return null;
+        const data = await res.json();
+        return data.user || null;
+      } catch (err) {
+        console.warn('Session check failed:', err);
+        return null;
+      }
+    },
+    async login(identifier, password) {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ identifier, password })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Login failed');
+      return data.user;
+    },
+    async signup(payload) {
+      const res = await fetch('/api/auth/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Signup failed');
+      return data.user;
+    },
+    async sendOtp(phone) {
+      const res = await fetch('/api/auth/send-otp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ phone })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed to send OTP');
+      return data;
+    },
+    async verifyOtp(phone, otp) {
+      const res = await fetch('/api/auth/verify-otp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ phone, otp })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'OTP verification failed');
+      return data;
+    },
+    async forgotPassword(identifier) {
+      const res = await fetch('/api/auth/forgot-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ identifier })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Forgot password request failed');
+      return data;
+    },
+    async resetPassword(token, newPassword) {
+      const res = await fetch('/api/auth/reset-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token, newPassword })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Password reset failed');
+      return data;
+    },
+    async logout() {
+      try {
+        await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' });
+      } catch (err) {
+        console.warn('Logout request failed:', err);
+      }
+    }
+  };
+
+  // State
+  let isPhoneOtpVerified = false;
+  let activeOtpCode = '';
+  let otpTimerInterval = null;
+
+  // DOM Elements
+  const authModalTitle = document.getElementById('authModalTitle');
+  const authTabsBar = document.getElementById('authTabsBar');
+  const tabBtnForgot = document.getElementById('tabBtnForgot');
+  const tabBtnReset = document.getElementById('tabBtnReset');
+
+  // Form Elements
+  const formLogin = document.getElementById('formLogin');
+  const formSignup = document.getElementById('formSignup');
+  const formForgot = document.getElementById('formForgot');
+  const formReset = document.getElementById('formReset');
+
+  // Alerts
+  const loginAlert = document.getElementById('loginAlert');
+  const signupAlert = document.getElementById('signupAlert');
+  const forgotAlert = document.getElementById('forgotAlert');
+  const resetAlert = document.getElementById('resetAlert');
+
+  // Switch Links
+  const linkToForgot = document.getElementById('linkToForgot');
+  const linkToSignup = document.getElementById('linkToSignup');
+  const linkToLogin = document.getElementById('linkToLogin');
+  const linkForgotBackToLogin = document.getElementById('linkForgotBackToLogin');
+  const linkResetBackToLogin = document.getElementById('linkResetBackToLogin');
+
+  // Navigation Profile & Logout Elements
+  const userLoggedInBlock = document.getElementById('userLoggedInBlock');
+  const navUserName = document.getElementById('navUserName');
+  const btnTopLogout = document.getElementById('btnTopLogout');
+  const btnNavProfileChip = document.getElementById('btnNavProfileChip');
+
+  // Helper: Show Alert
+  function showAlert(alertEl, msg, type = 'error') {
+    if (!alertEl) return;
+    alertEl.className = `auth-alert auth-alert-${type}`;
+    const icon = type === 'error' ? 'fa-triangle-exclamation' : type === 'success' ? 'fa-circle-check' : 'fa-circle-info';
+    alertEl.innerHTML = `<i class="fa-solid ${icon}"></i> <span>${msg}</span>`;
+    alertEl.style.display = 'flex';
+  }
+
+  function clearAlert(alertEl) {
+    if (alertEl) {
+      alertEl.style.display = 'none';
+      alertEl.innerHTML = '';
+    }
+  }
+
+  // Helper: Switch Auth Tab
+  function switchAuthTab(targetTabId) {
+    clearAlert(loginAlert);
+    clearAlert(signupAlert);
+    clearAlert(forgotAlert);
+    clearAlert(resetAlert);
+
+    // Show tab buttons if needed
+    if (targetTabId === 'tabForgot' && tabBtnForgot) tabBtnForgot.style.display = 'inline-flex';
+    if (targetTabId === 'tabReset' && tabBtnReset) tabBtnReset.style.display = 'inline-flex';
+
+    document.querySelectorAll('.auth-tab-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.getAttribute('data-auth-tab') === targetTabId);
+    });
+
+    document.querySelectorAll('.auth-tab-pane').forEach(pane => {
+      pane.classList.toggle('active', pane.id === targetTabId);
+    });
+
+    if (authModalTitle) {
+      if (targetTabId === 'tabLogin') authModalTitle.textContent = 'Vyapaar Sarthi | Citizen Login';
+      else if (targetTabId === 'tabSignup') authModalTitle.textContent = 'Vyapaar Sarthi | Entrepreneur Registration';
+      else if (targetTabId === 'tabForgot') authModalTitle.textContent = 'Vyapaar Sarthi | Password Recovery';
+      else if (targetTabId === 'tabReset') authModalTitle.textContent = 'Vyapaar Sarthi | Set New Password';
+    }
+  }
+
+  // Hook tab bar clicks
+  authTabsBar?.querySelectorAll('.auth-tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const tabId = btn.getAttribute('data-auth-tab');
+      if (tabId) switchAuthTab(tabId);
+    });
+  });
+
+  linkToForgot?.addEventListener('click', () => switchAuthTab('tabForgot'));
+  linkToSignup?.addEventListener('click', () => switchAuthTab('tabSignup'));
+  linkToLogin?.addEventListener('click', () => switchAuthTab('tabLogin'));
+  linkForgotBackToLogin?.addEventListener('click', () => switchAuthTab('tabLogin'));
+  linkResetBackToLogin?.addEventListener('click', () => switchAuthTab('tabLogin'));
+
+  // Password Visibility Toggles
+  function setupPasswordToggle(btnId, inputId) {
+    const btn = document.getElementById(btnId);
+    const input = document.getElementById(inputId);
+    if (!btn || !input) return;
+    btn.addEventListener('click', () => {
+      const isPwd = input.type === 'password';
+      input.type = isPwd ? 'text' : 'password';
+      btn.innerHTML = isPwd ? '<i class="fa-solid fa-eye-slash"></i>' : '<i class="fa-solid fa-eye"></i>';
+    });
+  }
+
+  setupPasswordToggle('btnToggleLoginPwd', 'loginPassword');
+  setupPasswordToggle('btnToggleSignupPwd', 'signupPassword');
+  setupPasswordToggle('btnToggleConfirmPwd', 'signupConfirmPassword');
+  setupPasswordToggle('btnToggleResetPwd', 'resetNewPassword');
+  setupPasswordToggle('btnToggleResetConfirmPwd', 'resetConfirmPassword');
+
+  // Live Password Criteria & Inline Validation
+  const signupPasswordInput = document.getElementById('signupPassword');
+  const signupConfirmPasswordInput = document.getElementById('signupConfirmPassword');
+  const ruleLength = document.getElementById('ruleLength');
+  const ruleLetter = document.getElementById('ruleLetter');
+  const ruleNumber = document.getElementById('ruleNumber');
+  const errSignupPassword = document.getElementById('errSignupPassword');
+  const errSignupConfirmPassword = document.getElementById('errSignupConfirmPassword');
+
+  signupPasswordInput?.addEventListener('input', () => {
+    const val = signupPasswordInput.value;
+    const hasLen = val.length >= 8;
+    const hasLetter = /[A-Za-z]/.test(val);
+    const hasNumber = /\d/.test(val);
+
+    ruleLength?.classList.toggle('valid', hasLen);
+    ruleLetter?.classList.toggle('valid', hasLetter);
+    ruleNumber?.classList.toggle('valid', hasNumber);
+
+    if (val.length > 0 && (!hasLen || !hasLetter || !hasNumber)) {
+      if (errSignupPassword) errSignupPassword.textContent = 'Password must be at least 8 characters with 1 letter and 1 number';
+    } else if (errSignupPassword) {
+      errSignupPassword.textContent = '';
+    }
+
+    if (signupConfirmPasswordInput?.value) {
+      if (errSignupConfirmPassword) {
+        errSignupConfirmPassword.textContent = signupConfirmPasswordInput.value === val ? '' : 'Passwords do not match';
+      }
+    }
+  });
+
+  signupConfirmPasswordInput?.addEventListener('input', () => {
+    if (errSignupConfirmPassword) {
+      errSignupConfirmPassword.textContent = signupConfirmPasswordInput.value === signupPasswordInput?.value ? '' : 'Passwords do not match';
+    }
+  });
+
+  // Phone Validation
+  const signupPhoneInput = document.getElementById('signupPhone');
+  const errSignupPhone = document.getElementById('errSignupPhone');
+  signupPhoneInput?.addEventListener('input', () => {
+    signupPhoneInput.value = signupPhoneInput.value.replace(/\D/g, '').slice(0, 10);
+    const val = signupPhoneInput.value;
+    if (val.length > 0 && !/^[6-9]\d{9}$/.test(val)) {
+      if (errSignupPhone) errSignupPhone.textContent = 'Enter a valid 10-digit Indian mobile number';
+    } else if (errSignupPhone) {
+      errSignupPhone.textContent = '';
+    }
+  });
+
+  // SMS OTP Controller
+  const btnRequestOtp = document.getElementById('btnRequestOtp');
+  const smsOtpCard = document.getElementById('smsOtpCard');
+  const txtSimulatedOtp = document.getElementById('txtSimulatedOtp');
+  const btnAutofillOtp = document.getElementById('btnAutofillOtp');
+  const signupOtp = document.getElementById('signupOtp');
+  const btnVerifyOtp = document.getElementById('btnVerifyOtp');
+  const otpVerifiedPill = document.getElementById('otpVerifiedPill');
+  const otpCountdown = document.getElementById('otpCountdown');
+  const errSignupOtp = document.getElementById('errSignupOtp');
+
+  btnRequestOtp?.addEventListener('click', async () => {
+    const phone = signupPhoneInput?.value.trim() || '';
+    if (!/^[6-9]\d{9}$/.test(phone)) {
+      if (errSignupPhone) errSignupPhone.textContent = 'Enter a valid 10-digit mobile number before requesting OTP';
+      signupPhoneInput?.focus();
+      return;
+    }
+
+    try {
+      btnRequestOtp.disabled = true;
+      btnRequestOtp.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sending...';
+      clearAlert(signupAlert);
+
+      const res = await API_AUTH.sendOtp(phone);
+      smsOtpCard.style.display = 'block';
+      activeOtpCode = res.simulatedOtp || '123456';
+      if (txtSimulatedOtp) txtSimulatedOtp.textContent = activeOtpCode;
+
+      showAlert(signupAlert, res.message || 'OTP sent successfully to your mobile number.', 'success');
+
+      // Start countdown
+      let remaining = 600; // 10 minutes
+      if (otpTimerInterval) clearInterval(otpTimerInterval);
+      otpTimerInterval = setInterval(() => {
+        remaining--;
+        if (remaining <= 0) {
+          clearInterval(otpTimerInterval);
+          if (otpCountdown) otpCountdown.textContent = 'Expired';
+          btnRequestOtp.disabled = false;
+          btnRequestOtp.innerHTML = '<i class="fa-solid fa-rotate-right"></i> Resend OTP';
+        } else if (otpCountdown) {
+          const m = Math.floor(remaining / 60);
+          const s = remaining % 60;
+          otpCountdown.textContent = `Valid for ${m}:${s < 10 ? '0' : ''}${s}`;
+        }
+      }, 1000);
+
+      btnRequestOtp.disabled = false;
+      btnRequestOtp.innerHTML = '<i class="fa-solid fa-rotate-right"></i> Resend OTP';
+      signupOtp?.focus();
+    } catch (err) {
+      btnRequestOtp.disabled = false;
+      btnRequestOtp.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Send OTP';
+      showAlert(signupAlert, err.message, 'error');
+    }
+  });
+
+  btnAutofillOtp?.addEventListener('click', () => {
+    if (activeOtpCode && signupOtp) {
+      signupOtp.value = activeOtpCode;
+      signupOtp.dispatchEvent(new Event('input'));
+      btnVerifyOtp?.click();
+    }
+  });
+
+  btnVerifyOtp?.addEventListener('click', async () => {
+    const phone = signupPhoneInput?.value.trim() || '';
+    const otp = signupOtp?.value.trim() || '';
+    if (otp.length !== 6) {
+      if (errSignupOtp) errSignupOtp.textContent = 'Please enter the 6-digit OTP';
+      return;
+    }
+
+    try {
+      btnVerifyOtp.disabled = true;
+      btnVerifyOtp.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Verifying...';
+      await API_AUTH.verifyOtp(phone, otp);
+
+      isPhoneOtpVerified = true;
+      if (otpVerifiedPill) otpVerifiedPill.style.display = 'inline-flex';
+      btnVerifyOtp.style.display = 'none';
+      if (signupOtp) signupOtp.disabled = true;
+      if (errSignupOtp) errSignupOtp.textContent = '';
+      showAlert(signupAlert, 'Phone number verified successfully with official OTP gateway.', 'success');
+    } catch (err) {
+      btnVerifyOtp.disabled = false;
+      btnVerifyOtp.innerHTML = '<i class="fa-solid fa-check-circle"></i> Verify OTP';
+      if (errSignupOtp) errSignupOtp.textContent = err.message;
+    }
+  });
+
+  // --- SUBMIT: LOGIN FORM ---
+  formLogin?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    clearAlert(loginAlert);
+
+    const identifier = document.getElementById('loginIdentifier')?.value.trim();
+    const password = document.getElementById('loginPassword')?.value;
+    const btnSubmit = document.getElementById('btnLoginSubmit');
+
+    if (!identifier) {
+      showAlert(loginAlert, 'Please enter your phone number or email');
+      return;
+    }
+    if (!password) {
+      showAlert(loginAlert, 'Please enter your password');
+      return;
+    }
+
+    try {
+      if (btnSubmit) {
+        btnSubmit.disabled = true;
+        btnSubmit.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Authenticating...';
+      }
+
+      const user = await API_AUTH.login(identifier, password);
+      currentUser.isLoggedIn = true;
+      currentUser.name = user.name;
+      currentUser.mobile = user.phone;
+      currentUser.email = user.email || '';
+
+      loginModal?.classList.remove('active');
+      triggerVerificationAnimation();
+    } catch (err) {
+      showAlert(loginAlert, err.message, 'error');
+    } finally {
+      if (btnSubmit) {
+        btnSubmit.disabled = false;
+        btnSubmit.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> <span data-i18n="btnSubmitLogin">Log In to Account</span>';
+      }
+    }
+  });
+
+  // --- SUBMIT: SIGNUP FORM ---
+  formSignup?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    clearAlert(signupAlert);
+
+    const name = document.getElementById('signupName')?.value.trim();
+    const phone = document.getElementById('signupPhone')?.value.trim();
+    const email = document.getElementById('signupEmail')?.value.trim();
+    const password = document.getElementById('signupPassword')?.value;
+    const confirmPassword = document.getElementById('signupConfirmPassword')?.value;
+    const otp = document.getElementById('signupOtp')?.value.trim();
+    const category = document.getElementById('signupCategory')?.value || 'sc';
+    const state = document.getElementById('signupState')?.value || 'Odisha';
+    const district = document.getElementById('signupDistrict')?.value || 'Khordha';
+    const area = document.getElementById('signupArea')?.value || 'Hansapal (Pilot)';
+    const pin = document.getElementById('signupPin')?.value || '751010';
+    const margin = parseInt(document.getElementById('signupMargin')?.value) || 48000;
+    const btnSubmit = document.getElementById('btnSignupSubmit');
+
+    // Validations
+    if (!name || name.length < 2) {
+      showAlert(signupAlert, 'Full Name must be at least 2 characters');
+      return;
+    }
+    if (!/^[6-9]\d{9}$/.test(phone)) {
+      showAlert(signupAlert, 'Enter a valid 10-digit Indian mobile number');
+      return;
+    }
+    if (!isPhoneOtpVerified && smsOtpCard?.style.display === 'block') {
+      showAlert(signupAlert, 'Please verify your phone number with the OTP code first.');
+      return;
+    }
+    if (!password || password.length < 8 || !/[A-Za-z]/.test(password) || !/\d/.test(password)) {
+      showAlert(signupAlert, 'Password must be at least 8 characters with at least 1 letter and 1 number');
+      return;
+    }
+    if (password !== confirmPassword) {
+      showAlert(signupAlert, 'Passwords do not match');
+      return;
+    }
+
+    try {
+      if (btnSubmit) {
+        btnSubmit.disabled = true;
+        btnSubmit.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Creating Account...';
+      }
+
+      const payload = { name, phone, password, category };
+      if (email) payload.email = email;
+      if (otp) payload.otp = otp;
+
+      const user = await API_AUTH.signup(payload);
+      currentUser.isLoggedIn = true;
+      currentUser.name = user.name;
+      currentUser.mobile = user.phone;
+      currentUser.email = user.email || '';
+      currentUser.category = category;
+      currentUser.state = state;
+      currentUser.district = district;
+      currentUser.area = area;
+      currentUser.pin = pin;
+      currentUser.margin = margin;
+
+      currentCategory = category;
+      document.querySelectorAll('.category-card').forEach(c => {
+        c.classList.toggle('active', c.getAttribute('data-cat-id') === currentCategory);
+      });
+
+      loginModal?.classList.remove('active');
+      triggerVerificationAnimation();
+    } catch (err) {
+      showAlert(signupAlert, err.message, 'error');
+    } finally {
+      if (btnSubmit) {
+        btnSubmit.disabled = false;
+        btnSubmit.innerHTML = '<i class="fa-solid fa-user-check"></i> <span data-i18n="btnSubmitSignup">Create Entrepreneur Account & Start</span>';
+      }
+    }
+  });
+
+  // --- SUBMIT: FORGOT PASSWORD FORM ---
+  formForgot?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    clearAlert(forgotAlert);
+
+    const identifier = document.getElementById('forgotIdentifier')?.value.trim();
+    const btnSubmit = document.getElementById('btnSubmitForgot');
+    const simulatedResetCard = document.getElementById('simulatedResetCard');
+    const btnOpenResetDirect = document.getElementById('btnOpenResetDirect');
+
+    if (!identifier) {
+      showAlert(forgotAlert, 'Please enter your registered phone number or email');
+      return;
+    }
+
+    try {
+      if (btnSubmit) {
+        btnSubmit.disabled = true;
+        btnSubmit.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processing...';
+      }
+
+      const res = await API_AUTH.forgotPassword(identifier);
+      showAlert(forgotAlert, res.message, res.isPhoneOnly ? 'warning' : 'success');
+
+      if (res.simulatedToken) {
+        if (simulatedResetCard) simulatedResetCard.style.display = 'block';
+        if (btnOpenResetDirect) {
+          btnOpenResetDirect.onclick = () => {
+            const resetTokenInput = document.getElementById('resetToken');
+            if (resetTokenInput) resetTokenInput.value = res.simulatedToken;
+            switchAuthTab('tabReset');
+          };
+        }
+      }
+    } catch (err) {
+      showAlert(forgotAlert, err.message, 'error');
+    } finally {
+      if (btnSubmit) {
+        btnSubmit.disabled = false;
+        btnSubmit.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Send Password Reset Instructions';
+      }
+    }
+  });
+
+  // --- SUBMIT: RESET PASSWORD FORM ---
+  formReset?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    clearAlert(resetAlert);
+
+    const token = document.getElementById('resetToken')?.value.trim();
+    const newPassword = document.getElementById('resetNewPassword')?.value;
+    const confirmPassword = document.getElementById('resetConfirmPassword')?.value;
+    const btnSubmit = document.getElementById('btnSubmitReset');
+
+    if (!token) {
+      showAlert(resetAlert, 'Security reset token is required');
+      return;
+    }
+    if (!newPassword || newPassword.length < 8 || !/[A-Za-z]/.test(newPassword) || !/\d/.test(newPassword)) {
+      showAlert(resetAlert, 'Password must be at least 8 characters with at least 1 letter and 1 number');
+      return;
+    }
+    if (newPassword !== confirmPassword) {
+      showAlert(resetAlert, 'Passwords do not match');
+      return;
+    }
+
+    try {
+      if (btnSubmit) {
+        btnSubmit.disabled = true;
+        btnSubmit.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Resetting Password...';
+      }
+
+      const res = await API_AUTH.resetPassword(token, newPassword);
+      showAlert(resetAlert, res.message || 'Your password has been reset successfully. Please log in.', 'success');
+
+      setTimeout(() => {
+        switchAuthTab('tabLogin');
+      }, 1500);
+    } catch (err) {
+      showAlert(resetAlert, err.message, 'error');
+    } finally {
+      if (btnSubmit) {
+        btnSubmit.disabled = false;
+        btnSubmit.innerHTML = '<i class="fa-solid fa-check-double"></i> Reset Password & Log In';
+      }
+    }
+  });
+
+  // Open / Close Login Modal Handlers
   btnOpenLogin?.addEventListener('click', () => {
     if (currentUser.isLoggedIn) {
       document.querySelector('.tab-btn[data-target="secProfile"]')?.click();
     } else {
-      loginModal?.classList.add('active');
-    }
-  });
-
-  document.getElementById('ftrLinkLogin')?.addEventListener('click', (e) => {
-    e.preventDefault();
-    if (currentUser.isLoggedIn) {
-      document.querySelector('.tab-btn[data-target="secProfile"]')?.click();
-    } else {
+      switchAuthTab('tabLogin');
       loginModal?.classList.add('active');
     }
   });
 
   btnCloseLogin?.addEventListener('click', () => loginModal?.classList.remove('active'));
 
-  // Auth Modal Tab Switcher
-  btnAuthTabLogin?.addEventListener('click', () => {
-    btnAuthTabLogin.classList.add('active');
-    btnAuthTabRegister?.classList.remove('active');
-    formLoginDirect?.classList.add('active');
-    formRegister?.classList.remove('active');
+  // Logout Handlers
+  async function handleLogout() {
+    await API_AUTH.logout();
+    currentUser.isLoggedIn = false;
+    currentUser.name = "Citizen Beneficiary";
+    updateAuthButtonText();
+    document.querySelector('.tab-btn[data-target="secModule1"]')?.click();
+    speakAdvisory('You have been logged out safely.');
+  }
+
+  btnTopLogout?.addEventListener('click', handleLogout);
+  document.getElementById('btnLogout')?.addEventListener('click', handleLogout);
+
+  btnNavProfileChip?.addEventListener('click', () => {
+    document.querySelector('.tab-btn[data-target="secProfile"]')?.click();
   });
 
-  btnAuthTabRegister?.addEventListener('click', () => {
-    btnAuthTabRegister.classList.add('active');
-    btnAuthTabLogin?.classList.remove('active');
-    formRegister?.classList.add('active');
-    formLoginDirect?.classList.remove('active');
+  document.getElementById('btnEditProfile')?.addEventListener('click', () => {
+    switchAuthTab('tabSignup');
+    loginModal?.classList.add('active');
   });
 
-  // Send OTP Feedback & API Request
-  btnSendOtp?.addEventListener('click', async () => {
-    const mobInput = document.getElementById('loginMobile');
-    const val = mobInput?.value?.trim() || "9876543210";
-
-    if (!val || val.length < 10) {
-      alert("Please enter a valid 10-digit mobile number before requesting an OTP.");
-      mobInput?.focus();
-      return;
+  // Protected Actions Guard
+  function requireAuth(message, callback) {
+    if (currentUser.isLoggedIn) {
+      if (callback) callback();
+      return true;
     }
+    switchAuthTab('tabLogin');
+    showAlert(loginAlert, message, 'warning');
+    loginModal?.classList.add('active');
+    return false;
+  }
 
-    btnSendOtp.disabled = true;
-    btnSendOtp.textContent = 'Sending...';
-
-    try {
-      const response = await fetch('/api/auth/send-otp', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ mobile: val })
-      });
-      const data = await response.json();
-
-      if (data.status === 'SUCCESS') {
-        const otpCode = data.otp;
-        btnSendOtp.textContent = 'OTP Sent!';
-        btnSendOtp.style.background = '#dcfce7';
-        btnSendOtp.style.color = '#15803d';
-
-        // Auto-fill OTP field for convenience & show notification alert
-        const otpInput = document.getElementById('loginOtp');
-        if (otpInput) {
-          otpInput.value = otpCode;
-          otpInput.focus();
-        }
-
-        alert(`🔑 OTP Verification Code Sent!\n\nMobile: +91-${val}\nYour 6-digit OTP is: ${otpCode}\n\n(The OTP field has been populated for quick testing).`);
-
-        setTimeout(() => {
-          btnSendOtp.disabled = false;
-          btnSendOtp.textContent = 'Send OTP';
-          btnSendOtp.style.background = '';
-          btnSendOtp.style.color = '';
-        }, 4000);
-      } else {
-        alert("Failed to send OTP: " + (data.error || "Server error"));
-        btnSendOtp.disabled = false;
-        btnSendOtp.textContent = 'Send OTP';
-      }
-    } catch (err) {
-      console.error(err);
-      const demoOtp = "123456";
-      const otpInput = document.getElementById('loginOtp');
-      if (otpInput) otpInput.value = demoOtp;
-      alert(`OTP Sent! (Demo Mode)\n\nMobile: +91-${val}\nYour OTP is: ${demoOtp}`);
-      btnSendOtp.disabled = false;
-      btnSendOtp.textContent = 'Send OTP';
+  btnPrintDPR?.addEventListener('click', (e) => {
+    if (!currentUser.isLoggedIn) {
+      e.stopImmediatePropagation();
+      requireAuth('Please log in or register to download certified Bank DPR reports.');
     }
-  });
+  }, true);
 
-  // Direct Login Form Handler with OTP Verification
-  formLoginDirect?.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const mob = document.getElementById('loginMobile')?.value?.trim() || "9876543210";
-    const otp = document.getElementById('loginOtp')?.value?.trim() || "";
-
-    if (!otp) {
-      alert("Please enter the 6-digit OTP code sent to your mobile or click 'Send OTP'.");
-      document.getElementById('loginOtp')?.focus();
-      return;
+  btnProfileDprDownload?.addEventListener('click', (e) => {
+    if (!currentUser.isLoggedIn) {
+      e.stopImmediatePropagation();
+      requireAuth('Please log in to download bank-certified reports.');
     }
+  }, true);
 
-    try {
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ mobile: mob, otp: otp })
-      });
-      const data = await response.json();
-      if (data.status === 'SUCCESS') {
-        currentUser.mobile = mob;
-        if (data.user && data.user.name) currentUser.name = data.user.name;
-        currentUser.isLoggedIn = true;
-        loginModal?.classList.remove('active');
-        triggerVerificationAnimation();
-      } else {
-        alert("Login failed: " + (data.error || "Invalid OTP code. Please try again."));
-      }
-    } catch (err) {
-      console.error(err);
-      alert("Error connecting to backend API.");
+  // Check URL query parameters for reset token (e.g. /?token=...)
+  try {
+    const urlParams = new URLSearchParams(window.location.search);
+    const tokenParam = urlParams.get('token');
+    if (tokenParam) {
+      const resetTokenInput = document.getElementById('resetToken');
+      if (resetTokenInput) resetTokenInput.value = tokenParam;
+      switchAuthTab('tabReset');
+      loginModal?.classList.add('active');
     }
-  });
+  } catch (e) {
+    console.warn('URL param parse error:', e);
+  }
 
-  // Registration Form Handler
-  formRegister?.addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    const name = document.getElementById('regName')?.value || "Sriram Jena";
-    const mobile = document.getElementById('regMobile')?.value || "9876543210";
-    const category = document.getElementById('regCategory')?.value || "sc";
-    const state = document.getElementById('regState')?.value || "Odisha";
-    const district = document.getElementById('regDistrict')?.value || "Khordha";
-    const area = document.getElementById('regArea')?.value || "Khordha Rural Cluster";
-    const pin = document.getElementById('regPin')?.value || "751010";
-    const margin = parseInt(document.getElementById('regMargin')?.value) || 48000;
-    
-    try {
-      const response = await fetch('/api/auth/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, mobile, category, state, district, area, pin, margin })
-      });
-      const data = await response.json();
-      if (data.status === 'SUCCESS') {
-        currentUser.name = name;
-        currentUser.mobile = mobile;
-        currentUser.category = category;
-        currentUser.state = state;
-        currentUser.district = district;
-        currentUser.area = area;
-        currentUser.pin = pin;
-        currentUser.margin = margin;
-        
-        currentCategory = currentUser.category;
-        document.querySelectorAll('.category-card').forEach(c => {
-          c.classList.toggle('active', c.getAttribute('data-cat-id') === currentCategory);
-        });
-
-        const selectedStatus = document.querySelector('input[name="bizStatus"]:checked');
-        if (selectedStatus) currentUser.status = selectedStatus.value;
-        currentUser.isLoggedIn = true;
-
-        loginModal?.classList.remove('active');
-        triggerVerificationAnimation();
-      } else {
-        alert("Registration failed: " + (data.error || "Unknown error"));
-      }
-    } catch (err) {
-      console.error(err);
-      alert("Error connecting to backend API.");
+  // Initial Session Check on Page Load
+  API_AUTH.getMe().then(user => {
+    if (user) {
+      currentUser.isLoggedIn = true;
+      currentUser.name = user.name;
+      currentUser.mobile = user.phone;
+      currentUser.email = user.email || '';
+      updateAuthButtonText();
+      updateUserProfileData();
+      console.log(`[Vyapaar Sarthi Session] Logged in as ${user.name} (${user.phone})`);
+    } else {
+      currentUser.isLoggedIn = false;
+      updateAuthButtonText();
     }
   });
 
@@ -1603,7 +2061,7 @@ document.addEventListener('DOMContentLoaded', () => {
       updateFinancialUI();
       updateAuthButtonText();
 
-      document.querySelector('.tab-btn[data-target="secProfile"]').click();
+      document.querySelector('.tab-btn[data-target="secProfile"]')?.click();
       announceWelcome();
     }, 2200);
   }
@@ -1629,16 +2087,6 @@ document.addEventListener('DOMContentLoaded', () => {
       catBadge.textContent = `${fin.catInfo.name} (${fin.catInfo.corporation.split('(')[0]})`;
     }
   }
-
-  document.getElementById('btnLogout').addEventListener('click', () => {
-    currentUser.isLoggedIn = false;
-    updateAuthButtonText();
-    document.querySelector('.tab-btn[data-target="secModule1"]').click();
-  });
-
-  document.getElementById('btnEditProfile').addEventListener('click', () => {
-    loginModal.classList.add('active');
-  });
 
   // --- TAB NAVIGATION & STICKY NAVBAR HOOKS ---
   function setupTabNavigation() {
@@ -1780,93 +2228,20 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function updateAuthButtonText() {
-    const userAuthContainer = document.getElementById('userAuthContainer');
-    if (!userAuthContainer) return;
+    const txtAuthBtn = document.getElementById('txtAuthBtn');
+    const btnOpenLogin = document.getElementById('btnOpenLogin');
+    const userLoggedInBlock = document.getElementById('userLoggedInBlock');
+    const navUserName = document.getElementById('navUserName');
     const dict = (typeof TRANSLATIONS !== 'undefined' && TRANSLATIONS[currentLang]) ? TRANSLATIONS[currentLang] : (typeof TRANSLATIONS !== 'undefined' ? TRANSLATIONS['en'] : {});
 
     if (currentUser && currentUser.isLoggedIn) {
-      const firstName = currentUser.name ? currentUser.name.split(' ')[0] : 'Citizen';
-      const categoryLabel = (currentUser.category || 'sc').toUpperCase();
-
-      userAuthContainer.innerHTML = `
-        <div class="user-profile-menu" id="userProfileMenu">
-          <button id="btnUserProfileDropdown" class="purple-avatar-btn" aria-label="Citizen Account Menu" title="Logged in as: ${currentUser.name}">
-            <div class="purple-avatar-img">
-              <i class="fa-solid fa-user"></i>
-            </div>
-          </button>
-
-          <div class="profile-dropdown-menu" id="profileDropdownMenu">
-            <div class="dropdown-user-header">
-              <strong>${currentUser.name}</strong>
-              <small><i class="fa-solid fa-mobile-screen"></i> +91-${currentUser.mobile}</small>
-              <small style="color:#d97706; font-weight:700; margin-top:0.2rem;"><i class="fa-solid fa-landmark"></i> ${categoryLabel} Concessional Channel</small>
-            </div>
-            <div class="dropdown-divider"></div>
-            <button class="dropdown-item" id="btnDropdownProfile">
-              <i class="fa-solid fa-id-card text-blue"></i> View Profile & Dashboard
-            </button>
-            <button class="dropdown-item" id="btnDropdownDpr">
-              <i class="fa-solid fa-file-invoice text-orange"></i> Download Bank DPR
-            </button>
-            <div class="dropdown-divider"></div>
-            <button class="dropdown-item text-red" id="btnDropdownLogout">
-              <i class="fa-solid fa-right-from-bracket"></i> Logout Session
-            </button>
-          </div>
-        </div>
-      `;
-
-      // Setup dropdown toggle & menu listeners
-      const menu = document.getElementById('userProfileMenu');
-      const btnToggle = document.getElementById('btnUserProfileDropdown');
-      const dropdown = document.getElementById('profileDropdownMenu');
-
-      btnToggle?.addEventListener('click', (e) => {
-        e.stopPropagation();
-        menu?.classList.toggle('open');
-        dropdown?.classList.toggle('open');
-      });
-
-      document.addEventListener('click', (e) => {
-        if (menu && !menu.contains(e.target)) {
-          menu.classList.remove('open');
-          dropdown?.classList.remove('open');
-        }
-      });
-
-      document.getElementById('btnDropdownProfile')?.addEventListener('click', () => {
-        dropdown?.classList.remove('open');
-        menu?.classList.remove('open');
-        document.querySelector('.tab-btn[data-target="secProfile"]')?.click();
-      });
-
-      document.getElementById('btnDropdownDpr')?.addEventListener('click', () => {
-        dropdown?.classList.remove('open');
-        menu?.classList.remove('open');
-        document.getElementById('btnProfileDprDownload')?.click();
-      });
-
-      document.getElementById('btnDropdownLogout')?.addEventListener('click', () => {
-        currentUser.isLoggedIn = false;
-        updateAuthButtonText();
-        const mainTab = document.querySelector('.tab-btn[data-target="secModule1"]');
-        if (mainTab) mainTab.click();
-        alert("🔒 Session Logged Out\n\nYou have successfully logged out of Vyapaar Sarthi.");
-      });
-
+      if (btnOpenLogin) btnOpenLogin.style.display = 'none';
+      if (userLoggedInBlock) userLoggedInBlock.style.display = 'flex';
+      if (navUserName) navUserName.textContent = currentUser.name;
     } else {
-      userAuthContainer.innerHTML = `
-        <button id="btnOpenLogin" class="btn-outline flex-align">
-          <i class="fa-solid fa-user-circle"></i>
-          <span id="txtAuthBtn">${dict['btnLogin'] || "Citizen Login / Register"}</span>
-        </button>
-      `;
-
-      document.getElementById('btnOpenLogin')?.addEventListener('click', () => {
-        const loginModal = document.getElementById('loginModal');
-        loginModal?.classList.add('active');
-      });
+      if (btnOpenLogin) btnOpenLogin.style.display = 'flex';
+      if (userLoggedInBlock) userLoggedInBlock.style.display = 'none';
+      if (txtAuthBtn) txtAuthBtn.textContent = dict['btnLogin'] || "Citizen Login / Register";
     }
   }
 

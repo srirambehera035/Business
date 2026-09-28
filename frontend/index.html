@@ -93,11 +93,25 @@
 
       <!-- Right Action: User Account / Login Button -->
       <div class="nav-actions flex-align">
-        <div id="userAuthContainer">
+        <div id="userAuthContainer" class="flex-align">
           <button id="btnOpenLogin" class="btn-outline flex-align">
             <i class="fa-solid fa-user-circle"></i>
             <span id="txtAuthBtn" data-i18n="btnLogin">Citizen Login / Register</span>
           </button>
+
+          <div id="userLoggedInBlock" class="user-logged-in-nav flex-align" style="display:none;">
+            <div class="nav-user-chip" id="btnNavProfileChip" title="View Entrepreneur Profile">
+              <i class="fa-solid fa-circle-user text-green"></i>
+              <div class="user-meta-text">
+                <span id="navUserName" class="nav-name-label">Entrepreneur</span>
+                <span class="nav-role-badge"><i class="fa-solid fa-shield-halved"></i> <span data-i18n="roleEntrepreneur">Entrepreneur</span></span>
+              </div>
+            </div>
+            <button id="btnTopLogout" class="btn-top-logout flex-align" title="Log Out" aria-label="Log Out">
+              <i class="fa-solid fa-right-from-bracket"></i>
+              <span data-i18n="btnLogout">Logout</span>
+            </button>
+          </div>
         </div>
         <button id="btnMobileNavToggle" class="btn-mobile-menu hide-desktop" aria-label="Toggle Navigation">
           <i class="fa-solid fa-bars"></i>
@@ -967,208 +981,303 @@
     <div class="modal-dialog auth-modal-dialog">
       <div class="modal-header flex-between">
         <div class="flex-align">
-          <div class="modal-icon-wrap">
-            <i class="fa-solid fa-scale-balanced text-orange"></i>
-          </div>
+          <i class="fa-solid fa-shield-halved text-orange modal-icon"></i>
           <div>
-            <h3 class="modal-title" id="authModalTitle">Citizen Portal Access</h3>
-            <p class="modal-subtitle">Ministry of Social Justice & Empowerment Concessional Credit Portal</p>
+            <h3 class="modal-title" id="authModalTitle">Vyapaar Sarthi | Citizen Authentication</h3>
+            <p class="modal-subtitle">Ministry of Social Justice & Empowerment — Rural Entrepreneur Session</p>
           </div>
         </div>
         <button id="btnCloseLogin" class="btn-close" aria-label="Close Modal">&times;</button>
       </div>
 
-      <!-- Auth Mode Tab Switcher -->
-      <div class="auth-tab-bar">
-        <button type="button" class="auth-tab-btn active" id="btnAuthTabLogin">
-          <i class="fa-solid fa-right-to-bracket"></i> Citizen Login
+      <!-- Auth Navigation Tabs -->
+      <div class="auth-tabs-bar" id="authTabsBar">
+        <button type="button" class="auth-tab-btn active" data-auth-tab="tabLogin">
+          <i class="fa-solid fa-right-to-bracket"></i> <span data-i18n="authLoginTab">Citizen Login</span>
         </button>
-        <button type="button" class="auth-tab-btn" id="btnAuthTabRegister">
-          <i class="fa-solid fa-user-plus"></i> New Registration
+        <button type="button" class="auth-tab-btn" data-auth-tab="tabSignup">
+          <i class="fa-solid fa-user-plus"></i> <span data-i18n="authSignupTab">Entrepreneur Sign Up</span>
+        </button>
+        <button type="button" class="auth-tab-btn" data-auth-tab="tabForgot" id="tabBtnForgot" style="display:none;">
+          <i class="fa-solid fa-key"></i> <span data-i18n="authForgotTab">Forgot Password</span>
+        </button>
+        <button type="button" class="auth-tab-btn" data-auth-tab="tabReset" id="tabBtnReset" style="display:none;">
+          <i class="fa-solid fa-lock-open"></i> <span data-i18n="authResetTab">Reset Password</span>
         </button>
       </div>
 
-      <div class="modal-body">
-        <!-- 1. DIRECT LOGIN FORM -->
-        <form id="formLoginDirect" class="auth-form-pane active">
-          <div class="form-group">
-            <label for="loginMobile"><i class="fa-solid fa-mobile-screen text-blue"></i> Registered Mobile Number / Aadhaar ID *</label>
-            <input type="tel" id="loginMobile" class="form-control" placeholder="Enter 10-digit mobile number" required>
-          </div>
+      <div class="modal-body auth-modal-body">
 
-          <div class="form-group">
-            <label for="loginOtp"><i class="fa-solid fa-key text-blue"></i> OTP / Security Access PIN *</label>
-            <div class="input-with-action">
-              <input type="password" id="loginOtp" class="form-control" placeholder="Enter 6-digit OTP or PIN" required>
-              <button type="button" class="btn-secondary-sm" id="btnSendOtp">Send OTP</button>
+        <!-- ================= TAB 1: LOGIN ================= -->
+        <div class="auth-tab-pane active" id="tabLogin">
+          <div id="loginAlert" class="auth-alert" style="display:none;"></div>
+
+          <form id="formLogin" novalidate>
+            <div class="form-group">
+              <label for="loginIdentifier">
+                <i class="fa-solid fa-id-badge"></i> <span data-i18n="lblPhoneOrEmail">Phone Number or Email</span> *
+              </label>
+              <input type="text" id="loginIdentifier" class="form-control auth-input" placeholder="e.g. 9876543210 or yourname@gmail.com" required autocomplete="username">
+              <small class="field-error" id="errLoginIdentifier"></small>
             </div>
-            <small class="text-muted" style="margin-top:0.4rem; display:block;"><i class="fa-solid fa-circle-info text-blue"></i> Demo PIN: 123456 (or click Send OTP to test authentication)</small>
-          </div>
 
-          <div class="form-group flex-between flex-align" style="margin-top:1.2rem;">
-            <label class="flex-align" style="font-size:0.85rem; cursor:pointer;">
-              <input type="checkbox" checked style="margin-right:0.45rem;"> Remember login session
-            </label>
-            <a href="#" id="linkForgotPin" style="font-size:0.82rem; color:#2563eb; text-decoration:none; font-weight:600;">Forgot PIN?</a>
-          </div>
+            <div class="form-group">
+              <div class="flex-between">
+                <label for="loginPassword">
+                  <i class="fa-solid fa-lock"></i> <span data-i18n="lblPassword">Password</span> *
+                </label>
+                <button type="button" class="btn-link-action" id="linkToForgot" data-i18n="linkForgot">Forgot Password?</button>
+              </div>
+              <div class="pwd-input-wrap">
+                <input type="password" id="loginPassword" class="form-control auth-input" placeholder="Enter your password" required autocomplete="current-password">
+                <button type="button" class="btn-toggle-pwd" id="btnToggleLoginPwd" title="Show / Hide Password" aria-label="Toggle password visibility">
+                  <i class="fa-solid fa-eye"></i>
+                </button>
+              </div>
+              <small class="field-error" id="errLoginPassword"></small>
+            </div>
 
-          <div class="form-submit-row text-center">
-            <button type="submit" class="btn-primary-lg">
-              <i class="fa-solid fa-right-to-bracket"></i> Login to Citizen Dashboard
+            <button type="submit" id="btnLoginSubmit" class="btn-primary-lg flex-align" style="width:100%; justify-content:center; margin-top:0.75rem;">
+              <i class="fa-solid fa-right-to-bracket"></i> <span data-i18n="btnSubmitLogin">Log In to Account</span>
             </button>
-            <div style="margin-top:0.6rem;">
-              <small class="text-muted"><i class="fa-solid fa-shield-halved text-green"></i> Authenticated via DigiLocker & MSJE Portal</small>
-            </div>
-          </div>
-        </form>
 
-        <!-- 2. REGISTRATION FORM -->
-        <form id="formRegister" class="auth-form-pane">
-          
-          <div class="form-grid-2">
-            <div class="form-group">
-              <label for="regName"><i class="fa-solid fa-user text-blue"></i> Full Name *</label>
-              <div class="input-with-mic">
-                <input type="text" id="regName" class="form-control" placeholder="e.g. Sriram Jena" required>
-                <button type="button" class="btn-mic-field" data-input="regName" title="Speak to Fill Name">
-                  <i class="fa-solid fa-microphone"></i>
-                </button>
+            <div class="auth-switch-row text-center">
+              <span>New to Vyapaar Sarthi?</span>
+              <button type="button" class="btn-link-action fw-bold" id="linkToSignup" data-i18n="linkSignup">Create an account</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- ================= TAB 2: SIGNUP ================= -->
+        <div class="auth-tab-pane" id="tabSignup">
+          <div id="signupAlert" class="auth-alert" style="display:none;"></div>
+
+          <form id="formSignup" novalidate>
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label for="signupName"><i class="fa-solid fa-user"></i> <span data-i18n="lblFullName">Full Name:</span> *</label>
+                <div class="input-with-mic">
+                  <input type="text" id="signupName" class="form-control auth-input" placeholder="e.g. Ramesh Patel" required autocomplete="name">
+                  <button type="button" class="btn-mic-field" data-input="signupName" title="Speak to Fill Name">
+                    <i class="fa-solid fa-microphone"></i>
+                  </button>
+                </div>
+                <small class="field-error" id="errSignupName"></small>
               </div>
-            </div>
-            <div class="form-group">
-              <label for="regMobile"><i class="fa-solid fa-mobile-screen text-blue"></i> Mobile Number (10 Digits) *</label>
-              <input type="tel" id="regMobile" class="form-control" placeholder="e.g. 9876543210" required>
-            </div>
-          </div>
 
-          <!-- Social Category Dropdown (MSJE Mandate) -->
-          <div class="form-group">
-            <label for="regCategory"><i class="fa-solid fa-users-viewfinder text-blue"></i> Socio-Economic Category (MSJE Mandate) *</label>
-            <select id="regCategory" class="form-control" required>
-              <option value="" disabled selected>Select Socio-Economic Category</option>
-              <option value="sc">Scheduled Caste (SC) - NSFDC Concessional Channel</option>
-              <option value="st">Scheduled Tribe (ST) - NSTFDC Tribal Channel</option>
-              <option value="obc">Other Backward Class (OBC) - NBCFDC Channel</option>
-              <option value="divyangjan">Persons with Disabilities (Divyangjan) - NDFDC Channel</option>
-              <option value="women_shg">Women Self-Help Group (SHG) / W-Enterprise</option>
-              <option value="general">General / Rural Economically Weaker Section (EWS)</option>
-            </select>
-          </div>
-
-          <div class="form-grid-2">
-            <div class="form-group">
-              <label for="regState"><i class="fa-solid fa-landmark text-blue"></i> State *</label>
-              <input list="stateList" id="regState" class="form-control" placeholder="Select or type State" required>
-              <datalist id="stateList">
-                <option value="Odisha">
-                <option value="Bihar">
-                <option value="Uttar Pradesh">
-                <option value="Maharashtra">
-                <option value="West Bengal">
-                <option value="Madhya Pradesh">
-                <option value="Rajasthan">
-                <option value="Tamil Nadu">
-                <option value="Telangana">
-                <option value="Andhra Pradesh">
-                <option value="Gujarat">
-                <option value="Karnataka">
-              </datalist>
-            </div>
-
-            <div class="form-group">
-              <label for="regDistrict"><i class="fa-solid fa-city text-blue"></i> District *</label>
-              <div class="input-with-mic">
-                <input list="districtList" id="regDistrict" class="form-control" placeholder="Select or type District" required>
-                <datalist id="districtList">
-                  <option value="Khordha">
-                  <option value="Cuttack">
-                  <option value="Puri">
-                  <option value="Gaya">
-                  <option value="Patna">
-                  <option value="Varanasi">
-                  <option value="Lucknow">
-                  <option value="Pune">
-                  <option value="Howrah">
-                  <option value="Madurai">
-                  <option value="Warangal">
-                  <option value="Ahmedabad">
-                </datalist>
-                <button type="button" class="btn-mic-field" data-input="regDistrict" title="Speak to Fill District">
-                  <i class="fa-solid fa-microphone"></i>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="form-grid-2">
-            <div class="form-group">
-              <label for="regArea"><i class="fa-solid fa-location-dot text-blue"></i> Village / Town *</label>
-              <div class="input-with-mic">
-                <input list="villageList" id="regArea" class="form-control" placeholder="Select or type Village" required>
-                <datalist id="villageList">
-                  <option value="Khordha Rural Cluster">
-                  <option value="Naharkanta">
-                  <option value="Balianta">
-                  <option value="Pandra">
-                  <option value="Bodh Gaya">
-                  <option value="Sarnath">
-                  <option value="Baramati">
-                  <option value="Singur">
-                  <option value="Alanganallur">
-                </datalist>
-                <button type="button" class="btn-mic-field" data-input="regArea" title="Speak to Fill Village">
-                  <i class="fa-solid fa-microphone"></i>
-                </button>
+              <div class="form-group">
+                <label for="signupPhone"><i class="fa-solid fa-mobile-screen"></i> <span data-i18n="lblPhone">Mobile Number (10 Digits):</span> *</label>
+                <div class="phone-input-group flex-align">
+                  <span class="phone-prefix">+91</span>
+                  <input type="tel" id="signupPhone" class="form-control auth-input" placeholder="10-digit mobile number" maxlength="10" required autocomplete="tel">
+                  <button type="button" id="btnRequestOtp" class="btn-otp-action flex-align">
+                    <i class="fa-solid fa-paper-plane"></i> <span data-i18n="btnSendOtp">Send OTP</span>
+                  </button>
+                </div>
+                <small class="field-error" id="errSignupPhone"></small>
               </div>
             </div>
 
+            <!-- Simulated SMS OTP Verification Box -->
+            <div id="smsOtpCard" class="sms-otp-card" style="display:none;">
+              <div class="otp-card-header flex-between">
+                <span class="otp-title flex-align"><i class="fa-solid fa-comment-sms text-orange"></i> SMS Verification Code</span>
+                <span id="otpCountdown" class="otp-countdown">Valid for 10:00</span>
+              </div>
+              <div id="simulatedOtpBanner" class="simulated-otp-banner">
+                <i class="fa-solid fa-bolt text-orange"></i>
+                <div class="sim-text">
+                  <strong>Simulated SMS Gateway:</strong> Your 6-digit code is <code id="txtSimulatedOtp" class="otp-code-highlight">------</code>
+                </div>
+                <button type="button" id="btnAutofillOtp" class="btn-mini-fill">Auto-Fill</button>
+              </div>
+              <div class="otp-input-row flex-align">
+                <input type="text" id="signupOtp" class="form-control auth-input otp-digit-input" placeholder="Enter 6-digit OTP" maxlength="6" inputmode="numeric">
+                <button type="button" id="btnVerifyOtp" class="btn-verify-action flex-align">
+                  <i class="fa-solid fa-check-circle"></i> <span data-i18n="btnVerifyOtp">Verify OTP</span>
+                </button>
+                <span id="otpVerifiedPill" class="badge-verified" style="display:none;">
+                  <i class="fa-solid fa-circle-check"></i> Verified
+                </span>
+              </div>
+              <small class="field-error" id="errSignupOtp"></small>
+            </div>
+
             <div class="form-group">
-              <label for="regPin"><i class="fa-solid fa-envelope text-blue"></i> Postal PIN Code *</label>
-              <input type="text" id="regPin" class="form-control" placeholder="6-digit PIN" required>
+              <label for="signupEmail"><i class="fa-solid fa-envelope"></i> <span data-i18n="lblEmail">Email Address (Optional):</span></label>
+              <input type="email" id="signupEmail" class="form-control auth-input" placeholder="e.g. entrepreneur@vyapaarsarthi.gov.in (for reports & reset)" autocomplete="email">
+              <small class="field-error" id="errSignupEmail"></small>
+            </div>
+
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label for="signupPassword"><i class="fa-solid fa-lock"></i> <span data-i18n="lblPassword">Password:</span> *</label>
+                <div class="pwd-input-wrap">
+                  <input type="password" id="signupPassword" class="form-control auth-input" placeholder="At least 8 characters (1 letter, 1 number)" required autocomplete="new-password">
+                  <button type="button" class="btn-toggle-pwd" id="btnToggleSignupPwd" title="Show / Hide Password" aria-label="Toggle password visibility">
+                    <i class="fa-solid fa-eye"></i>
+                  </button>
+                </div>
+                <!-- Inline validation helper checklist -->
+                <div class="pwd-criteria-checklist" id="pwdCriteria">
+                  <span id="ruleLength" class="rule-item"><i class="fa-solid fa-circle-xmark"></i> 8+ characters</span>
+                  <span id="ruleLetter" class="rule-item"><i class="fa-solid fa-circle-xmark"></i> At least 1 letter</span>
+                  <span id="ruleNumber" class="rule-item"><i class="fa-solid fa-circle-xmark"></i> At least 1 number</span>
+                </div>
+                <small class="field-error" id="errSignupPassword"></small>
+              </div>
+
+              <div class="form-group">
+                <label for="signupConfirmPassword"><i class="fa-solid fa-lock"></i> <span data-i18n="lblConfirmPassword">Confirm Password:</span> *</label>
+                <div class="pwd-input-wrap">
+                  <input type="password" id="signupConfirmPassword" class="form-control auth-input" placeholder="Re-enter password" required autocomplete="new-password">
+                  <button type="button" class="btn-toggle-pwd" id="btnToggleConfirmPwd" title="Show / Hide Password" aria-label="Toggle password visibility">
+                    <i class="fa-solid fa-eye"></i>
+                  </button>
+                </div>
+                <small class="field-error" id="errSignupConfirmPassword"></small>
+              </div>
+            </div>
+
+            <!-- Socio-Economic & Location Parameters -->
+            <div class="form-group">
+              <label for="signupCategory"><i class="fa-solid fa-users-viewfinder"></i> Socio-Economic Category (MSJE Mandate) *</label>
+              <select id="signupCategory" class="form-control auth-input" required>
+                <option value="sc" selected>Scheduled Caste (SC) - NSFDC Concessional Channel</option>
+                <option value="st">Scheduled Tribe (ST) - NSTFDC Tribal Channel</option>
+                <option value="obc">Other Backward Class (OBC) - NBCFDC Channel</option>
+                <option value="divyangjan">Persons with Disabilities (Divyangjan) - NDFDC Channel</option>
+                <option value="women_shg">Women Self-Help Group (SHG) / W-Enterprise</option>
+                <option value="general">General / Rural Economically Weaker Section (EWS)</option>
+              </select>
+            </div>
+
+            <div class="form-grid-3">
+              <div class="form-group">
+                <label for="signupState"><i class="fa-solid fa-landmark"></i> State *</label>
+                <input list="stateList" id="signupState" class="form-control auth-input" placeholder="State" required value="Odisha">
+              </div>
+              <div class="form-group">
+                <label for="signupDistrict"><i class="fa-solid fa-city"></i> District *</label>
+                <input list="districtList" id="signupDistrict" class="form-control auth-input" placeholder="District" required value="Khordha">
+              </div>
+              <div class="form-group">
+                <label for="signupArea"><i class="fa-solid fa-location-dot"></i> Village / Town *</label>
+                <input list="villageList" id="signupArea" class="form-control auth-input" placeholder="Village / Area" required value="Hansapal (Pilot)">
+              </div>
             </div>
           </div>
 
-          <div class="form-group">
-            <label for="regMargin"><i class="fa-solid fa-wallet text-blue"></i> Available 10% Margin Capital (₹) *</label>
-            <input type="number" id="regMargin" class="form-control" placeholder="e.g. 48000" min="10000" step="1000" required>
-          </div>
-
-          <div class="form-group">
-            <label><i class="fa-solid fa-briefcase"></i> Current Entrepreneurial Status *</label>
-            <div class="radio-options-grid">
-              <label class="radio-card">
-                <input type="radio" name="bizStatus" value="Planning to Start a New Business (First-Time)" checked>
-                <div>
-                  <strong>First-Time Entrepreneur</strong>
-                  <small>Planning to start a brand new rural business venture</small>
-                </div>
-              </label>
-              <label class="radio-card">
-                <input type="radio" name="bizStatus" value="Currently Running a Business (Seeking Expansion)">
-                <div>
-                  <strong>Currently Running Business</strong>
-                  <small>Looking for working capital / machinery expansion loan</small>
-                </div>
-              </label>
-              <label class="radio-card">
-                <input type="radio" name="bizStatus" value="Looking to Switch / Modernize Trade">
-                <div>
-                  <strong>Looking to Switch Business</strong>
-                  <small>Modernizing traditional trade or pivoting to high-demand niche</small>
-                </div>
-              </label>
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label for="signupPin"><i class="fa-solid fa-envelope"></i> Postal PIN Code *</label>
+                <input type="text" id="signupPin" class="form-control auth-input" placeholder="6-digit PIN" required value="751010" maxlength="6">
+              </div>
+              <div class="form-group">
+                <label for="signupMargin"><i class="fa-solid fa-wallet"></i> Margin Capital (₹) *</label>
+                <input type="number" id="signupMargin" class="form-control auth-input" placeholder="48000" min="10000" step="1000" required value="48000">
+              </div>
             </div>
-          </div>
 
-          <div class="form-submit-row text-center">
-            <button type="submit" class="btn-primary-lg" id="btnSubmitRegister">
-              <i class="fa-solid fa-user-check"></i> Complete Registration & Open Dashboard
+            <button type="submit" id="btnSignupSubmit" class="btn-primary-lg flex-align" style="width:100%; justify-content:center; margin-top:0.75rem;">
+              <i class="fa-solid fa-user-check"></i> <span data-i18n="btnSubmitSignup">Create Entrepreneur Account & Start</span>
             </button>
-            <div style="margin-top:0.6rem;">
-              <small class="text-muted"><i class="fa-solid fa-shield-halved text-green"></i> Certified under Ministry of Social Justice & Empowerment Guidelines</small>
+
+            <div class="auth-switch-row text-center">
+              <span>Already registered?</span>
+              <button type="button" class="btn-link-action fw-bold" id="linkToLogin" data-i18n="linkLogin">Log In here</button>
             </div>
-          </div>
-        </form>
+          </form>
+        </div>
+
+        <!-- ================= TAB 3: FORGOT PASSWORD ================= -->
+        <div class="auth-tab-pane" id="tabForgot">
+          <div id="forgotAlert" class="auth-alert" style="display:none;"></div>
+
+          <form id="formForgot" novalidate>
+            <p class="auth-instruction-text">
+              Enter your registered <strong>Phone Number</strong> or <strong>Email Address</strong>. We will generate password recovery instructions for your account.
+            </p>
+
+            <div class="form-group">
+              <label for="forgotIdentifier"><i class="fa-solid fa-id-badge"></i> <span data-i18n="lblPhoneOrEmail">Phone Number or Email</span> *</label>
+              <input type="text" id="forgotIdentifier" class="form-control auth-input" placeholder="e.g. 9876543210 or yourname@gmail.com" required>
+              <small class="field-error" id="errForgotIdentifier"></small>
+            </div>
+
+            <!-- Simulated Reset Link Result Card -->
+            <div id="simulatedResetCard" class="simulated-reset-card" style="display:none;">
+              <div class="flex-align" style="gap:0.5rem; margin-bottom:0.4rem;">
+                <i class="fa-solid fa-key text-orange"></i>
+                <strong>Password Reset Link Generated:</strong>
+              </div>
+              <p class="reset-link-desc">In production, this link is delivered to the registered email. For immediate local testing, click below:</p>
+              <button type="button" id="btnOpenResetDirect" class="btn-reset-direct flex-align">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Reset Password Form Now
+              </button>
+            </div>
+
+            <button type="submit" id="btnSubmitForgot" class="btn-primary-lg flex-align" style="width:100%; justify-content:center; margin-top:0.75rem;">
+              <i class="fa-solid fa-paper-plane"></i> Send Password Reset Instructions
+            </button>
+
+            <div class="auth-switch-row text-center">
+              <button type="button" class="btn-link-action" id="linkForgotBackToLogin">
+                <i class="fa-solid fa-arrow-left"></i> Back to Login
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- ================= TAB 4: RESET PASSWORD ================= -->
+        <div class="auth-tab-pane" id="tabReset">
+          <div id="resetAlert" class="auth-alert" style="display:none;"></div>
+
+          <form id="formReset" novalidate>
+            <p class="auth-instruction-text">
+              Please enter your reset security token and choose a new password.
+            </p>
+
+            <div class="form-group">
+              <label for="resetToken"><i class="fa-solid fa-fingerprint"></i> Reset Security Token *</label>
+              <input type="text" id="resetToken" class="form-control auth-input font-mono" placeholder="Security reset token" required readonly>
+              <small class="field-error" id="errResetToken"></small>
+            </div>
+
+            <div class="form-group">
+              <label for="resetNewPassword"><i class="fa-solid fa-lock"></i> New Password *</label>
+              <div class="pwd-input-wrap">
+                <input type="password" id="resetNewPassword" class="form-control auth-input" placeholder="Min 8 characters (1 letter, 1 number)" required autocomplete="new-password">
+                <button type="button" class="btn-toggle-pwd" id="btnToggleResetPwd" title="Show / Hide Password" aria-label="Toggle password visibility">
+                  <i class="fa-solid fa-eye"></i>
+                </button>
+              </div>
+              <small class="field-error" id="errResetNewPassword"></small>
+            </div>
+
+            <div class="form-group">
+              <label for="resetConfirmPassword"><i class="fa-solid fa-lock"></i> Confirm New Password *</label>
+              <div class="pwd-input-wrap">
+                <input type="password" id="resetConfirmPassword" class="form-control auth-input" placeholder="Re-enter new password" required autocomplete="new-password">
+                <button type="button" class="btn-toggle-pwd" id="btnToggleResetConfirmPwd" title="Show / Hide Password" aria-label="Toggle password visibility">
+                  <i class="fa-solid fa-eye"></i>
+                </button>
+              </div>
+              <small class="field-error" id="errResetConfirmPassword"></small>
+            </div>
+
+            <button type="submit" id="btnSubmitReset" class="btn-primary-lg flex-align" style="width:100%; justify-content:center; margin-top:0.75rem;">
+              <i class="fa-solid fa-check-double"></i> Reset Password & Log In
+            </button>
+
+            <div class="auth-switch-row text-center">
+              <button type="button" class="btn-link-action" id="linkResetBackToLogin">
+                <i class="fa-solid fa-arrow-left"></i> Back to Login
+              </button>
+            </div>
+          </form>
+        </div>
+
       </div>
     </div>
   </div>
