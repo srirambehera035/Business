@@ -303,6 +303,103 @@ body {
   margin-bottom: 1.2rem;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
 }
+
+/* =========================================================================
+   HERO CTA BUTTONS (Get Started & Explore 32 Enterprises)
+   ========================================================================= */
+.hero-cta-group {
+  display: flex !important;
+  align-items: center !important;
+  gap: 1.25rem !important;
+  margin-top: 1.75rem !important;
+  flex-wrap: wrap !important;
+}
+
+.btn-primary-hero {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.75rem !important;
+  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%) !important;
+  color: #ffffff !important;
+  font-family: var(--font-main, 'Inter', sans-serif) !important;
+  font-size: 1.05rem !important;
+  font-weight: 700 !important;
+  padding: 0.85rem 2.25rem !important;
+  border-radius: 9999px !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  cursor: pointer !important;
+  outline: none !important;
+  text-decoration: none !important;
+  box-shadow: 0 10px 25px -5px rgba(234, 88, 12, 0.5), 0 4px 12px rgba(0, 0, 0, 0.25) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.btn-primary-hero i {
+  font-size: 0.95rem !important;
+  transition: transform 0.3s ease !important;
+}
+
+.btn-primary-hero:hover {
+  background: linear-gradient(135deg, #fb923c 0%, #f97316 100%) !important;
+  transform: translateY(-3px) scale(1.02) !important;
+  box-shadow: 0 15px 30px -5px rgba(234, 88, 12, 0.65), 0 8px 20px rgba(0, 0, 0, 0.3) !important;
+  color: #ffffff !important;
+}
+
+.btn-primary-hero:hover i {
+  transform: translateX(5px) !important;
+}
+
+.btn-primary-hero:active {
+  transform: translateY(-1px) scale(0.99) !important;
+  box-shadow: 0 5px 15px -3px rgba(234, 88, 12, 0.4) !important;
+}
+
+.btn-secondary-hero {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.75rem !important;
+  background: rgba(15, 23, 42, 0.65) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  color: #ffffff !important;
+  font-family: var(--font-main, 'Inter', sans-serif) !important;
+  font-size: 1.05rem !important;
+  font-weight: 600 !important;
+  padding: 0.85rem 2.25rem !important;
+  border-radius: 9999px !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  cursor: pointer !important;
+  outline: none !important;
+  text-decoration: none !important;
+  box-shadow: 0 8px 20px -4px rgba(0, 0, 0, 0.3) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.btn-secondary-hero i {
+  font-size: 1rem !important;
+  transition: transform 0.3s ease !important;
+}
+
+.btn-secondary-hero:hover {
+  background: rgba(30, 41, 59, 0.85) !important;
+  border-color: rgba(255, 255, 255, 0.6) !important;
+  transform: translateY(-3px) scale(1.02) !important;
+  box-shadow: 0 12px 28px -4px rgba(0, 0, 0, 0.4) !important;
+  color: #ffffff !important;
+}
+
+.btn-secondary-hero:hover i {
+  transform: rotate(45deg) !important;
+}
+
+.btn-secondary-hero:active {
+  transform: translateY(-1px) scale(0.99) !important;
+}
 .hero-features-chips {
   flex-wrap: wrap;
   gap: 0.5rem;
