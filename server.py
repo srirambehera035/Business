@@ -10,8 +10,11 @@ import socketserver
 import json
 import urllib.parse
 import os
-import sys
+import random
 from pathlib import Path
+
+# In-memory OTP registry for authentication
+ACTIVE_OTPS = {}
 
 # Import core business engines
 try:
@@ -186,9 +189,38 @@ class VyapaarSarthiRequestHandler(http.server.SimpleHTTPRequestHandler):
                 })
             return self.send_json_response({"status": "FALLBACK", "audio_base64": None})
 
-        # 4. User Authentication API
-        elif path == '/api/auth/login' or path == '/api/auth/register':
-            mobile = payload.get('mobile', '9876543210')
+        # 4. OTP Dispatch API
+        elif path == '/api/auth/send-otp':
+            mobile = str(payload.get('mobile', '')).strip()
+            if not mobile or len(mobile) < 10:
+                return self.send_json_response({"status": "ERROR", "error": "Valid 10-digit mobile number required"}, status=400)
+            
+            # Generate a 6-digit OTP
+            otp = f"{random.randint(100000, 999999)}"
+            ACTIVE_OTPS[mobile] = otp
+            print(f"[AUTH OTP] Generated OTP {otp} for mobile +91-{mobile}")
+
+            return self.send_json_response({
+                "status": "SUCCESS",
+                "message": f"OTP successfully dispatched to +91-{mobile}",
+                "otp": otp,
+                "mobile": mobile
+            })
+
+        # 5. User Authentication API (Login & Register with OTP verification)
+        elif path == '/api/auth/login':
+            mobile = str(payload.get('mobile', '9876543210')).strip()
+            otp = str(payload.get('otp', '')).strip()
+            
+            valid_otp = ACTIVE_OTPS.get(mobile, '123456')
+            
+            # Allow valid generated OTP, or default 123456 / 654321 fallback PINs
+            if otp != valid_otp and otp != '123456' and otp != '654321':
+                return self.send_json_response({
+                    "status": "ERROR",
+                    "error": f"Invalid OTP code entered. Please enter the OTP sent to +91-{mobile} (or demo PIN 123456)."
+                }, status=400)
+            
             name = payload.get('name', 'Sriram Jena')
             return self.send_json_response({
                 "status": "SUCCESS",
@@ -199,7 +231,26 @@ class VyapaarSarthiRequestHandler(http.server.SimpleHTTPRequestHandler):
                     "category": payload.get('category', 'sc'),
                     "state": payload.get('state', 'Odisha'),
                     "district": payload.get('district', 'Khordha'),
-                    "token": f"MSJE-TOKEN-{hash(mobile)}"
+                    "token": f"MSJE-TOKEN-{abs(hash(mobile))}"
+                }
+            })
+
+        elif path == '/api/auth/register':
+            mobile = str(payload.get('mobile', '9876543210')).strip()
+            name = payload.get('name', 'Sriram Jena')
+            return self.send_json_response({
+                "status": "SUCCESS",
+                "message": "Registration & Verification successful",
+                "user": {
+                    "name": name,
+                    "mobile": mobile,
+                    "category": payload.get('category', 'sc'),
+                    "state": payload.get('state', 'Odisha'),
+                    "district": payload.get('district', 'Khordha'),
+                    "area": payload.get('area', 'Khordha Rural Cluster'),
+                    "pin": payload.get('pin', '751010'),
+                    "margin": payload.get('margin', 48000),
+                    "token": f"MSJE-TOKEN-{abs(hash(mobile))}"
                 }
             })
 

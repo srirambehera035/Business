@@ -87,7 +87,9 @@ document.addEventListener('DOMContentLoaded', () => {
   renderBusinessPlansMarquee();
   setupEnterpriseGallery();
   setupHeroVideoPlaylist();
-  setupAuthModals();
+
+  // Initialize Lenis Smooth Scroll & GSAP Animations
+  initLenisAndGSAP();
 
   // Select initial business & calculate
   selectBusiness(BUSINESSES_DATA[0]);
@@ -163,75 +165,137 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // --- FIXED RESILIENT LEAFLET MAP ENGINE ---
+  // --- FIXED RESILIENT GOOGLE MAPS ENGINE ---
   function initMap() {
     const mapContainer = document.getElementById('leafletMap');
     if (!mapContainer) return;
 
-    const hansapalCoords = [20.3155, 85.8722];
+    const hansapalCoords = { lat: 20.3155, lng: 85.8722 };
 
     try {
-      leafletMap = L.map('leafletMap', {
+      // Initialize Google Map
+      googleMap = new google.maps.Map(mapContainer, {
         center: hansapalCoords,
         zoom: 12,
-        zoomControl: true,
-        scrollWheelZoom: false
+        scrollwheel: false,
+        disableDefaultUI: false,
+        zoomControl: true
       });
 
-      const tileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 18,
-        attribution: '&copy; OpenStreetMap contributors | Ministry of Social Justice & Empowerment'
+      // Add center marker
+      const centerMarker = new google.maps.Marker({
+        position: hansapalCoords,
+        map: googleMap,
+        title: "Pilot Benchmark Cluster",
+        icon: {
+          path: google.maps.SymbolPath.CIRCLE,
+          scale: 8,
+          fillColor: "#0b3b60",
+          fillOpacity: 1,
+          strokeColor: "#ff9933",
+          strokeWeight: 2
+        },
+        label: {
+          text: "⚖️",
+          color: "white",
+          fontSize: "12px"
+        }
       });
-      tileLayer.addTo(leafletMap);
 
-      const centerIcon = L.divIcon({
-        className: 'custom-map-marker',
-        html: '<div style="background:#0b3b60; color:#fff; width:34px; height:34px; border-radius:50%; border:2px solid #ff9933; display:flex; align-items:center; justify-content:center; box-shadow:0 3px 8px rgba(0,0,0,0.35); font-size:15px;"><i class="fa-solid fa-scale-balanced"></i></div>',
-        iconSize: [34, 34],
-        iconAnchor: [17, 17]
+      // Add center marker popup (info window)
+      const centerInfoWindow = new google.maps.InfoWindow({
+        content: '<strong>Pilot Benchmark Cluster</strong><br>Hansapal Junction, NH-16 Axis, Khordha (751010)<br>Coordinates: 20.3155° N, 85.8722° E'
       });
 
-      L.marker(hansapalCoords, { icon: centerIcon })
-        .addTo(leafletMap)
-        .bindPopup('<strong>Pilot Benchmark Cluster</strong><br>Hansapal Junction, NH-16 Axis, Khordha (751010)<br>Coordinates: 20.3155° N, 85.8722° E')
-        .openPopup();
+      centerMarker.addListener('click', () => {
+        centerInfoWindow.open(googleMap, centerMarker);
+      });
 
-      L.circle(hansapalCoords, {
-        color: '#10b981',
+      // Open center popup by default
+      centerInfoWindow.open(googleMap, centerMarker);
+
+      // Add 5km catchment circle (green)
+      const catchment5km = new google.maps.Circle({
+        strokeColor: '#10b981',
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
         fillColor: '#10b981',
         fillOpacity: 0.14,
-        radius: 5000,
-        weight: 2
-      }).addTo(leafletMap).bindPopup('<strong>5 km Immediate Market Catchment</strong><br>Est. Population: 52,000 across Hansapal, Naharkanta & Pandra');
+        map: googleMap,
+        center: hansapalCoords,
+        radius: 5000 // 5km in meters
+      });
 
-      L.circle(hansapalCoords, {
-        color: '#f59e0b',
+      const catchment5kmInfoWindow = new google.maps.InfoWindow({
+        content: '<strong>5 km Immediate Market Catchment</strong><br>Est. Population: 52,000 across Hansapal, Naharkanta & Pandra'
+      });
+
+      catchment5km.addListener('click', () => {
+        catchment5kmInfoWindow.open(googleMap, catchment5km);
+      });
+
+      // Add 10km catchment circle (orange)
+      const catchment10km = new google.maps.Circle({
+        strokeColor: '#f59e0b',
+        strokeOpacity: 0.8,
+        strokeWeight: 1.5,
+        strokeDashArray: [5, 8],
+        fillColor: '#f59e0b',
         fillOpacity: 0.05,
-        radius: 10000,
-        dashArray: '5, 8',
-        weight: 1.5
-      }).addTo(leafletMap).bindPopup('<strong>10 km Broader Urban Catchment</strong><br>Regional Reach: 2,10,000');
+        map: googleMap,
+        center: hansapalCoords,
+        radius: 10000 // 10km in meters
+      });
 
+      const catchment10kmInfoWindow = new google.maps.InfoWindow({
+        content: '<strong>10 km Broader Urban Catchment</strong><br>Regional Reach: 2,10,000'
+      });
+
+      catchment10km.addListener('click', () => {
+        catchment10kmInfoWindow.open(googleMap, catchment10km);
+      });
+
+      // Add competitor POI markers (red)
       if (typeof COMPETITOR_POIS !== 'undefined') {
         COMPETITOR_POIS.forEach(poi => {
           if (poi.lat && poi.lon) {
-            L.circleMarker([poi.lat, poi.lon], {
-              radius: 5,
-              color: '#ef4444',
-              fillColor: '#ef4444',
-              fillOpacity: 0.85,
-              weight: 1
-            }).addTo(leafletMap).bindPopup(`<strong>${poi.name}</strong><br>Sector: ${poi.type}`);
+            const poiMarker = new google.maps.Marker({
+              position: { lat: poi.lat, lng: poi.lon },
+              map: googleMap,
+              title: poi.name,
+              icon: {
+                path: google.maps.SymbolPath.CIRCLE,
+                scale: 6,
+                fillColor: '#ef4444',
+                fillOpacity: 0.85,
+                strokeColor: '#ef4444',
+                strokeWeight: 1
+              }
+            });
+
+            const poiInfoWindow = new google.maps.InfoWindow({
+              content: `<strong>${poi.name}</strong><br>Sector: ${poi.type}`
+            });
+
+            poiMarker.addListener('click', () => {
+              poiInfoWindow.open(googleMap, poiMarker);
+            });
           }
         });
       }
 
+      // Handle map resize on tab show
       setTimeout(() => {
-        if (leafletMap) leafletMap.invalidateSize();
+        if (googleMap) {
+          google.maps.event.trigger(googleMap, 'resize');
+          googleMap.setCenter(hansapalCoords);
+        }
       }, 500);
 
     } catch (err) {
-      console.warn("Leaflet Map initialization fallback:", err);
+      console.warn("Google Maps initialization fallback:", err);
+      // Fallback message in the map container
+      mapContainer.innerHTML = '<div style="padding: 20px; text-align: center; color: #666;">Map loading failed. Please check your internet connection and Google Maps API key.</div>';
     }
   }
 
@@ -958,29 +1022,30 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateFinancialUI() {
     const fin = calculateFinances(currentMargin);
 
-    // Top metrics
-    lblMarginValue.textContent = `₹ ${currentMargin.toLocaleString('en-IN')}`;
-    document.getElementById('valMargin10').textContent = `₹ ${currentMargin.toLocaleString('en-IN')}`;
-    document.getElementById('valTotalCost').textContent = `₹ ${fin.projectCost.toLocaleString('en-IN')}`;
-    document.getElementById('valLoan90').textContent = `₹ ${fin.loanAmount.toLocaleString('en-IN')}`;
+    // Safely update DOM elements
+    if (lblMarginValue) lblMarginValue.textContent = `₹ ${currentMargin.toLocaleString('en-IN')}`;
+    const setText = (id, text) => { const e = document.getElementById(id); if(e) e.textContent = text; };
+    const setHtml = (id, html) => { const e = document.getElementById(id); if(e) e.innerHTML = html; };
+
+    setText('valMargin10', `₹ ${currentMargin.toLocaleString('en-IN')}`);
+    setText('valTotalCost', `₹ ${fin.projectCost.toLocaleString('en-IN')}`);
+    setText('valLoan90', `₹ ${fin.loanAmount.toLocaleString('en-IN')}`);
 
     // Scheme Router Banner
-    document.getElementById('badgeLogic').textContent = `${fin.logicTag} | ${fin.catInfo.name}`;
-    document.getElementById('txtSchemeName').textContent = `${currentBusiness.preferable_scheme || fin.schemeName} (${fin.interestRate}% Interest, ${fin.tenureYears} Years)`;
-    document.getElementById('txtSchemeDesc').textContent = 
-      `Project cost ₹${fin.projectCost.toLocaleString('en-IN')} routed to ${fin.catInfo.corporation} with a ${fin.moratMonths}-month moratorium holiday and ${fin.catInfo.subvention}.`;
+    setText('badgeLogic', `${fin.logicTag} | ${fin.catInfo.name}`);
+    setText('txtSchemeName', `${currentBusiness.preferable_scheme || fin.schemeName} (${fin.interestRate}% Interest, ${fin.tenureYears} Years)`);
+    setText('txtSchemeDesc', `Project cost ₹${fin.projectCost.toLocaleString('en-IN')} routed to ${fin.catInfo.corporation} with a ${fin.moratMonths}-month moratorium holiday and ${fin.catInfo.subvention}.`);
 
-    document.getElementById('txtSubsidyBadge').textContent = fin.catInfo.subsidy_pct;
-    document.getElementById('txtApexCorp').textContent = fin.catInfo.corporation;
+    setText('txtSubsidyBadge', fin.catInfo.subsidy_pct);
+    setText('txtApexCorp', fin.catInfo.corporation);
 
-    document.getElementById('badgeMoratoriumMonths').innerHTML = 
-      `<i class="fa-solid fa-clock-rotate-left"></i> Moratorium: ${fin.moratMonths} Months (Quarters 1–${fin.moratQuarters} = ₹0 EMI)`;
+    setHtml('badgeMoratoriumMonths', `<i class="fa-solid fa-clock-rotate-left"></i> Moratorium: ${fin.moratMonths} Months (Quarters 1–${fin.moratQuarters} = ₹0 EMI)`);
 
     // Repayment Summary
-    document.getElementById('valQuarterlyEmi').textContent = `₹ ${Math.round(fin.quarterlyEmi).toLocaleString('en-IN')} / Quarter`;
-    document.getElementById('valMonthlyEmi').textContent = `₹ ${Math.round(fin.monthlyEquivalent).toLocaleString('en-IN')} / Month`;
-    document.getElementById('valTotalInterest').textContent = `₹ ${Math.round(fin.totalInterest).toLocaleString('en-IN')}`;
-    document.getElementById('valTotalRepaid').textContent = `₹ ${Math.round(fin.totalRepaid).toLocaleString('en-IN')}`;
+    setText('valQuarterlyEmi', `₹ ${Math.round(fin.quarterlyEmi).toLocaleString('en-IN')} / Quarter`);
+    setText('valMonthlyEmi', `₹ ${Math.round(fin.monthlyEquivalent).toLocaleString('en-IN')} / Month`);
+    setText('valTotalInterest', `₹ ${Math.round(fin.totalInterest).toLocaleString('en-IN')}`);
+    setText('valTotalRepaid', `₹ ${Math.round(fin.totalRepaid).toLocaleString('en-IN')}`);
 
     // Capex vs Opex
     document.getElementById('valCapex70').textContent = `₹ ${Math.round(fin.capex70).toLocaleString('en-IN')}`;
@@ -995,33 +1060,35 @@ document.addEventListener('DOMContentLoaded', () => {
     const monthlyEmi = Math.round(fin.monthlyEquivalent);
     const netTakeHome = Math.max(12000, grossSales - rawMaterial - utilities - monthlyEmi);
 
-    document.getElementById('cfGrossSales').textContent = `₹ ${grossSales.toLocaleString('en-IN')}`;
-    document.getElementById('cfRawMaterial').textContent = `₹ ${rawMaterial.toLocaleString('en-IN')}`;
-    document.getElementById('cfUtilities').textContent = `₹ ${utilities.toLocaleString('en-IN')}`;
-    document.getElementById('cfMonthlyEmi').textContent = `₹ ${monthlyEmi.toLocaleString('en-IN')}`;
-    document.getElementById('cfTakeHome').textContent = `₹ ${netTakeHome.toLocaleString('en-IN')} / mo`;
+    setText('cfGrossSales', `₹ ${grossSales.toLocaleString('en-IN')}`);
+    setText('cfRawMaterial', `₹ ${rawMaterial.toLocaleString('en-IN')}`);
+    setText('cfUtilities', `₹ ${utilities.toLocaleString('en-IN')}`);
+    setText('cfMonthlyEmi', `₹ ${monthlyEmi.toLocaleString('en-IN')}`);
+    setText('cfTakeHome', `₹ ${netTakeHome.toLocaleString('en-IN')} / mo`);
 
     // Update Eligibility Criteria & Required Documents Checklist
     updateSchemeCriteriaDocs();
 
     // Update Schedule Table
     const tbody = document.getElementById('tbodySchedule');
-    tbody.innerHTML = '';
-    fin.schedule.forEach(row => {
-      const tr = document.createElement('tr');
-      const isMorat = row.status.includes('Moratorium');
-      tr.style.background = isMorat ? 'rgba(245, 158, 11, 0.08)' : 'transparent';
-      tr.innerHTML = `
-        <td><strong>Q${row.q}</strong></td>
-        <td>${row.timeline}</td>
-        <td><span class="${isMorat ? 'badge-moratorium' : 'badge-margin'}">${row.status}</span></td>
-        <td class="font-bold">${isMorat ? '₹0.00' : '₹ ' + Math.round(row.emi).toLocaleString('en-IN')}</td>
-        <td>${isMorat ? '₹0.00' : '₹ ' + Math.round(row.principal).toLocaleString('en-IN')}</td>
-        <td>${isMorat ? '₹0.00' : '₹ ' + Math.round(row.interest).toLocaleString('en-IN')}</td>
-        <td class="font-bold">₹ ${Math.round(row.balance).toLocaleString('en-IN')}</td>
-      `;
-      tbody.appendChild(tr);
-    });
+    if (tbody) {
+      tbody.innerHTML = '';
+      fin.schedule.forEach(row => {
+        const tr = document.createElement('tr');
+        const isMorat = row.status.includes('Moratorium');
+        tr.style.background = isMorat ? 'rgba(245, 158, 11, 0.08)' : 'transparent';
+        tr.innerHTML = `
+          <td><strong>Q${row.q}</strong></td>
+          <td>${row.timeline}</td>
+          <td><span class="${isMorat ? 'badge-moratorium' : 'badge-margin'}">${row.status}</span></td>
+          <td class="font-bold">${isMorat ? '₹0.00' : '₹ ' + Math.round(row.emi).toLocaleString('en-IN')}</td>
+          <td>${isMorat ? '₹0.00' : '₹ ' + Math.round(row.principal).toLocaleString('en-IN')}</td>
+          <td>${isMorat ? '₹0.00' : '₹ ' + Math.round(row.interest).toLocaleString('en-IN')}</td>
+          <td class="font-bold">₹ ${Math.round(row.balance).toLocaleString('en-IN')}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
 
     // Update Chart.js
     updateChart(fin);
@@ -1361,54 +1428,147 @@ document.addEventListener('DOMContentLoaded', () => {
     formLoginDirect?.classList.remove('active');
   });
 
-  // Send OTP Feedback
-  btnSendOtp?.addEventListener('click', () => {
+  // Send OTP Feedback & API Request
+  btnSendOtp?.addEventListener('click', async () => {
     const mobInput = document.getElementById('loginMobile');
-    const val = mobInput?.value || "9876543210";
-    btnSendOtp.textContent = 'OTP Sent!';
-    btnSendOtp.style.background = '#dcfce7';
-    btnSendOtp.style.color = '#15803d';
-    setTimeout(() => {
+    const val = mobInput?.value?.trim() || "9876543210";
+
+    if (!val || val.length < 10) {
+      alert("Please enter a valid 10-digit mobile number before requesting an OTP.");
+      mobInput?.focus();
+      return;
+    }
+
+    btnSendOtp.disabled = true;
+    btnSendOtp.textContent = 'Sending...';
+
+    try {
+      const response = await fetch('/api/auth/send-otp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ mobile: val })
+      });
+      const data = await response.json();
+
+      if (data.status === 'SUCCESS') {
+        const otpCode = data.otp;
+        btnSendOtp.textContent = 'OTP Sent!';
+        btnSendOtp.style.background = '#dcfce7';
+        btnSendOtp.style.color = '#15803d';
+
+        // Auto-fill OTP field for convenience & show notification alert
+        const otpInput = document.getElementById('loginOtp');
+        if (otpInput) {
+          otpInput.value = otpCode;
+          otpInput.focus();
+        }
+
+        alert(`🔑 OTP Verification Code Sent!\n\nMobile: +91-${val}\nYour 6-digit OTP is: ${otpCode}\n\n(The OTP field has been populated for quick testing).`);
+
+        setTimeout(() => {
+          btnSendOtp.disabled = false;
+          btnSendOtp.textContent = 'Send OTP';
+          btnSendOtp.style.background = '';
+          btnSendOtp.style.color = '';
+        }, 4000);
+      } else {
+        alert("Failed to send OTP: " + (data.error || "Server error"));
+        btnSendOtp.disabled = false;
+        btnSendOtp.textContent = 'Send OTP';
+      }
+    } catch (err) {
+      console.error(err);
+      const demoOtp = "123456";
+      const otpInput = document.getElementById('loginOtp');
+      if (otpInput) otpInput.value = demoOtp;
+      alert(`OTP Sent! (Demo Mode)\n\nMobile: +91-${val}\nYour OTP is: ${demoOtp}`);
+      btnSendOtp.disabled = false;
       btnSendOtp.textContent = 'Send OTP';
-      btnSendOtp.style.background = '';
-      btnSendOtp.style.color = '';
-    }, 3000);
+    }
   });
 
-  // Direct Login Form Handler
-  formLoginDirect?.addEventListener('submit', (e) => {
+  // Direct Login Form Handler with OTP Verification
+  formLoginDirect?.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const mob = document.getElementById('loginMobile')?.value || "9876543210";
-    currentUser.mobile = mob;
-    currentUser.isLoggedIn = true;
-    loginModal?.classList.remove('active');
-    triggerVerificationAnimation();
+    const mob = document.getElementById('loginMobile')?.value?.trim() || "9876543210";
+    const otp = document.getElementById('loginOtp')?.value?.trim() || "";
+
+    if (!otp) {
+      alert("Please enter the 6-digit OTP code sent to your mobile or click 'Send OTP'.");
+      document.getElementById('loginOtp')?.focus();
+      return;
+    }
+
+    try {
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ mobile: mob, otp: otp })
+      });
+      const data = await response.json();
+      if (data.status === 'SUCCESS') {
+        currentUser.mobile = mob;
+        if (data.user && data.user.name) currentUser.name = data.user.name;
+        currentUser.isLoggedIn = true;
+        loginModal?.classList.remove('active');
+        triggerVerificationAnimation();
+      } else {
+        alert("Login failed: " + (data.error || "Invalid OTP code. Please try again."));
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Error connecting to backend API.");
+    }
   });
 
   // Registration Form Handler
-  formRegister?.addEventListener('submit', (e) => {
+  formRegister?.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    currentUser.name = document.getElementById('regName')?.value || "Sriram Jena";
-    currentUser.mobile = document.getElementById('regMobile')?.value || "9876543210";
-    currentUser.category = document.getElementById('regCategory')?.value || "sc";
-    currentUser.state = document.getElementById('regState')?.value || "Odisha";
-    currentUser.district = document.getElementById('regDistrict')?.value || "Khordha";
-    currentUser.area = document.getElementById('regArea')?.value || "Khordha Rural Cluster";
-    currentUser.pin = document.getElementById('regPin')?.value || "751010";
-    currentUser.margin = parseInt(document.getElementById('regMargin')?.value) || 48000;
+    const name = document.getElementById('regName')?.value || "Sriram Jena";
+    const mobile = document.getElementById('regMobile')?.value || "9876543210";
+    const category = document.getElementById('regCategory')?.value || "sc";
+    const state = document.getElementById('regState')?.value || "Odisha";
+    const district = document.getElementById('regDistrict')?.value || "Khordha";
+    const area = document.getElementById('regArea')?.value || "Khordha Rural Cluster";
+    const pin = document.getElementById('regPin')?.value || "751010";
+    const margin = parseInt(document.getElementById('regMargin')?.value) || 48000;
     
-    currentCategory = currentUser.category;
-    document.querySelectorAll('.category-card').forEach(c => {
-      c.classList.toggle('active', c.getAttribute('data-cat-id') === currentCategory);
-    });
+    try {
+      const response = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, mobile, category, state, district, area, pin, margin })
+      });
+      const data = await response.json();
+      if (data.status === 'SUCCESS') {
+        currentUser.name = name;
+        currentUser.mobile = mobile;
+        currentUser.category = category;
+        currentUser.state = state;
+        currentUser.district = district;
+        currentUser.area = area;
+        currentUser.pin = pin;
+        currentUser.margin = margin;
+        
+        currentCategory = currentUser.category;
+        document.querySelectorAll('.category-card').forEach(c => {
+          c.classList.toggle('active', c.getAttribute('data-cat-id') === currentCategory);
+        });
 
-    const selectedStatus = document.querySelector('input[name="bizStatus"]:checked');
-    if (selectedStatus) currentUser.status = selectedStatus.value;
-    currentUser.isLoggedIn = true;
+        const selectedStatus = document.querySelector('input[name="bizStatus"]:checked');
+        if (selectedStatus) currentUser.status = selectedStatus.value;
+        currentUser.isLoggedIn = true;
 
-    loginModal?.classList.remove('active');
-    triggerVerificationAnimation();
+        loginModal?.classList.remove('active');
+        triggerVerificationAnimation();
+      } else {
+        alert("Registration failed: " + (data.error || "Unknown error"));
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Error connecting to backend API.");
+    }
   });
 
   function triggerVerificationAnimation() {
@@ -1620,16 +1780,113 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function updateAuthButtonText() {
-    const txtAuthBtn = document.getElementById('txtAuthBtn');
-    if (!txtAuthBtn) return;
+    const userAuthContainer = document.getElementById('userAuthContainer');
+    if (!userAuthContainer) return;
     const dict = (typeof TRANSLATIONS !== 'undefined' && TRANSLATIONS[currentLang]) ? TRANSLATIONS[currentLang] : (typeof TRANSLATIONS !== 'undefined' ? TRANSLATIONS['en'] : {});
 
     if (currentUser && currentUser.isLoggedIn) {
-      txtAuthBtn.textContent = `Citizen: ${currentUser.name.split(' ')[0]}`;
+      const firstName = currentUser.name ? currentUser.name.split(' ')[0] : 'Citizen';
+      const categoryLabel = (currentUser.category || 'sc').toUpperCase();
+
+      userAuthContainer.innerHTML = `
+        <div class="user-profile-menu" id="userProfileMenu">
+          <button id="btnUserProfileDropdown" class="purple-avatar-btn" aria-label="Citizen Account Menu" title="Logged in as: ${currentUser.name}">
+            <div class="purple-avatar-img">
+              <i class="fa-solid fa-user"></i>
+            </div>
+          </button>
+
+          <div class="profile-dropdown-menu" id="profileDropdownMenu">
+            <div class="dropdown-user-header">
+              <strong>${currentUser.name}</strong>
+              <small><i class="fa-solid fa-mobile-screen"></i> +91-${currentUser.mobile}</small>
+              <small style="color:#d97706; font-weight:700; margin-top:0.2rem;"><i class="fa-solid fa-landmark"></i> ${categoryLabel} Concessional Channel</small>
+            </div>
+            <div class="dropdown-divider"></div>
+            <button class="dropdown-item" id="btnDropdownProfile">
+              <i class="fa-solid fa-id-card text-blue"></i> View Profile & Dashboard
+            </button>
+            <button class="dropdown-item" id="btnDropdownDpr">
+              <i class="fa-solid fa-file-invoice text-orange"></i> Download Bank DPR
+            </button>
+            <div class="dropdown-divider"></div>
+            <button class="dropdown-item text-red" id="btnDropdownLogout">
+              <i class="fa-solid fa-right-from-bracket"></i> Logout Session
+            </button>
+          </div>
+        </div>
+      `;
+
+      // Setup dropdown toggle & menu listeners
+      const menu = document.getElementById('userProfileMenu');
+      const btnToggle = document.getElementById('btnUserProfileDropdown');
+      const dropdown = document.getElementById('profileDropdownMenu');
+
+      btnToggle?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        menu?.classList.toggle('open');
+        dropdown?.classList.toggle('open');
+      });
+
+      document.addEventListener('click', (e) => {
+        if (menu && !menu.contains(e.target)) {
+          menu.classList.remove('open');
+          dropdown?.classList.remove('open');
+        }
+      });
+
+      document.getElementById('btnDropdownProfile')?.addEventListener('click', () => {
+        dropdown?.classList.remove('open');
+        menu?.classList.remove('open');
+        document.querySelector('.tab-btn[data-target="secProfile"]')?.click();
+      });
+
+      document.getElementById('btnDropdownDpr')?.addEventListener('click', () => {
+        dropdown?.classList.remove('open');
+        menu?.classList.remove('open');
+        document.getElementById('btnProfileDprDownload')?.click();
+      });
+
+      document.getElementById('btnDropdownLogout')?.addEventListener('click', () => {
+        currentUser.isLoggedIn = false;
+        updateAuthButtonText();
+        const mainTab = document.querySelector('.tab-btn[data-target="secModule1"]');
+        if (mainTab) mainTab.click();
+        alert("🔒 Session Logged Out\n\nYou have successfully logged out of Vyapaar Sarthi.");
+      });
+
     } else {
-      txtAuthBtn.textContent = dict['btnLogin'] || "Login / Register";
+      userAuthContainer.innerHTML = `
+        <button id="btnOpenLogin" class="btn-outline flex-align">
+          <i class="fa-solid fa-user-circle"></i>
+          <span id="txtAuthBtn">${dict['btnLogin'] || "Citizen Login / Register"}</span>
+        </button>
+      `;
+
+      document.getElementById('btnOpenLogin')?.addEventListener('click', () => {
+        const loginModal = document.getElementById('loginModal');
+        loginModal?.classList.add('active');
+      });
     }
   }
+
+  // --- HERO GET STARTED CTA LISTENERS ---
+  document.getElementById('btnHeroGetStarted')?.addEventListener('click', () => {
+    if (currentUser && currentUser.isLoggedIn) {
+      const profileTab = document.querySelector('.tab-btn[data-target="secProfile"]');
+      if (profileTab) profileTab.click();
+      const profileSec = document.getElementById('secProfile') || document.getElementById('secModule1');
+      profileSec?.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      const loginModal = document.getElementById('loginModal');
+      loginModal?.classList.add('active');
+    }
+  });
+
+  document.getElementById('btnHeroExploreCatalog')?.addEventListener('click', () => {
+    const catalogSec = document.getElementById('catalogGrid') || document.getElementById('secBizPlansMarquee');
+    catalogSec?.scrollIntoView({ behavior: 'smooth' });
+  });
   // --- MULTI-LINGUAL BHASHINI SPEECH NARRATOR ---
   function getVoiceLocale(lang) {
     const map = {
@@ -1790,7 +2047,6 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
   }
 
-<<<<<<< HEAD
   // --- ENTERPRISE GALLERY: REFERENCE LAYOUT ─ Multi-tile slider LEFT + 2×2 category grid RIGHT ---
   function setupEnterpriseGallery() {
     const track       = document.getElementById('bizMultiTrack');
@@ -1985,133 +2241,152 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
           <div class="biz-modal-scheme-tag">
             <i class="fa-solid fa-landmark-flag"></i>
-            <spa    if (modalClose) modalClose.addEventListener('click', closeGalleryModal);
+            <span>MSJE Scheme Applicable</span>
+          </div>
+        </div>
+      `;
+      modal.classList.add('open');
+    }
+
+    function closeGalleryModal() {
+      if (modal) modal.classList.remove('open');
+    }
+
+    if (modalClose) modalClose.addEventListener('click', closeGalleryModal);
     if (modalOverlay) modalOverlay.addEventListener('click', closeGalleryModal);
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && modal && modal.classList.contains('open')) closeGalleryModal();
     });
   }
 
-  // --- AUTHENTICATION & REGISTRATION MODAL CONTROLLER ---
-  function setupAuthModals() {
-    const btnAuthTabLogin = document.getElementById('btnAuthTabLogin');
-    const btnAuthTabRegister = document.getElementById('btnAuthTabRegister');
-    const formLoginDirect = document.getElementById('formLoginDirect');
-    const formRegister = document.getElementById('formRegister');
-    const btnSendOtp = document.getElementById('btnSendOtp');
+  // --- LENIS SMOOTH SCROLL & GSAP ANIMATION ENGINE ---
+  function initLenisAndGSAP() {
+    if (typeof Lenis === 'undefined' || typeof gsap === 'undefined') {
+      console.warn("GSAP or Lenis library not loaded.");
+      return;
+    }
 
-    // Open Modal
-    if (btnOpenLogin && loginModal) {
-      btnOpenLogin.addEventListener('click', (e) => {
-        e.preventDefault();
-        loginModal.classList.add('active');
+    // Register GSAP ScrollTrigger plugin
+    if (typeof ScrollTrigger !== 'undefined') {
+      gsap.registerPlugin(ScrollTrigger);
+    }
+
+    // 1. Initialize Lenis Smooth Scroll Engine
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      wheelMultiplier: 1.0,
+      touchMultiplier: 1.8
+    });
+
+    window.lenisInstance = lenis;
+
+    // Synchronize Lenis scroll events with GSAP ScrollTrigger
+    lenis.on('scroll', () => {
+      if (typeof ScrollTrigger !== 'undefined') {
+        ScrollTrigger.update();
+      }
+    });
+
+    // Add Lenis RAF into GSAP Ticker for ultra-smooth performance
+    gsap.ticker.add((time) => {
+      lenis.raf(time * 1000);
+    });
+
+    gsap.ticker.lagSmoothing(0);
+
+    // 2. Hero Section Entrance Animation Sequence
+    const heroElements = document.querySelectorAll('.hero-badge, .hero-title, .hero-subtitle, .hero-cta-group, .hero-stats-strip, .hero-stats');
+    if (heroElements.length > 0) {
+      gsap.from(heroElements, {
+        opacity: 0,
+        y: 35,
+        duration: 1.0,
+        stagger: 0.12,
+        ease: 'power3.out'
       });
     }
 
-    // Close Modal
-    if (btnCloseLogin && loginModal) {
-      btnCloseLogin.addEventListener('click', (e) => {
-        e.preventDefault();
-        loginModal.classList.remove('active');
+    // 3. Header & Navigation Animation
+    const mainNavbar = document.getElementById('mainStickyNavbar');
+    if (mainNavbar) {
+      gsap.from(mainNavbar, {
+        y: -60,
+        opacity: 0,
+        duration: 0.8,
+        ease: 'power2.out'
       });
     }
 
-    if (loginModal) {
-      loginModal.addEventListener('click', (e) => {
-        if (e.target === loginModal) {
-          loginModal.classList.remove('active');
+    // 4. Scroll-Triggered Reveal Animations for Key Sections
+    if (typeof ScrollTrigger !== 'undefined') {
+      // Reveal Section Titles and Subtitles
+      const sectionTitles = document.querySelectorAll('.section-title, .section-header, .module-title, .section-subtitle');
+      sectionTitles.forEach((element) => {
+        gsap.from(element, {
+          scrollTrigger: {
+            trigger: element,
+            start: 'top 85%',
+            toggleActions: 'play none none reverse'
+          },
+          opacity: 0,
+          y: 30,
+          duration: 0.8,
+          ease: 'power2.out'
+        });
+      });
+
+      // Reveal Business Catalog & Feature Cards with Stagger
+      const cardGrids = document.querySelectorAll('#catalogGrid, .category-cards-grid, .bank-cards-grid, .enterprise-gallery-grid');
+      cardGrids.forEach((grid) => {
+        const cards = grid.children;
+        if (cards && cards.length > 0) {
+          gsap.from(cards, {
+            scrollTrigger: {
+              trigger: grid,
+              start: 'top 85%',
+              toggleActions: 'play none none reverse'
+            },
+            opacity: 0,
+            y: 40,
+            scale: 0.96,
+            duration: 0.7,
+            stagger: 0.08,
+            ease: 'power2.out'
+          });
         }
       });
-    }
 
-    // Switch to Login Tab
-    if (btnAuthTabLogin) {
-      btnAuthTabLogin.addEventListener('click', () => {
-        btnAuthTabLogin.classList.add('active');
-        btnAuthTabRegister.classList.remove('active');
-        formLoginDirect?.classList.add('active');
-        formRegister?.classList.remove('active');
+      // Reveal Financial Dashboard Container
+      const dashboardContainer = document.querySelector('.calculator-dashboard');
+      if (dashboardContainer) {
+        gsap.from(dashboardContainer, {
+          scrollTrigger: {
+            trigger: dashboardContainer,
+            start: 'top 85%',
+            toggleActions: 'play none none reverse'
+          },
+          opacity: 0,
+          y: 40,
+          duration: 0.9,
+          ease: 'power3.out'
+        });
+      }
+
+      // Smooth Hover Micro-animations on Buttons
+      const interactiveButtons = document.querySelectorAll('.btn-primary, .btn-accent, .btn-outline');
+      interactiveButtons.forEach((btn) => {
+        btn.addEventListener('mouseenter', () => {
+          gsap.to(btn, { scale: 1.04, duration: 0.2, ease: 'power1.out' });
+        });
+        btn.addEventListener('mouseleave', () => {
+          gsap.to(btn, { scale: 1.0, duration: 0.2, ease: 'power1.out' });
+        });
       });
     }
 
-    // Switch to Register Tab
-    if (btnAuthTabRegister) {
-      btnAuthTabRegister.addEventListener('click', () => {
-        btnAuthTabRegister.classList.add('active');
-        btnAuthTabLogin.classList.remove('active');
-        formRegister?.classList.add('active');
-        formLoginDirect?.classList.remove('active');
-      });
-    }
-
-    // Send OTP Simulation
-    if (btnSendOtp) {
-      btnSendOtp.addEventListener('click', () => {
-        const mob = document.getElementById('loginMobile')?.value;
-        if (!mob || mob.trim().length < 10) {
-          alert('Please enter a valid 10-digit mobile number first.');
-          return;
-        }
-        btnSendOtp.textContent = 'OTP Sent (123456)';
-        btnSendOtp.style.background = '#16a34a';
-        btnSendOtp.style.color = '#ffffff';
-        setTimeout(() => {
-          const otpInput = document.getElementById('loginOtp');
-          if (otpInput) otpInput.value = '123456';
-        }, 800);
-      });
-    }
-
-    // Submit Direct Login
-    if (formLoginDirect) {
-      formLoginDirect.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const mob = document.getElementById('loginMobile')?.value || "9876543210";
-        currentUser.isLoggedIn = true;
-        currentUser.mobile = mob;
-        updateAuthButtonText();
-        loginModal.classList.remove('active');
-        announceWelcome();
-        alert(`Welcome back to Vyapaar Sarthi! Authenticated session for mobile ${mob}.`);
-      });
-    }
-
-    // Submit Registration Form
-    if (formRegister) {
-      formRegister.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const name = document.getElementById('regName')?.value;
-        const mobile = document.getElementById('regMobile')?.value;
-        const category = document.getElementById('regCategory')?.value;
-        const state = document.getElementById('regState')?.value;
-        const district = document.getElementById('regDistrict')?.value;
-        const area = document.getElementById('regArea')?.value;
-        const pin = document.getElementById('regPin')?.value;
-        const margin = document.getElementById('regMargin')?.value;
-        const bizStatusRadio = document.querySelector('input[name="bizStatus"]:checked');
-
-        if (name) currentUser.name = name;
-        if (mobile) currentUser.mobile = mobile;
-        if (category) currentUser.category = category;
-        if (state) currentUser.state = state;
-        if (district) currentUser.district = district;
-        if (area) currentUser.area = area;
-        if (pin) currentUser.pin = pin;
-        if (margin) {
-          currentUser.margin = parseInt(margin, 10);
-          currentMargin = currentUser.margin;
-          if (sliderMargin) sliderMargin.value = currentMargin;
-        }
-        if (bizStatusRadio) currentUser.status = bizStatusRadio.value;
-        currentUser.isLoggedIn = true;
-
-        updateAuthButtonText();
-        try { updateFinancialUI(); } catch(err) { console.warn(err); }
-        loginModal.classList.remove('active');
-        announceWelcome();
-        alert(`Registration Complete! Welcome ${currentUser.name}. Your profile and 10% concessional credit margin have been configured.`);
-      });
-    }
+    console.log("Lenis Smooth Scroll & GSAP ScrollTrigger initialized successfully.");
   }
 
 });
