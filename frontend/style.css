@@ -274,6 +274,7 @@ body {
   margin-left: 0;
   margin-bottom: 0.5rem;
   text-align: left;
+  color: #ffffff !important;
 }
 .scheme-pill {
   display: inline-flex;
@@ -296,10 +297,11 @@ body {
   margin-bottom: 0.7rem;
 }
 .hero-desc {
-  font-size: 0.95rem;
-  color: var(--text-muted);
-  line-height: 1.5;
+  font-size: 0.98rem;
+  color: #ffffff !important;
+  line-height: 1.55;
   margin-bottom: 1.2rem;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
 }
 .hero-features-chips {
   flex-wrap: wrap;
@@ -5437,8 +5439,370 @@ body {
 }
 
 .auth-tab-btn.active {
+  background: #ffffff;
   color: #ea580c;
   border-bottom: 3px solid #ea580c;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.auth-tab-btn:hover:not(.active) {
+  background: rgba(255, 255, 255, 0.6);
+  color: #1e293b;
+}
+
+/* Modal Body Scrolling & Form Panes */
+.modal-body {
+  padding: 1.5rem;
+  overflow-y: auto;
+  flex: 1;
+  -webkit-overflow-scrolling: touch;
+  max-height: calc(90vh - 140px);
+}
+
+.auth-form-pane {
+  display: none;
+}
+
+.auth-form-pane.active {
+  display: block;
+}
+
+/* Form Group Grid Spacing */
+.form-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.radio-options-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.radio-card {
+  border: 1.5px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 0.85rem;
+  cursor: pointer;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  transition: all 0.2s ease;
+  background: #f8fafc;
+}
+
+.radio-card:hover {
+  border-color: #cbd5e1;
+  background: #ffffff;
+}
+
+.radio-card input[type="radio"]:checked + div {
+  color: #0b3b60;
+}
+
+.radio-card:has(input[type="radio"]:checked) {
+  border-color: #ff9933;
+  background: rgba(255, 153, 51, 0.06);
+}
+
+/* Sticky Submit Bar - Ensures Register & Login buttons are ALWAYS clearly visible without floating over inputs */
+.form-submit-row {
+  margin-top: 1.5rem;
+  padding: 1rem 0 0.5rem 0;
+  border-top: 1px solid #e2e8f0;
+  position: sticky;
+  bottom: 0;
+  background: #ffffff;
+  z-index: 10;
+  box-shadow: 0 -8px 16px rgba(255, 255, 255, 0.95);
+}
+
+.btn-primary-lg {
+  width: 100%;
+  padding: 0.95rem 1.5rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #ff9933 0%, #e67e22 100%);
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(255, 153, 51, 0.4);
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.btn-primary-lg:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 153, 51, 0.5);
+  background: linear-gradient(135deg, #e67e22 0%, #d35400 100%);
+}
+
+/* ==========================================================================
+   PROMINENT HERO TITLE & SLIGHT RIGHT INDENTATION ENHANCEMENT
+   ========================================================================== */
+.hero-container-single {
+  max-width: 980px !important;
+  margin-left: 0 !important;
+  margin-right: auto !important;
+  text-align: left !important;
+  padding-left: 3.5rem !important; /* Shift slightly to the right */
+}
+
+.hero-content {
+  text-align: left !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+}
+
+.scheme-pill {
+  margin-left: 0 !important;
+  margin-right: auto !important;
+  align-self: flex-start !important;
+}
+
+.hero-title,
+.hero-heading {
+  font-family: var(--font-heading);
+  font-size: clamp(2.2rem, 4.5vw, 3.4rem) !important;
+  font-weight: 900 !important;
+  line-height: 1.25 !important;
+  color: #ffffff !important;
+  text-shadow: 0 4px 16px rgba(0, 0, 0, 0.6), 0 2px 4px rgba(0, 0, 0, 0.4) !important;
+  letter-spacing: -0.02em !important;
+  margin-bottom: 1.1rem !important;
+  max-width: 980px !important;
+  margin-left: 0 !important;
+  margin-right: auto !important;
+  text-align: left !important;
+}
+
+.hero-desc {
+  text-align: left !important;
+  margin-left: 0 !important;
+  margin-right: auto !important;
+  color: #ffffff !important;
+}
+
+@media (max-width: 768px) {
+  .hero-container-single {
+    padding-left: 0.75rem !important;
+  }
+}
+
+/* ==========================================================================
+   LIVE DEMAND BUSINESS TICKER STRIP (IMAGE 3 STYLING)
+   ========================================================================== */
+.live-ticker-strip {
+  display: flex;
+  align-items: center;
+  background: #ffffff !important;
+  color: #dc2626 !important;
+  height: 42px;
+  overflow: hidden;
+  border-bottom: 1px solid #e2e8f0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  font-family: 'Space Mono', 'Roboto Mono', consolas, monospace, sans-serif;
+  font-size: 0.82rem;
+  z-index: 99;
+  position: relative;
+  width: 100%;
+}
+
+.ticker-badge {
+  background: linear-gradient(135deg, #ff9933 0%, #f59e0b 100%);
+  color: #0f172a;
+  font-weight: 900;
+  font-size: 0.8rem;
+  letter-spacing: 0.8px;
+  padding: 0 1.1rem;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  flex-shrink: 0;
+  z-index: 5;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.15);
+  text-transform: uppercase;
+}
+
+.pulse-dot {
+  width: 9px;
+  height: 9px;
+  background-color: #dc2626;
+  border-radius: 50%;
+  box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7);
+  animation: pulse-red 1.5s infinite;
+}
+
+@keyframes pulse-red {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7);
+  }
+  70% {
+    transform: scale(1.15);
+    box-shadow: 0 0 0 8px rgba(220, 38, 38, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(220, 38, 38, 0);
+  }
+}
+
+.ticker-content-wrapper {
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+}
+
+.ticker-marquee-track {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  animation: ticker-scroll 30s linear infinite;
+  gap: 1.5rem;
+}
+
+.ticker-marquee-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes ticker-scroll {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.ticker-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #dc2626 !important;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+.ticker-item strong {
+  color: #991b1b !important;
+  font-weight: 900;
+}
+
+.ticker-sep {
+  color: #f87171 !important;
+  font-size: 0.75rem;
+}
+
+.text-orange { color: #ea580c !important; }
+.text-green { color: #16a34a !important; }
+.text-yellow { color: #d97706 !important; }
+.text-blue { color: #0284c7 !important; }
+
+@media (max-width: 768px) {
+  .ticker-badge span:last-child {
+    display: none;
+  }
+  .ticker-badge {
+    padding: 0 0.65rem;
+  }
+}
+
+/* ============================================================================= */
+/* LOGGED-IN CITIZEN PROFILE BADGE & DROPDOWN MENU                              */
+/* ============================================================================= */
+.user-profile-menu {
+  position: relative;
+  display: inline-block;
+}
+
+.purple-avatar-btn {
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.purple-avatar-btn:hover {
+  transform: scale(1.08);
+}
+
+.purple-avatar-img {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #6366f1 0%, #4338ca 100%);
+  color: #e0e7ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.45rem;
+  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35);
+  border: 2px solid #a5b4fc;
+}
+
+[data-theme="dark"] .purple-avatar-img {
+  background: radial-gradient(circle at 35% 35%, #4f46e5 0%, #312e81 100%);
+  border-color: #6366f1;
+}
+
+.user-info-text {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  line-height: 1.2;
+}
+
+.user-name-label {
+  font-family: var(--font-heading);
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-primary, #0f172a);
+}
+
+.user-status-label {
+  font-size: 0.68rem;
+  color: #4ade80;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.dropdown-arrow {
+  font-size: 0.75rem;
+  color: #cbd5e1;
+  margin-left: 0.2rem;
+  transition: transform 0.2s ease;
+}
+
+.user-profile-menu.open .dropdown-arrow {
+  transform: rotate(180deg);
+}
+
+/* Dropdown Card */
+.profile-dropdown-menu {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  width: 250px;
+>>>>>>> 5b5d43b (style: set hero subtitle text to crisp white (#ffffff) color)
   background: var(--bg-surface, #ffffff);
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
