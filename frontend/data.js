@@ -495,7 +495,7 @@ const BUSINESSES_DATA = [
     "target_market": "Local dairy farmers and gaushalas across Balianta & Khordha district",
     "roi_payback_period": "14 - 18 months",
     "impact_score": "High (Solves the chronic green fodder shortage)",
-    "image_url": "assets/solar_dryer.jpg",
+    "image_url": "assets/hydroponic_fodder.jpg",
     "sector": "Agro-Processing & Dairy",
     "viability_score": 86,
     "viability_tag": "HIGH VIABILITY (80-89%)",
@@ -633,7 +633,7 @@ const BUSINESSES_DATA = [
     "target_market": "Apartment residents, highway commuters, corporate offices in Mancheswar",
     "roi_payback_period": "12 - 16 months",
     "impact_score": "Medium-High (Aesthetic and ecological enhancement)",
-    "image_url": "assets/honey_bee.jpg",
+    "image_url": "assets/nursery_garden.jpg",
     "sector": "Agro-Processing & Dairy",
     "viability_score": 85,
     "viability_tag": "HIGH VIABILITY (80-89%)",
@@ -840,7 +840,7 @@ const BUSINESSES_DATA = [
     "target_market": "Dairy cooperatives, commercial farmers, FMCG distributors",
     "roi_payback_period": "20 - 26 months",
     "impact_score": "Very High (Cuts rural post-harvest losses significantly)",
-    "image_url": "assets/cold_storage.jpg",
+    "image_url": "assets/cold_van_logistics.jpg",
     "sector": "Agro-Processing & Dairy",
     "viability_score": 91,
     "viability_tag": "EXCELLENT VIABILITY (90%+)",
@@ -909,7 +909,7 @@ const BUSINESSES_DATA = [
     "target_market": "Highway freight trucks, construction equipment operators, earthmovers",
     "roi_payback_period": "10 - 15 months",
     "impact_score": "Medium (Vital transit infrastructure service)",
-    "image_url": "assets/construction_thumb.jpg",
+    "image_url": "assets/hydraulic_repair.jpg",
     "sector": "Rural Construction & Infra",
     "viability_score": 83,
     "viability_tag": "HIGH VIABILITY (80-89%)",
@@ -978,7 +978,7 @@ const BUSINESSES_DATA = [
     "target_market": "Highway commuters, inter-city travelers between Bhubaneswar-Cuttack",
     "roi_payback_period": "7 - 10 months",
     "impact_score": "High (Promotes local indigenous millet consumption)",
-    "image_url": "assets/spices_thumb.jpg",
+    "image_url": "assets/millet_cafe.jpg",
     "sector": "Agro-Processing & Dairy",
     "viability_score": 90,
     "viability_tag": "EXCELLENT VIABILITY (90%+)",
@@ -1047,7 +1047,7 @@ const BUSINESSES_DATA = [
     "target_market": "Mancheswar industrial warehouses, logistics depots along NH-16",
     "roi_payback_period": "14 - 18 months",
     "impact_score": "Medium-High (Consistent B2B institutional orders)",
-    "image_url": "assets/pottery_craft_thumb.jpg",
+    "image_url": "assets/wooden_pallet.jpg",
     "sector": "Eco-Crafts & Waste Upcycling",
     "viability_score": 82,
     "viability_tag": "HIGH VIABILITY (80-89%)",
@@ -1185,7 +1185,7 @@ const BUSINESSES_DATA = [
     "target_market": "New residential duplexes, apartment renovations, commercial shops",
     "roi_payback_period": "12 - 16 months",
     "impact_score": "Medium-High (High value-added margins per square foot)",
-    "image_url": "assets/construction_thumb.jpg",
+    "image_url": "assets/aluminum_fabrication.jpg",
     "sector": "Rural Construction & Infra",
     "viability_score": 96,
     "viability_tag": "EXCELLENT VIABILITY (90%+)",
@@ -1392,7 +1392,7 @@ const BUSINESSES_DATA = [
     "target_market": "Apartment societies, duplex gated communities in Hansapal-Naharkanta",
     "roi_payback_period": "6 - 9 months",
     "impact_score": "High (High daily cash collections, low overheads)",
-    "image_url": "assets/digital_kiosk_thumb.jpg",
+    "image_url": "assets/mobile_repair_van.jpg",
     "sector": "Digital & Rural Services",
     "viability_score": 87,
     "viability_tag": "HIGH VIABILITY (80-89%)",
@@ -1668,7 +1668,7 @@ const BUSINESSES_DATA = [
     "target_market": "Apartment societies, local grocery stores, working professionals",
     "roi_payback_period": "6 - 9 months",
     "impact_score": "High (Instant daily morning turnover with high margins)",
-    "image_url": "assets/flour_mill.jpg",
+    "image_url": "assets/millet_cafe.jpg",
     "sector": "Agro-Processing & Dairy",
     "viability_score": 85,
     "viability_tag": "HIGH VIABILITY (80-89%)",
@@ -1875,7 +1875,7 @@ const BUSINESSES_DATA = [
     "target_market": "Garment stores, sweet shops, pharmaceutical stores, Mancheswar factories",
     "roi_payback_period": "16 - 22 months",
     "impact_score": "High (Substitutes banned plastic bags)",
-    "image_url": "assets/leaf_plates_thumb.jpg",
+    "image_url": "assets/wooden_pallet.jpg",
     "sector": "Eco-Crafts & Waste Upcycling",
     "viability_score": 91,
     "viability_tag": "EXCELLENT VIABILITY (90%+)",
@@ -2013,7 +2013,7 @@ const BUSINESSES_DATA = [
     "target_market": "Plant nurseries, greenhouse farmers, landscaping agencies",
     "roi_payback_period": "14 - 18 months",
     "impact_score": "High (Eliminates rotting coconut husk mosquito breeding)",
-    "image_url": "assets/leaf_plates_thumb.jpg",
+    "image_url": "assets/organic_thumb.jpg",
     "sector": "Eco-Crafts & Waste Upcycling",
     "viability_score": 90,
     "viability_tag": "EXCELLENT VIABILITY (90%+)",
@@ -2082,7 +2082,7 @@ const BUSINESSES_DATA = [
     "target_market": "Roadside shops, offices, residential households, construction sites",
     "roi_payback_period": "10 - 14 months",
     "impact_score": "Very High (Prevents water-borne illnesses in the community)",
-    "image_url": "assets/dairy_thumb.jpg",
+    "image_url": "assets/cold_van_logistics.jpg",
     "sector": "Digital & Rural Services",
     "viability_score": 82,
     "viability_tag": "HIGH VIABILITY (80-89%)",
@@ -2151,7 +2151,7 @@ const BUSINESSES_DATA = [
     "target_market": "Villagers of Hansapal, Naharkanta, Balianta belt",
     "roi_payback_period": "12 - 16 months",
     "impact_score": "Very High (Cuts rural out-of-pocket health expenditures by 60%)",
-    "image_url": "assets/digital_kiosk_thumb.jpg",
+    "image_url": "assets/jan_aushadhi_pharmacy.jpg",
     "sector": "Digital & Rural Services",
     "viability_score": 89,
     "viability_tag": "HIGH VIABILITY (80-89%)",
@@ -2427,7 +2427,7 @@ const BUSINESSES_DATA = [
     "target_market": "Daily highway commuters, delivery riders, local youth",
     "roi_payback_period": "11 - 15 months",
     "impact_score": "Medium-High (Reliable daily servicing cashflow)",
-    "image_url": "assets/ev_thumb.jpg",
+    "image_url": "assets/bike_service_workshop.jpg",
     "sector": "Green Energy & EV",
     "viability_score": 87,
     "viability_tag": "HIGH VIABILITY (80-89%)",
@@ -2478,9 +2478,12 @@ const BUSINESSES_DATA = [
 
 const TRANSLATIONS = {
   "en": {
+    "marqueeLead": "32 Vetted Enterprise Blueprints",
+    "marqueeSub": "• Tap any circle to load unit economics & concessional credit",
+    "marqueePause": "Continuous Stream (Right &rarr; Left) • Hover to Pause",
     "govIndia": "GOVERNMENT OF INDIA",
     "govIndiaHindi": "भारत सरकार",
-    "portalTitle": "Vyapaar Sarthi",
+    "portalTitle": "<span class=\"brand-vyapaar\">Vyapaar</span> <span class=\"brand-sarthi\">Sarthi</span>",
     "tagline": "Rural Micro-Enterprise Advisory & Concessional Scheme Navigator | Ministry of Social Justice & Empowerment",
     "lblTheme": "Dark Mode",
     "lblLanguage": "Select Language:",
@@ -2640,16 +2643,19 @@ const TRANSLATIONS = {
     "lblMonthlyEq": "Monthly Equivalent Burden",
     "lblTotalInterest": "Total Loan Interest Over Tenure",
     "lblTotalRepaid": "Total Repaid Over Tenure",
-    "videoSectionTitle": "Official Video Demonstration & Voice Guide for Rural Entrepreneurs",
+    "videoSectionTitle": "Official Video Guide: How to Use <span class=\"brand-vyapaar\">Vyapaar</span> <span class=\"brand-sarthi\">Sarthi</span>",
     "videoSectionDesc": "A complete audio-visual walkthrough explaining how to select an enterprise, read feasibility scores, and obtain a 10% margin bank sanction.",
     "inputTitle": "Select Location & Enterprise Parameters",
     "lblMargin": "Available Margin Capital (10%)",
     "navCatalog": "32 Enterprise Catalog"
   },
   "hi": {
+    "marqueeLead": "32 प्रमाणित ग्रामीण उद्यम मॉडल",
+    "marqueeSub": "• इकाई अर्थशास्त्र और रियायती ऋण देखने के लिए किसी भी वृत्त पर क्लिक करें",
+    "marqueePause": "सतत प्रवाह (दाएं से बाएं) • रोकने के लिए कर्सर रखें",
     "govIndia": "भारत सरकार",
     "govIndiaHindi": "GOVERNMENT OF INDIA",
-    "portalTitle": "व्यापार सारथी",
+    "portalTitle": "<span class=\"brand-vyapaar\">व्यापार</span> <span class=\"brand-sarthi\">सारथी</span>",
     "tagline": "ग्रामीण सूक्ष्म उद्यम परामर्श एवं रियायती ऋण योजना पोर्टल | सामाजिक न्याय एवं अधिकारिता मंत्रालय",
     "lblTheme": "डार्क मोड",
     "lblLanguage": "भाषा चुनें:",
@@ -2809,16 +2815,19 @@ const TRANSLATIONS = {
     "lblMonthlyEq": "मासिक समकक्ष बोझ",
     "lblTotalInterest": "कुल देय ऋण ब्याज",
     "lblTotalRepaid": "अवधि में कुल पुनर्भुगतान",
-    "videoSectionTitle": "ग्रामीण उद्यमियों के लिए आधिकारिक वीडियो एवं ध्वनि मार्गदर्शिका",
+    "videoSectionTitle": "<span class=\"brand-vyapaar\">व्यापार</span> <span class=\"brand-sarthi\">सारथी</span> के उपयोग हेतु आधिकारिक वीडियो मार्गदर्शिका",
     "videoSectionDesc": "अपनी भाषा में चरण-दर-चरण ऑडियो-विजुअल ट्यूटोरियल, जिसमें उद्यम चयन, व्यवहार्यता स्कोर और 10% बैंक स्वीकृति की पूरी प्रक्रिया समझाई गई है।",
     "inputTitle": "स्थान एवं उद्यम मापदंड चुनें",
     "lblMargin": "उपलब्ध मार्जिन पूंजी (10%)",
     "navCatalog": "32 उद्यम निर्देशिका"
   },
   "or": {
+    "marqueeLead": "32 ପ୍ରମାଣିତ ଗ୍ରାମୀଣ ଉଦ୍ୟୋଗ ଯୋଜନା",
+    "marqueeSub": "• ୟୁନିଟ୍ ଅର୍ଥନୀତି ଓ ରିହାତି ଋଣ ଦେଖିବାକୁ ଯେକୌଣସି ବୃତ୍ତ ଉପରେ କ୍ଲିକ୍ କରନ୍ତୁ",
+    "marqueePause": "ନିରନ୍ତର ପ୍ରବାହ (ଡାହାଣରୁ ବାମ) • ଅଟକାଇବା ପାଇଁ ହୋଭର୍ କରନ୍ତୁ",
     "govIndia": "ଭାରତ ସରକାର",
     "govIndiaHindi": "GOVERNMENT OF INDIA",
-    "portalTitle": "ବ୍ୟାପାର ସାରଥୀ",
+    "portalTitle": "<span class=\"brand-vyapaar\">ବ୍ୟାପାର</span> <span class=\"brand-sarthi\">ସାରଥୀ</span>",
     "tagline": "ଗ୍ରାମୀଣ କ୍ଷୁଦ୍ର ଉଦ୍ୟୋଗ ପରାମର୍ଶ ଏବଂ ରିହାତି ଋଣ ଯୋଜନା ପୋର୍ଟାଲ | ସାମାଜିକ ନ୍ୟାୟ ଏବଂ ସଶକ୍ତୀକରଣ ମନ୍ତ୍ରଣାଳୟ",
     "lblTheme": "ଡାର୍କ ମୋଡ୍",
     "lblLanguage": "ଭାଷା ବାଛନ୍ତୁ:",
@@ -2978,16 +2987,19 @@ const TRANSLATIONS = {
     "lblMonthlyEq": "ମାସିକ ସମତୁଲ୍ୟ ଆର୍ଥିକ ବୋଝ",
     "lblTotalInterest": "ମୋଟ ଦେୟ ଋଣ ସୁଧ",
     "lblTotalRepaid": "ଅବଧି ମଧ୍ୟରେ ମୋଟ ପରିଶୋଧିତ ରାଶି",
-    "videoSectionTitle": "ଗ୍ରାମୀଣ ଉଦ୍ୟୋଗୀମାନଙ୍କ ପାଇଁ ଅଫିସିଆଲ୍ ଭିଡିଓ ଓ ସ୍ୱର ନିର୍ଦ୍ଦେଶିକା",
+    "videoSectionTitle": "<span class=\"brand-vyapaar\">ବ୍ୟାପାର</span> <span class=\"brand-sarthi\">ସାରଥୀ</span> ବ୍ୟବହାର କରିବାର ଅଫିସିଆଲ୍ ଭିଡିଓ ଗାଇଡ୍",
     "videoSectionDesc": "ଉଦ୍ୟୋଗ ଚୟନ, ସମ୍ଭାବ୍ୟତା ସ୍କୋର ଏବଂ 10% ବ୍ୟାଙ୍କ ଋଣ ମଞ୍ଜୁରୀ ପାଇଁ ଆଞ୍ଚଳିକ ଭାଷାରେ ସମ୍ପୂର୍ଣ୍ଣ ଭିଡିଓ ସହାୟତା।",
     "inputTitle": "ସ୍ଥାନ ଏବଂ ଉଦ୍ୟୋଗ ବିବରଣୀ ବାଛନ୍ତୁ",
     "lblMargin": "ଉପଲବ୍ଧ ମାର୍ଜିନ ପୁଞ୍ଜି (10%)",
     "navCatalog": "32 ଉଦ୍ୟୋଗ ତାଲିକା"
   },
   "bn": {
+    "marqueeLead": "৩২টি পরীক্ষিত গ্রামীণ ব্যবসা মডেল",
+    "marqueeSub": "• আর্থিক বিবরণী ও ভর্তুকি দেখতে যেকোনো বৃত্তে ক্লিক করুন",
+    "marqueePause": "নিরবচ্ছিন্ন প্রবাহ (ডান থেকে বাম) • থামাতে হোভার করুন",
     "govIndia": "ভারত সরকার",
     "govIndiaHindi": "GOVERNMENT OF INDIA",
-    "portalTitle": "ব্যাপার সারথী",
+    "portalTitle": "<span class=\"brand-vyapaar\">ব্যাপার</span> <span class=\"brand-sarthi\">সারথী</span>",
     "tagline": "গ্রামীণ ক্ষুদ্র উদ্যোগ পরামর্শ ও রেয়াতি ঋণ প্রকল্প পোর্টাল | সামাজিক ন্যায় ও ক্ষমতায়ন মন্ত্রক",
     "lblTheme": "ডার্ক মোড",
     "lblLanguage": "ভাষা নির্বাচন করুন:",
@@ -3147,16 +3159,19 @@ const TRANSLATIONS = {
     "lblMonthlyEq": "মাসিক সমতুল্য বোঝা",
     "lblTotalInterest": "মেয়াদে মোট ঋণের সুদ",
     "lblTotalRepaid": "মেয়াদে মোট পরিশোধিত অর্থ",
-    "videoSectionTitle": "গ্রামীণ উদ্যোক্তাদের জন্য অফিসিয়াল ভিডিও ও ভয়েস নির্দেশিকা",
+    "videoSectionTitle": "<span class=\"brand-vyapaar\">ব্যাপার</span> <span class=\"brand-sarthi\">সারথী</span> ব্যবহারের জন্য অফিসিয়াল ভিডিও গাইড",
     "videoSectionDesc": "উদ্যোগ নির্বাচন, সম্ভাব্যতা স্কোর ও ব্যাংক ঋণ অনুমোদনের সম্পূর্ণ প্রক্রিয়া নিজের ভাষায় দেখুন।",
     "inputTitle": "অবস্থান ও উদ্যোগের বিবরণ নির্বাচন করুন",
     "lblMargin": "উপলব্ধ মূলধন অংশদান (১০%)",
     "navCatalog": "৩২ উদ্যোগ ক্যাটালগ"
   },
   "te": {
+    "marqueeLead": "32 ధృవీకరించబడిన గ్రామీణ వ్యాపార నమూనాలు",
+    "marqueeSub": "• యూనిట్ ఆర్థిక వివరాలు మరియు రాయితీ రుణం చూడటానికి ఏదైనా వృత్తంపై క్లిక్ చేయండి",
+    "marqueePause": "నిరంతర ప్రవాహం (కుడి నుండి ఎడమకు) • పాజ్ చేయడానికి హోవర్ చేయండి",
     "govIndia": "భారత ప్రభుత్వం",
     "govIndiaHindi": "GOVERNMENT OF INDIA",
-    "portalTitle": "వ్యాపార్ సారథి",
+    "portalTitle": "<span class=\"brand-vyapaar\">వ్యాపార్</span> <span class=\"brand-sarthi\">సారథి</span>",
     "tagline": "గ్రామీణ సూక్ష్మ వ్యాపార సలహా & రాయితీ రుణ పథకాల పోర్టల్ | సామాజిక న్యాయం మరియు సాధికారత మంత్రిత్వ శాఖ",
     "lblTheme": "డార్క్ మోడ్",
     "lblLanguage": "భాషను ఎంచుకోండి:",
@@ -3316,16 +3331,19 @@ const TRANSLATIONS = {
     "lblMonthlyEq": "నెలవారీ సమానమైన భారం",
     "lblTotalInterest": "మొత్తం చెల్లించాల్సిన వడ్డీ",
     "lblTotalRepaid": "గడువులో మొత్తం చెల్లించిన మొత్తం",
-    "videoSectionTitle": "గ్రామీଣ పారిశ్రామికవేత్తల కోసం అధికారిక వీడియో & వాయిస్ గైడ్",
+    "videoSectionTitle": "<span class=\"brand-vyapaar\">వ్యాపార్</span> <span class=\"brand-sarthi\">సారథి</span> ఎలా ఉపయోగించాలో అధికారిక వీడియో గైడ్",
     "videoSectionDesc": "వ్యాపార ఎంపిక, సాధ్యత స్కోరు మరియు 10% బ్యాంక్ లోన్ పొందే పూర్తి ప్రక్రియను మీ మాతୃభాషలో తెలుసుకోండి.",
     "inputTitle": "ప్రాంతం మరియు వ్యాపార వివరాలను ఎంచుకోండి",
     "lblMargin": "అందుబాటులో ఉన్న మూలధనం (10%)",
     "navCatalog": "32 వ్యాపారాల కేటలాగ్"
   },
   "ta": {
+    "marqueeLead": "32 சரிபார்க்கப்பட்ட கிராமப்புற வணிக மாதிரிகள்",
+    "marqueeSub": "• வணிக விவரங்கள் மற்றும் மானியக் கடனைக் காண ஏதேனும் வட்டத்தில் கிளிக் செய்யவும்",
+    "marqueePause": "தொடர்ச்சியான ஓட்டம் (வலமிருந்து இடமாக) • நிறுத்த நகர்த்தவும்",
     "govIndia": "இந்திய அரசு",
     "govIndiaHindi": "GOVERNMENT OF INDIA",
-    "portalTitle": "வியாபார் சாரதி",
+    "portalTitle": "<span class=\"brand-vyapaar\">வியாபார்</span> <span class=\"brand-sarthi\">சாரதி</span>",
     "tagline": "ஊரக சிறுதொழில் ஆலோசனை மற்றும் மானியக் கடன் திட்ட போர்டல் | சமூக நீதி மற்றும் அதிகாரமளித்தல் அமைச்சகம்",
     "lblTheme": "டார்க் மோட்",
     "lblLanguage": "மொழியைத் தேர்ந்தெடுக்கவும்:",
@@ -3485,16 +3503,19 @@ const TRANSLATIONS = {
     "lblMonthlyEq": "மாதாந்திர சமமான சுமை",
     "lblTotalInterest": "மொத்த கடன் வட்டி",
     "lblTotalRepaid": "மொத்த திருப்பிச் செலுத்தப்பட்ட தொகை",
-    "videoSectionTitle": "ஊரக தொழில்முனைவோருக்கான அதிகாரப்பூர்வ வீடியோ & குரல் வழிகாட்டி",
+    "videoSectionTitle": "<span class=\"brand-vyapaar\">வியாபார்</span> <span class=\"brand-sarthi\">சாரதி</span> பயன்படுத்துவதற்கான அதிகாரப்பூர்வ வீடியோ வழிகாட்டி",
     "videoSectionDesc": "தொழில் தேர்வு, சாத்தியக்கூறு மதிப்பெண் மற்றும் வங்கி கடன் ஒப்புதல் பெறும் முழு செயல்முறையையும் உங்கள் தாய்மொழியில் தெரிந்துகொள்ளுங்கள்.",
     "inputTitle": "இருப்பிடம் மற்றும் தொழில் அளவுருக்களைத் தேர்ந்தெடுக்கவும்",
     "lblMargin": "கிடைக்கக்கூடிய முதலீட்டு பங்கு (10%)",
     "navCatalog": "32 தொழில்கள் பட்டியல்"
   },
   "mr": {
+    "marqueeLead": "32 प्रमाणित ग्रामीण व्यवसाय मॉडेल",
+    "marqueeSub": "• युनिट अर्थशास्त्र आणि सवलतीचे कर्ज पाहण्यासाठी कोणत्याही वर्तुळावर क्लिक करा",
+    "marqueePause": "सतत प्रवाह (उजवीकडून डावीकडे) • थांबवण्यासाठी होव्हर करा",
     "govIndia": "भारत सरकार",
     "govIndiaHindi": "GOVERNMENT OF INDIA",
-    "portalTitle": "व्यापार सारथी",
+    "portalTitle": "<span class=\"brand-vyapaar\">व्यापार</span> <span class=\"brand-sarthi\">सारथी</span>",
     "tagline": "ग्रामीण सूक्ष्म उद्योग सल्लागार व सवलतीचे कर्ज योजना पोर्टल | सामाजिक न्याय व सक्षमीकरण मंत्रालय",
     "lblTheme": "डार्क मोड",
     "lblLanguage": "भाषा निवडा:",
@@ -3654,7 +3675,7 @@ const TRANSLATIONS = {
     "lblMonthlyEq": "मासिक समतुल्य भार",
     "lblTotalInterest": "कालावधीतील एकूण कर्ज व्याज",
     "lblTotalRepaid": "कालावधीत एकूण परतफेड केलेली रक्कम",
-    "videoSectionTitle": "ग्रामीण उद्योजकांसाठी अधिकृत व्हिडिओ व ऑडिओ मार्गदर्शक",
+    "videoSectionTitle": "<span class=\"brand-vyapaar\">व्यापार</span> <span class=\"brand-sarthi\">सारथी</span> कसे वापरावे याबद्दल अधिकृत व्हिडिओ मार्गदर्शक",
     "inputTitle": "ठिकाण व उद्योग निकष निवडा",
     "lblMargin": "उपलब्ध स्व-भांडवल (१०%)",
     "navCatalog": "३२ उद्योग कॅटलॉग",
@@ -3875,86 +3896,566 @@ const SEASONAL_CALENDAR_DATA = [
   {
     "month": "Jan",
     "name": "January",
+    "quarter": "Q1 - Winter",
     "demand": "Peak",
     "status": "green",
-    "notes": "Winter harvest, wedding surge, high paneer/mushroom sales"
+    "season": "Winter Harvest & Wedding Surge (Rabi Phase 1)",
+    "ideas": "Post-harvest cash liquidity and auspicious winter wedding dates drive 3x demand for dairy processing, pure mustard oils, and fresh mushrooms.",
+    "notes": "Winter harvest & wedding boom drive 3x demand for dairy, paneer & edible oils. Keep raw material inventory stocked.",
+    "featuredBusinesses": [
+      {
+        "name": "Solar Milk Chilling & Paneer Unit",
+        "image": "assets/dairy_thumb.jpg",
+        "category": "Dairy & Value Addition",
+        "demandTag": "Peak Wedding Surge",
+        "summary": "Supplies daily fresh paneer & pasteurized milk to sweet makers and banquet caterers during peak winter wedding dates.",
+        "margin": "₹48,000",
+        "profit": "₹35,000 – ₹52,000/mo",
+        "bizId": "BIZ-01"
+      },
+      {
+        "name": "Cold-Pressed Mustard Oil Unit",
+        "image": "assets/oil_mill_thumb.jpg",
+        "category": "Edible Oils & Agro",
+        "demandTag": "Fresh Crop Influx",
+        "summary": "Abundant winter mustard harvest provides low-cost raw seed. High margin retail sales in village haats and local mandis.",
+        "margin": "₹38,000",
+        "profit": "₹28,000 – ₹42,000/mo",
+        "bizId": "BIZ-03"
+      },
+      {
+        "name": "Button Mushroom Cultivation",
+        "image": "assets/mushroom_thumb.jpg",
+        "category": "Horticulture & Indoor",
+        "demandTag": "Ideal Ambient Climate",
+        "summary": "Cool winter temperatures (15–22°C) create optimal climate for heavy button flushes with zero air-conditioning costs.",
+        "margin": "₹25,000",
+        "profit": "₹22,000 – ₹34,000/mo",
+        "bizId": "BIZ-07"
+      }
+    ],
+    "otherBusinesses": [
+      { "name": "Paddy Harvesting & Threshing", "icon": "fa-tractor" },
+      { "name": "Cattle Feed & Silage Making", "icon": "fa-wheat-awn" },
+      { "name": "Sugarcane Juice & Jaggery", "icon": "fa-bottle-droplet" }
+    ]
   },
   {
     "month": "Feb",
     "name": "February",
+    "quarter": "Q1 - Haat Peak",
     "demand": "High",
     "status": "green",
-    "notes": "Festive haat demand, high liquid milk & food processing turnover"
+    "season": "Pre-Spring Haat & Agro-Processing Surge",
+    "ideas": "Weekly rural haats experience peak buyer footfall. High turnover for packaged ground spices, mini flour mills, and organic compost hubs.",
+    "notes": "Weekly rural haats witness maximum footfall. High turnover for ground spices, flour chakki and organic compost.",
+    "featuredBusinesses": [
+      {
+        "name": "Spices Grinding & Packaging Unit",
+        "image": "assets/spices_thumb.jpg",
+        "category": "Agro-Processing",
+        "demandTag": "Haat Footfall Peak",
+        "summary": "Turmeric, chili, and coriander bulk milling with airtight retail packaging for weekly haats and regional Kirana stores.",
+        "margin": "₹32,000",
+        "profit": "₹26,000 – ₹38,000/mo",
+        "bizId": "BIZ-08"
+      },
+      {
+        "name": "Bio-Fertilizer & Vermicompost Hub",
+        "image": "assets/organic_thumb.jpg",
+        "category": "Organic Agri-Inputs",
+        "demandTag": "Pre-Sowing Orders",
+        "summary": "Farmers pre-order organic vermicompost & bio-fertilizer ahead of spring pulses and vegetable nursery preparation.",
+        "margin": "₹22,000",
+        "profit": "₹18,000 – ₹28,000/mo",
+        "bizId": "BIZ-12"
+      },
+      {
+        "name": "Mini Rice & Flour Mill",
+        "image": "assets/flour_mill.jpg",
+        "category": "Grain Processing",
+        "demandTag": "Daily Cash Flow",
+        "summary": "Continuous custom milling demand for wheat, paddy, and millets with steady daily cash collections from village households.",
+        "margin": "₹28,000",
+        "profit": "₹24,000 – ₹36,000/mo",
+        "bizId": "BIZ-04"
+      }
+    ],
+    "otherBusinesses": [
+      { "name": "Dairy Value Addition (Curd/Butter)", "icon": "fa-cow" },
+      { "name": "Custom Hiring Farm Machinery", "icon": "fa-gears" },
+      { "name": "Poultry Hatchery & Egg Farm", "icon": "fa-egg" }
+    ]
   },
   {
     "month": "Mar",
     "name": "March",
+    "quarter": "Q1 - Grain Cycle",
     "demand": "Steady",
     "status": "blue",
-    "notes": "Pre-summer harvest, steady transit sales on highways"
+    "season": "Wheat & Grain Harvesting Cycle",
+    "ideas": "Rabi grain harvesting across rural belts. Farm machinery rentals, pulses processing, and cold storage operate at maximum seasonal capacity.",
+    "notes": "Rabi grain harvesting peak. Ensure fast transit to Mandis and secure dry storage against pre-monsoon pest risk.",
+    "featuredBusinesses": [
+      {
+        "name": "Combined Harvester & Custom Hiring",
+        "image": "assets/tractor.jpg",
+        "category": "Farm Mechanization",
+        "demandTag": "Hourly Rental Surge",
+        "summary": "High-margin tractor and harvester rentals to farmers during time-critical wheat and pulses harvesting windows.",
+        "margin": "₹55,000",
+        "profit": "₹42,000 – ₹65,000/mo",
+        "bizId": "BIZ-15"
+      },
+      {
+        "name": "Dal Mill & Pulses Processing",
+        "image": "assets/flour_mill.jpg",
+        "category": "Agro-Processing",
+        "demandTag": "Post-Harvest Processing",
+        "summary": "De-husking, grading, and packaging of freshly harvested gram, moong, and arhar pulses for regional wholesale markets.",
+        "margin": "₹35,000",
+        "profit": "₹28,000 – ₹40,000/mo",
+        "bizId": "BIZ-05"
+      },
+      {
+        "name": "Mini Cold Storage Unit",
+        "image": "assets/cold_storage.jpg",
+        "category": "Cold Chain Storage",
+        "demandTag": "Storage Arbitrage",
+        "summary": "Secure cold storage for perishable horticulture and seeds to avoid distress harvest sales and capture premium pricing.",
+        "margin": "₹45,000",
+        "profit": "₹32,000 – ₹48,000/mo",
+        "bizId": "BIZ-18"
+      }
+    ],
+    "otherBusinesses": [
+      { "name": "Solar Water Pumping & Drip", "icon": "fa-solar-panel" },
+      { "name": "Wheat Flour Chakki Unit", "icon": "fa-bowl-rice" },
+      { "name": "Transport & Haat Logistics", "icon": "fa-truck" }
+    ]
   },
   {
     "month": "Apr",
     "name": "April",
+    "quarter": "Q2 - New Year Rush",
     "demand": "High",
     "status": "green",
-    "notes": "New Year / Baisakhi / Pana Sankranti demand for dairy & beverages"
+    "season": "New Year Festivals & Pre-Summer Rush",
+    "ideas": "Regional festive celebrations and rising temperatures trigger immense demand for chilled dairy, clean beverages, and eco-packaging.",
+    "notes": "Rising temperatures trigger immense demand for chilled dairy, beverages, and cold chain transport.",
+    "featuredBusinesses": [
+      {
+        "name": "Flavored Milk, Lassi & Curd Unit",
+        "image": "assets/dairy_thumb.jpg",
+        "category": "Dairy & Beverages",
+        "demandTag": "High-Margin Refreshment",
+        "summary": "High turnover for chilled sweet lassi pouches, spiced buttermilk, and curd cups supplied to wayside stalls & mandis.",
+        "margin": "₹48,000",
+        "profit": "₹36,000 – ₹54,000/mo",
+        "bizId": "BIZ-01"
+      },
+      {
+        "name": "E-Rickshaw & Rural Transit Fleet",
+        "image": "assets/ev_thumb.jpg",
+        "category": "Clean Transit",
+        "demandTag": "Festive Mobility Boom",
+        "summary": "Zero-emission last-mile transit for festive shoppers and haat cargo with ultra-low operating & charging expenses.",
+        "margin": "₹30,000",
+        "profit": "₹22,000 – ₹35,000/mo",
+        "bizId": "BIZ-22"
+      },
+      {
+        "name": "Leaf Plates & Eco-Packaging",
+        "image": "assets/leaf_plates_thumb.jpg",
+        "category": "Eco-Manufacturing",
+        "demandTag": "Temple & Feast Demand",
+        "summary": "Biodegradable Sal & Areca leaf plates pressed for community feasts, religious gatherings, and festive catering.",
+        "margin": "₹18,000",
+        "profit": "₹16,000 – ₹25,000/mo",
+        "bizId": "BIZ-11"
+      }
+    ],
+    "otherBusinesses": [
+      { "name": "Cold Chain Perishables Delivery", "icon": "fa-snowflake" },
+      { "name": "Sugarcane Juice & Bottling", "icon": "fa-glass-water" },
+      { "name": "Ice Block & Beverage Production", "icon": "fa-cube" }
+    ]
   },
   {
     "month": "May",
     "name": "May",
+    "quarter": "Q2 - Summer Peak",
     "demand": "Caution",
     "status": "amber",
-    "notes": "Peak summer heat (42°C-44°C); ensure solar cooling aeration active"
+    "season": "Peak Summer Heatwaves (42°C - 45°C)",
+    "ideas": "Severe ambient heat necessitates solar-powered refrigeration, RO drinking water bottling, and livestock hydration support.",
+    "notes": "Extreme ambient heat hazard. Maintain 24x7 solar cooling aeration; protect dairy livestock hydration and shelf life.",
+    "featuredBusinesses": [
+      {
+        "name": "Solar Powered Cold Room / Chiller",
+        "image": "assets/cold_storage.jpg",
+        "category": "Solar Infrastructure",
+        "demandTag": "24x7 Spoilage Defense",
+        "summary": "Essential cooling preservation for milk, veterinary vaccines, and fresh fruits during 45°C heatwaves.",
+        "margin": "₹45,000",
+        "profit": "₹34,000 – ₹50,000/mo",
+        "bizId": "BIZ-18"
+      },
+      {
+        "name": "Packaged Drinking Water RO Plant",
+        "image": "assets/cold_van_logistics.jpg",
+        "category": "Utility Services",
+        "demandTag": "4x Water Demand",
+        "summary": "Bulk chilled 20-liter jars supplied daily to village schools, panchayat secretariats, and highway dhabas.",
+        "margin": "₹36,000",
+        "profit": "₹28,000 – ₹42,000/mo",
+        "bizId": "BIZ-20"
+      },
+      {
+        "name": "Dry Fodder & Silage Storage",
+        "image": "assets/hydroponic_fodder.jpg",
+        "category": "Livestock Support",
+        "demandTag": "Feed Security",
+        "summary": "Nutrient-fortified dry fodder & fermented silage supply to dairy farmers when natural grazing pastures are dry.",
+        "margin": "₹24,000",
+        "profit": "₹20,000 – ₹30,000/mo",
+        "bizId": "BIZ-02"
+      }
+    ],
+    "otherBusinesses": [
+      { "name": "Deep Freezer Dairy Hub", "icon": "fa-temperature-arrow-down" },
+      { "name": "Solar Rooftop & Inverter Hub", "icon": "fa-sun" },
+      { "name": "Rural Hardware & Shade Netting", "icon": "fa-shield" }
+    ]
   },
   {
     "month": "Jun",
     "name": "June",
+    "quarter": "Q2 - Kharif Sowing",
     "demand": "Steady",
     "status": "blue",
-    "notes": "Raja Festival & pre-monsoon construction material demand"
+    "season": "Kharif Pre-Sowing & Monsoon Onset",
+    "ideas": "Monsoon onset marks the start of Kharif cultivation. Peak purchasing for certified seed treatment, farm repair, and bio-manure.",
+    "notes": "Kharif sowing begins. Farmers heavily invest in high-yield seed preparation, bio-manure and tractor equipment.",
+    "featuredBusinesses": [
+      {
+        "name": "Certified Seed Processing Hub",
+        "image": "assets/organic_thumb.jpg",
+        "category": "Agri-Inputs",
+        "demandTag": "Kharif Planting Sowing",
+        "summary": "Grading and bio-fungicide coating of high-yield paddy, pulses, and oilseeds ready for timely field sowing.",
+        "margin": "₹26,000",
+        "profit": "₹22,000 – ₹35,000/mo",
+        "bizId": "BIZ-14"
+      },
+      {
+        "name": "Farm Machinery Repair & Spares",
+        "image": "assets/tractor.jpg",
+        "category": "Rural Engineering",
+        "demandTag": "High-Uptime Support",
+        "summary": "Servicing and maintenance of diesel pump sets, power tillers, and tractor attachments for continuous sowing.",
+        "margin": "₹30,000",
+        "profit": "₹25,000 – ₹38,000/mo",
+        "bizId": "BIZ-16"
+      },
+      {
+        "name": "Handloom & Khadi Textile Unit",
+        "image": "assets/handloom.jpg",
+        "category": "Rural Handicrafts",
+        "demandTag": "Indoor Production Cycle",
+        "summary": "Indoor loom weaving building cotton saree and dress material inventory ahead of upcoming festive demand.",
+        "margin": "₹20,000",
+        "profit": "₹18,000 – ₹26,000/mo",
+        "bizId": "BIZ-09"
+      }
+    ],
+    "otherBusinesses": [
+      { "name": "Organic Bio-Fertilizer & Pesticides", "icon": "fa-seedling" },
+      { "name": "Fish Hatchery & Fingerling Nursery", "icon": "fa-fish" },
+      { "name": "Poultry Layer Feed", "icon": "fa-egg" }
+    ]
   },
   {
     "month": "Jul",
     "name": "July",
+    "quarter": "Q3 - Heavy Monsoon",
     "demand": "Caution",
     "status": "red",
-    "notes": "Heavy monsoon rainfall; maintain elevated plinth storage"
+    "season": "Peak South-West Monsoon & Rain Deluges",
+    "ideas": "Heavy monsoon rains restrict outdoor transit. Superb growth window for freshwater pond aquaculture and indoor hydroponics.",
+    "notes": "Transit and flooding caution. Elevate inventory on high plinths; monitor pond water pH and aeration.",
+    "featuredBusinesses": [
+      {
+        "name": "Freshwater Aquaculture (Fish / Prawn)",
+        "image": "assets/fish_thumb.jpg",
+        "category": "Fisheries & Aqua",
+        "demandTag": "Rapid Monsoon Growth",
+        "summary": "Stocking high-yield carp and freshwater prawn fingerlings in rainwater-filled village panchayat ponds.",
+        "margin": "₹40,000",
+        "profit": "₹30,000 – ₹45,000/mo",
+        "bizId": "BIZ-06"
+      },
+      {
+        "name": "Hydroponic Green Fodder Unit",
+        "image": "assets/hydroponic_fodder.jpg",
+        "category": "Dairy Support",
+        "demandTag": "Waterlogged Feed Supply",
+        "summary": "Growing 7-day hydroponic barley/maize sprout mats to maintain cattle milk yield when outdoor fields are flooded.",
+        "margin": "₹22,000",
+        "profit": "₹18,000 – ₹27,000/mo",
+        "bizId": "BIZ-02"
+      },
+      {
+        "name": "Mushroom Substrate Preparation Hub",
+        "image": "assets/mushroom_thumb.jpg",
+        "category": "Agro-Allied",
+        "demandTag": "Indoor Humidity Advantage",
+        "summary": "Sterilizing and packing paddy straw spawn bags for humid late-monsoon oyster mushroom production cycles.",
+        "margin": "₹20,000",
+        "profit": "₹16,000 – ₹25,000/mo",
+        "bizId": "BIZ-07"
+      }
+    ],
+    "otherBusinesses": [
+      { "name": "Waterproof Grain Silo Storage", "icon": "fa-warehouse" },
+      { "name": "Veterinary Animal Health Point", "icon": "fa-stethoscope" },
+      { "name": "Rural Logistics & Transit", "icon": "fa-truck-fast" }
+    ]
   },
   {
     "month": "Aug",
     "name": "August",
+    "quarter": "Q3 - Aquaculture",
     "demand": "Steady",
     "status": "blue",
-    "notes": "Monsoon vegetable processing, mushroom indoor flushes"
+    "season": "Mid-Monsoon Aquaculture & Indoor Cultivation",
+    "ideas": "High ambient humidity fuels rapid oyster mushroom flushes and excellent weight gain for pond fisheries.",
+    "notes": "Indoor mushroom flushes thrive in monsoon humidity. Rapid growth for aquaculture fingerlings in rural ponds.",
+    "featuredBusinesses": [
+      {
+        "name": "Composite Fish Farming & Feed Unit",
+        "image": "assets/fish_thumb.jpg",
+        "category": "Aqua-Culture",
+        "demandTag": "Peak Fish Biomass",
+        "summary": "Manufacturing floating protein pellet feed for local aquaculture ponds and harvesting early market-ready fish.",
+        "margin": "₹40,000",
+        "profit": "₹32,000 – ₹48,000/mo",
+        "bizId": "BIZ-06"
+      },
+      {
+        "name": "Oyster Mushroom Flush Unit",
+        "image": "assets/mushroom_thumb.jpg",
+        "category": "Indoor Cultivation",
+        "demandTag": "Heavy Flush Yields",
+        "summary": "Harvesting daily fresh oyster mushrooms in natural humidity with high profit margins in local vegetable mandis.",
+        "margin": "₹22,000",
+        "profit": "₹20,000 – ₹32,000/mo",
+        "bizId": "BIZ-07"
+      },
+      {
+        "name": "Solar Dehydration & Herb Drying",
+        "image": "assets/solar_dryer.jpg",
+        "category": "Food Processing",
+        "demandTag": "Value Preservation",
+        "summary": "Hygienic solar cabinet dehydration of ginger, turmeric, and wild amla for off-season premium retail.",
+        "margin": "₹28,000",
+        "profit": "₹22,000 – ₹34,000/mo",
+        "bizId": "BIZ-19"
+      }
+    ],
+    "otherBusinesses": [
+      { "name": "Milch Cattle Dairy Expansion", "icon": "fa-cow" },
+      { "name": "Poultry Layer Unit", "icon": "fa-egg" },
+      { "name": "Bio-Gas Energy Unit", "icon": "fa-fire-flame-simple" }
+    ]
   },
   {
     "month": "Sep",
     "name": "September",
+    "quarter": "Q3 - Pre-Festive",
     "demand": "High",
     "status": "green",
-    "notes": "Pre-Puja retail stock replenishment, packaging box surges"
+    "season": "Pre-Festive Retail Stocking & Haat Surges",
+    "ideas": "Wholesalers and retail shops build massive inventory ahead of Durga Puja & Diwali. Huge orders for terracotta diyas, packaging, and honey.",
+    "notes": "Retailers build inventory ahead of Durga Puja & Diwali. Huge surge for gift packaging and processed snacks.",
+    "featuredBusinesses": [
+      {
+        "name": "Eco-Friendly Terracotta & Clay Crafts",
+        "image": "assets/pottery_craft_thumb.jpg",
+        "category": "Artisan Crafts",
+        "demandTag": "Festive Diya Bulk Orders",
+        "summary": "Electric pottery wheel molding of earthen lamps, decorative idols, and hand-crafted planters for festive wholesale.",
+        "margin": "₹16,000",
+        "profit": "₹22,000 – ₹36,000/mo",
+        "bizId": "BIZ-10"
+      },
+      {
+        "name": "Honey Bee Keeping & Packaging",
+        "image": "assets/honey_bee.jpg",
+        "category": "Apiculture",
+        "demandTag": "Festive Gifting Demand",
+        "summary": "Harvesting pure forest and mustard honey packed in premium glass jars for festive gift hampers and Ayurvedic trade.",
+        "margin": "₹24,000",
+        "profit": "₹20,000 – ₹32,000/mo",
+        "bizId": "BIZ-13"
+      },
+      {
+        "name": "Corrugated Box & Paper Bag Unit",
+        "image": "assets/wooden_pallet.jpg",
+        "category": "Packaging Solutions",
+        "demandTag": "Retail Packaging Surge",
+        "summary": "Supplying branded carry bags and sweet boxes to town confectioners, apparel shops, and jewelers.",
+        "margin": "₹30,000",
+        "profit": "₹26,000 – ₹38,000/mo",
+        "bizId": "BIZ-21"
+      }
+    ],
+    "otherBusinesses": [
+      { "name": "Ready-to-Eat Namkeen & Snacks", "icon": "fa-bowl-food" },
+      { "name": "Bakery & Confectionery Unit", "icon": "fa-cake-candles" },
+      { "name": "Liquid Milk Distribution", "icon": "fa-bottle-droplet" }
+    ]
   },
   {
     "month": "Oct",
     "name": "October",
+    "quarter": "Q4 - Festive Boom",
     "demand": "Peak",
     "status": "green",
-    "notes": "Durga Puja & Dussehra festival boom; 3x sales volume"
+    "season": "Durga Puja, Dussehra & Navratri Boom",
+    "ideas": "Festive spending explosion across rural and urban markets. Sweet shops, banquet caterers, and handloom weavers operate at 300% regular volume.",
+    "notes": "Sales surge 300% across festive markets. Direct high-margin retail of sweets, curd, paneer, and ceremonial craft.",
+    "featuredBusinesses": [
+      {
+        "name": "Sweets, Mawa & Khoya Processing",
+        "image": "assets/dairy_thumb.jpg",
+        "category": "Dairy Confectionery",
+        "demandTag": "300% Festive Volume",
+        "summary": "Continuous bulk mawa and condensed milk supply to sweet manufacturers for festive laddoos, pedas, and rasgullas.",
+        "margin": "₹48,000",
+        "profit": "₹45,000 – ₹70,000/mo",
+        "bizId": "BIZ-01"
+      },
+      {
+        "name": "Handloom Sarees & Jute Crafts",
+        "image": "assets/handloom.jpg",
+        "category": "Handicrafts & Apparel",
+        "demandTag": "Festive Shopping Rush",
+        "summary": "Peak direct-to-consumer sales of traditional handloom sarees, dhurries, and festive decorative jute items.",
+        "margin": "₹25,000",
+        "profit": "₹30,000 – ₹48,000/mo",
+        "bizId": "BIZ-09"
+      },
+      {
+        "name": "Poultry & Egg Layer Production",
+        "image": "assets/poultry_thumb.jpg",
+        "category": "Livestock & Poultry",
+        "demandTag": "Post-Navratri Surge",
+        "summary": "Catering to massive post-Navratri festive restaurant demand and weekly haat livestock buyers.",
+        "margin": "₹35,000",
+        "profit": "₹28,000 – ₹42,000/mo",
+        "bizId": "BIZ-17"
+      }
+    ],
+    "otherBusinesses": [
+      { "name": "Solar Milk Chilling & Paneer", "icon": "fa-temperature-arrow-down" },
+      { "name": "Mini Mustard Oil Expeller", "icon": "fa-droplet" },
+      { "name": "Rural Event Sound & Lighting", "icon": "fa-bolt" }
+    ]
   },
   {
     "month": "Nov",
     "name": "November",
+    "quarter": "Q4 - Wedding Peak",
     "demand": "Peak",
     "status": "green",
-    "notes": "Diwali & wedding season; maximum dairy & sweet orders"
+    "season": "Diwali, Chhath Puja & Winter Weddings",
+    "ideas": "Paddy harvest proceeds generate maximum disposable income. Major auspicious wedding dates drive enormous spending on ghee, cooking oils, and farm threshing.",
+    "notes": "Maximum liquidity in rural economy. Peak sales for pure ghee, cooking oils, and winter wedding catering.",
+    "featuredBusinesses": [
+      {
+        "name": "Cold-Pressed Mustard & Sesame Oil",
+        "image": "assets/oil_mill_thumb.jpg",
+        "category": "Edible Oils",
+        "demandTag": "Wedding Season Surge",
+        "summary": "Pure cold-pressed kachi ghani mustard oil for winter cooking, wedding banquets, and ceremonial Chhath rituals.",
+        "margin": "₹38,000",
+        "profit": "₹35,000 – ₹55,000/mo",
+        "bizId": "BIZ-03"
+      },
+      {
+        "name": "Pure Desi Ghee & Dairy Packaging",
+        "image": "assets/dairy_thumb.jpg",
+        "category": "High-Value Dairy",
+        "demandTag": "Premium Ghee Demand",
+        "summary": "Small-batch packaging of premium A2 cow ghee in glass jars with 40%+ gross profit margins.",
+        "margin": "₹48,000",
+        "profit": "₹40,000 – ₹60,000/mo",
+        "bizId": "BIZ-01"
+      },
+      {
+        "name": "Paddy Harvester & Threshing Service",
+        "image": "assets/tractor.jpg",
+        "category": "Custom Hiring",
+        "demandTag": "24/7 Field Operations",
+        "summary": "Non-stop custom threshing and baling operations in village fields following the Kharif paddy harvest.",
+        "margin": "₹50,000",
+        "profit": "₹45,000 – ₹70,000/mo",
+        "bizId": "BIZ-15"
+      }
+    ],
+    "otherBusinesses": [
+      { "name": "Fresh Button Mushroom Harvest", "icon": "fa-cubes-stacked" },
+      { "name": "Rural FMCG Retail Supplies", "icon": "fa-cart-shopping" },
+      { "name": "Mini Cold Storage Hub", "icon": "fa-snowflake" }
+    ]
   },
   {
     "month": "Dec",
     "name": "December",
+    "quarter": "Q4 - Winter Wayside",
     "demand": "High",
     "status": "green",
-    "notes": "Winter tourist transit on NH-16, picnic perishables demand"
+    "season": "Winter Tourist Transit & Highway Haats",
+    "ideas": "Winter travel, religious yatras, and highway tourist flows create bustling roadside trade for wayside dhabas, dehydrated winter snacks, and goat farming.",
+    "notes": "NH highway tourist flow boosts roadside sales of fresh dairy, processed snacks, honey, and winter flower garlands.",
+    "featuredBusinesses": [
+      {
+        "name": "Highway Wayside Agri-Tourism & Food",
+        "image": "assets/millet_cafe.jpg",
+        "category": "Hospitality & Food",
+        "demandTag": "Tourist Transit Surge",
+        "summary": "Serving fresh tea, traditional snacks, hot sugarcane juice, and organic farm produce to highway travelers.",
+        "margin": "₹32,000",
+        "profit": "₹30,000 – ₹46,000/mo",
+        "bizId": "BIZ-23"
+      },
+      {
+        "name": "Goat Rearing & Stall-Fed Breeding",
+        "image": "assets/goat_farming.jpg",
+        "category": "Livestock Rearing",
+        "demandTag": "Winter Meat Demand",
+        "summary": "Stall-fed Black Bengal & Osmanabadi goat breeding for winter festive meat demand with low feeding maintenance cost.",
+        "margin": "₹28,000",
+        "profit": "₹25,000 – ₹38,000/mo",
+        "bizId": "BIZ-24"
+      },
+      {
+        "name": "Honey & Herbal Extracts Unit",
+        "image": "assets/honey_bee.jpg",
+        "category": "Wellness & Food",
+        "demandTag": "Winter Health Products",
+        "summary": "Raw winter forest honey, ginger paste, and dried amla packed in retail jars for health-conscious buyers.",
+        "margin": "₹24,000",
+        "profit": "₹22,000 – ₹35,000/mo",
+        "bizId": "BIZ-13"
+      }
+    ],
+    "otherBusinesses": [
+      { "name": "Solar Milk Chilling & Dairy", "icon": "fa-cow" },
+      { "name": "Poultry Meat Processing", "icon": "fa-drumstick-bite" },
+      { "name": "Floriculture & Marigold Farm", "icon": "fa-spa" }
+    ]
   }
 ];
 

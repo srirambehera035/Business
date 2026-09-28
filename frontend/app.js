@@ -31,6 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let activeAudioResponse = "";
 
   // --- DOM REFERENCES ---
+  const inputMarginCapital = document.getElementById('inputMarginCapital');
   const sliderMargin = document.getElementById('sliderMargin');
   const lblMarginValue = document.getElementById('lblMarginValue');
   const dropdownPreferredBiz = document.getElementById('dropdownPreferredBiz');
@@ -82,12 +83,36 @@ document.addEventListener('DOMContentLoaded', () => {
   setupComparisonTool();
   setupAudioSarthi();
   setupWhatsAppSharing();
+  renderBusinessPlansMarquee();
+  setupEnterpriseGallery();
+  setupHeroVideoPlaylist();
+
+  // Initialize Lenis Smooth Scroll & GSAP Animations
+  initLenisAndGSAP();
 
   // Select initial business & calculate
   selectBusiness(BUSINESSES_DATA[0]);
 
   // Apply initial translations
   updateLanguageTexts();
+
+  // --- HERO BACKGROUND VIDEO PLAYLIST ENGINE ---
+  function setupHeroVideoPlaylist() {
+    const heroVideo = document.getElementById('heroBgVideo');
+    if (!heroVideo) return;
+
+    const playlist = [
+      "https://res.cloudinary.com/n0c7bqpd/video/upload/v1790452960/WhatsApp_Video_2026-09-27_at_01.28.53_z97fu1.mp4",
+      "https://res.cloudinary.com/n0c7bqpd/video/upload/v1790453491/WhatsApp_Video_2026-09-27_at_01.30.20_j5ffts.mp4"
+    ];
+    let currentIndex = 0;
+
+    heroVideo.addEventListener('ended', () => {
+      currentIndex = (currentIndex + 1) % playlist.length;
+      heroVideo.src = playlist[currentIndex];
+      heroVideo.play().catch(err => console.log('Hero video transition error:', err));
+    });
+  }
 
   // --- THEME ENGINE ---
   function initTheme() {
@@ -139,76 +164,159 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // --- FIXED RESILIENT LEAFLET MAP ENGINE ---
+  // --- FIXED RESILIENT GOOGLE MAPS ENGINE ---
   function initMap() {
     const mapContainer = document.getElementById('leafletMap');
     if (!mapContainer) return;
 
-    const hansapalCoords = [20.3155, 85.8722];
+    const hansapalCoords = { lat: 20.3155, lng: 85.8722 };
 
     try {
-      leafletMap = L.map('leafletMap', {
+      // Initialize Google Map
+      googleMap = new google.maps.Map(mapContainer, {
         center: hansapalCoords,
         zoom: 12,
-        zoomControl: true,
-        scrollWheelZoom: false
+        scrollwheel: false,
+        disableDefaultUI: false,
+        zoomControl: true
       });
 
-      const tileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 18,
-        attribution: '&copy; OpenStreetMap contributors | Ministry of Social Justice & Empowerment'
+      // Add center marker
+      const centerMarker = new google.maps.Marker({
+        position: hansapalCoords,
+        map: googleMap,
+        title: "Pilot Benchmark Cluster",
+        icon: {
+          path: google.maps.SymbolPath.CIRCLE,
+          scale: 8,
+          fillColor: "#0b3b60",
+          fillOpacity: 1,
+          strokeColor: "#ff9933",
+          strokeWeight: 2
+        },
+        label: {
+          text: "⚖️",
+          color: "white",
+          fontSize: "12px"
+        }
       });
-      tileLayer.addTo(leafletMap);
 
-      const centerIcon = L.divIcon({
-        className: 'custom-map-marker',
-        html: '<div style="background:#0b3b60; color:#fff; width:34px; height:34px; border-radius:50%; border:2px solid #ff9933; display:flex; align-items:center; justify-content:center; box-shadow:0 3px 8px rgba(0,0,0,0.35); font-size:15px;"><i class="fa-solid fa-scale-balanced"></i></div>',
-        iconSize: [34, 34],
-        iconAnchor: [17, 17]
+      // Add center marker popup (info window)
+      const centerInfoWindow = new google.maps.InfoWindow({
+        content: '<strong>Pilot Benchmark Cluster</strong><br>Hansapal Junction, NH-16 Axis, Khordha (751010)<br>Coordinates: 20.3155° N, 85.8722° E'
       });
 
-      L.marker(hansapalCoords, { icon: centerIcon })
-        .addTo(leafletMap)
-        .bindPopup('<strong>Pilot Benchmark Cluster</strong><br>Hansapal Junction, NH-16 Axis, Khordha (751010)<br>Coordinates: 20.3155° N, 85.8722° E')
-        .openPopup();
+      centerMarker.addListener('click', () => {
+        centerInfoWindow.open(googleMap, centerMarker);
+      });
 
-      L.circle(hansapalCoords, {
-        color: '#10b981',
+      // Open center popup by default
+      centerInfoWindow.open(googleMap, centerMarker);
+
+      // Add 5km catchment circle (green)
+      const catchment5km = new google.maps.Circle({
+        strokeColor: '#10b981',
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
         fillColor: '#10b981',
         fillOpacity: 0.14,
-        radius: 5000,
-        weight: 2
-      }).addTo(leafletMap).bindPopup('<strong>5 km Immediate Market Catchment</strong><br>Est. Population: 52,000 across Hansapal, Naharkanta & Pandra');
+        map: googleMap,
+        center: hansapalCoords,
+        radius: 5000 // 5km in meters
+      });
 
-      L.circle(hansapalCoords, {
-        color: '#f59e0b',
+      const catchment5kmInfoWindow = new google.maps.InfoWindow({
+        content: '<strong>5 km Immediate Market Catchment</strong><br>Est. Population: 52,000 across Hansapal, Naharkanta & Pandra'
+      });
+
+      catchment5km.addListener('click', () => {
+        catchment5kmInfoWindow.open(googleMap, catchment5km);
+      });
+
+      // Add 10km catchment circle (orange)
+      const catchment10km = new google.maps.Circle({
+        strokeColor: '#f59e0b',
+        strokeOpacity: 0.8,
+        strokeWeight: 1.5,
+        strokeDashArray: [5, 8],
+        fillColor: '#f59e0b',
         fillOpacity: 0.05,
-        radius: 10000,
-        dashArray: '5, 8',
-        weight: 1.5
-      }).addTo(leafletMap).bindPopup('<strong>10 km Broader Urban Catchment</strong><br>Regional Reach: 2,10,000');
+        map: googleMap,
+        center: hansapalCoords,
+        radius: 10000 // 10km in meters
+      });
 
+      const catchment10kmInfoWindow = new google.maps.InfoWindow({
+        content: '<strong>10 km Broader Urban Catchment</strong><br>Regional Reach: 2,10,000'
+      });
+
+      catchment10km.addListener('click', () => {
+        catchment10kmInfoWindow.open(googleMap, catchment10km);
+      });
+
+      // Add competitor POI markers (red)
       if (typeof COMPETITOR_POIS !== 'undefined') {
         COMPETITOR_POIS.forEach(poi => {
           if (poi.lat && poi.lon) {
-            L.circleMarker([poi.lat, poi.lon], {
-              radius: 5,
-              color: '#ef4444',
-              fillColor: '#ef4444',
-              fillOpacity: 0.85,
-              weight: 1
-            }).addTo(leafletMap).bindPopup(`<strong>${poi.name}</strong><br>Sector: ${poi.type}`);
+            const poiMarker = new google.maps.Marker({
+              position: { lat: poi.lat, lng: poi.lon },
+              map: googleMap,
+              title: poi.name,
+              icon: {
+                path: google.maps.SymbolPath.CIRCLE,
+                scale: 6,
+                fillColor: '#ef4444',
+                fillOpacity: 0.85,
+                strokeColor: '#ef4444',
+                strokeWeight: 1
+              }
+            });
+
+            const poiInfoWindow = new google.maps.InfoWindow({
+              content: `<strong>${poi.name}</strong><br>Sector: ${poi.type}`
+            });
+
+            poiMarker.addListener('click', () => {
+              poiInfoWindow.open(googleMap, poiMarker);
+            });
           }
         });
       }
 
+      // Handle map resize on tab show
       setTimeout(() => {
-        if (leafletMap) leafletMap.invalidateSize();
+        if (googleMap) {
+          google.maps.event.trigger(googleMap, 'resize');
+          googleMap.setCenter(hansapalCoords);
+        }
       }, 500);
 
     } catch (err) {
-      console.warn("Leaflet Map initialization fallback:", err);
+      console.warn("Google Maps initialization fallback:", err);
+      // Fallback message in the map container
+      mapContainer.innerHTML = '<div style="padding: 20px; text-align: center; color: #666;">Map loading failed. Please check your internet connection and Google Maps API key.</div>';
     }
+  }
+
+  // --- CONTINUOUS BUSINESS PLANS CAROUSEL TICKER (RIGHT TO LEFT) - DESIGN SHOWCASE ---
+  function renderBusinessPlansMarquee() {
+    const track = document.getElementById('tickerMarqueeTrack');
+    if (!track || typeof BUSINESSES_DATA === 'undefined') return;
+
+    // Render 32 items twice to create an infinite, seamless continuous marquee loop
+    const fullList = [...BUSINESSES_DATA, ...BUSINESSES_DATA];
+    
+    track.innerHTML = fullList.map((biz) => {
+      return `
+        <div class="biz-circle-item" title="${biz.name}" aria-label="${biz.name}">
+          <div class="biz-circle-ring">
+            <div class="biz-circle-avatar">
+              <img src="${biz.image_url}" alt="${biz.name}" class="biz-circle-img" loading="lazy" onerror="this.src='assets/dairy_thumb.jpg'" />
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
   }
 
   // --- MSJE BENEFICIARY CATEGORY SELECTOR CARDS ---
@@ -275,22 +383,162 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!grid || typeof SEASONAL_CALENDAR_DATA === 'undefined') return;
     grid.innerHTML = '';
 
+    const showPlaceholder = () => {
+      document.querySelectorAll('.month-cal-card').forEach(c => c.classList.remove('active'));
+      if (!noteEl) return;
+      noteEl.innerHTML = `
+        <div class="cal-placeholder-card">
+          <div class="cal-placeholder-icon"><i class="fa-solid fa-calendar-days text-orange"></i></div>
+          <h4>Seasonal Demand &amp; Business Opportunities</h4>
+          <p>Click any month (Jan – Dec) in the 4×3 matrix on the left to reveal season-specific business ideas, images, 10% margin requirements, and cash flow strategies.</p>
+          <div class="cal-placeholder-tags">
+            <span><i class="fa-solid fa-fire text-orange"></i> 32 Vetted Enterprises</span>
+            <span><i class="fa-solid fa-shield-halved text-green"></i> 10% Margin Capital</span>
+            <span><i class="fa-solid fa-landmark-flag text-blue"></i> MSJE Scheme Alignment</span>
+          </div>
+        </div>
+      `;
+    };
+
+    const updateActiveMonth = (m, card) => {
+      document.querySelectorAll('.month-cal-card').forEach(c => c.classList.remove('active'));
+      if (card) card.classList.add('active');
+
+      if (!noteEl) return;
+
+      const demandBadge = `<span class="badge-cal-pill ${m.status}">${m.demand} Demand</span>`;
+
+      const featuredListHtml = (m.featuredBusinesses || []).map(b => `
+        <div class="cal-biz-card-item">
+          <div class="cal-biz-thumb-wrap">
+            <img src="${b.image}" alt="${b.name}" class="cal-biz-thumb" loading="lazy" onerror="this.src='assets/dairy_thumb.jpg'">
+            <span class="cal-biz-demand-tag">${b.demandTag || 'High Demand'}</span>
+          </div>
+          <div class="cal-biz-content">
+            <div class="cal-biz-item-top">
+              <h5 class="cal-biz-name">${b.name}</h5>
+              <span class="cal-biz-cat-badge">${b.category}</span>
+            </div>
+            <p class="cal-biz-summary">${b.summary}</p>
+            <div class="cal-biz-footer">
+              <span class="cal-biz-meta-pill"><i class="fa-solid fa-wallet text-green"></i> 10% Margin: <strong>${b.margin}</strong></span>
+              <span class="cal-biz-meta-pill"><i class="fa-solid fa-chart-line text-blue"></i> Est: <strong>${b.profit}</strong></span>
+              <button class="cal-biz-select-btn" data-biz-id="${b.bizId}" title="Select enterprise and inspect DPR plan">
+                <span>Explore Plan</span> <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+
+      const otherChipsHtml = (m.otherBusinesses || []).map(ob => {
+        if (typeof ob === 'string') {
+          return `<span class="cal-biz-chip other"><i class="fa-solid fa-briefcase"></i> ${ob}</span>`;
+        } else {
+          return `<span class="cal-biz-chip other"><i class="fa-solid ${ob.icon || 'fa-briefcase'} text-blue"></i> ${ob.name}</span>`;
+        }
+      }).join('');
+
+      noteEl.innerHTML = `
+        <div class="cal-detail-card">
+          <div class="cal-detail-header">
+            <div class="cal-detail-title-wrap">
+              <div class="cal-detail-month">
+                <i class="fa-solid fa-calendar-check text-green"></i> ${m.name} (${m.month})
+              </div>
+              <span class="cal-detail-season">${m.season || ''}</span>
+              ${demandBadge}
+            </div>
+            <button class="cal-close-btn" id="btnCloseCalDetail" title="Close detail view" aria-label="Close detail section">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+
+          <div class="cal-advisory-row">
+            <i class="fa-solid fa-lightbulb text-orange"></i>
+            <div>
+              <strong>Seasonal Strategy &amp; Cash Flow Guidance:</strong>
+              <div class="cal-advisory-text">${m.ideas || m.notes}</div>
+            </div>
+          </div>
+
+          <div class="cal-biz-list-section">
+            <div class="cal-biz-list-header">
+              <i class="fa-solid fa-fire text-orange"></i> <strong>Seasonal Demanded Businesses &amp; Ideas:</strong>
+            </div>
+            <div class="cal-biz-list">
+              ${featuredListHtml}
+            </div>
+          </div>
+
+          <div class="cal-other-biz-section">
+            <div class="cal-other-title">
+              <i class="fa-solid fa-layer-group text-blue"></i> <strong>Other Demanded Businesses in ${m.name}:</strong>
+            </div>
+            <div class="cal-other-chips-wrap">
+              ${otherChipsHtml}
+            </div>
+          </div>
+        </div>
+      `;
+
+      // Attach Close Button Event
+      const closeBtn = noteEl.querySelector('#btnCloseCalDetail');
+      if (closeBtn) {
+        closeBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          showPlaceholder();
+        });
+      }
+
+      // Attach "Explore Plan" button click handlers
+      noteEl.querySelectorAll('.cal-biz-select-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const bizId = btn.getAttribute('data-biz-id');
+          const targetBiz = BUSINESSES_DATA.find(item => item.id === bizId);
+          if (targetBiz) {
+            selectBusiness(targetBiz);
+            const secCalc = document.getElementById('secFeasibilityModule') || document.getElementById('secOverview');
+            secCalc?.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      });
+    };
+
     SEASONAL_CALENDAR_DATA.forEach((m, idx) => {
       const card = document.createElement('div');
       card.className = `month-cal-card ${idx === 0 ? 'active' : ''}`;
+      card.setAttribute('role', 'button');
+      card.setAttribute('tabindex', '0');
+      card.setAttribute('aria-label', `${m.name} - ${m.demand} demand`);
+
       card.innerHTML = `
         <div class="m-name">${m.month}</div>
         <span class="badge-cal-pill ${m.status}">${m.demand}</span>
       `;
 
+      // Hover event
+      card.addEventListener('mouseenter', () => {
+        updateActiveMonth(m, card);
+      });
+
+      // Click event
       card.addEventListener('click', () => {
-        document.querySelectorAll('.month-cal-card').forEach(c => c.classList.remove('active'));
-        card.classList.add('active');
-        noteEl.innerHTML = `<strong>${m.name} Operational Advice:</strong> ${m.notes}`;
+        updateActiveMonth(m, card);
+      });
+
+      card.addEventListener('focus', () => {
+        updateActiveMonth(m, card);
       });
 
       grid.appendChild(card);
     });
+
+    // Render January by default on initialization
+    if (SEASONAL_CALENDAR_DATA.length > 0 && grid.children.length > 0) {
+      updateActiveMonth(SEASONAL_CALENDAR_DATA[0], grid.children[0]);
+    }
   }
 
   // --- LOCAL BANK BRANCH & SCA DIRECTORY ---
@@ -504,40 +752,50 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- POPULATE PREFERRED BUSINESSES DROPDOWN ---
   function populateBusinessDropdown() {
-    dropdownPreferredBiz.innerHTML = '';
-    
-    BUSINESSES_DATA.forEach(b => {
-      const opt = document.createElement('option');
-      opt.value = b.id;
-      opt.textContent = `${b.name} (Margin: ₹${b.beneficiary_margin_inr.toLocaleString('en-IN')} | ${b.viability_score}/100)`;
-      if (b.id === currentBusiness.id) opt.selected = true;
-      dropdownPreferredBiz.appendChild(opt);
-    });
+    if (dropdownPreferredBiz) {
+      dropdownPreferredBiz.innerHTML = '';
+      BUSINESSES_DATA.forEach(b => {
+        const opt = document.createElement('option');
+        opt.value = b.id;
+        opt.textContent = `${b.name} (Margin: ₹${b.beneficiary_margin_inr.toLocaleString('en-IN')} | ${b.viability_score}/100)`;
+        if (b.id === currentBusiness.id) opt.selected = true;
+        dropdownPreferredBiz.appendChild(opt);
+      });
 
-    dropdownPreferredBiz.addEventListener('change', (e) => {
-      const chosen = BUSINESSES_DATA.find(item => item.id === e.target.value);
-      if (chosen) selectBusiness(chosen);
-    });
+      dropdownPreferredBiz.addEventListener('change', (e) => {
+        const chosen = BUSINESSES_DATA.find(item => item.id === e.target.value);
+        if (chosen) selectBusiness(chosen);
+      });
+    }
 
     const trendingPillsContainer = document.getElementById('aiTrendingPills');
-    trendingPillsContainer.innerHTML = '';
-    const topPicks = [BUSINESSES_DATA[0], BUSINESSES_DATA[1], BUSINESSES_DATA[7], BUSINESSES_DATA[22]];
+    if (trendingPillsContainer) {
+      trendingPillsContainer.innerHTML = '';
+      const topPicks = [BUSINESSES_DATA[0], BUSINESSES_DATA[1], BUSINESSES_DATA[7], BUSINESSES_DATA[22]];
 
-    topPicks.forEach(p => {
-      const btn = document.createElement('button');
-      btn.className = 'trending-pill-btn';
-      btn.innerHTML = `<i class="fa-solid fa-fire text-orange"></i> ${p.name.split('&')[0].substring(0, 20)}... <span class="badge-margin">${p.viability_score}/100</span>`;
-      btn.addEventListener('click', () => selectBusiness(p));
-      trendingPillsContainer.appendChild(btn);
-    });
+      topPicks.forEach(p => {
+        const btn = document.createElement('button');
+        btn.className = 'trending-pill-btn';
+        btn.innerHTML = `<i class="fa-solid fa-fire text-orange"></i> ${p.name.split('&')[0].substring(0, 20)}... <span class="badge-margin">${p.viability_score}/100</span>`;
+        btn.addEventListener('click', () => selectBusiness(p));
+        trendingPillsContainer.appendChild(btn);
+      });
+    }
   }
 
   // --- SELECT BUSINESS & FULLY UPDATE ALL SECTIONS ---
   function selectBusiness(biz) {
     currentBusiness = biz;
-    currentMargin = biz.beneficiary_margin_inr;
-    sliderMargin.value = currentMargin;
-    dropdownPreferredBiz.value = biz.id;
+    currentMargin = Math.max(10000, biz.beneficiary_margin_inr || 10000);
+    if (inputMarginCapital) inputMarginCapital.value = currentMargin;
+    if (sliderMargin) sliderMargin.value = currentMargin;
+    if (lblMarginValue) {
+      lblMarginValue.innerHTML = `<i class="fa-solid fa-calculator text-blue"></i> Project Cost: ₹${(currentMargin * 10).toLocaleString('en-IN')}`;
+    }
+    document.querySelectorAll('#quickMarginPresets .quick-margin-chip').forEach(btn => {
+      btn.classList.toggle('active', parseInt(btn.getAttribute('data-val')) === currentMargin);
+    });
+    if (dropdownPreferredBiz) dropdownPreferredBiz.value = biz.id;
 
     // 1. Update Module 1 Header & Photo
     document.getElementById('badgeCurrentSector').textContent = biz.category;
@@ -618,6 +876,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 8. Multi-Lingual Speech Announcement
     announceBusinessSelection(biz);
+
+    // 9. Update Active Highlight in Carousel Marquee
+    try {
+      document.querySelectorAll('#tickerMarqueeTrack .biz-circle-item').forEach(el => {
+        if (el.getAttribute('data-biz-id') === biz.id) {
+          el.classList.add('active');
+        } else {
+          el.classList.remove('active');
+        }
+      });
+    } catch (e) {}
   }
 
   function populateList(elementId, items) {
@@ -752,29 +1021,30 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateFinancialUI() {
     const fin = calculateFinances(currentMargin);
 
-    // Top metrics
-    lblMarginValue.textContent = `₹ ${currentMargin.toLocaleString('en-IN')}`;
-    document.getElementById('valMargin10').textContent = `₹ ${currentMargin.toLocaleString('en-IN')}`;
-    document.getElementById('valTotalCost').textContent = `₹ ${fin.projectCost.toLocaleString('en-IN')}`;
-    document.getElementById('valLoan90').textContent = `₹ ${fin.loanAmount.toLocaleString('en-IN')}`;
+    // Safely update DOM elements
+    if (lblMarginValue) lblMarginValue.textContent = `₹ ${currentMargin.toLocaleString('en-IN')}`;
+    const setText = (id, text) => { const e = document.getElementById(id); if(e) e.textContent = text; };
+    const setHtml = (id, html) => { const e = document.getElementById(id); if(e) e.innerHTML = html; };
+
+    setText('valMargin10', `₹ ${currentMargin.toLocaleString('en-IN')}`);
+    setText('valTotalCost', `₹ ${fin.projectCost.toLocaleString('en-IN')}`);
+    setText('valLoan90', `₹ ${fin.loanAmount.toLocaleString('en-IN')}`);
 
     // Scheme Router Banner
-    document.getElementById('badgeLogic').textContent = `${fin.logicTag} | ${fin.catInfo.name}`;
-    document.getElementById('txtSchemeName').textContent = `${currentBusiness.preferable_scheme || fin.schemeName} (${fin.interestRate}% Interest, ${fin.tenureYears} Years)`;
-    document.getElementById('txtSchemeDesc').textContent = 
-      `Project cost ₹${fin.projectCost.toLocaleString('en-IN')} routed to ${fin.catInfo.corporation} with a ${fin.moratMonths}-month moratorium holiday and ${fin.catInfo.subvention}.`;
+    setText('badgeLogic', `${fin.logicTag} | ${fin.catInfo.name}`);
+    setText('txtSchemeName', `${currentBusiness.preferable_scheme || fin.schemeName} (${fin.interestRate}% Interest, ${fin.tenureYears} Years)`);
+    setText('txtSchemeDesc', `Project cost ₹${fin.projectCost.toLocaleString('en-IN')} routed to ${fin.catInfo.corporation} with a ${fin.moratMonths}-month moratorium holiday and ${fin.catInfo.subvention}.`);
 
-    document.getElementById('txtSubsidyBadge').textContent = fin.catInfo.subsidy_pct;
-    document.getElementById('txtApexCorp').textContent = fin.catInfo.corporation;
+    setText('txtSubsidyBadge', fin.catInfo.subsidy_pct);
+    setText('txtApexCorp', fin.catInfo.corporation);
 
-    document.getElementById('badgeMoratoriumMonths').innerHTML = 
-      `<i class="fa-solid fa-clock-rotate-left"></i> Moratorium: ${fin.moratMonths} Months (Quarters 1–${fin.moratQuarters} = ₹0 EMI)`;
+    setHtml('badgeMoratoriumMonths', `<i class="fa-solid fa-clock-rotate-left"></i> Moratorium: ${fin.moratMonths} Months (Quarters 1–${fin.moratQuarters} = ₹0 EMI)`);
 
     // Repayment Summary
-    document.getElementById('valQuarterlyEmi').textContent = `₹ ${Math.round(fin.quarterlyEmi).toLocaleString('en-IN')} / Quarter`;
-    document.getElementById('valMonthlyEmi').textContent = `₹ ${Math.round(fin.monthlyEquivalent).toLocaleString('en-IN')} / Month`;
-    document.getElementById('valTotalInterest').textContent = `₹ ${Math.round(fin.totalInterest).toLocaleString('en-IN')}`;
-    document.getElementById('valTotalRepaid').textContent = `₹ ${Math.round(fin.totalRepaid).toLocaleString('en-IN')}`;
+    setText('valQuarterlyEmi', `₹ ${Math.round(fin.quarterlyEmi).toLocaleString('en-IN')} / Quarter`);
+    setText('valMonthlyEmi', `₹ ${Math.round(fin.monthlyEquivalent).toLocaleString('en-IN')} / Month`);
+    setText('valTotalInterest', `₹ ${Math.round(fin.totalInterest).toLocaleString('en-IN')}`);
+    setText('valTotalRepaid', `₹ ${Math.round(fin.totalRepaid).toLocaleString('en-IN')}`);
 
     // Capex vs Opex
     document.getElementById('valCapex70').textContent = `₹ ${Math.round(fin.capex70).toLocaleString('en-IN')}`;
@@ -789,33 +1059,35 @@ document.addEventListener('DOMContentLoaded', () => {
     const monthlyEmi = Math.round(fin.monthlyEquivalent);
     const netTakeHome = Math.max(12000, grossSales - rawMaterial - utilities - monthlyEmi);
 
-    document.getElementById('cfGrossSales').textContent = `₹ ${grossSales.toLocaleString('en-IN')}`;
-    document.getElementById('cfRawMaterial').textContent = `₹ ${rawMaterial.toLocaleString('en-IN')}`;
-    document.getElementById('cfUtilities').textContent = `₹ ${utilities.toLocaleString('en-IN')}`;
-    document.getElementById('cfMonthlyEmi').textContent = `₹ ${monthlyEmi.toLocaleString('en-IN')}`;
-    document.getElementById('cfTakeHome').textContent = `₹ ${netTakeHome.toLocaleString('en-IN')} / mo`;
+    setText('cfGrossSales', `₹ ${grossSales.toLocaleString('en-IN')}`);
+    setText('cfRawMaterial', `₹ ${rawMaterial.toLocaleString('en-IN')}`);
+    setText('cfUtilities', `₹ ${utilities.toLocaleString('en-IN')}`);
+    setText('cfMonthlyEmi', `₹ ${monthlyEmi.toLocaleString('en-IN')}`);
+    setText('cfTakeHome', `₹ ${netTakeHome.toLocaleString('en-IN')} / mo`);
 
     // Update Eligibility Criteria & Required Documents Checklist
     updateSchemeCriteriaDocs();
 
     // Update Schedule Table
     const tbody = document.getElementById('tbodySchedule');
-    tbody.innerHTML = '';
-    fin.schedule.forEach(row => {
-      const tr = document.createElement('tr');
-      const isMorat = row.status.includes('Moratorium');
-      tr.style.background = isMorat ? 'rgba(245, 158, 11, 0.08)' : 'transparent';
-      tr.innerHTML = `
-        <td><strong>Q${row.q}</strong></td>
-        <td>${row.timeline}</td>
-        <td><span class="${isMorat ? 'badge-moratorium' : 'badge-margin'}">${row.status}</span></td>
-        <td class="font-bold">${isMorat ? '₹0.00' : '₹ ' + Math.round(row.emi).toLocaleString('en-IN')}</td>
-        <td>${isMorat ? '₹0.00' : '₹ ' + Math.round(row.principal).toLocaleString('en-IN')}</td>
-        <td>${isMorat ? '₹0.00' : '₹ ' + Math.round(row.interest).toLocaleString('en-IN')}</td>
-        <td class="font-bold">₹ ${Math.round(row.balance).toLocaleString('en-IN')}</td>
-      `;
-      tbody.appendChild(tr);
-    });
+    if (tbody) {
+      tbody.innerHTML = '';
+      fin.schedule.forEach(row => {
+        const tr = document.createElement('tr');
+        const isMorat = row.status.includes('Moratorium');
+        tr.style.background = isMorat ? 'rgba(245, 158, 11, 0.08)' : 'transparent';
+        tr.innerHTML = `
+          <td><strong>Q${row.q}</strong></td>
+          <td>${row.timeline}</td>
+          <td><span class="${isMorat ? 'badge-moratorium' : 'badge-margin'}">${row.status}</span></td>
+          <td class="font-bold">${isMorat ? '₹0.00' : '₹ ' + Math.round(row.emi).toLocaleString('en-IN')}</td>
+          <td>${isMorat ? '₹0.00' : '₹ ' + Math.round(row.principal).toLocaleString('en-IN')}</td>
+          <td>${isMorat ? '₹0.00' : '₹ ' + Math.round(row.interest).toLocaleString('en-IN')}</td>
+          <td class="font-bold">₹ ${Math.round(row.balance).toLocaleString('en-IN')}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
 
     // Update Chart.js
     updateChart(fin);
@@ -920,30 +1192,83 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // --- MARGIN SLIDER EVENT LISTENER ---
-  sliderMargin.addEventListener('input', (e) => {
-    currentMargin = parseInt(e.target.value);
-    lblMarginValue.textContent = `₹ ${currentMargin.toLocaleString('en-IN')}`;
-    updateFinancialUI();
+  // --- MARGIN TEXT & NUMBER INPUT EVENT LISTENERS ---
+  if (inputMarginCapital) {
+    inputMarginCapital.addEventListener('input', (e) => {
+      let val = parseInt(e.target.value);
+      if (isNaN(val)) val = 10000;
+      currentMargin = val;
+      if (lblMarginValue) {
+        lblMarginValue.innerHTML = `<i class="fa-solid fa-calculator text-blue"></i> Project Cost: ₹${(Math.max(10000, currentMargin) * 10).toLocaleString('en-IN')}`;
+      }
+      document.querySelectorAll('#quickMarginPresets .quick-margin-chip').forEach(btn => {
+        btn.classList.toggle('active', parseInt(btn.getAttribute('data-val')) === currentMargin);
+      });
+      if (currentMargin >= 10000) {
+        updateFinancialUI();
+      }
+    });
+
+    inputMarginCapital.addEventListener('change', (e) => {
+      let val = parseInt(e.target.value);
+      if (isNaN(val) || val < 10000) {
+        val = 10000; // Minimum margin of 10,000
+        inputMarginCapital.value = val;
+      }
+      currentMargin = val;
+      if (lblMarginValue) {
+        lblMarginValue.innerHTML = `<i class="fa-solid fa-calculator text-blue"></i> Project Cost: ₹${(currentMargin * 10).toLocaleString('en-IN')}`;
+      }
+      updateFinancialUI();
+    });
+  }
+
+  if (sliderMargin) {
+    sliderMargin.addEventListener('input', (e) => {
+      currentMargin = Math.max(10000, parseInt(e.target.value) || 10000);
+      if (inputMarginCapital) inputMarginCapital.value = currentMargin;
+      if (lblMarginValue) {
+        lblMarginValue.innerHTML = `<i class="fa-solid fa-calculator text-blue"></i> Project Cost: ₹${(currentMargin * 10).toLocaleString('en-IN')}`;
+      }
+      updateFinancialUI();
+    });
+  }
+
+  // Quick Margin Presets
+  document.querySelectorAll('#quickMarginPresets .quick-margin-chip').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const val = parseInt(btn.getAttribute('data-val')) || 10000;
+      currentMargin = Math.max(10000, val);
+      if (inputMarginCapital) inputMarginCapital.value = currentMargin;
+      if (sliderMargin) sliderMargin.value = currentMargin;
+      if (lblMarginValue) {
+        lblMarginValue.innerHTML = `<i class="fa-solid fa-calculator text-blue"></i> Project Cost: ₹${(currentMargin * 10).toLocaleString('en-IN')}`;
+      }
+      document.querySelectorAll('#quickMarginPresets .quick-margin-chip').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      updateFinancialUI();
+    });
   });
 
   // --- LOCATION SELECTOR LISTENER ---
-  selectLocation.addEventListener('change', (e) => {
-    const loc = e.target.value;
-    if (!leafletMap) return;
+  if (selectLocation) {
+    selectLocation.addEventListener('change', (e) => {
+      const loc = e.target.value;
+      if (!leafletMap) return;
 
-    const coords = {
-      hansapal: [20.3155, 85.8722],
-      bodhgaya: [24.6961, 84.9869],
-      sarnath: [25.3762, 83.0227],
-      baramati: [18.1517, 74.5772],
-      singur: [22.8126, 88.2323],
-      alanganallur: [10.0433, 78.0935],
-      wardhannapet: [17.7667, 79.6000]
-    };
+      const coords = {
+        hansapal: [20.3155, 85.8722],
+        bodhgaya: [24.6961, 84.9869],
+        sarnath: [25.3762, 83.0227],
+        baramati: [18.1517, 74.5772],
+        singur: [22.8126, 88.2323],
+        alanganallur: [10.0433, 78.0935],
+        wardhannapet: [17.7667, 79.6000]
+      };
 
-    if (coords[loc]) leafletMap.flyTo(coords[loc], 12);
-  });
+      if (coords[loc]) leafletMap.flyTo(coords[loc], 12);
+    });
+  }
 
   // --- POPULATE 32 ENTERPRISES CATALOG GRID ---
   function populateCatalogGrid() {
@@ -1842,7 +2167,9 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('[data-i18n]').forEach(el => {
       const key = el.getAttribute('data-i18n');
       if (dict[key]) {
-        if (el.children.length === 0) {
+        if (dict[key].includes('<span') || dict[key].includes('<')) {
+          el.innerHTML = dict[key];
+        } else if (el.children.length === 0) {
           el.textContent = dict[key];
         } else {
           const textSpan = el.querySelector('span');
@@ -1876,6 +2203,7 @@ document.addEventListener('DOMContentLoaded', () => {
     try { populateCatalogGrid(); } catch (err) { console.warn('populateCatalogGrid:', err); }
     try { renderAudioSarthiQuestions(); } catch (err) { console.warn('renderAudioSarthiQuestions:', err); }
     try { updateSchemeCriteriaDocs(); } catch (err) { console.warn('updateSchemeCriteriaDocs:', err); }
+    try { renderBusinessPlansMarquee(); } catch (err) { console.warn('renderBusinessPlansMarquee:', err); }
 
     if (currentBusiness) {
       const sectorEl = document.getElementById('badgeCurrentSector');
@@ -1916,6 +2244,24 @@ document.addEventListener('DOMContentLoaded', () => {
       if (txtAuthBtn) txtAuthBtn.textContent = dict['btnLogin'] || "Citizen Login / Register";
     }
   }
+
+  // --- HERO GET STARTED CTA LISTENERS ---
+  document.getElementById('btnHeroGetStarted')?.addEventListener('click', () => {
+    if (currentUser && currentUser.isLoggedIn) {
+      const profileTab = document.querySelector('.tab-btn[data-target="secProfile"]');
+      if (profileTab) profileTab.click();
+      const profileSec = document.getElementById('secProfile') || document.getElementById('secModule1');
+      profileSec?.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      const loginModal = document.getElementById('loginModal');
+      loginModal?.classList.add('active');
+    }
+  });
+
+  document.getElementById('btnHeroExploreCatalog')?.addEventListener('click', () => {
+    const catalogSec = document.getElementById('catalogGrid') || document.getElementById('secBizPlansMarquee');
+    catalogSec?.scrollIntoView({ behavior: 'smooth' });
+  });
   // --- MULTI-LINGUAL BHASHINI SPEECH NARRATOR ---
   function getVoiceLocale(lang) {
     const map = {
@@ -1997,6 +2343,18 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- CENTER VIDEO DEMO PLAYER WALKTHROUGH ---
   let videoChapter = 1;
 
+  const btnPlayMain = document.getElementById('btnPlayVideoMain');
+  btnPlayMain?.addEventListener('click', () => {
+    const overlay = document.getElementById('videoOverlay');
+    const poster = document.getElementById('imgVideoPoster');
+    const iframe = document.getElementById('youtubeVideoGuide');
+    if (overlay) overlay.style.display = 'none';
+    if (poster) poster.style.display = 'none';
+    if (iframe) iframe.style.display = 'block';
+    const p = SPEECH_PROMPTS[currentLang] || SPEECH_PROMPTS['en'];
+    speakAdvisory(p['ch1']);
+  });
+
   btnPlayDemo?.addEventListener('click', () => {
     const p = SPEECH_PROMPTS[currentLang] || SPEECH_PROMPTS['en'];
     const chKey = `ch${videoChapter}`;
@@ -2076,4 +2434,348 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
   }
 
+  // --- ENTERPRISE GALLERY: REFERENCE LAYOUT ─ Multi-tile slider LEFT + 2×2 category grid RIGHT ---
+  function setupEnterpriseGallery() {
+    const track       = document.getElementById('bizMultiTrack');
+    const dotsWrap    = document.getElementById('bizSliderDots');
+    const prevBtn     = document.getElementById('bizSliderPrev');
+    const nextBtn     = document.getElementById('bizSliderNext');
+    const captionName = document.getElementById('bizCaptionName');
+    const modal       = document.getElementById('bizGalleryModal');
+    const modalContent= document.getElementById('bizGalleryModalContent');
+    const modalClose  = document.getElementById('bizGalleryModalClose');
+    const modalOverlay= document.getElementById('bizGalleryModalOverlay');
+    const exploreBtn  = document.getElementById('bizExploreAllBtn');
+
+    if (!track || typeof BUSINESSES_DATA === 'undefined') return;
+
+    const items = BUSINESSES_DATA.slice(0, 12);
+    let current = 0;
+    let autoTimer = null;
+    const VISIBLE = 3;            // how many tiles show at once in the slider
+    const TILE_PCT_ACTIVE = 52;   // % width of the centre (active) tile
+    const TILE_PCT_SIDE = 24;     // % width of each flanking tile
+
+    // ── Build slide tiles ──────────────────────────────────────────────────────
+    items.forEach((biz, i) => {
+      const tile = document.createElement('div');
+      tile.className = 'biz-slide-tile';
+      tile.dataset.index = i;
+      tile.innerHTML = `
+        <img src="${biz.image_url}" alt="${biz.name}" loading="${i < 4 ? 'eager' : 'lazy'}"
+             onerror="this.src='assets/dairy_thumb.jpg'" />
+        <div class="biz-slide-tile-label">
+          <div class="biz-tile-label-cat">${biz.category}</div>
+          <div class="biz-tile-label-name">${biz.name}</div>
+        </div>
+      `;
+      tile.addEventListener('click', () => {
+        if (i === current) {
+          openGalleryModal(biz);
+        } else {
+          goToSlide(i, true);
+        }
+      });
+      track.appendChild(tile);
+
+      // Dot
+      const dot = document.createElement('button');
+      dot.className = 'biz-slider-dot' + (i === 0 ? ' active' : '');
+      dot.setAttribute('aria-label', `Slide ${i + 1}`);
+      dot.addEventListener('click', () => goToSlide(i, true));
+      dotsWrap.appendChild(dot);
+    });
+
+    // ── Position tiles like a peekaboo multi-slider ───────────────────────────
+    function renderTiles() {
+      const tiles = track.querySelectorAll('.biz-slide-tile');
+      const n = items.length;
+
+      tiles.forEach((tile, i) => {
+        const relPos = ((i - current) % n + n) % n;
+        // relPos: 0=active, 1=right1, 2=right2, n-1=left1, n-2=left2
+        let left, width, opacity, zIndex, filter;
+
+        if (relPos === 0) {
+          // Centre active tile
+          left = TILE_PCT_SIDE + '%';
+          width = TILE_PCT_ACTIVE + '%';
+          opacity = 1;
+          zIndex = 3;
+          filter = 'none';
+          tile.classList.add('biz-tile-active');
+        } else if (relPos === 1) {
+          // Right neighbour
+          left = (TILE_PCT_SIDE + TILE_PCT_ACTIVE) + '%';
+          width = TILE_PCT_SIDE + '%';
+          opacity = 0.82;
+          zIndex = 2;
+          filter = 'brightness(0.7)';
+          tile.classList.remove('biz-tile-active');
+        } else if (relPos === n - 1) {
+          // Left neighbour
+          left = '0%';
+          width = TILE_PCT_SIDE + '%';
+          opacity = 0.82;
+          zIndex = 2;
+          filter = 'brightness(0.7)';
+          tile.classList.remove('biz-tile-active');
+        } else {
+          // Off-screen
+          left = relPos <= n / 2 ? '100%' : '-50%';
+          width = TILE_PCT_SIDE + '%';
+          opacity = 0;
+          zIndex = 1;
+          filter = 'none';
+          tile.classList.remove('biz-tile-active');
+        }
+
+        tile.style.left = left;
+        tile.style.width = width;
+        tile.style.opacity = opacity;
+        tile.style.zIndex = zIndex;
+        tile.style.filter = filter;
+      });
+
+      // Update dots
+      dotsWrap.querySelectorAll('.biz-slider-dot').forEach((d, i) =>
+        d.classList.toggle('active', i === current)
+      );
+
+      // Update caption
+      if (captionName) captionName.textContent = items[current].name;
+    }
+
+    // ── Go to slide ───────────────────────────────────────────────────────────
+    function goToSlide(index, resetTimer) {
+      current = ((index % items.length) + items.length) % items.length;
+      renderTiles();
+      if (resetTimer) startAutoPlay();
+    }
+
+    // ── Auto-advance every 3 seconds ──────────────────────────────────────────
+    function startAutoPlay() {
+      clearInterval(autoTimer);
+      autoTimer = setInterval(() => {
+        goToSlide(current + 1, false);
+      }, 3000);
+    }
+    startAutoPlay();
+
+    // Pause on hover
+    track.parentElement.addEventListener('mouseenter', () => clearInterval(autoTimer));
+    track.parentElement.addEventListener('mouseleave', () => startAutoPlay());
+
+    // Nav buttons
+    if (prevBtn) prevBtn.addEventListener('click', (e) => { e.stopPropagation(); goToSlide(current - 1, true); });
+    if (nextBtn) nextBtn.addEventListener('click', (e) => { e.stopPropagation(); goToSlide(current + 1, true); });
+
+    // Keyboard nav
+    document.addEventListener('keydown', (e) => {
+      if (modal && modal.classList.contains('open')) return;
+      if (e.key === 'ArrowRight') goToSlide(current + 1, true);
+      else if (e.key === 'ArrowLeft') goToSlide(current - 1, true);
+    });
+
+    // Explore All
+    if (exploreBtn) {
+      exploreBtn.addEventListener('click', () => {
+        const sec = document.getElementById('secControlDock');
+        if (sec) sec.scrollIntoView({ behavior: 'smooth' });
+      });
+    }
+
+    // Initial render
+    renderTiles();
+
+    // ── CLICK MODAL ────────────────────────────────────────────────────────────
+    function openGalleryModal(biz) {
+      if (!modal || !modalContent) return;
+      const score = biz.viability_score || 88;
+      const rationale = biz.local_rationale || biz.target_market || '';
+
+      modalContent.innerHTML = `
+        <div class="biz-modal-image-wrap">
+          <img src="${biz.image_url}" alt="${biz.name}" onerror="this.src='assets/dairy_thumb.jpg'" />
+          <div class="biz-modal-image-badge">
+            <span class="slide-caption-badge">${biz.category}</span>
+            <div style="background:rgba(74,222,128,0.15);border:1px solid rgba(74,222,128,0.4);color:#4ade80;font-size:0.78rem;font-weight:700;padding:3px 10px;border-radius:4px;">
+              ${score}% Viability
+            </div>
+          </div>
+        </div>
+        <div class="biz-modal-detail-wrap">
+          <span class="biz-modal-category">${biz.category}</span>
+          <h3 class="biz-modal-title">${biz.name}</h3>
+          <p class="biz-modal-desc">${rationale}</p>
+          <div class="biz-modal-stats">
+            <div class="biz-modal-stat">
+              <div class="biz-modal-stat-label">Monthly Profit</div>
+              <div class="biz-modal-stat-val green">${biz.unit_economics ? biz.unit_economics.monthly_profit : '₹10,000+'}</div>
+            </div>
+            <div class="biz-modal-stat">
+              <div class="biz-modal-stat-label">Breakeven Period</div>
+              <div class="biz-modal-stat-val">${biz.unit_economics ? biz.unit_economics.breakeven : '6-8 Months'}</div>
+            </div>
+            <div class="biz-modal-stat">
+              <div class="biz-modal-stat-label">Project Cost</div>
+              <div class="biz-modal-stat-val">₹${(biz.project_cost_inr || 0).toLocaleString('en-IN')}</div>
+            </div>
+            <div class="biz-modal-stat">
+              <div class="biz-modal-stat-label">10% Beneficiary Margin</div>
+              <div class="biz-modal-stat-val">₹${(biz.beneficiary_margin_inr || 0).toLocaleString('en-IN')}</div>
+            </div>
+          </div>
+          <div class="biz-modal-scheme-tag">
+            <i class="fa-solid fa-landmark-flag"></i>
+            <span>MSJE Scheme Applicable</span>
+          </div>
+        </div>
+      `;
+      modal.classList.add('open');
+    }
+
+    function closeGalleryModal() {
+      if (modal) modal.classList.remove('open');
+    }
+
+    if (modalClose) modalClose.addEventListener('click', closeGalleryModal);
+    if (modalOverlay) modalOverlay.addEventListener('click', closeGalleryModal);
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal && modal.classList.contains('open')) closeGalleryModal();
+    });
+  }
+
+  // --- LENIS SMOOTH SCROLL & GSAP ANIMATION ENGINE ---
+  function initLenisAndGSAP() {
+    if (typeof Lenis === 'undefined' || typeof gsap === 'undefined') {
+      console.warn("GSAP or Lenis library not loaded.");
+      return;
+    }
+
+    // Register GSAP ScrollTrigger plugin
+    if (typeof ScrollTrigger !== 'undefined') {
+      gsap.registerPlugin(ScrollTrigger);
+    }
+
+    // 1. Initialize Lenis Smooth Scroll Engine
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      wheelMultiplier: 1.0,
+      touchMultiplier: 1.8
+    });
+
+    window.lenisInstance = lenis;
+
+    // Synchronize Lenis scroll events with GSAP ScrollTrigger
+    lenis.on('scroll', () => {
+      if (typeof ScrollTrigger !== 'undefined') {
+        ScrollTrigger.update();
+      }
+    });
+
+    // Add Lenis RAF into GSAP Ticker for ultra-smooth performance
+    gsap.ticker.add((time) => {
+      lenis.raf(time * 1000);
+    });
+
+    gsap.ticker.lagSmoothing(0);
+
+    // 2. Hero Section Entrance Animation Sequence
+    const heroElements = document.querySelectorAll('.hero-badge, .hero-title, .hero-subtitle, .hero-cta-group, .hero-stats-strip, .hero-stats');
+    if (heroElements.length > 0) {
+      gsap.from(heroElements, {
+        opacity: 0,
+        y: 35,
+        duration: 1.0,
+        stagger: 0.12,
+        ease: 'power3.out'
+      });
+    }
+
+    // 3. Header & Navigation Animation
+    const mainNavbar = document.getElementById('mainStickyNavbar');
+    if (mainNavbar) {
+      gsap.from(mainNavbar, {
+        y: -60,
+        opacity: 0,
+        duration: 0.8,
+        ease: 'power2.out'
+      });
+    }
+
+    // 4. Scroll-Triggered Reveal Animations for Key Sections
+    if (typeof ScrollTrigger !== 'undefined') {
+      // Reveal Section Titles and Subtitles
+      const sectionTitles = document.querySelectorAll('.section-title, .section-header, .module-title, .section-subtitle');
+      sectionTitles.forEach((element) => {
+        gsap.from(element, {
+          scrollTrigger: {
+            trigger: element,
+            start: 'top 85%',
+            toggleActions: 'play none none reverse'
+          },
+          opacity: 0,
+          y: 30,
+          duration: 0.8,
+          ease: 'power2.out'
+        });
+      });
+
+      // Reveal Business Catalog & Feature Cards with Stagger
+      const cardGrids = document.querySelectorAll('#catalogGrid, .category-cards-grid, .bank-cards-grid, .enterprise-gallery-grid');
+      cardGrids.forEach((grid) => {
+        const cards = grid.children;
+        if (cards && cards.length > 0) {
+          gsap.from(cards, {
+            scrollTrigger: {
+              trigger: grid,
+              start: 'top 85%',
+              toggleActions: 'play none none reverse'
+            },
+            opacity: 0,
+            y: 40,
+            scale: 0.96,
+            duration: 0.7,
+            stagger: 0.08,
+            ease: 'power2.out'
+          });
+        }
+      });
+
+      // Reveal Financial Dashboard Container
+      const dashboardContainer = document.querySelector('.calculator-dashboard');
+      if (dashboardContainer) {
+        gsap.from(dashboardContainer, {
+          scrollTrigger: {
+            trigger: dashboardContainer,
+            start: 'top 85%',
+            toggleActions: 'play none none reverse'
+          },
+          opacity: 0,
+          y: 40,
+          duration: 0.9,
+          ease: 'power3.out'
+        });
+      }
+
+      // Smooth Hover Micro-animations on Buttons
+      const interactiveButtons = document.querySelectorAll('.btn-primary, .btn-accent, .btn-outline');
+      interactiveButtons.forEach((btn) => {
+        btn.addEventListener('mouseenter', () => {
+          gsap.to(btn, { scale: 1.04, duration: 0.2, ease: 'power1.out' });
+        });
+        btn.addEventListener('mouseleave', () => {
+          gsap.to(btn, { scale: 1.0, duration: 0.2, ease: 'power1.out' });
+        });
+      });
+    }
+
+    console.log("Lenis Smooth Scroll & GSAP ScrollTrigger initialized successfully.");
+  }
+
 });
+
+

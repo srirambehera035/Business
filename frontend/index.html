@@ -3,7 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Vyapaar Sarthi | Rural Micro-Enterprise Advisory & Concessional Scheme Navigator | Govt. of India</title>
+  <title>Vyapaar Sarthi</title>
+  <link rel="icon" type="image/png" href="assets/logo.png">
+  <link rel="shortcut icon" href="assets/logo.png">
+  <link rel="apple-touch-icon" href="assets/logo.png">
   <meta name="description" content="Vyapaar Sarthi - AI-Driven Hyper-Local Business Advisory and Concessional Financial Structuring Platform for Rural Micro-Entrepreneurs under Ministry of Social Justice and Empowerment, Government of India.">
   
   <!-- Google Fonts: Inter & Outfit -->
@@ -13,10 +16,16 @@
   
   <!-- Leaflet CSS for Maps -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
-  
+
+  <!-- Google Maps API -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&libraries=geometry"></script>
+
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   
+  <!-- Lenis Smooth Scroll CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.css">
+
   <!-- Custom Stylesheet -->
   <link rel="stylesheet" href="style.css">
 </head>
@@ -45,25 +54,9 @@
           <span class="hindi-title" data-i18n="govIndiaHindi">भारत सरकार | सामाजिक न्याय एवं अधिकारिता मंत्रालय</span>
           <span class="eng-title" data-i18n="govIndia">Government of India | Ministry of Social Justice and Empowerment</span>
         </div>
-      </div></div>
       </div>
 
       <div class="utility-controls flex-align">
-        <!-- Theme Mode: Light / Dark / System -->
-        <div class="theme-switcher flex-align">
-          
-          <button class="theme-btn active" data-theme="light" title="Light Mode"><i class="fa-solid fa-sun"></i></button>
-          <button class="theme-btn" data-theme="dark" title="Dark Mode"><i class="fa-solid fa-moon"></i></button>
-          <button class="theme-btn" data-theme="system" title="System Default"><i class="fa-solid fa-desktop"></i></button>
-        </div>
-
-        <!-- Font Resize -->
-        <div class="font-resizers hide-mobile">
-          <button id="btnFontDec" title="Decrease Font">A-</button>
-          <button id="btnFontReset" title="Normal Font">A</button>
-          <button id="btnFontInc" title="Increase Font">A+</button>
-        </div>
-
         <!-- 7-Language Switcher -->
         <div class="lang-selector flex-align">
           <i class="fa-solid fa-globe"></i>
@@ -86,22 +79,16 @@
     <div class="container flex-between">
       <div class="portal-identity flex-align">
         <div class="portal-logo-icon">
-          <i class="fa-solid fa-scale-balanced"></i>
+          <img src="assets/logo.png" alt="Vyapaar Sarthi Logo" class="portal-logo-img">
         </div>
         <div>
-          <h1 class="portal-name"><span data-i18n="portalTitle">Vyapaar Sarthi</span> <span class="badge-beta">MSJE PAN-INDIA</span></h1>
+          <h1 class="portal-name"><span data-i18n="portalTitle"><span class="brand-vyapaar">Vyapaar</span> <span class="brand-sarthi">Sarthi</span></span> <span class="badge-beta">MSJE PAN-INDIA</span></h1>
           <p class="portal-tagline" data-i18n="tagline">National AI Rural Enterprise Advisory & Concessional Scheme Navigator</p>
         </div>
       </div>
 
       <!-- Multiple Sticky Navigation Options -->
       <div class="nav-menu-links flex-align hide-mobile" id="navMenuLinks">
-        <a href="#secOverview" class="nav-link-btn active" data-target="secModule1"><i class="fa-solid fa-chart-pie"></i> <span data-i18n="navFeasibility">Feasibility & Threats</span></a>
-        <a href="#secCalculator" class="nav-link-btn" data-target="secModule2"><i class="fa-solid fa-calculator"></i> <span data-i18n="navFinancials">Financial Engine (10%)</span></a>
-        <a href="#secEnterprises" class="nav-link-btn" data-target="secCatalog"><i class="fa-solid fa-store"></i> <span data-i18n="navEnterprises">32 Enterprises</span></a>
-        <a href="#secDashboard" class="nav-link-btn" data-target="secProfile" id="navLinkDashboard"><i class="fa-solid fa-id-card"></i> <span data-i18n="navDashboard">Beneficiary Dashboard</span></a>
-        <button id="btnNavCompare" class="nav-link-btn btn-nav-highlight"><i class="fa-solid fa-code-compare"></i> Compare Plans</button>
-        <a href="#secVideoGuide" class="nav-link-btn"><i class="fa-solid fa-circle-play"></i> <span data-i18n="navVideo">Video Guide</span></a>
       </div>
 
       <!-- Right Action: User Account / Login Button -->
@@ -134,71 +121,91 @@
 
     <!-- Mobile Collapsible Menu Drawer -->
     <div class="mobile-nav-drawer" id="mobileNavDrawer">
-      <button class="m-nav-item active" data-target="secModule1"><i class="fa-solid fa-chart-pie"></i> <span data-i18n="navFeasibility">Feasibility & Threats</span></button>
-      <button class="m-nav-item" data-target="secModule2"><i class="fa-solid fa-calculator"></i> <span data-i18n="navFinancials">Financial Engine (10%)</span></button>
-      <button class="m-nav-item" data-target="secCatalog"><i class="fa-solid fa-store"></i> 32 Vetted Enterprises</button>
-      <button class="m-nav-item" data-target="secProfile"><i class="fa-solid fa-id-card"></i> <span data-i18n="navDashboard">Beneficiary Dashboard</span></button>
-      <button class="m-nav-item" id="btnMobileCompare"><i class="fa-solid fa-code-compare"></i> Compare 2 Plans Side-by-Side</button>
-      <a href="#secVideoGuide" class="m-nav-item"><i class="fa-solid fa-circle-play"></i> Video Demonstration</a>
     </div>
   </nav>
+
+  <!-- ========================================================================= -->
+  <!-- LIVE DEMAND BUSINESS TICKER STRIP (IMAGE 3 INSPIRATION)                  -->
+  <!-- ========================================================================= -->
+  <div class="live-ticker-strip">
+    <div class="ticker-badge">
+      <span class="pulse-dot"></span>
+      <i class="fa-solid fa-bolt"></i>
+      <span>LIVE DEMAND BUSINESS</span>
+    </div>
+    <div class="ticker-content-wrapper">
+      <div class="ticker-marquee-track">
+        <span class="ticker-item"><i class="fa-solid fa-fire text-orange"></i> <strong>Khordha Cluster:</strong> Solar Milk Chilling Unit (96% High Demand &amp; Viability)</span>
+        <span class="ticker-sep">&#9670;</span>
+        <span class="ticker-item"><i class="fa-solid fa-chart-line text-green"></i> <strong>Bio-Fertilizer Unit:</strong> 94% Viability Score | NBCFDC Concessional Channel</span>
+        <span class="ticker-sep">&#9670;</span>
+        <span class="ticker-item"><i class="fa-solid fa-award text-yellow"></i> <strong>MSJE Concessional Loan:</strong> 10% Margin Capital Match Active Nationwide</span>
+        <span class="ticker-sep">&#9670;</span>
+        <span class="ticker-item"><i class="fa-solid fa-wheat-awn text-orange"></i> <strong>Agro Cold Storage:</strong> High Market Radius Demand in Gaya &amp; Varanasi</span>
+        <span class="ticker-sep">&#9670;</span>
+        <span class="ticker-item"><i class="fa-solid fa-solar-panel text-blue"></i> <strong>Solar Irrigation Kiosk:</strong> 8.0% Concessional Term Loan Sanctioning</span>
+        <span class="ticker-sep">&#9670;</span>
+        <span class="ticker-item"><i class="fa-solid fa-shield-halved text-green"></i> <strong>Collateral-Free Credit:</strong> 100% CGTMSE Guarantee Cover Enabled</span>
+        <span class="ticker-sep">&#9670;</span>
+        <!-- Duplicate for continuous infinite scroll loop -->
+        <span class="ticker-item"><i class="fa-solid fa-fire text-orange"></i> <strong>Khordha Cluster:</strong> Solar Milk Chilling Unit (96% High Demand &amp; Viability)</span>
+        <span class="ticker-sep">&#9670;</span>
+        <span class="ticker-item"><i class="fa-solid fa-chart-line text-green"></i> <strong>Bio-Fertilizer Unit:</strong> 94% Viability Score | NBCFDC Concessional Channel</span>
+        <span class="ticker-sep">&#9670;</span>
+        <span class="ticker-item"><i class="fa-solid fa-award text-yellow"></i> <strong>MSJE Concessional Loan:</strong> 10% Margin Capital Match Active Nationwide</span>
+        <span class="ticker-sep">&#9670;</span>
+        <span class="ticker-item"><i class="fa-solid fa-wheat-awn text-orange"></i> <strong>Agro Cold Storage:</strong> High Market Radius Demand in Gaya &amp; Varanasi</span>
+      </div>
+    </div>
+  </div>
 
   <!-- ========================================================================= -->
   <!-- HERO BANNER: NATIONWIDE RURAL ENTERPRISE INITIATIVE                       -->
   <!-- ========================================================================= -->
   <section class="hero-banner" id="secOverview">
-    <div class="container hero-grid">
-      <div class="hero-content">
+    <video autoplay muted loop playsinline class="hero-bg-video" id="heroBgVideo">
+      <source src="https://res.cloudinary.com/n0c7bqpd/video/upload/v1790452960/WhatsApp_Video_2026-09-27_at_01.28.53_z97fu1.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <div class="hero-overlay"></div>
+
+    <div class="container hero-container-single">
+      <div class="hero-content text-left">
         <div class="scheme-pill">
           <i class="fa-solid fa-landmark-flag text-orange"></i>
-          <span>Ministry of Social Justice & Empowerment | Pan-India Concessional Credit</span>
+          <span>Ministry of Social Justice &amp; Empowerment | Pan-India Concessional Credit</span>
         </div>
         <h2 class="hero-title" data-i18n="heroHeading">
-          AI-Powered Rural Enterprise Advisory & Concessional Scheme Navigator
+          AI-Powered Hyper-Local Feasibility &amp; Concessional Credit Portal
         </h2>
         <p class="hero-desc" data-i18n="heroDesc">
-          Eliminate anecdotal business failures. Get hyper-local market research, competitor density, localized threat radars, and automated 10% margin loan structuring certified under Ministry of Social Justice & Empowerment concessional credit frameworks.
+          Eliminate anecdotal business failures. Get hyper-local market research, competitor density, localized threat radars, and automated 10% margin loan structuring certified under Ministry of Social Justice &amp; Empowerment concessional credit frameworks.
         </p>
-        
-        <div class="hero-features-chips flex-align">
-          <span class="chip"><i class="fa-solid fa-shield-halved text-green"></i> <span data-i18n="heroChip3">CGTMSE Collateral-Free</span></span>
-          <span class="chip"><i class="fa-solid fa-hand-holding-dollar text-green"></i> <span data-i18n="heroChip1">10% Beneficiary Margin</span></span>
-          <span class="chip"><i class="fa-solid fa-percent text-green"></i> <span data-i18n="heroChip4">5% Interest Subvention</span></span>
-          <span class="chip"><i class="fa-solid fa-gift text-green"></i> <span data-i18n="heroChip2">Up to 50% Capital Subsidy</span></span>
+
+        <!-- Prominent Hero Get Started CTA Group -->
+        <div class="hero-cta-group flex-align">
+          <button id="btnHeroGetStarted" class="btn-primary-hero flex-align">
+            <span>Get Started</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+          <button id="btnHeroExploreCatalog" class="btn-secondary-hero flex-align">
+            <i class="fa-solid fa-compass text-orange"></i>
+            <span>Explore 32 Enterprises</span>
+          </button>
         </div>
       </div>
+    </div>
+  </section>
 
-      <!-- Live Nationwide Stats (Pan-India) -->
-      <div class="hero-stats-panel">
-        
-        <div class="stat-card">
-          <div class="stat-icon bg-blue"><i class="fa-solid fa-map-location-dot"></i></div>
-          <div>
-            <div class="stat-val" data-i18n="statDistricts">766 Districts</div>
-            <div class="stat-lbl" data-i18n="statDistrictsSub">Pan-India Gram Panchayats Mapped</div>
-          </div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon bg-green"><i class="fa-solid fa-layer-group"></i></div>
-          <div>
-            <div class="stat-val" data-i18n="statStates">28 States & 8 UTs</div>
-            <div class="stat-lbl" data-i18n="statStatesSub">Unified LGD Directory Integrated</div>
-          </div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon bg-orange"><i class="fa-solid fa-hand-holding-dollar"></i></div>
-          <div>
-            <div class="stat-val" data-i18n="statBizPlans">32 Profitable Plans</div>
-            <div class="stat-lbl" data-i18n="statBizPlansSub">DPRs with Unit Economics</div>
-          </div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon bg-purple"><i class="fa-solid fa-landmark-flag"></i></div>
-          <div>
-            <div class="stat-val" data-i18n="statSubsidy">Up to ₹1.25 Lakh</div>
-            <div class="stat-lbl" data-i18n="statSubsidySub">Concessional Capital Subsidy</div>
-          </div>
-        </div>
+  <!-- ========================================================================= -->
+  <!-- CONTINUOUS BUSINESS PLANS SHOWCASE (RIGHT TO LEFT)                        -->
+  <!-- Under Ministry of Social Justice & Empowerment Pan-India Concessional Credit -->
+  <!-- ========================================================================= -->
+  <section class="business-plans-carousel-ribbon" id="secBizPlansMarquee">
+    <!-- Continuous Marquee Viewport with Edge Fade Masks -->
+    <div class="ticker-marquee-viewport" id="tickerMarqueeViewport">
+      <div class="ticker-marquee-track" id="tickerMarqueeTrack">
+        <!-- Populated dynamically by renderBusinessPlansMarquee() in app.js -->
       </div>
     </div>
   </section>
@@ -210,8 +217,7 @@
     <div class="container">
       <div class="video-showcase-card">
         <div class="video-section-header text-center">
-          <span class="badge-video"><i class="fa-solid fa-circle-play"></i> RURAL CITIZEN VIDEO GUIDE</span>
-          <h3 class="video-section-title" data-i18n="videoSectionTitle">Official Video Guide: How to Use Vyapaar Sarthi</h3>
+          <h3 class="video-section-title" data-i18n="videoSectionTitle">Official Video Guide: How to Use <span class="brand-vyapaar">Vyapaar</span> <span class="brand-sarthi">Sarthi</span></h3>
           <p class="video-section-subtitle" data-i18n="videoSectionDesc">
             A complete visual walkthrough for rural citizens to test business viability and secure concessional credit.
           </p>
@@ -219,31 +225,40 @@
 
         <div class="video-player-frame">
           <div class="video-inner-container" id="mainVideoPlayer">
-            <video id="actualVideo" class="html5-video-tag" controls poster="assets/dairy_thumb.jpg" preload="none">
-              <source src="assets/demo_walkthrough.mp4" type="video/mp4">
-              Your browser does not support the video tag.
-            </video>
+            <!-- Official Vyapaar Sarthi Demo Video Poster Thumbnail -->
+            <img src="assets/demo_video_poster.jpg" alt="Vyapaar Sarthi Official Portal Demo Guide" class="video-poster-img" id="imgVideoPoster">
             
             <div class="video-placeholder-overlay" id="videoOverlay">
-              <div class="v-overlay-icon pulse-icon"><i class="fa-solid fa-play"></i></div>
-              <h4 id="txtVideoOverlayTitle">Interactive Audio Walkthrough: 4 Simple Steps to Your Loan</h4>
-              <p id="txtVideoOverlayDesc">Click to play animated step-by-step audio guidance in your chosen regional language.</p>
+              <button class="v-overlay-icon pulse-icon" id="btnPlayVideoMain" aria-label="Play Official Video Guide">
+                <i class="fa-solid fa-play"></i>
+              </button>
+              <h4 id="txtVideoOverlayTitle">Official Portal Guide: How to Use Vyapaar Sarthi</h4>
+              <p id="txtVideoOverlayDesc">Watch the complete step-by-step visual and regional audio walkthrough to test enterprise feasibility and secure 90% concessional loan sanction.</p>
               <div class="v-chapters-bar flex-align">
-                <span class="v-chip"><i class="fa-solid fa-map-pin"></i> 1. Select State & Village</span>
+                <span class="v-chip"><i class="fa-solid fa-map-pin"></i> 1. Select State &amp; Village</span>
                 <span class="v-chip"><i class="fa-solid fa-wallet"></i> 2. Enter 10% Margin</span>
-                <span class="v-chip"><i class="fa-solid fa-shield"></i> 3. Feasibility & Threats</span>
+                <span class="v-chip"><i class="fa-solid fa-shield"></i> 3. Feasibility &amp; Threats</span>
                 <span class="v-chip"><i class="fa-solid fa-file-pdf"></i> 4. Download Bank DPR</span>
               </div>
             </div>
+
+            <!-- YouTube Video Embed Player (revealed on play) -->
+            <iframe id="youtubeVideoGuide" class="youtube-embed-frame" style="display:none;"
+                    src="https://www.youtube.com/embed/60a0nHFefn4?autoplay=1&rel=0&modestbranding=1" 
+                    title="Official YouTube Guide: How Vyapaar Sarthi Works" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                    allowfullscreen>
+            </iframe>
           </div>
 
           <div class="video-player-bottom-bar flex-between">
             <div class="flex-align">
-              <button id="btnPlayDemo" class="v-action-btn"><i class="fa-solid fa-volume-high"></i> Play Native Audio Walkthrough</button>
+              <button id="btnPlayDemo" class="v-action-btn"><i class="fa-solid fa-volume-high"></i> Play Regional Audio Guide</button>
               <button id="btnNextChapter" class="v-action-btn"><i class="fa-solid fa-forward-step"></i> Next Step</button>
             </div>
             <div class="v-audio-badge flex-align">
-              <i class="fa-solid fa-headset text-orange"></i> Native Audio Sync: <strong id="lblActiveVideoLang">English</strong>
+              <i class="fa-solid fa-headset text-orange" style="font-size:1.1rem;"></i> Native Audio Walkthrough: <strong id="lblActiveVideoLang">English</strong>
             </div>
           </div>
         </div>
@@ -252,78 +267,74 @@
   </section>
 
   <!-- ========================================================================= -->
-  <!-- CONTROL DOCK: LOCATION & 32 BUSINESS DROPDOWN SELECTOR                   -->
+  <!-- ENTERPRISE SHOWCASE — REFERENCE LAYOUT: SLIDER LEFT + CARDS RIGHT        -->
   <!-- ========================================================================= -->
-  <section class="control-dock-section" id="secControlDock">
-    <div class="container">
-      <div class="dock-card">
-        <div class="dock-header flex-between">
-          <div class="flex-align">
-            <span class="dock-step">STEP 1</span>
-            <h3 class="dock-title" data-i18n="inputTitle">Select Location & Enterprise Parameters</h3>
-          </div>
-          <div class="dock-actions flex-align">
-            <button id="btnOpenCompareDock" class="btn-compare-pill flex-align" title="Compare 2 Business Plans Side-by-Side">
-              <i class="fa-solid fa-code-compare"></i> <span data-i18n="btnCompareSchemes">Compare All Concessional Schemes</span>
-            </button>
-          </div>
+  <section class="biz-gallery-section" id="secBizGallery">
+
+    <!-- TOP DIV: 2-column — Left: multi-image slider | Right: 2x2 icon card grid -->
+    <div class="biz-gallery-top">
+
+      <!-- LEFT SPAN: Overlapping multi-image slider (3 visible, sliding left) -->
+      <div class="biz-multi-slider" id="bizMultiSlider">
+        <div class="biz-multi-track" id="bizMultiTrack">
+          <!-- Slides injected by JS -->
         </div>
+        <!-- Left/Right nav arrows -->
+        <button class="biz-slider-arrow biz-slider-prev" id="bizSliderPrev" aria-label="Previous">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <button class="biz-slider-arrow biz-slider-next" id="bizSliderNext" aria-label="Next">
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+        <!-- Dots indicator row -->
+        <div class="biz-slider-dots" id="bizSliderDots"></div>
+      </div>
 
-        <div class="dock-grid">
-          <!-- 1. Geographic Location Selector (Pan-India) -->
-          <div class="form-group">
-            <label for="selectLocation"><i class="fa-solid fa-map-pin"></i> <span data-i18n="lblLocation">Geographic Cluster / Village (Pan-India)</span></label>
-            <select id="selectLocation" class="form-control">
-              <option value="panindia" selected>National Rural Directory (All 766 Districts Mapped)</option>
-              <option value="khordha">Khordha District Cluster, Odisha (751010)</option>
-              <option value="bodhgaya">Bodh Gaya Peri-Urban Cluster, Gaya, Bihar (824231)</option>
-              <option value="sarnath">Sarnath Rural Haat, Varanasi, Uttar Pradesh (221001)</option>
-              <option value="baramati">Baramati Agro-Processing Cluster, Pune, Maharashtra (413102)</option>
-              <option value="singur">Singur Agro-Hub, Hooghly, West Bengal (712409)</option>
-              <option value="alanganallur">Alanganallur Agro-Center, Madurai, Tamil Nadu (625501)</option>
-              <option value="wardhannapet">Wardhannapet Rural Cluster, Warangal, Telangana (506313)</option>
-              <option value="custom">-- Custom Village (Registered in Citizen Profile) --</option>
-            </select>
-            <small class="form-hint"><i class="fa-solid fa-circle-info"></i> Fully geocoded catchment for competitor mapping & hazard radars</small>
-          </div>
-
-          <!-- 2. Available Margin Capital (10% Rule) -->
-          <div class="form-group">
-            <label for="sliderMargin"><i class="fa-solid fa-wallet"></i> <span data-i18n="lblMargin">Available Margin Capital (10% Beneficiary Contribution)</span></label>
-            <div class="slider-container">
-              <input type="range" id="sliderMargin" min="10000" max="500000" step="5000" value="48000" class="margin-slider">
-              <div class="slider-labels flex-between">
-                <span>₹10,000</span>
-                <span class="active-margin-display" id="lblMarginValue">₹ 48,000</span>
-                <span>₹5,00,000</span>
-              </div>
-            </div>
-            <small class="form-hint"><i class="fa-solid fa-calculator text-blue"></i> Automatically structures 100% Project Cost = Margin &times; 10</small>
-          </div>
-
-          <!-- 3. AI-Ranked Business Dropdown (All 32 Businesses) -->
-          <div class="form-group col-span-2">
-            <label for="dropdownPreferredBiz"><i class="fa-solid fa-briefcase"></i> <span data-i18n="lblSelectBiz">Select Preferred Micro-Enterprise (32 Vetted Plans)</span></label>
-            <div class="select-with-ai-badge">
-              <select id="dropdownPreferredBiz" class="form-control select-business-dropdown">
-                <!-- Dynamically populated with all 32 businesses from data.js -->
-              </select>
-              <small class="form-hint"><i class="fa-solid fa-wand-magic-sparkles text-orange"></i> AI ranks demand, viability score and routes to preferential schemes</small>
+      <!-- RIGHT SPAN: 12-Month Seasonal Demand & Operational Calendar -->
+      <div class="biz-gallery-calendar-pane" id="secSeasonalCalendar">
+        <div class="gallery-cal-header flex-between">
+          <div class="flex-align" style="gap: 10px;">
+            <div class="gallery-cal-icon"><i class="fa-solid fa-calendar-days"></i></div>
+            <div>
+              <h4 class="gallery-cal-title">6. 12-Month Seasonal Demand &amp; Operational Calendar</h4>
+              <p class="gallery-cal-subtitle">Empirical monthly cash-flow forecasting calibrated for rural harvest cycles &amp; monsoon conditions</p>
             </div>
           </div>
+          <div class="calendar-legends flex-align">
+            <span class="leg-item"><span class="badge-cal-pill green">Peak Demand</span></span>
+            <span class="leg-item"><span class="badge-cal-pill blue">Steady Sales</span></span>
+            <span class="leg-item"><span class="badge-cal-pill amber">Weather Caution</span></span>
+          </div>
         </div>
-
-        <!-- Locality High-Demand Quick Selection Pills -->
-        <div class="ai-trending-strip flex-align">
-          <span class="trending-label"><i class="fa-solid fa-arrow-trend-up text-orange"></i> Trending Top Demand:</span>
-          <div class="trending-pills-list flex-align" id="aiTrendingPills">
-            <!-- Dynamically populated buttons -->
+        <!-- SIDE-BY-SIDE: 4x3 Matrix on Left | Demanded Businesses Panel on Right -->
+        <div class="cal-split-layout">
+          <div class="seasonal-months-grid" id="seasonalMonthsGrid">
+            <!-- 4 rows x 3 columns of Month Cards injected by JS -->
+          </div>
+          <div class="calendar-active-note" id="calendarActiveNote">
+            <div id="txtCalendarNote">
+              <!-- Dynamically populated on hover/click -->
+            </div>
           </div>
         </div>
       </div>
+
     </div>
+
   </section>
 
+  <!-- ENTERPRISE CLICK MODAL (Full Detail with ✕ close) -->
+  <div class="biz-gallery-modal" id="bizGalleryModal" role="dialog" aria-modal="true" aria-label="Enterprise Detail">
+    <div class="biz-gallery-modal-overlay" id="bizGalleryModalOverlay"></div>
+    <div class="biz-gallery-modal-card" id="bizGalleryModalCard">
+      <button class="biz-modal-close-btn" id="bizGalleryModalClose" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+      <div class="biz-modal-content" id="bizGalleryModalContent">
+        <!-- Populated by JS on click -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
   <!-- ========================================================================= -->
   <!-- TAB NAVIGATION: MODULES & CITIZEN DASHBOARD                               -->
   <!-- ========================================================================= -->
@@ -493,29 +504,7 @@
             </div>
           </div>
 
-          <!-- Pillar 6: 12-Month Seasonal Operational & Demand Calendar (FEATURE ADDED!) -->
-          <div class="grid-card col-span-2" id="secSeasonalCalendar">
-            <div class="card-header flex-between">
-              <div class="flex-align">
-                <div class="card-icon bg-green"><i class="fa-solid fa-calendar-days"></i></div>
-                <div>
-                  <h4 class="card-title">6. 12-Month Seasonal Demand & Operational Calendar</h4>
-                  <p class="card-subtitle">Empirical monthly cash-flow forecasting calibrated for rural harvest cycles & monsoon conditions</p>
-                </div>
-              </div>
-              <div class="calendar-legends flex-align">
-                <span class="leg-item"><span class="badge-cal-pill green">Peak Demand</span></span>
-                <span class="leg-item"><span class="badge-cal-pill blue">Steady Sales</span></span>
-                <span class="leg-item"><span class="badge-cal-pill amber">Weather Caution</span></span>
-              </div>
-            </div>
-            <div class="seasonal-months-grid" id="seasonalMonthsGrid">
-              <!-- Injected dynamically from SEASONAL_CALENDAR_DATA -->
-            </div>
-            <div class="calendar-active-note" id="calendarActiveNote">
-              <i class="fa-solid fa-lightbulb text-orange"></i> <strong>Month Insight:</strong> <span id="txtCalendarNote">Select any month above to view actionable operational guidelines for this enterprise.</span>
-            </div>
-          </div>
+
 
         </div>
       </section>
@@ -1177,6 +1166,7 @@
                 <input list="villageList" id="signupArea" class="form-control auth-input" placeholder="Village / Area" required value="Hansapal (Pilot)">
               </div>
             </div>
+          </div>
 
             <div class="form-grid-2">
               <div class="form-group">
@@ -1323,40 +1313,105 @@
   <!-- GOVERNMENT OFFICIAL FOOTER                                                -->
   <!-- ========================================================================= -->
   <footer class="gov-footer">
-    <div class="container footer-grid">
-      <div>
-        <div class="flex-align" style="gap:0.75rem; margin-bottom: 0.75rem;">
-          <i class="fa-solid fa-scale-balanced text-orange" style="font-size:1.8rem;"></i>
-          <h4 style="color:#fff; font-size:1.2rem; margin:0;" data-i18n="portalTitle">Vyapaar Sarthi</h4>
+    <div class="footer-top-accent"></div>
+    <div class="container">
+      
+      <!-- 4-Column Responsive Footer Grid -->
+      <div class="footer-grid-4">
+        
+        <!-- Column 1: Portal Brand & National Helpline -->
+        <div class="footer-col-brand">
+          <div class="footer-brand-title">
+            <img src="assets/logo.png" alt="Vyapaar Sarthi Logo" style="height:32px;">
+            <span>Vyapaar Sarthi</span>
+            <span class="footer-brand-badge">GOVT OF INDIA</span>
+          </div>
+          <p class="footer-desc">
+            National AI-Driven Hyper-Local Business Advisory &amp; Concessional Financial Structuring Platform for Rural Micro-Entrepreneurs under Ministry of Social Justice and Empowerment.
+          </p>
+          <div class="footer-helpline-box">
+            <i class="fa-solid fa-phone-volume helpline-icon"></i>
+            <div>
+              <div class="helpline-number">1800-11-0031 / 14567</div>
+              <div class="helpline-label">Toll-Free MSJE Citizen Helpline (24x7)</div>
+            </div>
+          </div>
         </div>
-        <p class="footer-desc">
-          An AI-driven hyper-local rural business intelligence and concessional credit structuring platform developed under the Ministry of Social Justice and Empowerment, Government of India.
-        </p>
+
+        <!-- Column 2: MSJE Apex Channelizing Corporations -->
+        <div>
+          <h4 class="f-head">MSJE Apex Corporations</h4>
+          <ul class="f-links">
+            <li><i class="fa-solid fa-angle-right"></i> <a href="https://nsfdc.nic.in" target="_blank" rel="noopener">NSFDC (Scheduled Castes)</a></li>
+            <li><i class="fa-solid fa-angle-right"></i> <a href="https://nstfdc.tribal.gov.in" target="_blank" rel="noopener">NSTFDC (Scheduled Tribes)</a></li>
+            <li><i class="fa-solid fa-angle-right"></i> <a href="http://www.nbcfdc.gov.in" target="_blank" rel="noopener">NBCFDC (Backward Classes)</a></li>
+            <li><i class="fa-solid fa-angle-right"></i> <a href="https://nhfdc.nic.in" target="_blank" rel="noopener">NDFDC (Divyangjan)</a></li>
+            <li><i class="fa-solid fa-angle-right"></i> <a href="#" id="ftrLinkWomenShg">W-Enterprise / Women SHG</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 3: Platform Tools & Services -->
+        <div>
+          <h4 class="f-head">Platform Tools &amp; DPR</h4>
+          <ul class="f-links">
+            <li><i class="fa-solid fa-angle-right"></i> <a href="#secOverview">32 Feasible Enterprises</a></li>
+            <li><i class="fa-solid fa-angle-right"></i> <a href="#secOverview">10% Margin Calculator</a></li>
+            <li><i class="fa-solid fa-angle-right"></i> <a href="#secOverview">Threat Radar &amp; POI Map</a></li>
+            <li><i class="fa-solid fa-angle-right"></i> <a href="#" id="ftrLinkDprGen">Bank-Ready DPR Generator</a></li>
+            <li><i class="fa-solid fa-angle-right"></i> <a href="#" id="ftrLinkLogin">Citizen Dashboard Login</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 4: Lead Channelizing Banks & Standards -->
+        <div>
+          <h4 class="f-head">Lead Channelizing Banks</h4>
+          <ul class="f-links">
+            <li><i class="fa-solid fa-building-columns"></i> <span>State Bank of India (SBI)</span></li>
+            <li><i class="fa-solid fa-building-columns"></i> <span>UCO Bank &amp; State Channelizing Agencies</span></li>
+            <li><i class="fa-solid fa-shield-halved text-green"></i> <span>100% Collateral-Free (CGTMSE)</span></li>
+            <li><i class="fa-solid fa-certificate text-orange"></i> <span>DigiLocker &amp; LGD Sync</span></li>
+            <li><i class="fa-solid fa-universal-access text-blue"></i> <span>GIGW &amp; WCAG 2.1 Compliant</span></li>
+          </ul>
+        </div>
+
       </div>
 
-      <div>
-        <h5 class="f-head">Concessional Credit Framework</h5>
-        <ul class="f-links">
-          <li><i class="fa-solid fa-angle-right"></i> 10% Beneficiary Margin Rule</li>
-          <li><i class="fa-solid fa-angle-right"></i> Logic A: Micro Finance (&le; ₹1.40L @ 6.5%)</li>
-          <li><i class="fa-solid fa-angle-right"></i> Logic B: Term Loan (&le; ₹50.00L @ 8.0%)</li>
-          <li><i class="fa-solid fa-angle-right"></i> 3 to 6-Month Moratorium Holidays</li>
-        </ul>
+      <!-- Government Trust Badges Row -->
+      <div class="footer-badges-row">
+        <div class="gov-trust-badge">
+          <i class="fa-solid fa-certificate"></i>
+          <span>Ministry Certified Concessional Credit</span>
+        </div>
+        <div class="gov-trust-badge">
+          <i class="fa-solid fa-lock"></i>
+          <span>DigiLocker 256-Bit SSL Secured</span>
+        </div>
+        <div class="gov-trust-badge">
+          <i class="fa-solid fa-microchip"></i>
+          <span>Bhashini AI Multi-Lingual Engine</span>
+        </div>
+        <div class="gov-trust-badge">
+          <i class="fa-solid fa-building-columns"></i>
+          <span>SBI &amp; UCO Bank Channelizing Ready</span>
+        </div>
       </div>
 
-      <div>
-        <h5 class="f-head">Geographic & Pilot Reach</h5>
-        <ul class="f-links">
-          <li><i class="fa-solid fa-location-dot"></i> Pan-India Coverage (28 States & 8 UTs)</li>
-          <li><i class="fa-solid fa-location-dot"></i> Khordha District Rural Cluster, Odisha (751010)</li>
-          <li><i class="fa-solid fa-language"></i> 7 Indic Languages (Bhashini AI Voice)</li>
-          <li><i class="fa-solid fa-universal-access"></i> NIC Accessibility Standard Compliant</li>
-        </ul>
+      <!-- Footer Bottom Bar -->
+      <div class="footer-bottom">
+        <div>
+          <p>&copy; 2026 Government of India | Ministry of Social Justice and Empowerment. All Rights Reserved.</p>
+        </div>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy Policy</a>
+          <span>|</span>
+          <a href="#">Terms of Service</a>
+          <span>|</span>
+          <a href="#">Accessibility Statement</a>
+          <span>|</span>
+          <a href="#">Help &amp; Support</a>
+        </div>
       </div>
-    </div>
 
-    <div class="footer-bottom text-center">
-      <p>&copy; 2026 Government of India | Ministry of Social Justice and Empowerment | All Rights Reserved.</p>
     </div>
   </footer>
 
@@ -1365,6 +1420,13 @@
 
   <!-- Leaflet JS for Maps -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+  <!-- GSAP Animation Library & ScrollTrigger Plugin -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <!-- Lenis Smooth Scroll -->
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
 
   <!-- Datasets & 7-Language Dictionary -->
   <script src="data.js"></script>
