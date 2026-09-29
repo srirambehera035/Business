@@ -1,4 +1,4 @@
-﻿# Dependencies
+# Dependencies
 node_modules/
 **/node_modules/
 .pnp
@@ -27,7 +27,7 @@ pnpm-debug.log*
 # Python / Caches
 __pycache__/
 *.py[cod]
-*$py.class
+*.class
 .venv/
 venv/
 
