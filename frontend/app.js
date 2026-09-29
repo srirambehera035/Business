@@ -177,6 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- ROBUST INTERACTIVE GOOGLE MAPS GIS ENGINE ---
   let leafletMapInstance = null;
   let activeTileLayer = null;
+  let mapInitRetries = 0;
 
   function initMap() {
     const mapContainer = document.getElementById('leafletMap');
@@ -187,7 +188,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     try {
       if (typeof L === 'undefined') {
-        console.warn("Leaflet library not loaded yet.");
+        if (mapInitRetries < 20) {
+          mapInitRetries++;
+          setTimeout(initMap, 150);
+        } else {
+          console.warn("Leaflet library failed to load after retries.");
+        }
         return;
       }
 
@@ -363,11 +369,21 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       });
 
-      // Recalculate map size smoothly
+      // Recalculate map size on tab switch or window resize
+      document.querySelectorAll('.module-tab, .nav-item, .hero-btn, [data-tab]').forEach(el => {
+        el.addEventListener('click', () => {
+          setTimeout(() => {
+            if (leafletMapInstance) leafletMapInstance.invalidateSize();
+          }, 250);
+        });
+      });
+
+      window.addEventListener('resize', () => {
+        if (leafletMapInstance) leafletMapInstance.invalidateSize();
+      });
+
       setTimeout(() => {
-        if (leafletMapInstance) {
-          leafletMapInstance.invalidateSize();
-        }
+        if (leafletMapInstance) leafletMapInstance.invalidateSize();
       }, 400);
 
     } catch (err) {

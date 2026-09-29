@@ -15,6 +15,7 @@ from pathlib import Path
 
 # In-memory OTP registry for authentication
 ACTIVE_OTPS = {}
+CURRENT_USER_SESSION = {"isLoggedIn": False}
 
 # Import core business engines
 try:
