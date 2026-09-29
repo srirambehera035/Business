@@ -353,10 +353,6 @@
           <i class="fa-solid fa-store"></i> 
           <span data-i18n="catalogTitle">32 Profitable Rural Micro-Enterprise Blueprints</span>
         </button>
-        <button class="tab-btn" data-target="secProfile" id="tabBtnProfile">
-          <i class="fa-solid fa-id-card"></i> 
-          <span data-i18n="navDashboard">Beneficiary Dashboard</span>
-        </button>
       </div>
 
       <!-- ======================================================================= -->
@@ -793,86 +789,348 @@
         </div>
       </section>
 
-      <!-- ======================================================================= -->
-      <!-- DEDICATED CITIZEN DASHBOARD                                            -->
-      <!-- ======================================================================= -->
-      <section id="secProfile" class="tab-pane">
-        <div class="profile-dashboard-card">
-          
-          <div class="profile-banner flex-between">
-            <div class="flex-align">
-              <div class="profile-avatar">
-                <i class="fa-solid fa-user-shield"></i>
-              </div>
-              <div>
-                <div class="verified-badge"><i class="fa-solid fa-circle-check"></i> Authenticated Rural Beneficiary</div>
-                <h3 class="profile-name" id="profDisplayName">Sriram Jena</h3>
-                <p class="profile-meta">
-                  <i class="fa-solid fa-phone"></i> <span id="profMobile">+91 9876543210</span> | 
-                  <i class="fa-solid fa-location-dot"></i> <span id="profLocation">Khordha Rural Cluster, Odisha (751010)</span> |
-                  <i class="fa-solid fa-id-card-clip"></i> <span id="profCategoryBadge" class="badge-cat-sm">SC (NSFDC Channel)</span>
-                </p>
-              </div>
-            </div>
-
-            <div class="profile-actions flex-align">
-              <button id="btnProfileDprDownload" class="btn-primary flex-align" title="Generate PDF DPR">
-                <i class="fa-solid fa-file-pdf"></i> <span data-i18n="btnDownloadDprPdf">Download Bank-Ready DPR (PDF)</span>
-              </button>
-              <button id="btnProfileShareWhatsApp" class="btn-whatsapp flex-align" title="Share roadmap on WhatsApp">
-                <i class="fa-brands fa-whatsapp"></i> <span data-i18n="btnShareWhatsApp">Share Plan on WhatsApp</span>
-              </button>
-              <button id="btnEditProfile" class="btn-outline flex-align">
-                <i class="fa-solid fa-user-pen"></i> Edit Profile
-              </button>
-              <button id="btnLogout" class="btn-danger flex-align">
-                <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
-              </button>
-            </div>
-          </div>
-
-          <!-- Citizen Metrics Row -->
-          <div class="profile-metrics-grid">
-            <div class="p-card">
-              <span class="p-lbl">Entrepreneurial Intent</span>
-              <strong class="p-val text-blue" id="profBizStatus">First-Time Entrepreneur</strong>
-              <small class="text-muted">Aadhaar Linked LGD Jurisdiction</small>
-            </div>
-            <div class="p-card">
-              <span class="p-lbl">Selected Enterprise</span>
-              <strong class="p-val text-green" id="profBizName">Solar Milk Chilling Unit</strong>
-              <small class="text-muted" id="profSector">Dairy & Value Addition</small>
-            </div>
-            <div class="p-card">
-              <span class="p-lbl">Beneficiary Margin (10%)</span>
-              <strong class="p-val text-orange" id="profMargin">₹ 48,000</strong>
-              <small class="text-muted">Self-Financed Contribution</small>
-            </div>
-            <div class="p-card">
-              <span class="p-lbl">Concessional Bank Loan</span>
-              <strong class="p-val text-green" id="profLoanCapacity">₹ 4,32,000 (90%)</strong>
-              <small class="text-muted" id="profSchemeStatus">MKUY / NSFDC Term Loan</small>
-            </div>
-          </div>
-
-          <!-- Active Enterprise Summary Card -->
-          <div class="profile-application-box">
-            <div class="flex-between flex-wrap">
-              <div>
-                <span class="badge-status badge-ready"><i class="fa-solid fa-check"></i> Bank Application Ready</span>
-                <h4 style="margin: 0.5rem 0 0.2rem 0; font-size: 1.25rem;">Active Detailed Project Report (DPR) Application</h4>
-                <p class="text-muted" style="font-size: 0.9rem;">
-                  Your loan application is structured under Ministry of Social Justice & Empowerment concessional credit guidelines with zero physical collateral for micro-tiers.
-                </p>
-              </div>
-              <div class="text-right">
-                <span class="dpr-ref-pill">DPR Reference: <strong id="lblDprRefCode">MSJE-OD-751010-0926</strong></span>
-              </div>
-            </div>
-          </div>
-
+    </div>
+  </main>
+  <!-- ========================================================================= -->
+  <!-- AUTHENTICATED CITIZEN DASHBOARD MODAL (JOURNEY & HISTORY)                 -->
+  <!-- ========================================================================= -->
+  <div id="citizenDashboardModal" class="dashboard-modal-overlay" role="dialog" aria-modal="true" aria-label="Authenticated Citizen Dashboard">
+    <div class="dashboard-modal-container">
+      <!-- Top Bar: Back to Portal & Close Button -->
+      <div class="dashboard-modal-topbar flex-between">
+        <div class="dash-portal-breadcrumb flex-align">
+          <button id="btnCloseDashboard" class="btn-back-portal flex-align">
+            <i class="fa-solid fa-arrow-left"></i>
+            <span>Back to Public Portal</span>
+          </button>
+          <span class="dash-breadcrumb-sep" style="opacity:0.4; margin: 0 0.5rem;">/</span>
+          <span class="dash-breadcrumb-active" style="font-size:0.85rem; font-weight:700;"><i class="fa-solid fa-shield-halved text-orange"></i> Private Authenticated Citizen Session</span>
         </div>
-      </section>
+        <button id="btnTopCloseDashboard" class="btn-dash-modal-close" aria-label="Close Dashboard">&times;</button>
+      </div>
+
+      <div class="chaart-dashboard-wrapper">
+        
+        <!-- LEFT SIDEBAR: PROFILE & NAVIGATION -->
+        <aside class="dash-sidebar">
+          <div class="dash-user-card text-center">
+            <div class="dash-avatar-wrap">
+              <div class="dash-avatar-inner">
+                <i class="fa-solid fa-user-tie"></i>
+              </div>
+              <span class="dash-status-dot" title="Authenticated Citizen"></span>
+            </div>
+            <h3 class="dash-user-name" id="profDisplayName">Citizen Beneficiary</h3>
+            <p class="dash-user-email" id="profDisplayEmail">citizen@vyapaarsarthi.gov.in</p>
+            <p class="dash-user-phone" id="profDisplayPhone"><i class="fa-solid fa-phone"></i> +91 9040082772</p>
+            <div class="dash-verified-pill">
+              <i class="fa-solid fa-circle-check text-green"></i>
+              <span id="profCategoryBadge">SC (NSFDC Channel)</span>
+            </div>
+          </div>
+
+          <nav class="dash-menu-nav">
+            <button class="dash-menu-item active" data-dash-pane="overview">
+              <i class="fa-solid fa-table-cells-large"></i>
+              <span>Dashboard</span>
+            </button>
+            <button class="dash-menu-item" data-dash-pane="journey" id="btnDashNavJourney">
+              <i class="fa-solid fa-compass"></i>
+              <span>Enterprise Journey</span>
+            </button>
+            <button class="dash-menu-item" data-dash-pane="tasks" id="btnDashNavTasks">
+              <i class="fa-solid fa-list-check"></i>
+              <span>Milestone Tasks</span>
+            </button>
+            <button class="dash-menu-item" data-dash-pane="dpr" id="btnDashNavDpr">
+              <i class="fa-solid fa-file-invoice"></i>
+              <span>Bank DPR Files</span>
+            </button>
+            <button class="dash-menu-item" id="btnDashEditProfile">
+              <i class="fa-solid fa-gear"></i>
+              <span>Settings</span>
+            </button>
+          </nav>
+
+          <div class="dash-sidebar-footer">
+            <button id="btnLogout" class="dash-logout-btn flex-align">
+              <i class="fa-solid fa-arrow-right-from-bracket"></i>
+              <span>Log Out</span>
+            </button>
+          </div>
+        </aside>
+
+        <!-- CENTER MAIN AREA: GREETING, JOURNEY CARDS, TASKS & STATS -->
+        <main class="dash-main-area">
+          
+          <!-- Top Header Row -->
+          <div class="dash-header-row flex-between">
+            <div>
+              <h2 class="dash-greeting-title">Hello, <span id="dashGreetingName" class="text-gradient">Citizen</span> 👋</h2>
+              <p class="dash-greeting-date" id="dashGreetingDate">Today is Tuesday, 29 September 2026</p>
+            </div>
+
+            <div class="dash-header-actions fle x-align">
+              <div class="dash-search-box flex-align">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="dashSearchInput" placeholder="Search roadmap...">
+              </div>
+              <button class="dash-btn-add flex-align" id="btnDashNewPlan">
+                <i class="fa-solid fa-plus"></i>
+                <span>New Enterprise Plan</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Top Row: 3 Enterprise Journey Progress Cards -->
+          <div class="dash-journey-cards-grid">
+            
+            <!-- Card 1: Purple Gradient (Active Selection) -->
+            <div class="journey-card card-purple active-plan-card" id="journeyCard1">
+              <div class="j-card-header flex-between">
+                <div class="j-user-avatars flex-align">
+                  <span class="j-pill"><i class="fa-solid fa-cow"></i> Active</span>
+                </div>
+                <span class="j-more-icon"><i class="fa-solid fa-ellipsis-vertical"></i></span>
+              </div>
+              <h4 class="j-title" id="profBizName">Solar Milk Chilling Unit</h4>
+              <p class="j-subtitle" id="profSector">Dairy & Value Addition</p>
+              <div class="j-progress-wrap">
+                <div class="j-progress-bar">
+                  <div class="j-progress-fill fill-purple" id="jProgFill1" style="width: 85%;"></div>
+                </div>
+                <div class="j-progress-labels flex-between">
+                  <span>10 Milestones</span>
+                  <strong id="jProgVal1">85% Ready</strong>
+                </div>
+              </div>
+              <div class="j-card-footer flex-between">
+                <small>10% Margin: <strong id="profMargin">₹ 48,000</strong></small>
+                <small>Loan: <strong id="profLoanCapacity">₹ 4,32,000</strong></small>
+              </div>
+            </div>
+
+            <!-- Card 2: Teal / Cyan Gradient -->
+            <div class="journey-card card-cyan" id="journeyCard2">
+              <div class="j-card-header flex-between">
+                <div class="j-user-avatars flex-align">
+                  <span class="j-pill"><i class="fa-solid fa-leaf"></i> Pipeline</span>
+                </div>
+                <span class="j-more-icon"><i class="fa-solid fa-ellipsis-vertical"></i></span>
+              </div>
+              <h4 class="j-title">Bio-Fertilizer & Vermicompost</h4>
+              <p class="j-subtitle">Agri & Waste Upcycling</p>
+              <div class="j-progress-wrap">
+                <div class="j-progress-bar">
+                  <div class="j-progress-fill fill-cyan" style="width: 60%;"></div>
+                </div>
+                <div class="j-progress-labels flex-between">
+                  <span>6 Milestones</span>
+                  <strong>60% Verified</strong>
+                </div>
+              </div>
+              <div class="j-card-footer flex-between">
+                <small>10% Margin: <strong>₹ 35,000</strong></small>
+                <small>Subsidy: <strong>45% NBCFDC</strong></small>
+              </div>
+            </div>
+
+            <!-- Card 3: Orange / Coral Gradient -->
+            <div class="journey-card card-orange" id="journeyCard3">
+              <div class="j-card-header flex-between">
+                <div class="j-user-avatars flex-align">
+                  <span class="j-pill"><i class="fa-solid fa-bolt"></i> Explore</span>
+                </div>
+                <span class="j-more-icon"><i class="fa-solid fa-ellipsis-vertical"></i></span>
+              </div>
+              <h4 class="j-title">Two-Wheeler EV Battery Station</h4>
+              <p class="j-subtitle">Green Mobility & Energy</p>
+              <div class="j-progress-wrap">
+                <div class="j-progress-bar">
+                  <div class="j-progress-fill fill-orange" style="width: 40%;"></div>
+                </div>
+                <div class="j-progress-labels flex-between">
+                  <span>4 Milestones</span>
+                  <strong>40% Survey</strong>
+                </div>
+              </div>
+              <div class="j-card-footer flex-between">
+                <small>10% Margin: <strong>₹ 25,000</strong></small>
+                <small>Cover: <strong>100% CGTMSE</strong></small>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Middle Section: Tasks For Today + Statistics & Scheme Grant -->
+          <div class="dash-middle-grid">
+            
+            <!-- Left Column: Tasks / Milestones Checklist -->
+            <div class="dash-tasks-panel">
+              <div class="panel-head flex-between">
+                <h3 class="panel-title"><i class="fa-solid fa-list-check text-orange"></i> Action Milestones & Tasks</h3>
+                <span class="badge-count">3 of 4 Done</span>
+              </div>
+
+              <div class="dash-task-list" id="dashTaskList">
+                
+                <div class="dash-task-item done">
+                  <div class="task-indicator"><i class="fa-solid fa-circle-check"></i></div>
+                  <div class="task-content">
+                    <span class="task-tag tag-blue">Step 1 • Capital</span>
+                    <h5 class="task-name">10% Beneficiary Margin Structured</h5>
+                    <p class="task-desc">Calculated ₹48,000 self-contribution for ₹4,80,000 project size</p>
+                  </div>
+                </div>
+
+                <div class="dash-task-item done">
+                  <div class="task-indicator"><i class="fa-solid fa-circle-check"></i></div>
+                  <div class="task-content">
+                    <span class="task-tag tag-green">Step 2 • Feasibility</span>
+                    <h5 class="task-name">5–10 km Radius Threat & Catchment Scan</h5>
+                    <p class="task-desc">Hansapal commercial corridor verified with 93/100 viability score</p>
+                  </div>
+                </div>
+
+                <div class="dash-task-item active">
+                  <div class="task-indicator"><i class="fa-solid fa-spinner fa-spin"></i></div>
+                  <div class="task-content">
+                    <span class="task-tag tag-orange">Step 3 • Documentation</span>
+                    <h5 class="task-name">Bank DPR Formulated & PDF Ready</h5>
+                    <p class="task-desc">Reference: <strong id="lblDprRefCode">MSJE-OD-751010-0926</strong></p>
+                  </div>
+                </div>
+
+                <div class="dash-task-item pending">
+                  <div class="task-indicator"><i class="fa-regular fa-circle"></i></div>
+                  <div class="task-content">
+                    <span class="task-tag tag-muted">Step 4 • Sanction</span>
+                    <h5 class="task-name">District Lead Bank Disbursal Desk</h5>
+                    <p class="task-desc">Submit stamped DPR to State Channelizing Agency officer</p>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Right Column: Statistics & Concessional Grant Box -->
+            <div class="dash-stats-panel">
+              <div class="panel-head flex-between">
+                <h3 class="panel-title"><i class="fa-solid fa-chart-line text-blue"></i> Concessional Economics</h3>
+                <span class="badge-status badge-ready">Bank Approved</span>
+              </div>
+
+              <div class="dash-stats-row">
+                <div class="mini-stat-card">
+                  <span class="stat-number text-blue">90%</span>
+                  <span class="stat-label">Bank Term Loan</span>
+                </div>
+                <div class="mini-stat-card">
+                  <span class="stat-number text-green">45%</span>
+                  <span class="stat-label">Capital Subsidy</span>
+                </div>
+                <div class="mini-stat-card">
+                  <span class="stat-number text-orange" id="dashStatProfit">₹31K</span>
+                  <span class="stat-label">Net Take-Home/mo</span>
+                </div>
+              </div>
+
+              <!-- Concessional Grant Promo Card -->
+              <div class="dash-grant-banner">
+                <div class="grant-content">
+                  <span class="grant-badge"><i class="fa-solid fa-shield-halved"></i> MSJE Scheme Pass</span>
+                  <h4 class="grant-title">Bank-Ready Concessional DPR</h4>
+                  <p class="grant-desc">100% Collateral-Free under CGTMSE with 6-Month ₹0 EMI Moratorium.</p>
+                  <div class="grant-actions flex-align">
+                    <button id="btnProfileDprDownload" class="btn-dash-primary flex-align">
+                      <i class="fa-solid fa-file-pdf"></i>
+                      <span>Download DPR (PDF)</span>
+                    </button>
+                    <button id="btnProfileShareWhatsApp" class="btn-dash-whatsapp flex-align">
+                      <i class="fa-brands fa-whatsapp"></i>
+                      <span>Share Plan</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </main>
+
+        <!-- RIGHT SIDEBAR: CALENDAR & JOURNEY HISTORY -->
+        <aside class="dash-history-sidebar">
+          <div class="history-head flex-between">
+            <h4 class="history-title"><i class="fa-solid fa-calendar-days"></i> Timeline & History</h4>
+            <button class="btn-bell-icon" title="Notifications"><i class="fa-regular fa-bell"></i></button>
+          </div>
+
+          <div class="timeline-log-list" id="timelineLogList">
+            
+            <div class="timeline-day-group">
+              <span class="timeline-date-label">Today</span>
+              
+              <div class="timeline-event-item">
+                <span class="event-time">14:30</span>
+                <div class="event-body">
+                  <strong class="event-title">Account Created & Verified</strong>
+                  <p class="event-desc">Aadhaar & LGD directory matched</p>
+                </div>
+              </div>
+
+              <div class="timeline-event-item">
+                <span class="event-time">14:32</span>
+                <div class="event-body">
+                  <strong class="event-title">10% Margin Calculated</strong>
+                  <p class="event-desc">₹48,000 margin for Solar Milk Unit</p>
+                </div>
+              </div>
+
+              <div class="timeline-event-item">
+                <span class="event-time">14:34</span>
+                <div class="event-body">
+                  <strong class="event-title">Threat Radar Analyzed</strong>
+                  <p class="event-desc">93/100 Viability in Khordha cluster</p>
+                </div>
+              </div>
+
+              <div class="timeline-event-item">
+                <span class="event-time">14:35</span>
+                <div class="event-body">
+                  <strong class="event-title">Bank DPR Generated</strong>
+                  <p class="event-desc">Certified under NSFDC concessional tier</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="timeline-day-group">
+              <span class="timeline-date-label">Upcoming Schedule</span>
+
+              <div class="timeline-event-item upcoming">
+                <span class="event-time">10:00</span>
+                <div class="event-body">
+                  <strong class="event-title">Bank Officer Review</strong>
+                  <p class="event-desc">District single-window disbursal meeting</p>
+                </div>
+              </div>
+
+              <div class="timeline-event-item upcoming">
+                <span class="event-time">15:00</span>
+                <div class="event-body">
+                  <strong class="event-title">Equipment Procurement</strong>
+                  <p class="event-desc">70% Capex machinery quotation</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </aside>
+
+      </div>
+    </div>
+  </div>
 
     </div>
   </main>
@@ -912,43 +1170,7 @@
     </div>
   </div>
 
-  <!-- ========================================================================= -->
-  <!-- FLOATING AUDIO SARTHI AI VOICE ASSISTANT WIDGET (FEATURE ADDED!)          -->
-  <!-- ========================================================================= -->
-  <div class="floating-audio-sarthi" id="floatingAudioSarthi">
-    <button class="btn-sarthi-trigger" id="btnTriggerSarthi" title="Talk to Audio Sarthi AI">
-      <div class="sarthi-pulse-ring"></div>
-      <i class="fa-solid fa-microphone"></i>
-      <span class="sarthi-btn-lbl">Audio Sarthi</span>
-    </button>
 
-    <div class="sarthi-dialog-card" id="sarthiDialogCard">
-      <div class="sarthi-dialog-header flex-between">
-        <div class="flex-align">
-          <div class="sarthi-avatar-mini"><i class="fa-solid fa-headset"></i></div>
-          <div>
-            <strong>Audio Sarthi | AI Assistant</strong>
-            <small class="block text-muted">Ministry of Social Justice Voice Guide</small>
-          </div>
-        </div>
-        <button id="btnCloseSarthi" class="btn-close-sm">&times;</button>
-      </div>
-
-      <div class="sarthi-dialog-body">
-        <p class="sarthi-intro">Click any common question or tap the mic to speak in your native language:</p>
-        <div class="sarthi-questions-list" id="sarthiQuestionsList">
-          <!-- Dynamically populated from AUDIO_SARTHI_INTENTS -->
-        </div>
-        <div class="sarthi-answer-box" id="sarthiAnswerBox" style="display:none;">
-          <div class="sarthi-ans-head flex-between">
-            <span class="text-green"><i class="fa-solid fa-volume-high"></i> AI Response:</span>
-            <button id="btnReplayAudio" class="btn-replay-sm"><i class="fa-solid fa-rotate-right"></i> Replay</button>
-          </div>
-          <p id="txtSarthiResponseText"></p>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <!-- ========================================================================= -->
   <!-- POST-LOGIN VERIFICATION ANIMATION OVERLAY                                 -->
@@ -1020,7 +1242,6 @@
               <input type="text" id="loginIdentifier" class="form-control auth-input" placeholder="e.g. 9876543210 or yourname@gmail.com" required autocomplete="username">
               <small class="field-error" id="errLoginIdentifier"></small>
             </div>
-
             <div class="form-group">
               <div class="flex-between">
                 <label for="loginPassword">
@@ -1036,14 +1257,14 @@
               </div>
               <small class="field-error" id="errLoginPassword"></small>
             </div>
-
-            <button type="submit" id="btnLoginSubmit" class="btn-primary-lg flex-align" style="width:100%; justify-content:center; margin-top:0.75rem;">
-              <i class="fa-solid fa-right-to-bracket"></i> <span data-i18n="btnSubmitLogin">Log In to Account</span>
-            </button>
-
-            <div class="auth-switch-row text-center">
-              <span>New to Vyapaar Sarthi?</span>
-              <button type="button" class="btn-link-action fw-bold" id="linkToSignup" data-i18n="linkSignup">Create an account</button>
+            <div class="auth-sticky-footer">
+              <button type="submit" id="btnLoginSubmit" class="btn-primary-lg flex-align" style="width:100%; justify-content:center;">
+                <i class="fa-solid fa-right-to-bracket"></i> <span data-i18n="btnSubmitLogin">Log In to Account</span>
+              </button>
+              <div class="auth-switch-row text-center" style="margin-top:0.5rem;">
+                <span>New to Vyapaar Sarthi?</span>
+                <button type="button" class="btn-link-action fw-bold" id="linkToSignup" data-i18n="linkSignup">Create an account</button>
+              </div>
             </div>
           </form>
         </div>
@@ -1053,138 +1274,52 @@
           <div id="signupAlert" class="auth-alert" style="display:none;"></div>
 
           <form id="formSignup" novalidate>
-            <div class="form-grid-2">
-              <div class="form-group">
-                <label for="signupName"><i class="fa-solid fa-user"></i> <span data-i18n="lblFullName">Full Name:</span> *</label>
-                <div class="input-with-mic">
-                  <input type="text" id="signupName" class="form-control auth-input" placeholder="e.g. Ramesh Patel" required autocomplete="name">
-                  <button type="button" class="btn-mic-field" data-input="signupName" title="Speak to Fill Name">
-                    <i class="fa-solid fa-microphone"></i>
-                  </button>
-                </div>
-                <small class="field-error" id="errSignupName"></small>
-              </div>
-
-              <div class="form-group">
-                <label for="signupPhone"><i class="fa-solid fa-mobile-screen"></i> <span data-i18n="lblPhone">Mobile Number (10 Digits):</span> *</label>
-                <div class="phone-input-group flex-align">
-                  <span class="phone-prefix">+91</span>
-                  <input type="tel" id="signupPhone" class="form-control auth-input" placeholder="10-digit mobile number" maxlength="10" required autocomplete="tel">
-                  <button type="button" id="btnRequestOtp" class="btn-otp-action flex-align">
-                    <i class="fa-solid fa-paper-plane"></i> <span data-i18n="btnSendOtp">Send OTP</span>
-                  </button>
-                </div>
-                <small class="field-error" id="errSignupPhone"></small>
-              </div>
-            </div>
-
-            <!-- Simulated SMS OTP Verification Box -->
-            <div id="smsOtpCard" class="sms-otp-card" style="display:none;">
-              <div class="otp-card-header flex-between">
-                <span class="otp-title flex-align"><i class="fa-solid fa-comment-sms text-orange"></i> SMS Verification Code</span>
-                <span id="otpCountdown" class="otp-countdown">Valid for 10:00</span>
-              </div>
-              <div id="simulatedOtpBanner" class="simulated-otp-banner">
-                <i class="fa-solid fa-bolt text-orange"></i>
-                <div class="sim-text">
-                  <strong>Simulated SMS Gateway:</strong> Your 6-digit code is <code id="txtSimulatedOtp" class="otp-code-highlight">------</code>
-                </div>
-                <button type="button" id="btnAutofillOtp" class="btn-mini-fill">Auto-Fill</button>
-              </div>
-              <div class="otp-input-row flex-align">
-                <input type="text" id="signupOtp" class="form-control auth-input otp-digit-input" placeholder="Enter 6-digit OTP" maxlength="6" inputmode="numeric">
-                <button type="button" id="btnVerifyOtp" class="btn-verify-action flex-align">
-                  <i class="fa-solid fa-check-circle"></i> <span data-i18n="btnVerifyOtp">Verify OTP</span>
+            <div class="form-group">
+              <label for="signupName"><i class="fa-solid fa-user"></i> <span data-i18n="lblFullName">Full Name:</span> *</label>
+              <div class="input-with-mic">
+                <input type="text" id="signupName" class="form-control auth-input" placeholder="e.g. Ramesh Patel" required autocomplete="name">
+                <button type="button" class="btn-mic-field" data-input="signupName" title="Speak to Fill Name">
+                  <i class="fa-solid fa-microphone"></i>
                 </button>
-                <span id="otpVerifiedPill" class="badge-verified" style="display:none;">
-                  <i class="fa-solid fa-circle-check"></i> Verified
-                </span>
               </div>
-              <small class="field-error" id="errSignupOtp"></small>
+              <small class="field-error" id="errSignupName"></small>
             </div>
 
             <div class="form-group">
-              <label for="signupEmail"><i class="fa-solid fa-envelope"></i> <span data-i18n="lblEmail">Email Address (Optional):</span></label>
-              <input type="email" id="signupEmail" class="form-control auth-input" placeholder="e.g. entrepreneur@vyapaarsarthi.gov.in (for reports & reset)" autocomplete="email">
+              <label for="signupPhone"><i class="fa-solid fa-mobile-screen"></i> <span data-i18n="lblPhone">Phone Number:</span> *</label>
+              <div class="phone-input-group flex-align">
+                <span class="phone-prefix">+91</span>
+                <input type="tel" id="signupPhone" class="form-control auth-input" placeholder="10-digit mobile number" maxlength="10" required autocomplete="tel">
+              </div>
+              <small class="field-error" id="errSignupPhone"></small>
+            </div>
+
+            <div class="form-group">
+              <label for="signupEmail"><i class="fa-solid fa-envelope"></i> <span data-i18n="lblEmail">Email Address:</span> *</label>
+              <input type="email" id="signupEmail" class="form-control auth-input" placeholder="e.g. ramesh@example.com" required autocomplete="email">
               <small class="field-error" id="errSignupEmail"></small>
             </div>
 
-            <div class="form-grid-2">
-              <div class="form-group">
-                <label for="signupPassword"><i class="fa-solid fa-lock"></i> <span data-i18n="lblPassword">Password:</span> *</label>
-                <div class="pwd-input-wrap">
-                  <input type="password" id="signupPassword" class="form-control auth-input" placeholder="At least 8 characters (1 letter, 1 number)" required autocomplete="new-password">
-                  <button type="button" class="btn-toggle-pwd" id="btnToggleSignupPwd" title="Show / Hide Password" aria-label="Toggle password visibility">
-                    <i class="fa-solid fa-eye"></i>
-                  </button>
-                </div>
-                <!-- Inline validation helper checklist -->
-                <div class="pwd-criteria-checklist" id="pwdCriteria">
-                  <span id="ruleLength" class="rule-item"><i class="fa-solid fa-circle-xmark"></i> 8+ characters</span>
-                  <span id="ruleLetter" class="rule-item"><i class="fa-solid fa-circle-xmark"></i> At least 1 letter</span>
-                  <span id="ruleNumber" class="rule-item"><i class="fa-solid fa-circle-xmark"></i> At least 1 number</span>
-                </div>
-                <small class="field-error" id="errSignupPassword"></small>
-              </div>
-
-              <div class="form-group">
-                <label for="signupConfirmPassword"><i class="fa-solid fa-lock"></i> <span data-i18n="lblConfirmPassword">Confirm Password:</span> *</label>
-                <div class="pwd-input-wrap">
-                  <input type="password" id="signupConfirmPassword" class="form-control auth-input" placeholder="Re-enter password" required autocomplete="new-password">
-                  <button type="button" class="btn-toggle-pwd" id="btnToggleConfirmPwd" title="Show / Hide Password" aria-label="Toggle password visibility">
-                    <i class="fa-solid fa-eye"></i>
-                  </button>
-                </div>
-                <small class="field-error" id="errSignupConfirmPassword"></small>
-              </div>
-            </div>
-
-            <!-- Socio-Economic & Location Parameters -->
             <div class="form-group">
-              <label for="signupCategory"><i class="fa-solid fa-users-viewfinder"></i> Socio-Economic Category (MSJE Mandate) *</label>
-              <select id="signupCategory" class="form-control auth-input" required>
-                <option value="sc" selected>Scheduled Caste (SC) - NSFDC Concessional Channel</option>
-                <option value="st">Scheduled Tribe (ST) - NSTFDC Tribal Channel</option>
-                <option value="obc">Other Backward Class (OBC) - NBCFDC Channel</option>
-                <option value="divyangjan">Persons with Disabilities (Divyangjan) - NDFDC Channel</option>
-                <option value="women_shg">Women Self-Help Group (SHG) / W-Enterprise</option>
-                <option value="general">General / Rural Economically Weaker Section (EWS)</option>
-              </select>
+              <label for="signupPassword"><i class="fa-solid fa-lock"></i> <span data-i18n="lblPassword">Password:</span> *</label>
+              <div class="pwd-input-wrap">
+                <input type="password" id="signupPassword" class="form-control auth-input" placeholder="Enter your password (min 6 characters)" required autocomplete="new-password">
+                <button type="button" class="btn-toggle-pwd" id="btnToggleSignupPwd" title="Show / Hide Password" aria-label="Toggle password visibility">
+                  <i class="fa-solid fa-eye"></i>
+                </button>
+              </div>
+              <small class="field-error" id="errSignupPassword"></small>
             </div>
 
-            <div class="form-grid-3">
-              <div class="form-group">
-                <label for="signupState"><i class="fa-solid fa-landmark"></i> State *</label>
-                <input list="stateList" id="signupState" class="form-control auth-input" placeholder="State" required value="Odisha">
-              </div>
-              <div class="form-group">
-                <label for="signupDistrict"><i class="fa-solid fa-city"></i> District *</label>
-                <input list="districtList" id="signupDistrict" class="form-control auth-input" placeholder="District" required value="Khordha">
-              </div>
-              <div class="form-group">
-                <label for="signupArea"><i class="fa-solid fa-location-dot"></i> Village / Town *</label>
-                <input list="villageList" id="signupArea" class="form-control auth-input" placeholder="Village / Area" required value="Hansapal (Pilot)">
-              </div>
-            </div>
+            <div class="auth-sticky-footer">
+              <button type="submit" id="btnSignupSubmit" class="btn-primary-lg flex-align" style="width:100%; justify-content:center;">
+                <i class="fa-solid fa-user-plus"></i> <span data-i18n="btnSubmitSignup">Register</span>
+              </button>
 
-            <div class="form-grid-2">
-              <div class="form-group">
-                <label for="signupPin"><i class="fa-solid fa-envelope"></i> Postal PIN Code *</label>
-                <input type="text" id="signupPin" class="form-control auth-input" placeholder="6-digit PIN" required value="751010" maxlength="6">
+              <div class="auth-switch-row text-center" style="margin-top:0.75rem;">
+                <span>Already registered?</span>
+                <button type="button" class="btn-link-action fw-bold" id="linkToLogin" data-i18n="linkLogin">Log In here</button>
               </div>
-              <div class="form-group">
-                <label for="signupMargin"><i class="fa-solid fa-wallet"></i> Margin Capital (₹) *</label>
-                <input type="number" id="signupMargin" class="form-control auth-input" placeholder="48000" min="10000" step="1000" required value="48000">
-              </div>
-            </div>
-
-            <button type="submit" id="btnSignupSubmit" class="btn-primary-lg flex-align" style="width:100%; justify-content:center; margin-top:0.75rem;">
-              <i class="fa-solid fa-user-check"></i> <span data-i18n="btnSubmitSignup">Create Entrepreneur Account & Start</span>
-            </button>
-
-            <div class="auth-switch-row text-center">
-              <span>Already registered?</span>
-              <button type="button" class="btn-link-action fw-bold" id="linkToLogin" data-i18n="linkLogin">Log In here</button>
             </div>
           </form>
         </div>

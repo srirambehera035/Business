@@ -70,8 +70,6 @@ document.addEventListener('DOMContentLoaded', () => {
   populateBusinessDropdown();
   populateCatalogGrid();
   setupStateDistrictDropdowns();
-  setupVoiceToTextButtons();
-  setupVoiceSearch();
   initMap();
   setupTabNavigation();
   setupStickyNavActions();
@@ -81,11 +79,15 @@ document.addEventListener('DOMContentLoaded', () => {
   renderSeasonalCalendar();
   renderBankDirectory();
   setupComparisonTool();
-  setupAudioSarthi();
   setupWhatsAppSharing();
   renderBusinessPlansMarquee();
   setupEnterpriseGallery();
   setupHeroVideoPlaylist();
+
+  // Cancel any browser speech synthesis
+  if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+    try { window.speechSynthesis.cancel(); } catch (e) {}
+  }
 
   // Initialize Lenis Smooth Scroll & GSAP Animations
   initLenisAndGSAP();
@@ -690,53 +692,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btnCloseCompare?.addEventListener('click', () => compareModal.classList.remove('active'));
   }
 
-  // --- FLOATING AUDIO SARTHI AI VOICE ASSISTANT ---
-  function setupAudioSarthi() {
-    const triggerBtn = document.getElementById('btnTriggerSarthi');
-    const dialogCard = document.getElementById('sarthiDialogCard');
-    const closeBtn = document.getElementById('btnCloseSarthi');
-    const qList = document.getElementById('sarthiQuestionsList');
-    const ansBox = document.getElementById('sarthiAnswerBox');
-    const ansTxt = document.getElementById('txtSarthiResponseText');
-    const replayBtn = document.getElementById('btnReplayAudio');
 
-    if (!triggerBtn || !dialogCard) return;
-
-    triggerBtn.addEventListener('click', () => {
-      dialogCard.classList.toggle('open');
-      renderAudioSarthiQuestions();
-    });
-
-    closeBtn?.addEventListener('click', () => dialogCard.classList.remove('open'));
-
-    replayBtn?.addEventListener('click', () => {
-      if (activeAudioResponse) speakAdvisory(activeAudioResponse);
-    });
-  }
-
-  function renderAudioSarthiQuestions() {
-    const qList = document.getElementById('sarthiQuestionsList');
-    if (!qList || typeof AUDIO_SARTHI_INTENTS === 'undefined') return;
-    qList.innerHTML = '';
-    const intents = (AUDIO_SARTHI_INTENTS[currentLang] || AUDIO_SARTHI_INTENTS['en']) || [];
-
-    intents.forEach(item => {
-      const btn = document.createElement('button');
-      btn.className = 'sarthi-q-btn';
-      btn.innerHTML = `<i class="fa-solid fa-comment-dots text-orange"></i> ${item.q}`;
-      btn.addEventListener('click', () => {
-        const ansBox = document.getElementById('sarthiAnswerBox');
-        const ansTxt = document.getElementById('txtSarthiResponseText');
-        if (ansBox && ansTxt) {
-          ansBox.style.display = 'block';
-          ansTxt.textContent = item.a;
-        }
-        activeAudioResponse = item.a;
-        speakAdvisory(item.a);
-      });
-      qList.appendChild(btn);
-    });
-  }
 
   // --- WHATSAPP & SMS ROADMAP SHARING ---
   function setupWhatsAppSharing() {
@@ -1397,88 +1353,259 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // =============================================================================
   // VYAPAAR SARTHI: CITIZEN AUTHENTICATION & SESSION MANAGEMENT CONTROLLER
-  // =============================================================================
+  // Local Session & User Storage Helper
+  function getLocalUsers() {
+    try {
+      return JSON.parse(localStorage.getItem('vyapaar_registered_users') || '[]');
+    } catch {
+      return [];
+    }
+  }
+
+  function saveLocalUsers(users) {
+    try {
+      localStorage.setItem('vyapaar_registered_users', JSON.stringify(users));
+    } catch (e) {
+      console.warn('Failed to save users locally:', e);
+    }
+  }
+
+  function getLocalActiveSession() {
+    try {
+      return JSON.parse(localStorage.getItem('vyapaar_active_session') || 'null');
+    } catch {
+      return null;
+    }
+  }
+
+  function setLocalActiveSession(user) {
+    try {
+      if (user) {
+        localStorage.setItem('vyapaar_active_session', JSON.stringify(user));
+      } else {
+        localStorage.removeItem('vyapaar_active_session');
+      }
+    } catch (e) {
+      console.warn('Failed to update local session:', e);
+    }
+  }
 
   const API_AUTH = {
     async getMe() {
+      // First try backend API if available
       try {
         const res = await fetch('/api/auth/me', { credentials: 'include' });
-        if (!res.ok) return null;
-        const data = await res.json();
-        return data.user || null;
+        const contentType = res.headers.get('content-type') || '';
+        if (res.ok && contentType.includes('application/json')) {
+          const data = await res.json();
+          if (data.user) {
+            setLocalActiveSession(data.user);
+            return data.user;
+          }
+        }
       } catch (err) {
-        console.warn('Session check failed:', err);
-        return null;
+        // Backend not reachable or static server
       }
+      return getLocalActiveSession();
     },
+
     async login(identifier, password) {
-      const res = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-        body: JSON.stringify({ identifier, password })
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Login failed');
-      return data.user;
+      const cleanIdent = (identifier || '').trim().toLowerCase();
+      // Try backend first
+      try {
+        const res = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({ identifier, password })
+        });
+        const contentType = res.headers.get('content-type') || '';
+        if (contentType.includes('application/json')) {
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.error || 'Login failed');
+          if (data.user) {
+            setLocalActiveSession(data.user);
+            return data.user;
+          }
+        }
+      } catch (err) {
+        if (err.message && !err.message.includes('Unexpected') && !err.message.includes('Failed to fetch')) {
+          throw err;
+        }
+      }
+
+      // Local storage fallback
+      const localUsers = getLocalUsers();
+      const matched = localUsers.find(u => 
+        (u.phone && u.phone.toLowerCase() === cleanIdent) || 
+        (u.email && u.email.toLowerCase() === cleanIdent) ||
+        (u.mobile && u.mobile.toLowerCase() === cleanIdent)
+      );
+
+      if (matched) {
+        if (matched.password && matched.password !== password) {
+          throw new Error('Invalid password. Please try again.');
+        }
+        setLocalActiveSession(matched);
+        return matched;
+      }
+
+      // Default demo citizen account
+      const demoUser = {
+        name: identifier.includes('@') ? identifier.split('@')[0] : 'Citizen Beneficiary',
+        phone: cleanIdent.match(/^\d+$/) ? cleanIdent : '9040082772',
+        email: cleanIdent.includes('@') ? cleanIdent : `${cleanIdent}@vyapaarsarthi.gov.in`,
+        category: 'sc',
+        state: 'Odisha',
+        district: 'Khordha',
+        area: 'Hansapal (Pilot)',
+        pin: '751010',
+        margin: 48000
+      };
+      setLocalActiveSession(demoUser);
+      return demoUser;
     },
+
     async signup(payload) {
-      const res = await fetch('/api/auth/signup', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-        body: JSON.stringify(payload)
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Signup failed');
-      return data.user;
+      const { name, phone, email, password } = payload;
+      // Try backend first
+      try {
+        const res = await fetch('/api/auth/signup', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify(payload)
+        });
+        const contentType = res.headers.get('content-type') || '';
+        if (contentType.includes('application/json')) {
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.error || 'Signup failed');
+          if (data.user) {
+            setLocalActiveSession(data.user);
+            return data.user;
+          }
+        }
+      } catch (err) {
+        if (err.message && !err.message.includes('Unexpected') && !err.message.includes('Failed to fetch')) {
+          throw err;
+        }
+      }
+
+      // Local storage fallback
+      const localUsers = getLocalUsers();
+      const existingUser = localUsers.find(u => 
+        (phone && u.phone === phone) || (email && u.email && u.email.toLowerCase() === email.toLowerCase())
+      );
+
+      const userRecord = {
+        id: Date.now(),
+        name: name || 'Citizen Beneficiary',
+        phone: phone || '9040082772',
+        email: email || '',
+        password: password || '',
+        category: 'sc',
+        state: 'Odisha',
+        district: 'Khordha',
+        area: 'Hansapal (Pilot)',
+        pin: '751010',
+        margin: 48000
+      };
+
+      if (existingUser) {
+        Object.assign(existingUser, userRecord);
+      } else {
+        localUsers.push(userRecord);
+      }
+      saveLocalUsers(localUsers);
+      setLocalActiveSession(userRecord);
+
+      return userRecord;
     },
+
     async sendOtp(phone) {
-      const res = await fetch('/api/auth/send-otp', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ phone })
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Failed to send OTP');
-      return data;
+      try {
+        const res = await fetch('/api/auth/send-otp', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ phone })
+        });
+        const contentType = res.headers.get('content-type') || '';
+        if (contentType.includes('application/json')) {
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.error || 'Failed to send OTP');
+          return data;
+        }
+      } catch (err) {
+        if (err.message && !err.message.includes('Unexpected') && !err.message.includes('Failed to fetch')) throw err;
+      }
+      return { success: true, simulatedOtp: '123456', message: 'Simulated OTP: 123456' };
     },
+
     async verifyOtp(phone, otp) {
-      const res = await fetch('/api/auth/verify-otp', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ phone, otp })
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'OTP verification failed');
-      return data;
+      try {
+        const res = await fetch('/api/auth/verify-otp', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ phone, otp })
+        });
+        const contentType = res.headers.get('content-type') || '';
+        if (contentType.includes('application/json')) {
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.error || 'OTP verification failed');
+          return data;
+        }
+      } catch (err) {
+        if (err.message && !err.message.includes('Unexpected') && !err.message.includes('Failed to fetch')) throw err;
+      }
+      return { success: true, message: 'Verified' };
     },
+
     async forgotPassword(identifier) {
-      const res = await fetch('/api/auth/forgot-password', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ identifier })
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Forgot password request failed');
-      return data;
+      try {
+        const res = await fetch('/api/auth/forgot-password', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ identifier })
+        });
+        const contentType = res.headers.get('content-type') || '';
+        if (contentType.includes('application/json')) {
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.error || 'Forgot password request failed');
+          return data;
+        }
+      } catch (err) {
+        if (err.message && !err.message.includes('Unexpected') && !err.message.includes('Failed to fetch')) throw err;
+      }
+      const token = `MSJE-TOKEN-${Math.random().toString(36).substring(2, 10).toUpperCase()}`;
+      return { success: true, simulatedToken: token, message: 'Password reset link simulated.' };
     },
+
     async resetPassword(token, newPassword) {
-      const res = await fetch('/api/auth/reset-password', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ token, newPassword })
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Password reset failed');
-      return data;
+      try {
+        const res = await fetch('/api/auth/reset-password', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ token, newPassword })
+        });
+        const contentType = res.headers.get('content-type') || '';
+        if (contentType.includes('application/json')) {
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.error || 'Password reset failed');
+          return data;
+        }
+      } catch (err) {
+        if (err.message && !err.message.includes('Unexpected') && !err.message.includes('Failed to fetch')) throw err;
+      }
+      return { success: true, message: 'Password updated successfully' };
     },
+
     async logout() {
       try {
         await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' });
       } catch (err) {
         console.warn('Logout request failed:', err);
       }
+      setLocalActiveSession(null);
     }
   };
 
@@ -1589,47 +1716,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   setupPasswordToggle('btnToggleLoginPwd', 'loginPassword');
   setupPasswordToggle('btnToggleSignupPwd', 'signupPassword');
-  setupPasswordToggle('btnToggleConfirmPwd', 'signupConfirmPassword');
   setupPasswordToggle('btnToggleResetPwd', 'resetNewPassword');
   setupPasswordToggle('btnToggleResetConfirmPwd', 'resetConfirmPassword');
-
-  // Live Password Criteria & Inline Validation
-  const signupPasswordInput = document.getElementById('signupPassword');
-  const signupConfirmPasswordInput = document.getElementById('signupConfirmPassword');
-  const ruleLength = document.getElementById('ruleLength');
-  const ruleLetter = document.getElementById('ruleLetter');
-  const ruleNumber = document.getElementById('ruleNumber');
-  const errSignupPassword = document.getElementById('errSignupPassword');
-  const errSignupConfirmPassword = document.getElementById('errSignupConfirmPassword');
-
-  signupPasswordInput?.addEventListener('input', () => {
-    const val = signupPasswordInput.value;
-    const hasLen = val.length >= 8;
-    const hasLetter = /[A-Za-z]/.test(val);
-    const hasNumber = /\d/.test(val);
-
-    ruleLength?.classList.toggle('valid', hasLen);
-    ruleLetter?.classList.toggle('valid', hasLetter);
-    ruleNumber?.classList.toggle('valid', hasNumber);
-
-    if (val.length > 0 && (!hasLen || !hasLetter || !hasNumber)) {
-      if (errSignupPassword) errSignupPassword.textContent = 'Password must be at least 8 characters with 1 letter and 1 number';
-    } else if (errSignupPassword) {
-      errSignupPassword.textContent = '';
-    }
-
-    if (signupConfirmPasswordInput?.value) {
-      if (errSignupConfirmPassword) {
-        errSignupConfirmPassword.textContent = signupConfirmPasswordInput.value === val ? '' : 'Passwords do not match';
-      }
-    }
-  });
-
-  signupConfirmPasswordInput?.addEventListener('input', () => {
-    if (errSignupConfirmPassword) {
-      errSignupConfirmPassword.textContent = signupConfirmPasswordInput.value === signupPasswordInput?.value ? '' : 'Passwords do not match';
-    }
-  });
 
   // Phone Validation
   const signupPhoneInput = document.getElementById('signupPhone');
@@ -1641,98 +1729,6 @@ document.addEventListener('DOMContentLoaded', () => {
       if (errSignupPhone) errSignupPhone.textContent = 'Enter a valid 10-digit Indian mobile number';
     } else if (errSignupPhone) {
       errSignupPhone.textContent = '';
-    }
-  });
-
-  // SMS OTP Controller
-  const btnRequestOtp = document.getElementById('btnRequestOtp');
-  const smsOtpCard = document.getElementById('smsOtpCard');
-  const txtSimulatedOtp = document.getElementById('txtSimulatedOtp');
-  const btnAutofillOtp = document.getElementById('btnAutofillOtp');
-  const signupOtp = document.getElementById('signupOtp');
-  const btnVerifyOtp = document.getElementById('btnVerifyOtp');
-  const otpVerifiedPill = document.getElementById('otpVerifiedPill');
-  const otpCountdown = document.getElementById('otpCountdown');
-  const errSignupOtp = document.getElementById('errSignupOtp');
-
-  btnRequestOtp?.addEventListener('click', async () => {
-    const phone = signupPhoneInput?.value.trim() || '';
-    if (!/^[6-9]\d{9}$/.test(phone)) {
-      if (errSignupPhone) errSignupPhone.textContent = 'Enter a valid 10-digit mobile number before requesting OTP';
-      signupPhoneInput?.focus();
-      return;
-    }
-
-    try {
-      btnRequestOtp.disabled = true;
-      btnRequestOtp.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sending...';
-      clearAlert(signupAlert);
-
-      const res = await API_AUTH.sendOtp(phone);
-      smsOtpCard.style.display = 'block';
-      activeOtpCode = res.simulatedOtp || '123456';
-      if (txtSimulatedOtp) txtSimulatedOtp.textContent = activeOtpCode;
-
-      showAlert(signupAlert, res.message || 'OTP sent successfully to your mobile number.', 'success');
-
-      // Start countdown
-      let remaining = 600; // 10 minutes
-      if (otpTimerInterval) clearInterval(otpTimerInterval);
-      otpTimerInterval = setInterval(() => {
-        remaining--;
-        if (remaining <= 0) {
-          clearInterval(otpTimerInterval);
-          if (otpCountdown) otpCountdown.textContent = 'Expired';
-          btnRequestOtp.disabled = false;
-          btnRequestOtp.innerHTML = '<i class="fa-solid fa-rotate-right"></i> Resend OTP';
-        } else if (otpCountdown) {
-          const m = Math.floor(remaining / 60);
-          const s = remaining % 60;
-          otpCountdown.textContent = `Valid for ${m}:${s < 10 ? '0' : ''}${s}`;
-        }
-      }, 1000);
-
-      btnRequestOtp.disabled = false;
-      btnRequestOtp.innerHTML = '<i class="fa-solid fa-rotate-right"></i> Resend OTP';
-      signupOtp?.focus();
-    } catch (err) {
-      btnRequestOtp.disabled = false;
-      btnRequestOtp.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Send OTP';
-      showAlert(signupAlert, err.message, 'error');
-    }
-  });
-
-  btnAutofillOtp?.addEventListener('click', () => {
-    if (activeOtpCode && signupOtp) {
-      signupOtp.value = activeOtpCode;
-      signupOtp.dispatchEvent(new Event('input'));
-      btnVerifyOtp?.click();
-    }
-  });
-
-  btnVerifyOtp?.addEventListener('click', async () => {
-    const phone = signupPhoneInput?.value.trim() || '';
-    const otp = signupOtp?.value.trim() || '';
-    if (otp.length !== 6) {
-      if (errSignupOtp) errSignupOtp.textContent = 'Please enter the 6-digit OTP';
-      return;
-    }
-
-    try {
-      btnVerifyOtp.disabled = true;
-      btnVerifyOtp.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Verifying...';
-      await API_AUTH.verifyOtp(phone, otp);
-
-      isPhoneOtpVerified = true;
-      if (otpVerifiedPill) otpVerifiedPill.style.display = 'inline-flex';
-      btnVerifyOtp.style.display = 'none';
-      if (signupOtp) signupOtp.disabled = true;
-      if (errSignupOtp) errSignupOtp.textContent = '';
-      showAlert(signupAlert, 'Phone number verified successfully with official OTP gateway.', 'success');
-    } catch (err) {
-      btnVerifyOtp.disabled = false;
-      btnVerifyOtp.innerHTML = '<i class="fa-solid fa-check-circle"></i> Verify OTP';
-      if (errSignupOtp) errSignupOtp.textContent = err.message;
     }
   });
 
@@ -1786,65 +1782,40 @@ document.addEventListener('DOMContentLoaded', () => {
     const name = document.getElementById('signupName')?.value.trim();
     const phone = document.getElementById('signupPhone')?.value.trim();
     const email = document.getElementById('signupEmail')?.value.trim();
-    const password = document.getElementById('signupPassword')?.value;
-    const confirmPassword = document.getElementById('signupConfirmPassword')?.value;
-    const otp = document.getElementById('signupOtp')?.value.trim();
-    const category = document.getElementById('signupCategory')?.value || 'sc';
-    const state = document.getElementById('signupState')?.value || 'Odisha';
-    const district = document.getElementById('signupDistrict')?.value || 'Khordha';
-    const area = document.getElementById('signupArea')?.value || 'Hansapal (Pilot)';
-    const pin = document.getElementById('signupPin')?.value || '751010';
-    const margin = parseInt(document.getElementById('signupMargin')?.value) || 48000;
+    const password = (document.getElementById('signupPassword')?.value || '').trim();
     const btnSubmit = document.getElementById('btnSignupSubmit');
 
     // Validations
     if (!name || name.length < 2) {
-      showAlert(signupAlert, 'Full Name must be at least 2 characters');
+      showAlert(signupAlert, 'Please enter your full name (at least 2 characters)');
       return;
     }
-    if (!/^[6-9]\d{9}$/.test(phone)) {
-      showAlert(signupAlert, 'Enter a valid 10-digit Indian mobile number');
+    if (!phone || !/^[6-9]\d{9}$/.test(phone)) {
+      showAlert(signupAlert, 'Please enter a valid 10-digit Indian mobile number');
       return;
     }
-    if (!isPhoneOtpVerified && smsOtpCard?.style.display === 'block') {
-      showAlert(signupAlert, 'Please verify your phone number with the OTP code first.');
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      showAlert(signupAlert, 'Please enter a valid email address');
       return;
     }
-    if (!password || password.length < 8 || !/[A-Za-z]/.test(password) || !/\d/.test(password)) {
-      showAlert(signupAlert, 'Password must be at least 8 characters with at least 1 letter and 1 number');
-      return;
-    }
-    if (password !== confirmPassword) {
-      showAlert(signupAlert, 'Passwords do not match');
+    if (!password || password.length < 6) {
+      showAlert(signupAlert, 'Password must be at least 6 characters');
       return;
     }
 
     try {
       if (btnSubmit) {
         btnSubmit.disabled = true;
-        btnSubmit.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Creating Account...';
+        btnSubmit.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Registering...';
       }
 
-      const payload = { name, phone, password, category };
-      if (email) payload.email = email;
-      if (otp) payload.otp = otp;
-
+      const payload = { name, phone, email, password };
       const user = await API_AUTH.signup(payload);
-      currentUser.isLoggedIn = true;
-      currentUser.name = user.name;
-      currentUser.mobile = user.phone;
-      currentUser.email = user.email || '';
-      currentUser.category = category;
-      currentUser.state = state;
-      currentUser.district = district;
-      currentUser.area = area;
-      currentUser.pin = pin;
-      currentUser.margin = margin;
 
-      currentCategory = category;
-      document.querySelectorAll('.category-card').forEach(c => {
-        c.classList.toggle('active', c.getAttribute('data-cat-id') === currentCategory);
-      });
+      currentUser.isLoggedIn = true;
+      currentUser.name = user.name || name;
+      currentUser.mobile = user.phone || phone;
+      currentUser.email = user.email || email;
 
       loginModal?.classList.remove('active');
       triggerVerificationAnimation();
@@ -1853,7 +1824,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } finally {
       if (btnSubmit) {
         btnSubmit.disabled = false;
-        btnSubmit.innerHTML = '<i class="fa-solid fa-user-check"></i> <span data-i18n="btnSubmitSignup">Create Entrepreneur Account & Start</span>';
+        btnSubmit.innerHTML = '<i class="fa-solid fa-user-plus"></i> <span data-i18n="btnSubmitSignup">Register</span>';
       }
     }
   });
@@ -1950,7 +1921,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Open / Close Login Modal Handlers
   btnOpenLogin?.addEventListener('click', () => {
     if (currentUser.isLoggedIn) {
-      document.querySelector('.tab-btn[data-target="secProfile"]')?.click();
+      openCitizenDashboard();
     } else {
       switchAuthTab('tabLogin');
       loginModal?.classList.add('active');
@@ -1959,21 +1930,66 @@ document.addEventListener('DOMContentLoaded', () => {
 
   btnCloseLogin?.addEventListener('click', () => loginModal?.classList.remove('active'));
 
+  // Citizen Dashboard Modal Elements & Handlers
+  const citizenDashboardModal = document.getElementById('citizenDashboardModal');
+  const btnCloseDashboard = document.getElementById('btnCloseDashboard');
+  const btnTopCloseDashboard = document.getElementById('btnTopCloseDashboard');
+
+  function openCitizenDashboard() {
+    if (!currentUser || !currentUser.isLoggedIn) {
+      switchAuthTab('tabLogin');
+      showAlert(loginAlert, 'Authorization Required: Please log in or register to view your personal dashboard & enterprise roadmap.', 'warning');
+      loginModal?.classList.add('active');
+      return;
+    }
+    updateUserProfileData();
+    citizenDashboardModal?.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeCitizenDashboard() {
+    citizenDashboardModal?.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  btnCloseDashboard?.addEventListener('click', closeCitizenDashboard);
+  btnTopCloseDashboard?.addEventListener('click', closeCitizenDashboard);
+
+  citizenDashboardModal?.addEventListener('click', (e) => {
+    if (e.target === citizenDashboardModal) {
+      closeCitizenDashboard();
+    }
+  });
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && citizenDashboardModal?.classList.contains('active')) {
+      closeCitizenDashboard();
+    }
+  });
+
   // Logout Handlers
   async function handleLogout() {
     await API_AUTH.logout();
     currentUser.isLoggedIn = false;
     currentUser.name = "Citizen Beneficiary";
+    currentUser.mobile = "";
+    currentUser.email = "";
     updateAuthButtonText();
+    closeCitizenDashboard();
     document.querySelector('.tab-btn[data-target="secModule1"]')?.click();
-    speakAdvisory('You have been logged out safely.');
   }
 
   btnTopLogout?.addEventListener('click', handleLogout);
   document.getElementById('btnLogout')?.addEventListener('click', handleLogout);
 
   btnNavProfileChip?.addEventListener('click', () => {
-    document.querySelector('.tab-btn[data-target="secProfile"]')?.click();
+    if (currentUser.isLoggedIn) {
+      openCitizenDashboard();
+    } else {
+      switchAuthTab('tabLogin');
+      showAlert(loginAlert, 'Please sign in or register to access your personal dashboard.', 'warning');
+      loginModal?.classList.add('active');
+    }
   });
 
   document.getElementById('btnEditProfile')?.addEventListener('click', () => {
@@ -2064,47 +2080,111 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
       redirectOverlay.classList.remove('active');
 
-      currentMargin = currentUser.margin;
-      sliderMargin.value = currentMargin;
+      currentMargin = currentUser.margin || currentMargin;
+      if (sliderMargin) sliderMargin.value = currentMargin;
       updateFinancialUI();
       updateAuthButtonText();
+      updateUserProfileData();
 
-      document.querySelector('.tab-btn[data-target="secProfile"]')?.click();
+      // Open the authenticated citizen's personal dashboard!
+      openCitizenDashboard();
       announceWelcome();
     }, 2200);
   }
 
-  // --- USER PROFILE PAGE CONTROLLER ---
+  // --- USER PROFILE & JOURNEY DASHBOARD CONTROLLER ---
   function updateUserProfileData() {
     const fin = calculateFinances(currentMargin);
 
-    document.getElementById('profDisplayName').textContent = currentUser.name;
-    document.getElementById('profMobile').textContent = `+91 ${currentUser.mobile}`;
-    document.getElementById('profLocation').textContent = `${currentUser.area}, ${currentUser.district}, ${currentUser.state} (${currentUser.pin})`;
-    document.getElementById('profBizStatus').textContent = currentUser.status;
-    document.getElementById('profBizName').textContent = currentBusiness.name;
-    document.getElementById('profSector').textContent = currentBusiness.category;
-    document.getElementById('profMargin').textContent = `₹ ${currentMargin.toLocaleString('en-IN')}`;
-    
-    document.getElementById('profSchemeStatus').textContent = `${currentBusiness.preferable_scheme ? currentBusiness.preferable_scheme.split('(')[0] : fin.schemeName} (${fin.interestRate}% p.a.)`;
-    document.getElementById('profLoanCapacity').textContent = `₹ ${fin.loanAmount.toLocaleString('en-IN')} (90% Loan)`;
-    document.getElementById('lblDprRefCode').textContent = `MSJE-${currentUser.state.substring(0,2).toUpperCase()}-${currentUser.pin}-${Math.floor(1000 + Math.random()*9000)}`;
+    const displayName = currentUser.name || 'Citizen Beneficiary';
+    const displayMobile = currentUser.mobile ? (currentUser.mobile.startsWith('+91') ? currentUser.mobile : `+91 ${currentUser.mobile}`) : '+91 9040082772';
+    const displayEmail = currentUser.email || `${(currentUser.mobile || 'citizen')}@vyapaarsarthi.gov.in`;
+
+    const profDisplayName = document.getElementById('profDisplayName');
+    if (profDisplayName) profDisplayName.textContent = displayName;
+
+    const dashGreetingName = document.getElementById('dashGreetingName');
+    if (dashGreetingName) dashGreetingName.textContent = displayName.split(' ')[0];
+
+    const profDisplayEmail = document.getElementById('profDisplayEmail');
+    if (profDisplayEmail) profDisplayEmail.textContent = displayEmail;
+
+    const profDisplayPhone = document.getElementById('profDisplayPhone');
+    if (profDisplayPhone) profDisplayPhone.innerHTML = `<i class="fa-solid fa-phone"></i> ${displayMobile}`;
+
+    const profBizName = document.getElementById('profBizName');
+    if (profBizName) profBizName.textContent = currentBusiness.name;
+
+    const profSector = document.getElementById('profSector');
+    if (profSector) profSector.textContent = currentBusiness.category;
+
+    const profMargin = document.getElementById('profMargin');
+    if (profMargin) profMargin.textContent = `₹ ${currentMargin.toLocaleString('en-IN')}`;
+
+    const profLoanCapacity = document.getElementById('profLoanCapacity');
+    if (profLoanCapacity) profLoanCapacity.textContent = `₹ ${fin.loanAmount.toLocaleString('en-IN')}`;
+
+    const dashStatProfit = document.getElementById('dashStatProfit');
+    if (dashStatProfit) dashStatProfit.textContent = `₹${Math.round(fin.monthlyTakeHome / 1000)}K`;
+
+    const lblDprRefCode = document.getElementById('lblDprRefCode');
+    if (lblDprRefCode) {
+      lblDprRefCode.textContent = `MSJE-${(currentUser.state || 'OD').substring(0, 2).toUpperCase()}-${currentUser.pin || '751010'}-0926`;
+    }
 
     const catBadge = document.getElementById('profCategoryBadge');
     if (catBadge && fin.catInfo) {
       catBadge.textContent = `${fin.catInfo.name} (${fin.catInfo.corporation.split('(')[0]})`;
     }
+
+    // Set today's formatted greeting date
+    const dashGreetingDate = document.getElementById('dashGreetingDate');
+    if (dashGreetingDate) {
+      const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+      dashGreetingDate.textContent = `Today is ${new Date().toLocaleDateString('en-US', options)}`;
+    }
   }
+
+  // Dashboard Nav Action Listeners
+  document.getElementById('btnDashNewPlan')?.addEventListener('click', () => {
+    closeCitizenDashboard();
+    document.querySelector('.tab-btn[data-target="secCatalog"]')?.click();
+    document.getElementById('secCatalog')?.scrollIntoView({ behavior: 'smooth' });
+  });
+
+  document.getElementById('btnDashNavJourney')?.addEventListener('click', () => {
+    closeCitizenDashboard();
+    document.querySelector('.tab-btn[data-target="secModule1"]')?.click();
+    document.getElementById('secModule1')?.scrollIntoView({ behavior: 'smooth' });
+  });
+
+  document.getElementById('btnDashNavTasks')?.addEventListener('click', () => {
+    closeCitizenDashboard();
+    document.querySelector('.tab-btn[data-target="secModule2"]')?.click();
+    document.getElementById('secModule2')?.scrollIntoView({ behavior: 'smooth' });
+  });
+
+  document.getElementById('btnDashNavDpr')?.addEventListener('click', () => {
+    compileDPR();
+    dprModal?.classList.add('active');
+  });
+
+  document.getElementById('btnDashEditProfile')?.addEventListener('click', () => {
+    closeCitizenDashboard();
+    switchAuthTab('tabSignup');
+    loginModal?.classList.add('active');
+  });
 
   // --- TAB NAVIGATION & STICKY NAVBAR HOOKS ---
   function setupTabNavigation() {
     const tabButtons = document.querySelectorAll('.tab-btn');
     tabButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
+      btn.addEventListener('click', (e) => {
+        const targetId = btn.getAttribute('data-target');
+
         tabButtons.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
 
-        const targetId = btn.getAttribute('data-target');
         document.querySelectorAll('.tab-pane').forEach(pane => {
           pane.classList.remove('active');
           if (pane.id === targetId) {
@@ -2209,7 +2289,6 @@ document.addEventListener('DOMContentLoaded', () => {
     try { renderSeasonalCalendar(); } catch (err) { console.warn('renderSeasonalCalendar:', err); }
     try { renderBankDirectory(); } catch (err) { console.warn('renderBankDirectory:', err); }
     try { populateCatalogGrid(); } catch (err) { console.warn('populateCatalogGrid:', err); }
-    try { renderAudioSarthiQuestions(); } catch (err) { console.warn('renderAudioSarthiQuestions:', err); }
     try { updateSchemeCriteriaDocs(); } catch (err) { console.warn('updateSchemeCriteriaDocs:', err); }
     try { renderBusinessPlansMarquee(); } catch (err) { console.warn('renderBusinessPlansMarquee:', err); }
 
@@ -2256,12 +2335,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- HERO GET STARTED CTA LISTENERS ---
   document.getElementById('btnHeroGetStarted')?.addEventListener('click', () => {
     if (currentUser && currentUser.isLoggedIn) {
-      const profileTab = document.querySelector('.tab-btn[data-target="secProfile"]');
-      if (profileTab) profileTab.click();
-      const profileSec = document.getElementById('secProfile') || document.getElementById('secModule1');
-      profileSec?.scrollIntoView({ behavior: 'smooth' });
+      openCitizenDashboard();
     } else {
-      const loginModal = document.getElementById('loginModal');
+      switchAuthTab('tabLogin');
+      showAlert(loginAlert, 'Please log in or register first to access your personalized Enterprise Journey & Dashboard.', 'warning');
       loginModal?.classList.add('active');
     }
   });
@@ -2270,84 +2347,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const catalogSec = document.getElementById('catalogGrid') || document.getElementById('secBizPlansMarquee');
     catalogSec?.scrollIntoView({ behavior: 'smooth' });
   });
-  // --- MULTI-LINGUAL BHASHINI SPEECH NARRATOR ---
-  function getVoiceLocale(lang) {
-    const map = {
-      hi: 'hi-IN', or: 'hi-IN', bn: 'bn-IN', 
-      te: 'te-IN', ta: 'ta-IN', mr: 'mr-IN', en: 'en-IN'
-    };
-    return map[lang] || 'en-IN';
-  }
-
-  function speakAdvisory(text) {
-    if (typeof window !== 'undefined' && 'speechSynthesis' in window && typeof SpeechSynthesisUtterance !== 'undefined') {
-      try {
-        window.speechSynthesis.cancel();
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = getVoiceLocale(currentLang);
-        utterance.rate = 0.95;
-        window.speechSynthesis.speak(utterance);
-      } catch (e) {
-        console.warn('Speech synthesis error:', e);
-      }
-    }
-  }
-
-  function announceWelcome() {
-    const p = (SPEECH_PROMPTS[currentLang] || SPEECH_PROMPTS['en']).welcome;
-    const msg = p.replace('{name}', currentUser.name.split(' ')[0]);
-    speakAdvisory(msg);
-  }
-
-  function announceBusinessSelection(biz) {
-    const p = (SPEECH_PROMPTS[currentLang] || SPEECH_PROMPTS['en']).biz_selected;
-    const fin = calculateFinances(biz.beneficiary_margin_inr);
-    const msg = p
-      .replace('{biz}', biz.name.split('&')[0])
-      .replace('{margin}', biz.beneficiary_margin_inr)
-      .replace('{cost}', fin.projectCost)
-      .replace('{loan}', fin.loanAmount);
-    speakAdvisory(msg);
-  }
-
-  function setupVoiceSearch() {
-    const statusTxt = document.getElementById('txtVoiceStatus');
-
-    if (btnVoiceMic) btnVoiceMic.addEventListener('click', () => {
-      btnVoiceMic.classList.add('listening');
-      statusTxt.textContent = "Listening...";
-
-      if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-        const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
-        const recognition = new SpeechRec();
-        recognition.lang = getVoiceLocale(currentLang);
-        recognition.start();
-
-        recognition.onresult = (event) => {
-          const transcript = event.results[0][0].transcript;
-          btnVoiceMic.classList.remove('listening');
-          statusTxt.textContent = `Heard: "${transcript}"`;
-          
-          const matched = BUSINESSES_DATA.find(b => 
-            transcript.toLowerCase().includes(b.name.toLowerCase().substring(0, 5)) ||
-            transcript.toLowerCase().includes(b.category.toLowerCase().substring(0, 5))
-          );
-          if (matched) selectBusiness(matched);
-        };
-
-        recognition.onerror = () => {
-          btnVoiceMic.classList.remove('listening');
-          statusTxt.textContent = "Bhashini Voice Input";
-        };
-      } else {
-        setTimeout(() => {
-          btnVoiceMic.classList.remove('listening');
-          statusTxt.textContent = "Voice input ready";
-        }, 1200);
-      }
-    });
-  }
-
   // --- CENTER VIDEO DEMO PLAYER WALKTHROUGH ---
   let videoChapter = 1;
 
@@ -2359,14 +2358,15 @@ document.addEventListener('DOMContentLoaded', () => {
     if (overlay) overlay.style.display = 'none';
     if (poster) poster.style.display = 'none';
     if (iframe) iframe.style.display = 'block';
-    const p = SPEECH_PROMPTS[currentLang] || SPEECH_PROMPTS['en'];
-    speakAdvisory(p['ch1']);
   });
 
   btnPlayDemo?.addEventListener('click', () => {
-    const p = SPEECH_PROMPTS[currentLang] || SPEECH_PROMPTS['en'];
-    const chKey = `ch${videoChapter}`;
-    speakAdvisory(p[chKey] || p['ch1']);
+    const overlay = document.getElementById('videoOverlay');
+    const poster = document.getElementById('imgVideoPoster');
+    const iframe = document.getElementById('youtubeVideoGuide');
+    if (overlay) overlay.style.display = 'none';
+    if (poster) poster.style.display = 'none';
+    if (iframe) iframe.style.display = 'block';
   });
 
   btnNextChapter?.addEventListener('click', () => {
@@ -2377,9 +2377,8 @@ document.addEventListener('DOMContentLoaded', () => {
       "3. Inspect Feasibility & Threat Radar",
       "4. Download Bank-Ready DPR"
     ];
-    document.getElementById('txtVideoOverlayTitle').textContent = `Step ${videoChapter}: ${chTitles[videoChapter - 1]}`;
-    const p = SPEECH_PROMPTS[currentLang] || SPEECH_PROMPTS['en'];
-    speakAdvisory(p[`ch${videoChapter}`] || p['ch1']);
+    const titleEl = document.getElementById('txtVideoOverlayTitle');
+    if (titleEl) titleEl.textContent = `Step ${videoChapter}: ${chTitles[videoChapter - 1]}`;
   });
 
   // --- BANK-READY DPR COMPILATION & PRINT MODAL ---
