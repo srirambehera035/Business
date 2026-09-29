@@ -24,12 +24,10 @@
   
   <!-- Lenis Smooth Scroll CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.css">
-
   <!-- Custom Stylesheet -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="font-inter">
-
   <!-- TOP TRICOLOR BAR -->
   <div class="tricolor-strip">
     <div class="saffron"></div>
@@ -1374,6 +1372,12 @@
             <p class="auth-instruction-text">
               Please enter your reset security token and choose a new password.
             </p>
+
+            <div class="form-group" id="groupResetIdentifier">
+              <label for="resetIdentifier"><i class="fa-solid fa-id-badge"></i> <span data-i18n="lblPhoneOrEmail">Phone Number or Email</span> *</label>
+              <input type="text" id="resetIdentifier" class="form-control auth-input" placeholder="e.g. 9876543210 or yourname@gmail.com" required>
+              <small class="field-error" id="errResetIdentifier"></small>
+            </div>
 
             <div class="form-group">
               <label for="resetToken"><i class="fa-solid fa-fingerprint"></i> Reset Security Token *</label>

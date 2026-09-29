@@ -1529,6 +1529,29 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  // Helper: Normalize identifier for robust matching (phones, emails)
+  function normalizeUserIdent(val) {
+    if (!val) return '';
+    let clean = String(val).trim().toLowerCase();
+    const digitsOnly = clean.replace(/\D/g, '');
+    if (digitsOnly.length === 10) return digitsOnly;
+    if (digitsOnly.length === 12 && digitsOnly.startsWith('91')) return digitsOnly.slice(2);
+    if (digitsOnly.length === 11 && digitsOnly.startsWith('0')) return digitsOnly.slice(1);
+    return clean;
+  }
+
+  function matchesUserIdentifier(user, queryIdent) {
+    if (!user || !queryIdent) return false;
+    const target = normalizeUserIdent(queryIdent);
+    const rawTarget = String(queryIdent).trim().toLowerCase();
+    const userEmails = [user.email, user.mail].filter(Boolean).map(e => String(e).trim().toLowerCase());
+    const userPhones = [user.phone, user.mobile, user.contact].filter(Boolean).map(p => normalizeUserIdent(p));
+    
+    if (userEmails.includes(rawTarget) || userEmails.includes(target)) return true;
+    if (userPhones.includes(target)) return true;
+    return false;
+  }
+
   const API_AUTH = {
     async getMe() {
       // First try backend API if available
@@ -1575,11 +1598,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Local storage fallback
       const localUsers = getLocalUsers();
-      const matched = localUsers.find(u => 
-        (u.phone && u.phone.toLowerCase() === cleanIdent) || 
-        (u.email && u.email.toLowerCase() === cleanIdent) ||
-        (u.mobile && u.mobile.toLowerCase() === cleanIdent)
-      );
+      const matched = localUsers.find(u => matchesUserIdentifier(u, cleanIdent));
 
       if (matched) {
         if (matched.password && matched.password !== password) {
@@ -1594,6 +1613,7 @@ document.addEventListener('DOMContentLoaded', () => {
         name: identifier.includes('@') ? identifier.split('@')[0] : 'Citizen Beneficiary',
         phone: cleanIdent.match(/^\d+$/) ? cleanIdent : '9040082772',
         email: cleanIdent.includes('@') ? cleanIdent : `${cleanIdent}@vyapaarsarthi.gov.in`,
+        password: password,
         category: 'sc',
         state: 'Odisha',
         district: 'Khordha',
@@ -1601,6 +1621,8 @@ document.addEventListener('DOMContentLoaded', () => {
         pin: '751010',
         margin: 48000
       };
+      localUsers.push(demoUser);
+      saveLocalUsers(localUsers);
       setLocalActiveSession(demoUser);
       return demoUser;
     },
@@ -1633,7 +1655,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Local storage fallback
       const localUsers = getLocalUsers();
       const existingUser = localUsers.find(u => 
-        (phone && u.phone === phone) || (email && u.email && u.email.toLowerCase() === email.toLowerCase())
+        (phone && matchesUserIdentifier(u, phone)) || (email && matchesUserIdentifier(u, email))
       );
 
       const userRecord = {
@@ -1700,42 +1722,114 @@ document.addEventListener('DOMContentLoaded', () => {
     },
 
     async forgotPassword(identifier) {
+      const cleanIdent = (identifier || '').trim();
+      let simToken = `MSJE-TOKEN-${Math.random().toString(36).substring(2, 10).toUpperCase()}`;
+
       try {
         const res = await fetch('/api/auth/forgot-password', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ identifier })
+          body: JSON.stringify({ identifier: cleanIdent })
         });
         const contentType = res.headers.get('content-type') || '';
         if (contentType.includes('application/json')) {
           const data = await res.json();
           if (!res.ok) throw new Error(data.error || 'Forgot password request failed');
+          if (data.simulatedToken) simToken = data.simulatedToken;
+          if (cleanIdent) {
+            sessionStorage.setItem('vyapaar_pending_reset_identifier', cleanIdent);
+            localStorage.setItem('vyapaar_reset_token_' + simToken, cleanIdent);
+          }
           return data;
         }
       } catch (err) {
         if (err.message && !err.message.includes('Unexpected') && !err.message.includes('Failed to fetch')) throw err;
       }
-      const token = `MSJE-TOKEN-${Math.random().toString(36).substring(2, 10).toUpperCase()}`;
-      return { success: true, simulatedToken: token, message: 'Password reset link simulated.' };
+
+      if (cleanIdent) {
+        sessionStorage.setItem('vyapaar_pending_reset_identifier', cleanIdent);
+        localStorage.setItem('vyapaar_reset_token_' + simToken, cleanIdent);
+      }
+      return { 
+        success: true, 
+        simulatedToken: simToken, 
+        message: 'Password reset link simulated. Click the button below to set your new password.' 
+      };
     },
 
-    async resetPassword(token, newPassword) {
+    async resetPassword(token, newPassword, identifier) {
+      let targetIdentifier = (identifier || '').trim();
+      if (!targetIdentifier && token) {
+        targetIdentifier = localStorage.getItem('vyapaar_reset_token_' + token) || '';
+      }
+      if (!targetIdentifier) {
+        targetIdentifier = sessionStorage.getItem('vyapaar_pending_reset_identifier') || '';
+      }
+
+      // Try backend first
       try {
         const res = await fetch('/api/auth/reset-password', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ token, newPassword })
+          body: JSON.stringify({ token, newPassword, identifier: targetIdentifier })
         });
         const contentType = res.headers.get('content-type') || '';
         if (contentType.includes('application/json')) {
           const data = await res.json();
           if (!res.ok) throw new Error(data.error || 'Password reset failed');
-          return data;
         }
       } catch (err) {
         if (err.message && !err.message.includes('Unexpected') && !err.message.includes('Failed to fetch')) throw err;
       }
-      return { success: true, message: 'Password updated successfully' };
+
+      // Persist password update in localStorage (vyapaar_registered_users)
+      const localUsers = getLocalUsers();
+      let matched = false;
+
+      if (targetIdentifier) {
+        localUsers.forEach(u => {
+          if (matchesUserIdentifier(u, targetIdentifier)) {
+            u.password = newPassword;
+            matched = true;
+          }
+        });
+      }
+
+      if (!matched) {
+        // If user wasn't registered in local storage yet, register them with the new password
+        const isEmail = targetIdentifier.includes('@');
+        const newUser = {
+          id: Date.now(),
+          name: isEmail ? targetIdentifier.split('@')[0] : 'Citizen Beneficiary',
+          phone: !isEmail && targetIdentifier.match(/^\d+$/) ? targetIdentifier : '9040082772',
+          email: isEmail ? targetIdentifier : `${targetIdentifier}@vyapaarsarthi.gov.in`,
+          password: newPassword,
+          category: 'sc',
+          state: 'Odisha',
+          district: 'Khordha',
+          area: 'Hansapal (Pilot)',
+          pin: '751010',
+          margin: 48000
+        };
+        localUsers.push(newUser);
+      } else if (!targetIdentifier && localUsers.length > 0) {
+        localUsers[localUsers.length - 1].password = newPassword;
+      }
+
+      saveLocalUsers(localUsers);
+
+      // Also update currently active session if present
+      const activeSession = getLocalActiveSession();
+      if (activeSession && (!targetIdentifier || matchesUserIdentifier(activeSession, targetIdentifier))) {
+        activeSession.password = newPassword;
+        setLocalActiveSession(activeSession);
+      }
+
+      // Cleanup token mapping
+      if (token) localStorage.removeItem('vyapaar_reset_token_' + token);
+      sessionStorage.removeItem('vyapaar_pending_reset_identifier');
+
+      return { success: true, message: 'Password reset successfully. You can now log in with your new password.' };
     },
 
     async logout() {
@@ -1810,6 +1904,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // Show tab buttons if needed
     if (targetTabId === 'tabForgot' && tabBtnForgot) tabBtnForgot.style.display = 'inline-flex';
     if (targetTabId === 'tabReset' && tabBtnReset) tabBtnReset.style.display = 'inline-flex';
+
+    if (targetTabId === 'tabReset') {
+      const resetIdentInput = document.getElementById('resetIdentifier');
+      if (resetIdentInput && !resetIdentInput.value) {
+        const pending = sessionStorage.getItem('vyapaar_pending_reset_identifier') || '';
+        if (pending) resetIdentInput.value = pending;
+      }
+    }
 
     document.querySelectorAll('.auth-tab-btn').forEach(btn => {
       btn.classList.toggle('active', btn.getAttribute('data-auth-tab') === targetTabId);
@@ -1998,6 +2100,8 @@ document.addEventListener('DOMContentLoaded', () => {
           btnOpenResetDirect.onclick = () => {
             const resetTokenInput = document.getElementById('resetToken');
             if (resetTokenInput) resetTokenInput.value = res.simulatedToken;
+            const resetIdentInput = document.getElementById('resetIdentifier');
+            if (resetIdentInput) resetIdentInput.value = identifier;
             switchAuthTab('tabReset');
           };
         }
@@ -2018,10 +2122,16 @@ document.addEventListener('DOMContentLoaded', () => {
     clearAlert(resetAlert);
 
     const token = document.getElementById('resetToken')?.value.trim();
+    const identifier = document.getElementById('resetIdentifier')?.value.trim() || 
+                       sessionStorage.getItem('vyapaar_pending_reset_identifier') || '';
     const newPassword = document.getElementById('resetNewPassword')?.value;
     const confirmPassword = document.getElementById('resetConfirmPassword')?.value;
     const btnSubmit = document.getElementById('btnSubmitReset');
 
+    if (!identifier) {
+      showAlert(resetAlert, 'Please enter your registered phone number or email');
+      return;
+    }
     if (!token) {
       showAlert(resetAlert, 'Security reset token is required');
       return;
@@ -2041,12 +2151,19 @@ document.addEventListener('DOMContentLoaded', () => {
         btnSubmit.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Resetting Password...';
       }
 
-      const res = await API_AUTH.resetPassword(token, newPassword);
-      showAlert(resetAlert, res.message || 'Your password has been reset successfully. Please log in.', 'success');
+      const res = await API_AUTH.resetPassword(token, newPassword, identifier);
+      showAlert(resetAlert, res.message || 'Password reset successfully! Redirecting to login...', 'success');
+
+      // Pre-fill login credentials so citizen can log in smoothly
+      const loginIdentInput = document.getElementById('loginIdentifier');
+      const loginPasswordInput = document.getElementById('loginPassword');
+      if (loginIdentInput) loginIdentInput.value = identifier;
+      if (loginPasswordInput) loginPasswordInput.value = newPassword;
 
       setTimeout(() => {
         switchAuthTab('tabLogin');
-      }, 1500);
+        showAlert(loginAlert, 'Password reset successful! Please click "Log In to Account" to enter.', 'success');
+      }, 1200);
     } catch (err) {
       showAlert(resetAlert, err.message, 'error');
     } finally {
@@ -2201,13 +2318,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }, true);
 
-  // Check URL query parameters for reset token (e.g. /?token=...)
+  // Check URL query parameters for reset token (e.g. /?token=...&identifier=...)
   try {
     const urlParams = new URLSearchParams(window.location.search);
     const tokenParam = urlParams.get('token');
+    const identParam = urlParams.get('identifier') || urlParams.get('email') || urlParams.get('phone');
     if (tokenParam) {
       const resetTokenInput = document.getElementById('resetToken');
       if (resetTokenInput) resetTokenInput.value = tokenParam;
+      const resetIdentInput = document.getElementById('resetIdentifier');
+      if (resetIdentInput && identParam) resetIdentInput.value = identParam;
       switchAuthTab('tabReset');
       loginModal?.classList.add('active');
     }

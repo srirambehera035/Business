@@ -13,9 +13,11 @@ import os
 import random
 from pathlib import Path
 
-# In-memory OTP registry for authentication
+# In-memory OTP and user credential registry for authentication
 ACTIVE_OTPS = {}
 CURRENT_USER_SESSION = {"isLoggedIn": False}
+USER_CREDENTIALS = {}
+RESET_TOKENS = {}
 
 # Import core business engines
 try:
@@ -243,10 +245,22 @@ class VyapaarSarthiRequestHandler(http.server.SimpleHTTPRequestHandler):
             if not identifier:
                 return self.send_json_response({"status": "ERROR", "error": "Phone number or email required"}, status=400)
 
+            clean_ident = identifier.lower().replace(" ", "").replace("-", "")
+            if clean_ident.startswith("+91"):
+                clean_ident = clean_ident[3:]
+
+            # Validate password against stored credentials if exists
+            if clean_ident in USER_CREDENTIALS and password:
+                if USER_CREDENTIALS[clean_ident] != password:
+                    return self.send_json_response({"status": "ERROR", "error": "Invalid password. Please try again."}, status=400)
+            elif password:
+                USER_CREDENTIALS[clean_ident] = password
+
             name = payload.get('name', 'Sriram Jena')
             user_data = {
                 "name": name,
                 "mobile": identifier,
+                "phone": identifier,
                 "email": payload.get('email', f"{identifier}@vyapaarsarthi.gov.in"),
                 "category": payload.get('category', 'sc'),
                 "state": payload.get('state', 'Odisha'),
@@ -266,10 +280,21 @@ class VyapaarSarthiRequestHandler(http.server.SimpleHTTPRequestHandler):
         # 7. User Registration API (Signup / Register)
         elif path in ('/api/auth/signup', '/api/auth/register'):
             mobile = str(payload.get('phone') or payload.get('mobile') or '9876543210').strip()
+            password = payload.get('password', '')
+            email = str(payload.get('email') or '').strip()
+            if password:
+                clean_m = mobile.lower().replace(" ", "").replace("-", "")
+                if clean_m.startswith("+91"):
+                    clean_m = clean_m[3:]
+                USER_CREDENTIALS[clean_m] = password
+                if email:
+                    USER_CREDENTIALS[email.lower()] = password
+
             name = payload.get('name', 'Sriram Jena')
             user_data = {
                 "name": name,
                 "mobile": mobile,
+                "phone": mobile,
                 "email": payload.get('email', f"{mobile}@vyapaarsarthi.gov.in"),
                 "category": payload.get('category', 'sc'),
                 "state": payload.get('state', 'Odisha'),
@@ -291,13 +316,29 @@ class VyapaarSarthiRequestHandler(http.server.SimpleHTTPRequestHandler):
         # 8. Password Recovery & Logout APIs
         elif path == '/api/auth/forgot-password':
             identifier = str(payload.get('identifier', '')).strip()
+            clean_ident = identifier.lower().replace(" ", "").replace("-", "")
+            if clean_ident.startswith("+91"):
+                clean_ident = clean_ident[3:]
+            token = f"MSJE-TOKEN-{abs(hash(identifier))}"
+            RESET_TOKENS[token] = clean_ident
             return self.send_json_response({
                 "status": "SUCCESS",
                 "message": f"Password recovery instructions generated for {identifier}",
-                "identifier": identifier
+                "identifier": identifier,
+                "simulatedToken": token
             })
 
         elif path == '/api/auth/reset-password':
+            token = str(payload.get('token', '')).strip()
+            new_password = payload.get('newPassword') or payload.get('password', '')
+            identifier = str(payload.get('identifier', '')).strip()
+            if not identifier and token in RESET_TOKENS:
+                identifier = RESET_TOKENS[token]
+            if identifier and new_password:
+                clean_ident = identifier.lower().replace(" ", "").replace("-", "")
+                if clean_ident.startswith("+91"):
+                    clean_ident = clean_ident[3:]
+                USER_CREDENTIALS[clean_ident] = new_password
             return self.send_json_response({
                 "status": "SUCCESS",
                 "message": "Password reset successfully. Please log in with your new password."
