@@ -3,13 +3,63 @@
 // CORE APPLICATION LOGIC, REAL-TIME AMORTIZATION & MSJE CONCESSION ENGINE
 // =============================================================================
 
+// --- GLOBAL MODAL & NAVIGATION HANDLERS (IMMEDIATELY AVAILABLE) ---
+window.openLoginModal = function() {
+  const lm = document.getElementById('loginModal');
+  if (lm) {
+    lm.classList.add('active');
+    lm.style.display = 'flex';
+  }
+};
+
+window.closeLoginModal = function() {
+  const lm = document.getElementById('loginModal');
+  if (lm) {
+    lm.classList.remove('active');
+    lm.style.display = 'none';
+  }
+};
+
+window.openCitizenDashboard = function() {
+  const cdm = document.getElementById('citizenDashboardModal');
+  if (cdm) {
+    cdm.classList.add('active');
+    cdm.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+};
+
+window.closeCitizenDashboard = function() {
+  const cdm = document.getElementById('citizenDashboardModal');
+  if (cdm) {
+    cdm.classList.remove('active');
+    cdm.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+};
+
+window.switchTab = function(targetId) {
+  if (!targetId) return;
+  document.querySelectorAll('.tab-btn').forEach(b => {
+    b.classList.toggle('active', b.getAttribute('data-target') === targetId);
+  });
+  document.querySelectorAll('.tab-pane').forEach(p => {
+    p.classList.toggle('active', p.id === targetId);
+  });
+  const el = document.getElementById(targetId);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+};
+
 document.addEventListener('DOMContentLoaded', () => {
+
+  const getBusinesses = () => (typeof BUSINESSES_DATA !== 'undefined' && Array.isArray(BUSINESSES_DATA)) ? BUSINESSES_DATA : (window.BUSINESSES_DATA || []);
+  const allBusinesses = getBusinesses();
 
   // --- STATE MANAGEMENT ---
   let currentMargin = 48000;
   let currentLang = 'en'; // Default to English
   let currentCategory = 'sc'; // Default to Scheduled Caste under MSJE mandate
-  let currentBusiness = BUSINESSES_DATA[0]; // Solar Milk Chilling Unit
+  let currentBusiness = allBusinesses.length > 0 ? allBusinesses[0] : null; // Solar Milk Chilling Unit
   let currentUser = {
     name: "Sriram Jena",
     mobile: "9876543210",
@@ -64,25 +114,25 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnMobileNavToggle = document.getElementById('btnMobileNavToggle');
   const mobileNavDrawer = document.getElementById('mobileNavDrawer');
 
-  // --- INITIALIZE APPLICATION ---
-  initTheme();
-  initFontResizers();
-  populateBusinessDropdown();
-  populateCatalogGrid();
-  setupStateDistrictDropdowns();
-  initMap();
-  setupTabNavigation();
-  setupStickyNavActions();
+  // --- INITIALIZE APPLICATION SAFELY ---
+  try { initTheme(); } catch (e) { console.warn('initTheme:', e); }
+  try { initFontResizers(); } catch (e) { console.warn('initFontResizers:', e); }
+  try { populateBusinessDropdown(); } catch (e) { console.warn('populateBusinessDropdown:', e); }
+  try { populateCatalogGrid(); } catch (e) { console.warn('populateCatalogGrid:', e); }
+  try { setupStateDistrictDropdowns(); } catch (e) { console.warn('setupStateDistrictDropdowns:', e); }
+  try { initMap(); } catch (e) { console.warn('initMap:', e); }
+  try { setupTabNavigation(); } catch (e) { console.warn('setupTabNavigation:', e); }
+  try { setupStickyNavActions(); } catch (e) { console.warn('setupStickyNavActions:', e); }
 
   // Render MSJE & Feasibility Modules
-  renderCategoryCards();
-  renderSeasonalCalendar();
-  renderBankDirectory();
-  setupComparisonTool();
-  setupWhatsAppSharing();
-  renderBusinessPlansMarquee();
-  setupEnterpriseGallery();
-  setupHeroVideoPlaylist();
+  try { renderCategoryCards(); } catch (e) { console.warn('renderCategoryCards:', e); }
+  try { renderSeasonalCalendar(); } catch (e) { console.warn('renderSeasonalCalendar:', e); }
+  try { renderBankDirectory(); } catch (e) { console.warn('renderBankDirectory:', e); }
+  try { setupComparisonTool(); } catch (e) { console.warn('setupComparisonTool:', e); }
+  try { setupWhatsAppSharing(); } catch (e) { console.warn('setupWhatsAppSharing:', e); }
+  try { renderBusinessPlansMarquee(); } catch (e) { console.warn('renderBusinessPlansMarquee:', e); }
+  try { setupEnterpriseGallery(); } catch (e) { console.warn('setupEnterpriseGallery:', e); }
+  try { setupHeroVideoPlaylist(); } catch (e) { console.warn('setupHeroVideoPlaylist:', e); }
 
   // Cancel any browser speech synthesis
   if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
@@ -90,13 +140,14 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Initialize Lenis Smooth Scroll & GSAP Animations
-  initLenisAndGSAP();
+  try { initLenisAndGSAP(); } catch (e) { console.warn('initLenisAndGSAP:', e); }
 
   // Select initial business & calculate
-  selectBusiness(BUSINESSES_DATA[0]);
+  try { if (currentBusiness) selectBusiness(currentBusiness); } catch (e) { console.warn('selectBusiness:', e); }
 
   // Apply initial translations
-  updateLanguageTexts();
+  try { updateLanguageTexts(); } catch (e) { console.warn('updateLanguageTexts:', e); }
+
 
   // --- HERO BACKGROUND VIDEO PLAYLIST ENGINE ---
   function setupHeroVideoPlaylist() {
