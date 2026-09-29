@@ -2080,6 +2080,27 @@ document.addEventListener('DOMContentLoaded', () => {
     loginModal?.classList.add('active');
   });
 
+  // Expose on window for direct HTML onclick safety
+  window.openLoginModal = function() {
+    if (currentUser && currentUser.isLoggedIn) {
+      openCitizenDashboard();
+    } else {
+      switchAuthTab('tabLogin');
+      const lm = document.getElementById('loginModal');
+      if (lm) lm.classList.add('active');
+    }
+  };
+
+  window.closeLoginModal = function() {
+    const lm = document.getElementById('loginModal');
+    if (lm) lm.classList.remove('active');
+  };
+
+  window.openCitizenDashboard = openCitizenDashboard;
+  window.closeCitizenDashboard = closeCitizenDashboard;
+  window.handleLogout = handleLogout;
+
+
   // Protected Actions Guard
   function requireAuth(message, callback) {
     if (currentUser.isLoggedIn) {
