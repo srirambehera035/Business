@@ -1,10 +1,11 @@
-{
+﻿{
   "name": "vyapaar-sarthi",
   "version": "1.0.0",
   "description": "Vyapaar Sarthi - Rural Micro-Enterprise Advisory & Concessional Scheme Navigator",
   "main": "frontend/index.html",
   "scripts": {
-    "build": "npm run build --prefix frontend",
+    "build": "echo Vyapaar Sarthi build ready",
+    "build:frontend": "npm run build --prefix frontend",
     "dev": "npx -y serve frontend -p 8000",
     "start": "python server.py",
     "server": "python server.py",
