@@ -2477,49 +2477,34 @@ document.addEventListener('DOMContentLoaded', () => {
     const prevTotal = document.getElementById('prevTotal');
     const prevProfit = document.getElementById('prevProfit');
 
-    if (prevMargin) prevMargin.textContent = `₹ ${val.toLocaleString('en-IN')}`;
-    if (prevLoan) prevLoan.textContent = `₹ ${(val * 9).toLocaleString('en-IN')}`;
-    if (prevTotal) prevTotal.textContent = `₹ ${(val * 10).toLocaleString('en-IN')}`;
-    if (prevProfit) prevProfit.textContent = `₹ ${Math.round(val * 0.58).toLocaleString('en-IN')}/mo`;
+    if (val > 0) {
+      if (prevMargin) prevMargin.textContent = `₹ ${val.toLocaleString('en-IN')}`;
+      if (prevLoan) prevLoan.textContent = `₹ ${(val * 9).toLocaleString('en-IN')}`;
+      if (prevTotal) prevTotal.textContent = `₹ ${(val * 10).toLocaleString('en-IN')}`;
+      if (prevProfit) prevProfit.textContent = `₹ ${Math.round(val * 0.58).toLocaleString('en-IN')}/mo`;
+    } else {
+      if (prevMargin) prevMargin.textContent = `₹ 0`;
+      if (prevLoan) prevLoan.textContent = `₹ 0`;
+      if (prevTotal) prevTotal.textContent = `₹ 0`;
+      if (prevProfit) prevProfit.textContent = `₹ 0/mo`;
+    }
   }
 
   function openNewEnterprisePlanModal() {
     clearAlert(newPlanAlert);
 
-    // Pre-populate with current citizen values if present
-    if (planState) {
-      planState.value = currentUser.state || 'Odisha';
-    }
-    if (planDistrict && !planDistrict.value) {
-      planDistrict.value = currentUser.district || 'Khordha';
-    }
-    if (planBlock && !planBlock.value) {
-      planBlock.value = currentUser.block || 'Bhubaneswar';
-    }
-    if (planVillage && !planVillage.value) {
-      planVillage.value = currentUser.area || currentUser.village || 'Hansapal';
-    }
-    if (planCapital) {
-      planCapital.value = currentMargin || currentUser.margin || 48000;
-    }
-    if (planBusiness) {
-      const targetBiz = currentBusiness.name || 'Solar-Powered Milk Chilling & Paneer/Curd Processing Unit';
-      let foundOption = false;
-      for (let i = 0; i < planBusiness.options.length; i++) {
-        if (planBusiness.options[i].value === targetBiz || targetBiz.includes(planBusiness.options[i].value)) {
-          planBusiness.selectedIndex = i;
-          foundOption = true;
-          break;
-        }
-      }
-      if (!foundOption && targetBiz) {
-        planBusiness.value = 'OTHER_CUSTOM';
-        if (planBusinessCustomWrap) planBusinessCustomWrap.style.display = 'block';
-        if (planBusinessCustom) planBusinessCustom.value = targetBiz;
-      } else {
-        if (planBusinessCustomWrap) planBusinessCustomWrap.style.display = 'none';
-      }
-    }
+    // Keep all fields completely empty so user enters fresh data
+    if (planState) planState.value = '';
+    if (planDistrict) planDistrict.value = '';
+    if (planBlock) planBlock.value = '';
+    if (planVillage) planVillage.value = '';
+    if (planCapital) planCapital.value = '';
+    if (planBusiness) planBusiness.value = '';
+    if (planBusinessCustom) planBusinessCustom.value = '';
+    if (planBusinessCustomWrap) planBusinessCustomWrap.style.display = 'none';
+
+    // Deselect all quick chips
+    document.querySelectorAll('.capital-chip').forEach(c => c.classList.remove('active'));
 
     updatePlanPreviewMetrics();
     newPlanModal?.classList.add('active');

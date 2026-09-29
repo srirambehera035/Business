@@ -1455,7 +1455,8 @@
                 <i class="fa-solid fa-map" style="color: #f59e0b !important;"></i> State *
               </label>
               <select id="planState" class="form-control auth-input plan-custom-input" style="color: #ffffff !important; background: #112238 !important;" required>
-                <option value="Odisha" selected>Odisha</option>
+                <option value="" selected disabled>-- Select State --</option>
+                <option value="Odisha">Odisha</option>
                 <option value="Andhra Pradesh">Andhra Pradesh</option>
                 <option value="Assam">Assam</option>
                 <option value="Bihar">Bihar</option>
@@ -1485,7 +1486,7 @@
               <label for="planDistrict" class="form-label-bold" style="color: #ffffff !important; font-weight: 700; font-size: 0.92rem;">
                 <i class="fa-solid fa-map-location-dot" style="color: #f59e0b !important;"></i> District *
               </label>
-              <input type="text" id="planDistrict" class="form-control auth-input plan-custom-input" style="color: #ffffff !important; background: #112238 !important;" placeholder="e.g. Khordha, Cuttack, Puri" required>
+              <input type="text" id="planDistrict" class="form-control auth-input plan-custom-input" style="color: #ffffff !important; background: #112238 !important;" placeholder="Enter district (e.g. Khordha, Cuttack)" required>
               <small class="field-error" id="errPlanDistrict"></small>
             </div>
 
@@ -1494,7 +1495,7 @@
               <label for="planBlock" class="form-label-bold" style="color: #ffffff !important; font-weight: 700; font-size: 0.92rem;">
                 <i class="fa-solid fa-building-flag" style="color: #f59e0b !important;"></i> Block / Tehsil *
               </label>
-              <input type="text" id="planBlock" class="form-control auth-input plan-custom-input" style="color: #ffffff !important; background: #112238 !important;" placeholder="e.g. Bhubaneswar, Balianta, Jatni" required>
+              <input type="text" id="planBlock" class="form-control auth-input plan-custom-input" style="color: #ffffff !important; background: #112238 !important;" placeholder="Enter block (e.g. Bhubaneswar, Balianta)" required>
               <small class="field-error" id="errPlanBlock"></small>
             </div>
 
@@ -1503,7 +1504,7 @@
               <label for="planVillage" class="form-label-bold" style="color: #ffffff !important; font-weight: 700; font-size: 0.92rem;">
                 <i class="fa-solid fa-house-chimney" style="color: #f59e0b !important;"></i> Village / Gram Panchayat *
               </label>
-              <input type="text" id="planVillage" class="form-control auth-input plan-custom-input" style="color: #ffffff !important; background: #112238 !important;" placeholder="e.g. Hansapal, Pahal, Pipili" required>
+              <input type="text" id="planVillage" class="form-control auth-input plan-custom-input" style="color: #ffffff !important; background: #112238 !important;" placeholder="Enter village (e.g. Hansapal, Pahal)" required>
               <small class="field-error" id="errPlanVillage"></small>
             </div>
 
@@ -1515,7 +1516,7 @@
               </label>
               <div class="currency-input-wrap">
                 <span class="currency-symbol">₹</span>
-                <input type="number" id="planCapital" class="form-control auth-input currency-input plan-custom-input" style="color: #ffffff !important; background: #112238 !important;" placeholder="e.g. 50000" min="10000" step="5000" required>
+                <input type="number" id="planCapital" class="form-control auth-input currency-input plan-custom-input" style="color: #ffffff !important; background: #112238 !important;" placeholder="Enter capital amount (e.g. 50000)" min="10000" step="5000" required>
               </div>
               <div class="capital-quick-chips">
                 <button type="button" class="capital-chip" data-amount="25000">₹25,000</button>
@@ -1535,10 +1536,10 @@
                 <span class="form-hint" style="color: #cbd5e1 !important;">Select from 30+ government-vetted rural models</span>
               </label>
               <select id="planBusiness" class="form-control auth-input plan-custom-input" style="color: #ffffff !important; background: #112238 !important; font-size: 0.92rem; font-weight: 600;" required>
-                <option value="" disabled>-- Select a Vetted Micro-Enterprise --</option>
+                <option value="" selected disabled>-- Select a Vetted Micro-Enterprise --</option>
                 
                 <optgroup label="🥛 Dairy & Agro-Processing (High Demand)">
-                  <option value="Solar-Powered Milk Chilling & Paneer/Curd Processing Unit" selected>Solar-Powered Milk Chilling & Paneer/Curd Unit (45% NBCFDC Subsidy)</option>
+                  <option value="Solar-Powered Milk Chilling & Paneer/Curd Processing Unit">Solar-Powered Milk Chilling & Paneer/Curd Unit (45% NBCFDC Subsidy)</option>
                   <option value="Commercial Mushroom Farming & Solar Dehydration">Commercial Mushroom Farming & Solar Dehydration (Fast Cycle)</option>
                   <option value="Bio-Fertilizer & Vermicompost Packaging Unit">Bio-Fertilizer & Vermicompost Unit (CGTMSE Covered)</option>
                   <option value="Cold Pressed Mustard & Sesame Oil Mill">Cold Pressed Mustard & Sesame Oil Mill (ODOP Agro)</option>
