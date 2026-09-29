@@ -231,23 +231,22 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // --- ROBUST INTERACTIVE GOOGLE MAPS GIS ENGINE ---
+  // --- ROBUST INTERACTIVE GIS MAP ENGINE ---
   let leafletMapInstance = null;
   let activeTileLayer = null;
   let mapInitRetries = 0;
 
   function initMap() {
     const mapContainer = document.getElementById('leafletMap');
-    const embedContainer = document.getElementById('googleEmbedMap');
     if (!mapContainer) return;
 
     const hansapalCoords = [20.3155, 85.8722];
 
     try {
       if (typeof L === 'undefined') {
-        if (mapInitRetries < 20) {
+        if (mapInitRetries < 30) {
           mapInitRetries++;
-          setTimeout(initMap, 150);
+          setTimeout(initMap, 120);
         } else {
           console.warn("Leaflet library failed to load after retries.");
         }
@@ -255,7 +254,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       if (leafletMapInstance) {
-        leafletMapInstance.remove();
+        try { leafletMapInstance.remove(); } catch (e) {}
         leafletMapInstance = null;
       }
 
@@ -267,26 +266,32 @@ document.addEventListener('DOMContentLoaded', () => {
         scrollWheelZoom: false
       });
 
-      // Google Maps & OSM Tile Providers (Direct Google Maps tiles without broken API keys)
+      leafletMap = leafletMapInstance;
+      window.leafletMap = leafletMapInstance;
+
+      // 100% Reliable Free High-Performance GIS Tile Providers (No API keys needed)
       const tileLayers = {
-        'google-roadmap': L.tileLayer('https://mt{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
-          maxZoom: 20,
-          subdomains: ['0', '1', '2', '3'],
-          attribution: '&copy; Google Maps'
+        'carto-voyager': L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+          maxZoom: 19,
+          subdomains: 'abcd',
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
         }),
-        'google-satellite': L.tileLayer('https://mt{s}.google.com/vt/lyrs=y&x={x}&y={y}&z={z}', {
-          maxZoom: 20,
-          subdomains: ['0', '1', '2', '3'],
-          attribution: '&copy; Google Maps Satellite'
+        'satellite': L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+          maxZoom: 19,
+          attribution: 'Tiles &copy; Esri &mdash; Source: Esri, Maxar, Earthstar Geographics'
         }),
         'osm': L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
           maxZoom: 19,
-          attribution: '&copy; OpenStreetMap contributors'
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }),
+        'topo': L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+          maxZoom: 17,
+          attribution: '&copy; OpenStreetMap contributors, SRTM | OpenTopoMap'
         })
       };
 
-      // Set default layer to Google Roadmap
-      activeTileLayer = tileLayers['google-roadmap'];
+      // Set default layer to Carto Voyager Street Map
+      activeTileLayer = tileLayers['carto-voyager'];
       activeTileLayer.addTo(leafletMapInstance);
 
       // 1. Center Marker: Hansapal Junction Pilot Benchmark Cluster (Animated Glowing Beacon)
@@ -361,8 +366,9 @@ document.addEventListener('DOMContentLoaded', () => {
       `);
 
       // 4. Add Competitor POI Markers from Dataset
-      if (typeof COMPETITOR_POIS !== 'undefined' && Array.isArray(COMPETITOR_POIS)) {
-        COMPETITOR_POIS.forEach(poi => {
+      const pois = (typeof window.COMPETITOR_POIS !== 'undefined' && Array.isArray(window.COMPETITOR_POIS)) ? window.COMPETITOR_POIS : ((typeof COMPETITOR_POIS !== 'undefined' && Array.isArray(COMPETITOR_POIS)) ? COMPETITOR_POIS : []);
+      if (pois && pois.length > 0) {
+        pois.forEach(poi => {
           if (poi.lat && (poi.lon || poi.lng)) {
             const lat = poi.lat;
             const lng = poi.lon || poi.lng;
@@ -405,24 +411,16 @@ document.addEventListener('DOMContentLoaded', () => {
           btn.style.color = '#fff';
 
           const mode = btn.getAttribute('data-map-mode');
-          if (mode === 'google-embed') {
-            if (mapContainer) mapContainer.style.display = 'none';
-            if (embedContainer) embedContainer.style.display = 'block';
-          } else {
-            if (embedContainer) embedContainer.style.display = 'none';
-            if (mapContainer) mapContainer.style.display = 'block';
-
-            if (activeTileLayer && leafletMapInstance.hasLayer(activeTileLayer)) {
-              leafletMapInstance.removeLayer(activeTileLayer);
-            }
-            if (tileLayers[mode]) {
-              activeTileLayer = tileLayers[mode];
-              activeTileLayer.addTo(leafletMapInstance);
-            }
-            setTimeout(() => {
-              leafletMapInstance.invalidateSize();
-            }, 100);
+          if (activeTileLayer && leafletMapInstance.hasLayer(activeTileLayer)) {
+            leafletMapInstance.removeLayer(activeTileLayer);
           }
+          if (tileLayers[mode]) {
+            activeTileLayer = tileLayers[mode];
+            activeTileLayer.addTo(leafletMapInstance);
+          }
+          setTimeout(() => {
+            if (leafletMapInstance) leafletMapInstance.invalidateSize();
+          }, 100);
         });
       });
 
@@ -441,7 +439,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       setTimeout(() => {
         if (leafletMapInstance) leafletMapInstance.invalidateSize();
-      }, 400);
+      }, 300);
 
     } catch (err) {
       console.warn("Map initialization:", err);
@@ -2534,20 +2532,22 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnPlayMain = document.getElementById('btnPlayVideoMain');
   btnPlayMain?.addEventListener('click', () => {
     const overlay = document.getElementById('videoOverlay');
-    const poster = document.getElementById('imgVideoPoster');
     const iframe = document.getElementById('youtubeVideoGuide');
     if (overlay) overlay.style.display = 'none';
-    if (poster) poster.style.display = 'none';
-    if (iframe) iframe.style.display = 'block';
+    if (iframe) {
+      iframe.style.display = 'block';
+      iframe.src = "https://www.youtube.com/embed/60a0nHFefn4?autoplay=1&rel=0&modestbranding=1";
+    }
   });
 
   btnPlayDemo?.addEventListener('click', () => {
     const overlay = document.getElementById('videoOverlay');
-    const poster = document.getElementById('imgVideoPoster');
     const iframe = document.getElementById('youtubeVideoGuide');
     if (overlay) overlay.style.display = 'none';
-    if (poster) poster.style.display = 'none';
-    if (iframe) iframe.style.display = 'block';
+    if (iframe) {
+      iframe.style.display = 'block';
+      iframe.src = "https://www.youtube.com/embed/60a0nHFefn4?autoplay=1&rel=0&modestbranding=1";
+    }
   });
 
   btnNextChapter?.addEventListener('click', () => {
