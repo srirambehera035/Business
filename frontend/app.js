@@ -2444,11 +2444,232 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Dashboard Nav Action Listeners
-  document.getElementById('btnDashNewPlan')?.addEventListener('click', () => {
-    closeCitizenDashboard();
-    document.querySelector('.tab-btn[data-target="secCatalog"]')?.click();
-    document.getElementById('secCatalog')?.scrollIntoView({ behavior: 'smooth' });
+  // --- NEW ENTERPRISE PLAN CONTROLLER & MODAL ---
+  const newPlanModal = document.getElementById('newPlanModal');
+  const btnCloseNewPlan = document.getElementById('btnCloseNewPlan');
+  const btnCancelNewPlan = document.getElementById('btnCancelNewPlan');
+  const formNewEnterprisePlan = document.getElementById('formNewEnterprisePlan');
+  const planState = document.getElementById('planState');
+  const planDistrict = document.getElementById('planDistrict');
+  const planBlock = document.getElementById('planBlock');
+  const planVillage = document.getElementById('planVillage');
+  const planCapital = document.getElementById('planCapital');
+  const planBusiness = document.getElementById('planBusiness');
+  const newPlanAlert = document.getElementById('newPlanAlert');
+
+  function updatePlanPreviewMetrics() {
+    const val = parseFloat(planCapital?.value) || 0;
+    const prevMargin = document.getElementById('prevMargin');
+    const prevLoan = document.getElementById('prevLoan');
+    const prevTotal = document.getElementById('prevTotal');
+    const prevProfit = document.getElementById('prevProfit');
+
+    if (prevMargin) prevMargin.textContent = `₹ ${val.toLocaleString('en-IN')}`;
+    if (prevLoan) prevLoan.textContent = `₹ ${(val * 9).toLocaleString('en-IN')}`;
+    if (prevTotal) prevTotal.textContent = `₹ ${(val * 10).toLocaleString('en-IN')}`;
+    if (prevProfit) prevProfit.textContent = `₹ ${Math.round(val * 0.58).toLocaleString('en-IN')}/mo`;
+  }
+
+  function openNewEnterprisePlanModal() {
+    clearAlert(newPlanAlert);
+
+    // Pre-populate with current citizen values if present
+    if (planState) {
+      planState.value = currentUser.state || 'Odisha';
+    }
+    if (planDistrict && !planDistrict.value) {
+      planDistrict.value = currentUser.district || 'Khordha';
+    }
+    if (planBlock && !planBlock.value) {
+      planBlock.value = currentUser.block || 'Bhubaneswar';
+    }
+    if (planVillage && !planVillage.value) {
+      planVillage.value = currentUser.area || currentUser.village || 'Hansapal';
+    }
+    if (planCapital) {
+      planCapital.value = currentMargin || currentUser.margin || 48000;
+    }
+    if (planBusiness && !planBusiness.value) {
+      planBusiness.value = currentBusiness.name || 'Solar Milk Chilling Unit';
+    }
+
+    updatePlanPreviewMetrics();
+    newPlanModal?.classList.add('active');
+  }
+
+  function closeNewEnterprisePlanModal() {
+    newPlanModal?.classList.remove('active');
+    clearAlert(newPlanAlert);
+  }
+
+  // Capital quick chips
+  document.querySelectorAll('.capital-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      const amount = chip.getAttribute('data-amount');
+      if (planCapital && amount) {
+        planCapital.value = amount;
+        document.querySelectorAll('.capital-chip').forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        updatePlanPreviewMetrics();
+      }
+    });
+  });
+
+  planCapital?.addEventListener('input', () => {
+    document.querySelectorAll('.capital-chip').forEach(c => c.classList.remove('active'));
+    updatePlanPreviewMetrics();
+  });
+
+  // Open & Close Listeners
+  document.getElementById('btnDashNewPlan')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    openNewEnterprisePlanModal();
+  });
+
+  btnCloseNewPlan?.addEventListener('click', closeNewEnterprisePlanModal);
+  btnCancelNewPlan?.addEventListener('click', closeNewEnterprisePlanModal);
+
+  newPlanModal?.addEventListener('click', (e) => {
+    if (e.target === newPlanModal) closeNewEnterprisePlanModal();
+  });
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && newPlanModal?.classList.contains('active')) {
+      closeNewEnterprisePlanModal();
+    }
+  });
+
+  // Form Submit Handler
+  formNewEnterprisePlan?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    clearAlert(newPlanAlert);
+
+    const state = planState?.value.trim();
+    const district = planDistrict?.value.trim();
+    const block = planBlock?.value.trim();
+    const village = planVillage?.value.trim();
+    const capital = parseFloat(planCapital?.value) || 0;
+    const business = planBusiness?.value.trim();
+    const btnSubmit = document.getElementById('btnSubmitNewPlan');
+
+    // Validations
+    if (!state) {
+      showAlert(newPlanAlert, 'Please select state', 'error');
+      planState?.focus();
+      return;
+    }
+    if (!district) {
+      showAlert(newPlanAlert, 'Please enter district name', 'error');
+      planDistrict?.focus();
+      return;
+    }
+    if (!block) {
+      showAlert(newPlanAlert, 'Please enter block or tehsil name', 'error');
+      planBlock?.focus();
+      return;
+    }
+    if (!village) {
+      showAlert(newPlanAlert, 'Please enter village or gram panchayat name', 'error');
+      planVillage?.focus();
+      return;
+    }
+    if (!capital || capital < 10000) {
+      showAlert(newPlanAlert, 'Please enter available capital (minimum ₹10,000)', 'error');
+      planCapital?.focus();
+      return;
+    }
+    if (!business) {
+      showAlert(newPlanAlert, 'Please enter or select your desired micro-enterprise', 'error');
+      planBusiness?.focus();
+      return;
+    }
+
+    try {
+      if (btnSubmit) {
+        btnSubmit.disabled = true;
+        btnSubmit.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Formulating Plan...';
+      }
+
+      // 1. Update session & runtime state
+      currentUser.state = state;
+      currentUser.district = district;
+      currentUser.block = block;
+      currentUser.area = village;
+      currentUser.village = village;
+      currentUser.margin = capital;
+      currentMargin = capital;
+      currentBusiness.name = business;
+
+      // 2. Persist in local storage
+      const localUsers = getLocalUsers();
+      const cleanMobile = currentUser.mobile || '';
+      const cleanEmail = currentUser.email || '';
+      const matched = localUsers.find(u => matchesUserIdentifier(u, cleanMobile) || matchesUserIdentifier(u, cleanEmail));
+      if (matched) {
+        matched.state = state;
+        matched.district = district;
+        matched.block = block;
+        matched.area = village;
+        matched.village = village;
+        matched.margin = capital;
+        matched.business = business;
+        saveLocalUsers(localUsers);
+      }
+      setLocalActiveSession(currentUser);
+
+      // 3. Save new enterprise plan record in user's history
+      try {
+        const userPlans = JSON.parse(localStorage.getItem('vyapaar_user_enterprise_plans') || '[]');
+        const newPlan = {
+          id: `PLAN-${Date.now()}`,
+          state,
+          district,
+          block,
+          village,
+          capital,
+          business,
+          createdAt: new Date().toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
+          totalProjectSize: capital * 10,
+          bankLoan: capital * 9,
+          status: 'Active Formulation'
+        };
+        userPlans.unshift(newPlan);
+        localStorage.setItem('vyapaar_user_enterprise_plans', JSON.stringify(userPlans));
+      } catch (err) {
+        console.warn('Failed to save plan history:', err);
+      }
+
+      // 4. Update Financial & Profile Dashboard UI
+      if (sliderMargin) sliderMargin.value = capital;
+      updateFinancialUI();
+      updateUserProfileData();
+
+      // Update Card 1 UI with smooth transition
+      const profBizName = document.getElementById('profBizName');
+      if (profBizName) profBizName.textContent = business;
+
+      const journeyCard1 = document.getElementById('journeyCard1');
+      if (journeyCard1) {
+        journeyCard1.style.boxShadow = '0 0 25px rgba(255, 153, 51, 0.6)';
+        setTimeout(() => {
+          journeyCard1.style.boxShadow = '';
+        }, 2500);
+      }
+
+      showAlert(newPlanAlert, `Enterprise Plan "${business}" in ${village}, ${district} created successfully! Roadmap updated.`, 'success');
+
+      setTimeout(() => {
+        closeNewEnterprisePlanModal();
+      }, 1000);
+    } catch (err) {
+      showAlert(newPlanAlert, err.message || 'Failed to create plan', 'error');
+    } finally {
+      if (btnSubmit) {
+        btnSubmit.disabled = false;
+        btnSubmit.innerHTML = '<i class="fa-solid fa-circle-check"></i> <span>Create Enterprise Plan & Calculate Roadmap</span>';
+      }
+    }
   });
 
   document.getElementById('btnDashNavJourney')?.addEventListener('click', () => {

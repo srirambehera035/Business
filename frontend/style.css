@@ -7419,3 +7419,277 @@ body {
   background: rgba(255, 255, 255, 0.1) !important;
 }
 
+/* =============================================================================
+   NEW ENTERPRISE PLAN FORM MODAL STYLING (HIGH CONTRAST & PREMIUM)
+   ============================================================================= */
+.new-plan-modal-overlay {
+  z-index: 100005 !important;
+  background: rgba(11, 20, 38, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.new-plan-modal-dialog {
+  max-width: 720px;
+  width: 94%;
+  background: #0d1b2e !important;
+  border: 1.5px solid rgba(255, 153, 51, 0.4) !important;
+  border-radius: 20px;
+  box-shadow: 0 25px 60px -10px rgba(0, 0, 0, 0.7), 0 0 40px rgba(255, 153, 51, 0.15);
+  overflow: hidden;
+  color: #ffffff !important;
+  animation: modalPopIn 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes modalPopIn {
+  from {
+    opacity: 0;
+    transform: scale(0.94) translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.new-plan-header {
+  background: linear-gradient(135deg, #0b2545 0%, #153c6c 100%);
+  padding: 1.3rem 1.7rem;
+  border-bottom: 2px solid rgba(255, 153, 51, 0.5);
+}
+
+.new-plan-header .modal-title {
+  color: #ffffff !important;
+  font-size: 1.3rem !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.2px;
+}
+
+.new-plan-header .modal-subtitle {
+  color: #cbd5e1 !important;
+  font-size: 0.82rem !important;
+  margin-top: 0.2rem;
+}
+
+.new-plan-icon-wrap {
+  width: 46px;
+  height: 46px;
+  background: rgba(255, 153, 51, 0.18);
+  border: 1px solid rgba(255, 153, 51, 0.45);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+}
+
+.new-plan-body {
+  padding: 1.6rem;
+  max-height: 80vh;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #ea580c rgba(15, 23, 42, 0.5);
+}
+
+.new-plan-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem;
+}
+
+.new-plan-full-col {
+  grid-column: 1 / -1;
+}
+
+/* Explicit high-contrast labels */
+.new-plan-modal-dialog label,
+.new-plan-modal-dialog .form-label-bold {
+  font-weight: 700 !important;
+  font-size: 0.92rem !important;
+  color: #ffffff !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+  margin-bottom: 0.45rem !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6) !important;
+  letter-spacing: 0.2px;
+}
+
+.new-plan-modal-dialog .form-hint {
+  color: #94a3b8 !important;
+  font-size: 0.78rem !important;
+  font-weight: 500 !important;
+  text-shadow: none !important;
+}
+
+/* Sleek Dark Navy Inputs with Golden Focus */
+.new-plan-modal-dialog .auth-input,
+.new-plan-modal-dialog .plan-custom-input,
+.new-plan-modal-dialog input.form-control,
+.new-plan-modal-dialog select.form-control {
+  background: #112238 !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.24) !important;
+  color: #ffffff !important;
+  font-size: 0.95rem !important;
+  font-weight: 600 !important;
+  border-radius: 10px !important;
+  padding: 0.75rem 1rem !important;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.35) !important;
+  transition: all 0.2s ease !important;
+  width: 100% !important;
+}
+
+.new-plan-modal-dialog .auth-input:focus,
+.new-plan-modal-dialog .plan-custom-input:focus,
+.new-plan-modal-dialog input.form-control:focus,
+.new-plan-modal-dialog select.form-control:focus {
+  background: #162a45 !important;
+  border-color: #f59e0b !important;
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.32), inset 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+  color: #ffffff !important;
+  outline: none !important;
+}
+
+.new-plan-modal-dialog input::placeholder {
+  color: #64748b !important;
+  font-weight: 400 !important;
+}
+
+.new-plan-modal-dialog select option {
+  background: #0d1b2e !important;
+  color: #ffffff !important;
+}
+
+.currency-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.new-plan-modal-dialog .currency-symbol {
+  position: absolute;
+  left: 1rem;
+  color: #f59e0b !important;
+  font-weight: 800 !important;
+  font-size: 1.15rem !important;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.new-plan-modal-dialog .currency-input {
+  padding-left: 2.3rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.5px;
+}
+
+.capital-quick-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.6rem;
+}
+
+.new-plan-modal-dialog .capital-chip {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  color: #f1f5f9 !important;
+  font-size: 0.8rem !important;
+  font-weight: 600 !important;
+  padding: 0.35rem 0.85rem !important;
+  border-radius: 20px !important;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.new-plan-modal-dialog .capital-chip:hover,
+.new-plan-modal-dialog .capital-chip.active {
+  background: rgba(245, 158, 11, 0.25) !important;
+  border-color: #f59e0b !important;
+  color: #fbbf24 !important;
+  box-shadow: 0 0 12px rgba(245, 158, 11, 0.35);
+  transform: translateY(-1px);
+}
+
+.new-plan-modal-dialog .plan-calculated-preview {
+  margin-top: 1.35rem !important;
+  background: rgba(10, 19, 34, 0.85) !important;
+  border: 1.5px dashed rgba(245, 158, 11, 0.5) !important;
+  border-radius: 14px !important;
+  padding: 1.1rem 1.3rem !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4) !important;
+}
+
+.new-plan-modal-dialog .preview-metrics-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.new-plan-modal-dialog .preview-metric {
+  display: flex;
+  flex-direction: column;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 10px !important;
+  padding: 0.65rem 0.8rem !important;
+}
+
+.new-plan-modal-dialog .preview-metric small {
+  font-size: 0.76rem !important;
+  color: #cbd5e1 !important;
+  font-weight: 600 !important;
+}
+
+.new-plan-modal-dialog .preview-metric strong {
+  font-size: 1.05rem !important;
+  color: #ffffff !important;
+  margin-top: 0.3rem !important;
+  font-weight: 800 !important;
+}
+
+.new-plan-modal-dialog .btn-cancel-plan {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  color: #cbd5e1 !important;
+  padding: 0.85rem 1.5rem !important;
+  border-radius: 10px !important;
+  font-weight: 700 !important;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.new-plan-modal-dialog .btn-cancel-plan:hover {
+  background: rgba(255, 255, 255, 0.16) !important;
+  color: #ffffff !important;
+}
+
+.new-plan-modal-dialog #btnSubmitNewPlan {
+  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%) !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  border: none !important;
+  border-radius: 10px !important;
+  padding: 0.85rem 1.5rem !important;
+  box-shadow: 0 4px 15px rgba(234, 88, 12, 0.4) !important;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.new-plan-modal-dialog #btnSubmitNewPlan:hover {
+  background: linear-gradient(135deg, #fb923c 0%, #f97316 100%) !important;
+  box-shadow: 0 6px 20px rgba(234, 88, 12, 0.55) !important;
+  transform: translateY(-1px);
+}
+
+@media (max-width: 640px) {
+  .new-plan-grid {
+    grid-template-columns: 1fr;
+  }
+  .new-plan-modal-dialog .preview-metrics-row {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+
+
