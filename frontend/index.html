@@ -1528,25 +1528,69 @@
               <small class="field-error" id="errPlanCapital"></small>
             </div>
 
-            <!-- 6. Desired Business -->
+            <!-- 6. Desired Business Dropdown -->
             <div class="form-group new-plan-full-col">
               <label for="planBusiness" class="form-label-bold flex-between" style="color: #ffffff !important; font-weight: 700; font-size: 0.92rem;">
                 <span style="color: #ffffff !important;"><i class="fa-solid fa-briefcase" style="color: #f59e0b !important;"></i> Desired Business / Micro-Enterprise *</span>
-                <span class="form-hint" style="color: #cbd5e1 !important;">Choose recommendation or type your custom idea</span>
+                <span class="form-hint" style="color: #cbd5e1 !important;">Select from 30+ government-vetted rural models</span>
               </label>
-              <input type="text" id="planBusiness" list="businessSuggestions" class="form-control auth-input plan-custom-input" style="color: #ffffff !important; background: #112238 !important;" placeholder="e.g. Solar Milk Chilling Unit, Bio-Fertilizer, EV Battery Station..." required>
-              <datalist id="businessSuggestions">
-                <option value="Solar Milk Chilling Unit">Dairy & Cold Chain (45% NBCFDC Subsidy)</option>
-                <option value="Bio-Fertilizer & Vermicompost">Agri-Waste Recycling (CGTMSE Covered)</option>
-                <option value="Two-Wheeler EV Battery Station">Green Mobility & Charging (PM Surya Ghar)</option>
-                <option value="Mushroom Cultivation & Spawn Lab">Horticulture & Fast Rotation</option>
-                <option value="Custom Garment & Tailoring Hub">Apparel & Rural Craft (PMEGP 35%)</option>
-                <option value="Cold Pressed Mustard & Sesame Oil Mill">Food Processing & Value Addition</option>
-                <option value="Poultry Feed & Broiler Farm">Animal Husbandry & Livestock</option>
-                <option value="Spices Grinding & Automated Packaging">Agro-Processing & Local Retail</option>
-                <option value="Terracotta Pottery & Craft Workshop">Traditional Artisans & ODOP</option>
-                <option value="Fly Ash Brick Manufacturing">Construction & Eco Materials</option>
-              </datalist>
+              <select id="planBusiness" class="form-control auth-input plan-custom-input" style="color: #ffffff !important; background: #112238 !important; font-size: 0.92rem; font-weight: 600;" required>
+                <option value="" disabled>-- Select a Vetted Micro-Enterprise --</option>
+                
+                <optgroup label="🥛 Dairy & Agro-Processing (High Demand)">
+                  <option value="Solar-Powered Milk Chilling & Paneer/Curd Processing Unit" selected>Solar-Powered Milk Chilling & Paneer/Curd Unit (45% NBCFDC Subsidy)</option>
+                  <option value="Commercial Mushroom Farming & Solar Dehydration">Commercial Mushroom Farming & Solar Dehydration (Fast Cycle)</option>
+                  <option value="Bio-Fertilizer & Vermicompost Packaging Unit">Bio-Fertilizer & Vermicompost Unit (CGTMSE Covered)</option>
+                  <option value="Cold Pressed Mustard & Sesame Oil Mill">Cold Pressed Mustard & Sesame Oil Mill (ODOP Agro)</option>
+                  <option value="Spices Grinding & Automated Pouch Packaging">Spices Grinding & Automated Pouch Packaging Unit</option>
+                  <option value="Mini Rice & Pulse (Dal) Processing Hub">Mini Rice & Pulse (Dal) Processing Hub</option>
+                  <option value="Fruit Pulp, Pickle & Murabba Processing">Fruit Pulp, Pickle & Jam Processing Enterprise</option>
+                  <option value="Cattle & Poultry Feed Processing Mill">Cattle & Livestock Feed Processing Mill</option>
+                </optgroup>
+
+                <optgroup label="⚡ Clean Energy, Solar & Green Mobility">
+                  <option value="Two-Wheeler EV Battery Swapping & Fast Charging Point">Two-Wheeler EV Battery Swapping Station (PM Surya Ghar)</option>
+                  <option value="Solar Rooftop Installation & Service Hub">Solar Rooftop Installation & Maintenance Enterprise</option>
+                  <option value="Solar Agricultural Pump Repair & Servicing Center">Solar Agricultural Pump Servicing Hub</option>
+                  <option value="Biomass Briquetting & Pellet Manufacturing">Biomass Briquetting & Bio-Pellet Manufacturing</option>
+                </optgroup>
+
+                <optgroup label="🧵 Handloom, Textiles & Rural Crafts">
+                  <option value="Custom Garment & Computerized Tailoring Hub">Custom Garment & Tailoring Hub (PMEGP 35%)</option>
+                  <option value="Handloom Weaving & Natural Dyeing Center">Handloom Weaving & Eco-Dyeing Center (ODOP)</option>
+                  <option value="Terracotta Pottery & Clay Handicraft Workshop">Terracotta Pottery & Traditional Clay Craft</option>
+                  <option value="Bamboo Furniture & Eco-Craft Manufacturing">Bamboo Furniture & Eco-Craft Workshop</option>
+                  <option value="Jute & Cotton Eco-Bag Printing Enterprise">Jute & Cotton Eco-Friendly Bag Printing Unit</option>
+                  <option value="Coir Fiber Mat & Rope Production Hub">Coir Fiber Mat & Rope Manufacturing</option>
+                </optgroup>
+
+                <optgroup label="🐓 Animal Husbandry & Aquaculture">
+                  <option value="High-Yield Broiler Poultry Farm">High-Yield Broiler Poultry Farm (500–1000 Birds)</option>
+                  <option value="Goat Rearing & Breeding Enterprise">Commercial Goat Rearing & Breeding (20+1 Unit)</option>
+                  <option value="Fresh Inland Fish Farming & Biofloc Unit">Fresh Inland Fish Farming & Biofloc Aquaculture</option>
+                  <option value="Commercial Apiculture & Raw Honey Extraction">Commercial Apiculture & Honey Extraction Center</option>
+                </optgroup>
+
+                <optgroup label="🧱 Construction, Eco-Materials & Fabrication">
+                  <option value="Fly Ash Brick & Paver Block Manufacturing">Fly Ash Brick & Interlocking Paver Manufacturing</option>
+                  <option value="Corrugated Box & Paper Carton Manufacturing">Corrugated Box & Paper Packaging Unit</option>
+                  <option value="Biodegradable Areca Palm Leaf Plate Unit">Biodegradable Areca Palm Leaf Plate Manufacturing</option>
+                  <option value="Aluminum Fabrication & Grill Workshop">Aluminum Fabrication & Welding Enterprise</option>
+                </optgroup>
+
+                <optgroup label="🚜 Rural Services, Custom Hiring & Digital">
+                  <option value="Agro-Drone Spraying & Custom Hiring Center">Agro-Drone Spraying & Custom Hiring Center (CHC)</option>
+                  <option value="Rural Cold Storage & Packhouse Facility">Rural Micro Cold Storage & Vegetable Packhouse</option>
+                  <option value="Common Service Center (CSC) & Digital Hub">Common Service Center (CSC) & e-Mitra Hub</option>
+                  <option value="Electric Motor & Pump Rewinding Workshop">Electric Motor & Pump Rewinding Workshop</option>
+                  <option value="OTHER_CUSTOM">✨ Other / Custom Micro-Enterprise Idea...</option>
+                </optgroup>
+              </select>
+              
+              <!-- Custom Business Input (Toggled if "Other" is chosen) -->
+              <div id="planBusinessCustomWrap" style="display: none; margin-top: 0.65rem;">
+                <input type="text" id="planBusinessCustom" class="form-control auth-input plan-custom-input" style="color: #ffffff !important; background: #112238 !important;" placeholder="Type your custom business name (e.g. Herbal Soap Unit, Bakery...)">
+              </div>
               <small class="field-error" id="errPlanBusiness"></small>
             </div>
 
@@ -1587,6 +1631,214 @@
           </div>
         </form>
       </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- GENERATED DUAL ENTERPRISE REPORTS MODAL (ADVISORY & FINANCIAL)           -->
+  <!-- ========================================================================= -->
+  <div id="planGeneratedReportsModal" class="modal-overlay new-plan-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="repModalTitle">
+    <div class="modal-dialog plan-reports-modal-dialog">
+      <div class="modal-header plan-reports-header flex-between">
+        <div class="flex-align" style="gap:0.85rem;">
+          <div class="modal-icon-wrap plan-reports-icon-wrap">
+            <i class="fa-solid fa-file-circle-check text-saffron"></i>
+          </div>
+          <div>
+            <h3 class="modal-title" id="repModalTitle">Enterprise Reports Generated</h3>
+            <p class="modal-subtitle" id="repModalSubtitle">Comprehensive Business Advisory & Smart Financial Structuring</p>
+          </div>
+        </div>
+        <button type="button" class="btn-close-modal" id="btnCloseReportsModal" aria-label="Close reports modal">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Report Tabs Selector -->
+      <div class="reports-tabs-bar flex-align">
+        <button type="button" class="rep-tab-btn active" id="btnRepTabAdvisory" data-rep-target="paneRepAdvisory">
+          <i class="fa-solid fa-chart-pie"></i>
+          <span>1. Business Advisory Report</span>
+        </button>
+        <button type="button" class="rep-tab-btn" id="btnRepTabFinancial" data-rep-target="paneRepFinancial">
+          <i class="fa-solid fa-calculator"></i>
+          <span>2. Financial Calculator Report</span>
+        </button>
+      </div>
+
+      <div class="modal-body plan-reports-body">
+        
+        <!-- PANE 1: BUSINESS ADVISORY REPORT -->
+        <div class="rep-tab-pane active" id="paneRepAdvisory">
+          <div class="report-content-card">
+            <div class="rep-badge-row flex-between">
+              <span class="rep-badge-pill"><i class="fa-solid fa-location-dot"></i> <span id="repAdvLocation">Hansapal, Bhubaneswar, Khordha, Odisha</span></span>
+              <span class="rep-viability-badge" id="repAdvViability">94/100 • HIGH VIABILITY</span>
+            </div>
+
+            <h2 class="rep-heading-title" id="repAdvBizTitle">Solar-Powered Milk Chilling & Paneer/Curd Processing Unit</h2>
+            <p class="rep-summary-lead" id="repAdvSummary">
+              Comprehensive micro-enterprise viability and demand catchment analysis calibrated for local haat trade, raw material supply chain, and commercial competition density.
+            </p>
+
+            <div class="rep-section-divider"></div>
+
+            <div class="rep-grid-2col">
+              <!-- Catchment & Demographic -->
+              <div class="rep-info-block">
+                <h4 class="rep-block-title"><i class="fa-solid fa-users text-blue"></i> Market Catchment & Demographic Reach</h4>
+                <ul class="rep-detail-list">
+                  <li><span>5 km Immediate Haat Catchment:</span> <strong id="repAdvPop5km">52,000+ Residents</strong></li>
+                  <li><span>10 km Regional Transit Access:</span> <strong id="repAdvPop10km">2,10,000+ Population</strong></li>
+                  <li><span>Daily Consumer Footfall:</span> <strong id="repAdvFootfall">3,500 – 4,800 Visitors/day</strong></li>
+                  <li><span>Nearest Commercial Mandi / Highway:</span> <strong id="repAdvHighway">1.8 km Distance</strong></li>
+                </ul>
+              </div>
+
+              <!-- Threat & Competition Radar -->
+              <div class="rep-info-block">
+                <h4 class="rep-block-title"><i class="fa-solid fa-shield-halved text-green"></i> Competition & Threat Radar</h4>
+                <ul class="rep-detail-list">
+                  <li><span>Saturation Index:</span> <strong class="text-green" id="repAdvSaturation">Low Saturation (22%)</strong></li>
+                  <li><span>Active Competitors in 5 km:</span> <strong id="repAdvCompetitors">1 Similar Unit</strong></li>
+                  <li><span>Supply-Demand Gap:</span> <strong class="text-orange" id="repAdvDemandGap">+68% Unmet Local Demand</strong></li>
+                  <li><span>Raw Material Supply Risk:</span> <strong class="text-green" id="repAdvRawRisk">Abundant (95% Local)</strong></li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Strategic Action Roadmap -->
+            <div class="rep-roadmap-block">
+              <h4 class="rep-block-title"><i class="fa-solid fa-route text-saffron"></i> 4-Step Operational Advisory Roadmap</h4>
+              <div class="rep-steps-row">
+                <div class="rep-step-item">
+                  <span class="rep-step-num">1</span>
+                  <h5>Catchment Sourcing</h5>
+                  <p>Aggregate raw materials from 12+ adjoining village clusters.</p>
+                </div>
+                <div class="rep-step-item">
+                  <span class="rep-step-num">2</span>
+                  <h5>Capacity Setup</h5>
+                  <p>Procure certified machinery via 70% Capex allocation.</p>
+                </div>
+                <div class="rep-step-item">
+                  <span class="rep-step-num">3</span>
+                  <h5>Market Linkage</h5>
+                  <p>Supply direct to retail dairies & weekly rural haats.</p>
+                </div>
+                <div class="rep-step-item">
+                  <span class="rep-step-num">4</span>
+                  <h5>Subsidy Sanction</h5>
+                  <p>Avail 45% capital subsidy under MoSJE/NBCFDC channel.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PANE 2: FINANCIAL CALCULATOR & LOAN STRUCTURING REPORT -->
+        <div class="rep-tab-pane" id="paneRepFinancial">
+          <div class="report-content-card">
+            <div class="rep-badge-row flex-between">
+              <span class="rep-badge-pill"><i class="fa-solid fa-building-columns"></i> <span id="repFinScheme">NBCFDC / MoSJE Concessional Credit</span></span>
+              <span class="rep-viability-badge badge-green">100% CGTMSE Collateral-Free</span>
+            </div>
+
+            <h2 class="rep-heading-title">Financial Model & Concessional Apportionment</h2>
+            <p class="rep-summary-lead">
+              Precision credit sizing and monthly cash flow economics based on beneficiary self-contribution and Ministry concessional interest guidelines.
+            </p>
+
+            <div class="rep-section-divider"></div>
+
+            <!-- 4 Major Financial Metric Cards -->
+            <div class="rep-fin-metric-grid">
+              <div class="rep-fin-box highlight-orange">
+                <small>10% Beneficiary Margin</small>
+                <h3 id="repFinMargin">₹ 48,000</h3>
+                <span>Self Contribution</span>
+              </div>
+              <div class="rep-fin-box highlight-blue">
+                <small>90% Sanctioned Term Loan</small>
+                <h3 id="repFinLoan">₹ 4,32,000</h3>
+                <span>Concessional Bank Loan</span>
+              </div>
+              <div class="rep-fin-box highlight-purple">
+                <small>Total Project Size (100%)</small>
+                <h3 id="repFinTotal">₹ 4,80,000</h3>
+                <span>Capex 70% + Opex 30%</span>
+              </div>
+              <div class="rep-fin-box highlight-green">
+                <small>Est. Net Monthly Profit</small>
+                <h3 id="repFinProfit" class="text-green">₹ 27,840/mo</h3>
+                <span>Take-Home Family Earning</span>
+              </div>
+            </div>
+
+            <!-- Financial Structuring Breakdown Table -->
+            <div class="rep-fin-table-wrap">
+              <table class="rep-fin-table">
+                <thead>
+                  <tr>
+                    <th>Financial Parameter</th>
+                    <th>Apportioned Value</th>
+                    <th>Concessional Norms / Remarks</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Concessional Interest Rate</strong></td>
+                    <td><strong class="text-green" id="repFinInterest">5.0% p.a.</strong></td>
+                    <td>Ministry Subsidized Rate vs Commercial (11.5%)</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Capital Subsidy Match</strong></td>
+                    <td><strong class="text-orange" id="repFinSubsidy">45% (₹ 2,16,000)</strong></td>
+                    <td>Direct Benefit Credit to Term Loan Account</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Moratorium Grace Period</strong></td>
+                    <td><strong id="repFinMorat">6 Months (₹0 EMI)</strong></td>
+                    <td>Zero repayment obligation during project setup</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Quarterly Repayment EMI</strong></td>
+                    <td><strong id="repFinEmi">₹ 24,180 / quarter</strong></td>
+                    <td>Structured over 5 Years (20 Quarters)</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Estimated Monthly Revenue</strong></td>
+                    <td><strong id="repFinRevenue">₹ 85,000 / month</strong></td>
+                    <td>Full operational output capacity</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Estimated Monthly Operating Costs</strong></td>
+                    <td><strong id="repFinOpex">₹ 57,160 / month</strong></td>
+                    <td>Raw materials, power, transport & labor</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Action Footer -->
+      <div class="modal-footer plan-reports-footer flex-between">
+        <button type="button" class="btn-cancel-plan" id="btnCloseReportsBtn">Close View</button>
+        <div class="flex-align" style="gap:0.75rem;">
+          <button type="button" class="btn-secondary flex-align" id="btnRepOpenDpr" style="padding:0.75rem 1.25rem; font-weight:700;">
+            <i class="fa-solid fa-file-pdf text-orange"></i>
+            <span>Generate Bank DPR PDF</span>
+          </button>
+          <button type="button" class="btn-primary-lg flex-align" id="btnRepGoDashboard" style="padding:0.75rem 1.4rem; font-weight:700;">
+            <i class="fa-solid fa-table-cells-large"></i>
+            <span>View in Citizen Dashboard</span>
+          </button>
+        </div>
+      </div>
+
     </div>
   </div>
 
