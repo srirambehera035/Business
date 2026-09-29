@@ -7196,3 +7196,162 @@ body {
   }
 }
 
+/* ==========================================================================
+   GOOGLE MAPS GIS & CATCHMENT ENGINE STYLING
+   ========================================================================== */
+.custom-benchmark-marker {
+  background: transparent;
+  border: none;
+}
+
+.beacon-pulse-wrapper {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.beacon-ring {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: rgba(234, 88, 12, 0.4);
+  animation: beaconPulse 2s cubic-bezier(0.24, 0, 0.38, 1) infinite;
+}
+
+@keyframes beaconPulse {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}
+
+.beacon-core {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  background: linear-gradient(135deg, #0b3b60 0%, #1e3a8a 100%);
+  border: 2px solid #ea580c;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 0.85rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  z-index: 2;
+}
+
+.custom-poi-marker {
+  background: transparent;
+  border: none;
+}
+
+.poi-pin {
+  width: 24px;
+  height: 24px;
+  background: #ef4444;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 0.65rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  transition: transform 0.2s ease;
+}
+
+.poi-pin:hover {
+  transform: scale(1.25);
+  background: #dc2626;
+}
+
+.map-popup-card {
+  padding: 4px;
+  font-family: inherit;
+  color: #0f172a;
+}
+
+.popup-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 20px;
+  background: #0b3b60;
+  color: #ffffff;
+  margin-bottom: 6px;
+}
+
+.popup-badge.bg-green {
+  background: #059669;
+}
+
+.popup-badge.bg-orange {
+  background: #ea580c;
+}
+
+.popup-badge.bg-red {
+  background: #dc2626;
+}
+
+.popup-title {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 4px 0;
+  line-height: 1.25;
+}
+
+.popup-sub {
+  font-size: 0.78rem;
+  color: #475569;
+  margin: 0 0 6px 0;
+  line-height: 1.35;
+}
+
+.popup-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 0.72rem;
+  color: #64748b;
+  border-top: 1px dashed #cbd5e1;
+  padding-top: 5px;
+}
+
+.btn-map-mode {
+  cursor: pointer;
+  outline: none;
+}
+
+.btn-map-mode:hover:not(.active) {
+  background: rgba(0, 0, 0, 0.05) !important;
+}
+
+[data-theme="dark"] .map-popup-card {
+  color: #f1f5f9;
+}
+
+[data-theme="dark"] .popup-title {
+  color: #f8fafc;
+}
+
+[data-theme="dark"] .popup-sub {
+  color: #cbd5e1;
+}
+
+[data-theme="dark"] .btn-map-mode:hover:not(.active) {
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+

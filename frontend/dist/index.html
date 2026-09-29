@@ -17,8 +17,6 @@
   <!-- Leaflet CSS for Maps -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 
-  <!-- Google Maps API -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&libraries=geometry"></script>
 
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -27,7 +25,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.css">
 
   <!-- Custom Stylesheet -->
-  <link rel="stylesheet" crossorigin href="/assets/index-BTTimEaP.css">
+  <link rel="stylesheet" crossorigin href="/assets/index-C5ASNl7a.css">
 </head>
 <body class="font-inter">
 
@@ -481,22 +479,43 @@
 
           <!-- Pillar 5: Interactive Resilient Geographic Catchment Map -->
           <div class="grid-card col-span-2">
-            <div class="card-header flex-between">
+            <div class="card-header flex-between" style="flex-wrap: wrap; gap: 0.75rem;">
               <div class="flex-align">
                 <div class="card-icon bg-blue"><i class="fa-solid fa-map-location-dot"></i></div>
                 <div>
-                  <h4 class="card-title">5. Geographic Market Catchment Map & Competitor POIs</h4>
-                  <p class="card-subtitle">OpenStreetMap visualization with 5 km & 10 km concentric radial rings and competitor clusters</p>
+                  <h4 class="card-title">5. Geographic Market Catchment Map &amp; Competitor POIs</h4>
+                  <p class="card-subtitle">Interactive Google Maps GIS engine with 5 km &amp; 10 km concentric radial rings and competitor clusters</p>
                 </div>
               </div>
-              <div class="map-legends flex-align">
-                <span class="leg-item"><span class="leg-dot bg-green"></span> 5 km Catchment</span>
-                <span class="leg-item"><span class="leg-dot bg-orange"></span> 10 km Regional Buffer</span>
-                <span class="leg-item"><span class="leg-dot bg-red"></span> Competitor POIs</span>
+              <div class="map-controls-bar flex-align" style="gap: 0.75rem; flex-wrap: wrap;">
+                <!-- Map Layer Switcher -->
+                <div class="map-layer-switcher" style="display: flex; gap: 0.35rem; background: var(--bg-card-subtle, #f1f5f9); padding: 4px; border-radius: 8px; border: 1px solid var(--border-color, #e2e8f0);">
+                  <button type="button" class="btn-map-mode active" data-map-mode="google-roadmap" style="font-size: 0.76rem; font-weight: 700; padding: 0.3rem 0.65rem; border-radius: 6px; border: none; cursor: pointer; background: #ea580c; color: #fff; transition: all 0.2s;"><i class="fa-solid fa-map"></i> Google Maps</button>
+                  <button type="button" class="btn-map-mode" data-map-mode="google-satellite" style="font-size: 0.76rem; font-weight: 700; padding: 0.3rem 0.65rem; border-radius: 6px; border: none; cursor: pointer; background: transparent; color: var(--text-secondary, #64748b); transition: all 0.2s;"><i class="fa-solid fa-satellite"></i> Satellite</button>
+                  <button type="button" class="btn-map-mode" data-map-mode="google-embed" style="font-size: 0.76rem; font-weight: 700; padding: 0.3rem 0.65rem; border-radius: 6px; border: none; cursor: pointer; background: transparent; color: var(--text-secondary, #64748b); transition: all 0.2s;"><i class="fa-brands fa-google"></i> Live 3D Embed</button>
+                  <button type="button" class="btn-map-mode" data-map-mode="osm" style="font-size: 0.76rem; font-weight: 700; padding: 0.3rem 0.65rem; border-radius: 6px; border: none; cursor: pointer; background: transparent; color: var(--text-secondary, #64748b); transition: all 0.2s;"><i class="fa-solid fa-layer-group"></i> OSM</button>
+                </div>
+                <div class="map-legends flex-align">
+                  <span class="leg-item"><span class="leg-dot bg-green"></span> 5 km Catchment</span>
+                  <span class="leg-item"><span class="leg-dot bg-orange"></span> 10 km Regional Buffer</span>
+                  <span class="leg-item"><span class="leg-dot bg-red"></span> Competitor POIs</span>
+                </div>
               </div>
             </div>
-            <div class="map-wrapper">
-              <div id="leafletMap" class="leaflet-map-frame" style="height: 420px; width: 100%;"></div>
+            <div class="map-wrapper" style="position: relative; border-radius: 12px; overflow: hidden; border: 1px solid var(--border-color, #e2e8f0); box-shadow: 0 4px 16px rgba(0,0,0,0.06);">
+              <div id="leafletMap" class="leaflet-map-frame" style="height: 440px; width: 100%; z-index: 1;"></div>
+              <div id="googleEmbedMap" style="display: none; height: 440px; width: 100%;">
+                <iframe 
+                  id="googleMapIframe"
+                  width="100%" 
+                  height="100%" 
+                  style="border:0;" 
+                  loading="lazy" 
+                  allowfullscreen 
+                  referrerpolicy="no-referrer-when-downgrade"
+                  src="https://maps.google.com/maps?q=Hansapal%20Junction%2C%20Bhubaneswar%2C%20Odisha%20751010&t=&z=13&ie=UTF8&iwloc=&output=embed">
+                </iframe>
+              </div>
             </div>
           </div>
 
