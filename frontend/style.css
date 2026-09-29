@@ -6359,17 +6359,23 @@ body {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(15, 23, 42, 0.78);
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(15, 23, 42, 0.82);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   z-index: 99999;
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  padding: 1.5rem 1rem 3rem 1rem;
-  overflow-y: auto;
+  padding: 1.5rem 1rem 4rem 1rem;
+  overflow-y: scroll !important;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: #ea580c rgba(15, 23, 42, 0.6);
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -6382,10 +6388,34 @@ body {
   pointer-events: auto;
 }
 
+/* Prominent Custom Scrollbar for Dashboard Modal */
+.dashboard-modal-overlay::-webkit-scrollbar {
+  width: 12px;
+  display: block;
+}
+
+.dashboard-modal-overlay::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.7);
+  border-radius: 8px;
+  margin: 6px 0;
+}
+
+.dashboard-modal-overlay::-webkit-scrollbar-thumb {
+  background: #ea580c;
+  background-image: linear-gradient(180deg, #ea580c 0%, #f97316 100%);
+  border-radius: 8px;
+  border: 2px solid rgba(15, 23, 42, 0.7);
+}
+
+.dashboard-modal-overlay::-webkit-scrollbar-thumb:hover {
+  background: #c2410c;
+}
+
 .dashboard-modal-container {
   width: 100%;
   max-width: 1440px;
-  margin: 0 auto;
+  margin: 0 auto 3.5rem auto;
+  padding-bottom: 2rem;
   background: transparent;
   transform: translateY(20px) scale(0.98);
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);

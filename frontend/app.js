@@ -23,6 +23,9 @@ window.closeLoginModal = function() {
 window.openCitizenDashboard = function() {
   const cdm = document.getElementById('citizenDashboardModal');
   if (cdm) {
+    if (window.lenisInstance && typeof window.lenisInstance.stop === 'function') {
+      try { window.lenisInstance.stop(); } catch(e){}
+    }
     cdm.classList.add('active');
     cdm.style.display = 'flex';
     document.body.style.overflow = 'hidden';
@@ -35,6 +38,9 @@ window.closeCitizenDashboard = function() {
     cdm.classList.remove('active');
     cdm.style.display = 'none';
     document.body.style.overflow = '';
+    if (window.lenisInstance && typeof window.lenisInstance.start === 'function') {
+      try { window.lenisInstance.start(); } catch(e){}
+    }
   }
 };
 
@@ -1110,6 +1116,7 @@ document.addEventListener('DOMContentLoaded', () => {
       totalRepaid,
       capex70,
       opex30,
+      monthlyTakeHome: Math.max(15000, Math.round(projectCost * 0.165 * 0.47 - quarterlyEmi / 3)),
       catInfo: cat,
       schedule
     };
@@ -2077,13 +2084,21 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
     updateUserProfileData();
+    if (window.lenisInstance && typeof window.lenisInstance.stop === 'function') {
+      try { window.lenisInstance.stop(); } catch(e){}
+    }
     citizenDashboardModal?.classList.add('active');
+    citizenDashboardModal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
   }
 
   function closeCitizenDashboard() {
     citizenDashboardModal?.classList.remove('active');
+    citizenDashboardModal.style.display = 'none';
     document.body.style.overflow = '';
+    if (window.lenisInstance && typeof window.lenisInstance.start === 'function') {
+      try { window.lenisInstance.start(); } catch(e){}
+    }
   }
 
   btnCloseDashboard?.addEventListener('click', closeCitizenDashboard);
@@ -2279,8 +2294,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const profLoanCapacity = document.getElementById('profLoanCapacity');
     if (profLoanCapacity) profLoanCapacity.textContent = `₹ ${fin.loanAmount.toLocaleString('en-IN')}`;
 
+    const monthlyTakeHome = fin.monthlyTakeHome || 28000;
     const dashStatProfit = document.getElementById('dashStatProfit');
-    if (dashStatProfit) dashStatProfit.textContent = `₹${Math.round(fin.monthlyTakeHome / 1000)}K`;
+    if (dashStatProfit) dashStatProfit.textContent = `₹${Math.round(monthlyTakeHome / 1000)}K`;
 
     const lblDprRefCode = document.getElementById('lblDprRefCode');
     if (lblDprRefCode) {

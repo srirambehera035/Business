@@ -814,8 +814,8 @@
   <!-- ========================================================================= -->
   <!-- AUTHENTICATED CITIZEN DASHBOARD MODAL (JOURNEY & HISTORY)                 -->
   <!-- ========================================================================= -->
-  <div id="citizenDashboardModal" class="dashboard-modal-overlay" role="dialog" aria-modal="true" aria-label="Authenticated Citizen Dashboard">
-    <div class="dashboard-modal-container">
+  <div id="citizenDashboardModal" class="dashboard-modal-overlay" data-lenis-prevent="true" role="dialog" aria-modal="true" aria-label="Authenticated Citizen Dashboard">
+    <div class="dashboard-modal-container" data-lenis-prevent="true">
       <!-- Top Bar: Back to Portal & Close Button -->
       <div class="dashboard-modal-topbar flex-between">
         <div class="dash-portal-breadcrumb flex-align">
@@ -829,7 +829,7 @@
         <button id="btnTopCloseDashboard" class="btn-dash-modal-close" aria-label="Close Dashboard">&times;</button>
       </div>
 
-      <div class="chaart-dashboard-wrapper">
+      <div class="chaart-dashboard-wrapper" data-lenis-prevent="true">
         
         <!-- LEFT SIDEBAR: PROFILE & NAVIGATION -->
         <aside class="dash-sidebar">
