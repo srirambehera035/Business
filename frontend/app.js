@@ -2110,6 +2110,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  // Stop wheel event bubbling to window to prevent Lenis scroll interception
+  citizenDashboardModal?.addEventListener('wheel', (e) => {
+    e.stopPropagation();
+  }, { passive: true });
+
+  const chaartWrap = document.querySelector('.chaart-dashboard-wrapper');
+  chaartWrap?.addEventListener('wheel', (e) => {
+    e.stopPropagation();
+  }, { passive: true });
+
   window.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && citizenDashboardModal?.classList.contains('active')) {
       closeCitizenDashboard();
